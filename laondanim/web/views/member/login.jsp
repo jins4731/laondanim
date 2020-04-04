@@ -1,8 +1,17 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> 
+	
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <style>
 .login-container {
@@ -153,7 +162,7 @@
 									<td><input type="text" class="form-control" placeholder="이름을 입력하세요" id="name"> </td>
 								</tr>
 								<tr>
-									<td>본인확인 이메일 </td>
+									<td>이메일 </td>
 									<td><input type="text" class="form-control" placeholder="danim@abc.com" name="email" id="findIdEmail" required> </td>
 									<td><input type="button" class="btn btn-primary btn-sm" value="인증번호 발송" onclick="checkInfo();"></td>
 								</tr>
@@ -178,7 +187,7 @@
 					<td><input type="text" class="form-control" placeholder="아이디를 입력하세요" id="userId"></td>
 				</tr>
 				<tr>
-					<td>본인확인 이메일</td>
+					<td>이메일</td>
 					<td><input type="text" class="form-control" placeholder="danim@abc.com" name="email" id="findPwEmail" required>
 					</td>
 					<td><input type="button" class="btn btn-primary btn-sm" value="인증번호 발송" onclick="checkInfo2();"></td>

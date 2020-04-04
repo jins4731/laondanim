@@ -154,7 +154,7 @@
 								</tr>
 								<tr>
 									<td>본인확인 이메일 </td>
-									<td><input type="text" class="form-control" placeholder="danim@abc.com" name="email" id="Idckemail" required> </td>
+									<td><input type="text" class="form-control" placeholder="danim@abc.com" name="email" id="findIdEmail" required> </td>
 									<td><input type="button" class="btn btn-primary btn-sm" value="인증번호 발송" onclick="checkInfo();"></td>
 								</tr>
 								<tr>
@@ -179,9 +179,9 @@
 				</tr>
 				<tr>
 					<td>본인확인 이메일</td>
-					<td><input type="text" class="form-control" placeholder="danim@abc.com" name="email" id="PwckEmail" required>
+					<td><input type="text" class="form-control" placeholder="danim@abc.com" name="email" id="findPwEmail" required>
 					</td>
-					<td><input type="button" class="btn btn-primary btn-sm" value="인증번호 발송"></td>
+					<td><input type="button" class="btn btn-primary btn-sm" value="인증번호 발송" onclick="checkInfo2();"></td>
 				</tr>
 				<tr>
 					<td>인증번호 입력</td>
@@ -219,7 +219,34 @@
 			
 		}
 		function checkInfo(){
-			
+			const name=$("#name").val();
+			const email=$("#findIdEmail").val();
+			if(name.trim().length==0){
+				alert("이름을 입력하세요");
+				$("#name").focus();
+				return false;
+			}
+			if(email.trim().length==0){
+				alert("이메일을 입력하세요");
+				$("#findIdEmail").focus();
+				return false;
+			}
+			return true;
+		}
+		function checkInfo2(){
+			const id=$("#userId").val();
+			const email=$("#findPwEmail").val();
+			if(id.trim().length==0){
+				alert("아이디를 입력하세요");
+				$("#userId").focus();
+				return false;
+			}
+			if(email.trim().length==0){
+				alert("이메일을 입력하세요");
+				$("#findPwEmail").focus();
+				return false;
+			}
+			return true;
 		}
 		//유효성검사 하기
 	</script>

@@ -120,6 +120,7 @@ header li>a {
 								<a class="dropdown-item" href="#">커뮤니티</a>
 							</div>
 						</li>
+						<!-- 세션의 멤버 값을 가져와서 null 이 아닐경우  마이페이지/로그아웃 출력, null 일경우 로그인 페이지로 이동-->
 						<li class="nav-item"><a class="nav-link"
 							href="<%=request.getContextPath()%>/login.do"> <img
 								src="<%=request.getContextPath()%>/icon/profile_icon.png"

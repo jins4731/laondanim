@@ -118,7 +118,7 @@ header li>a {
 
 					<!-- Links -->
 					<ul class="navbar-nav main-nav">
-						<li class="nav-item"><a class="nav-link" href="#">여행기</a></li>
+						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/trip/list.do">여행기</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">여행정보</a></li>
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">커뮤니티</a>
@@ -128,10 +128,11 @@ header li>a {
 							</div>
 						</li>
 						<!-- 세션의 멤버 값을 가져와서 null 이 아닐경우  마이페이지/로그아웃 출력, null 일경우 로그인 페이지로 이동-->
-						<li class="nav-item"><a class="nav-link"
-							href="<%=request.getContextPath()%>/login.do"> <img
-								src="<%=request.getContextPath()%>/icon/profile_icon.png"
-								width="50px" height="50px"></a></li>
+						<li class="nav-item">
+						<a class="nav-link"href="<%=request.getContextPath()%>/login.do"> 
+							<img src="<%=request.getContextPath()%>/icon/profile_icon.png" width="50px" height="50px">
+						</a>
+						</li>
 					</ul>
 
 				</nav>

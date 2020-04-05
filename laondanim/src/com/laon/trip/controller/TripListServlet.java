@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,13 +35,8 @@ public class TripListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		//검색으로 들어올 때랑 필터로 들어올 때랑 분기 처리 해야함
-		//검색으로 들어올 때는 검색을 쿼리 스트링으로 받아서 db 접근하여 가져오고 (오버로딩 한 함수 통해서)
-		//필터로 들어올때는 쿼리문에서 order by 를 이용하여 정렬하고 가져옴
+		//검색버튼 눌렀을 때, keyword 값 가져오기 , null 이면 검색 안한거 있으면 검색한거
 		String keyword = request.getParameter("keyword");
-		String sort = request.getParameter("sort");
-		String category = request.getParameter("category");
-		String filter = request.getParameter("filter");
 		
 		int cPage;
 			
@@ -49,7 +45,7 @@ public class TripListServlet extends HttpServlet {
 		}catch(NumberFormatException e) {
 			cPage = 1;
 		}
-		System.out.println(cPage);	
+		
 		int perPage = 10;
 		int totalData=0;
 		ArrayList<Trip> list = null;
@@ -59,40 +55,12 @@ public class TripListServlet extends HttpServlet {
 			list = new TripService().searchList(cPage, perPage);	//여행기 리스트 가져오기
 			//사진 리스트 가져오기 추가
 		}
-		else {
+		else if(keyword!=null){	//검색 버튼을 눌러서 keyword 값을 쿼리 스트링 형식으로 전송했기 때문에 값이 있다.
 			totalData = new TripService().getTotalData(keyword);
 			list = new TripService().searchList(cPage, perPage, keyword);
 		}
-		
-//		if(sort!=null) {
-//			if(category.equals("date")) {
-//				list = new TripService().sortListWriteDate(sort,cPage);
-//			}else if(category.equals("like")) {
-//				list = new TripService().sortListLike(sort,cPage);
-//			}
-//		}
-		
-		if(category!=null) {
-			String type="";
-			
-			switch(category) {
-			case "plan":
-				type = "여행 일정";
-				totalData = new TripService().getTotalDataPr(type);	//plan or review
-				list = new TripService().searchListPr(cPage, perPage, type);
-				break;
-			
-			case "review":
-				type = "여행 후기";
-				totalData = new TripService().getTotalDataPr(type);	//plan or review
-				list = new TripService().searchListPr(cPage, perPage, type);
-				break;
-			}
-			
-			request.setAttribute("category", type);
-		}
-		
-		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/list.do", totalData, cPage, perPage); //페이지바 가져오기
+				
+		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/list.do", totalData, cPage, perPage, keyword); //페이지바 가져오기
 		
 		request.setAttribute("triplist", list);	//여행기 리스트 저장
 		//request.setAttribute("picture", picture); //사진 리스트 저장 

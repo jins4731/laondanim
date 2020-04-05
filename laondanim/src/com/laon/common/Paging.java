@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class Paging {
 
-	public String pageBar(String url, int totalData, int cPage, int perPage) {
+	public String pageBar(String url, int totalData, int cPage, int perPage, String keyword) {
 		
 	
 		
@@ -20,14 +20,14 @@ public class Paging {
 		if(rowNum == cPage) {
 			pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&lt;</a></li>";
 		}else {
-			pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?cPage=" + (rowNum-1) +"' area-label='Previous'>&lt;</a></li>";
+			pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?cPage=" + (rowNum-1) +"&keyword="+keyword+"' area-label='Previous'>&lt;</a></li>";
 		}
 		
 		while(!(rowNum>pageLast || rowNum>totalPage)) {
 			if(cPage==rowNum) {
 				pageBar += "<li class='page-item'><a class='page-link' href=''>"+rowNum+"</a></li>";
 			}else {
-				pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?cPage="+rowNum+"'>"+rowNum+"</a></li>";
+				pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?cPage="+rowNum+"&keyword="+keyword+"'>"+rowNum+"</a></li>";
 			}
 			rowNum++;
 		}
@@ -35,7 +35,7 @@ public class Paging {
 		if(rowNum>totalPage) {
 			pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&gt;</a></li>";
 		}else {
-			pageBar +="<li class='page-item'><a class='page-link' href='"+url+"?cPage="+rowNum+"' area-label='Previous'>&gt;</a></li>";
+			pageBar +="<li class='page-item'><a class='page-link' href='"+url+"?cPage="+rowNum+"&keyword="+keyword+"' area-label='Previous'>&gt;</a></li>";
 		}
 		
 		pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&raquo;</a></li> </ul>";

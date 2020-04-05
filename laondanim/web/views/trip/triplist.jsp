@@ -7,20 +7,15 @@
     	ArrayList<Trip> list = (ArrayList<Trip>)request.getAttribute("triplist");
     	String pageBar = (String)request.getAttribute("pageBar");
     	int totalData= Integer.parseInt(request.getAttribute("totalData").toString());
-    	String category = (String)request.getAttribute("category");
      %>
     <section>
-    	<!-- 서블릿에서 넘어온 검색 option -->
-    		<input type="hidden" value="<%=category%>" id="category"/>
-    	
-    	<!----------------------------->
-        
+     
         <!-- 검색창 -->
         <div class="container mb-5 mt-4">
             <div class="row justify-content-center">
                 <div class="col-7 border border-secondary rounded d-flex flex-row justify-content-between p-0">
                     <div class="d-flex flex-row mr-2">
-                        <button class="btn btn-light border-0"><i class="fas fa-search" id="btn-search"></i> 키워드 검색</button>
+                        <button class="btn btn-light border-0" id="btn-search"><i class="fas fa-search"></i> 키워드 검색</button>
                         <input type="text" placeholder="키워드로 검색하세요 :)" class="form-control border-0 ml-2" size="100" id="search">
                     </div>
 
@@ -31,62 +26,15 @@
             </div>
         </div>
 
-        <script>
-            $(function(){
-            	$("#plan-review").each(function(){
-            		if($(this).val()==$("#category")){
-            			$(this).attr("selected","selected");
-            		}
-            	});
-            	
-                $("#btn-search").click(function(){      //검색버튼 클릭했을 때 리스트 가져오기
+          <script>
+            $(function(){            
+            	//검색 버튼 클릭했을 때 검색한 값 쿼리스트링으로 전송
+            	$("#btn-search").click(function(){      
                 	var keyword = $("#search").val();
                 	console.log(keyword);
-                   location.replace('<%=request.getContextPath()%>/trip/list.do?keyword='+keyword);
-                });
-
-               <%-- $("#search").keyup(function(){  //키업했을 때 데이터리스트에 추가하기
-                    $.ajax({
-                        url:"<%=request.getContextPath()%>/trip/tripdatalist.do",
-                        data:{val : $("#search").val()},
-                        success: function(data){
-                            let tags = data.split(",");
-
-                            for(let i=0; i<tags.length; i++){
-                                let op=$("<option>").attr("value",tags[i]).html(tags[i]);
-                                if(i==0) $("#data").html(op);
-                                else $("#data").append(op);
-                            }
-                        }
-                    })
-                });  --%>
-
-                $("#plan-review").change(function(){
-                	var category = $(this).val();
-                	console.log(category);	//plan or review
-                	
-                    location.replace('<%=request.getContextPath()%>/trip/list.do?category='+category);
-                    
-                });
-
-                $("#lo").change(function(){
-					var lo = $("#lo").val();
-                	
-                    location.replace('<%=request.getContextPath()%>/trip/list.do?&lo='+lo);
-                });
-                
-                $("#recent").click(function(){      //클릭했을 때 리스트 가져오기
-					var recent = $("#recent").val();
-                	
-                    location.replace('<%=request.getContextPath()%>/trip/list.do?sort=<%=list%>&category='+recent);
+                    location.replace('<%=request.getContextPath()%>/trip/list.do?keyword='+keyword);
+                });            	        
             });
-
-            	$("like").click(function(){      //클릭했을 때 리스트 가져오기
-					var like = $("#like").val();
-                	
-                    location.replace('<%=request.getContextPath()%>/trip/list.do?sort=<%=list%>&category='+like);
-            }); 
-            })
             
             
             //검색창 x 버튼 클릭시 클리어
@@ -97,14 +45,7 @@
                 });
             }
 
-           
-
-            //데이터리스트에서 keyup 할때마다 태그 값들 가져오기
-            
-        
-
-                
-           
+            //데이터리스트에서 keyup 할때마다 태그 값들 가져오기 
         </script>
 
 
@@ -305,4 +246,6 @@
 
   
     </section>
+    
+  
 <%@ include file = "/views/common/footer.jsp"%>

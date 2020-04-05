@@ -27,15 +27,6 @@ html,body {
 	height:100%;
 
 }
-
-/* body안의 전체를 감싸는 wrapper컨테이너 */
-.wrapper {
-
-	position:relative;
-	min-height:100%;
-
-}
-
 header {
 
 	height:150px;
@@ -53,7 +44,7 @@ section {
 
 footer {
 
-    position:absolute;
+  /*   position:absolute; */
 	bottom:0;
 	width:100%;
 	height:70px;   
@@ -65,13 +56,20 @@ footer {
 
 } 
 
+/* body안의 전체를 감싸는 wrapper컨테이너 */
+.body-wrapper{
 
-#title{
-	padding-top:70px;
-	margin-left: 70px;
+	position:relative;
+	min-height:100%;
+
 }
 
-		/* 글자색 통일 */
+.mainTitle-container{
+	margin-top:30px;
+	margin-left:50px;
+}
+
+/* 글자색 통일 */
 header a {
 	text-decoration: none;
 	color: mediumaquamarine;
@@ -92,7 +90,7 @@ header li>a {
 	text-decoration: none;
 }
 
-.navbar-nav {
+.main-nav {
 	list-style: none;
 }
 
@@ -105,12 +103,12 @@ header li>a {
 </style>
 </head>
 <body>
-	<div class="wrapper">
+	<div class="body-wrapper">
 	<header>
 	
 		<div class="title-container">
 			<h1>
-				<span id="title"><a href="" class="title">라온다님</a></span>
+				<div class="mainTitle-container"><a href="" >라온다님</a></div>
 			</h1>
 		</div>	
 		<div class="header-container">
@@ -119,14 +117,14 @@ header li>a {
 				<nav class="navbar navbar-expand-sm ">
 
 					<!-- Links -->
-					<ul class="navbar-nav">
+					<ul class="navbar-nav main-nav">
 						<li class="nav-item"><a class="nav-link" href="#">여행기</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">여행정보</a></li>
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">커뮤니티</a>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="#">동행찾기</a> 
-								<a class="dropdown-item" href="#">커뮤니티</a>
+								<a class="dropdown-item" href="#">게시판</a>
 							</div>
 						</li>
 						<!-- 세션의 멤버 값을 가져와서 null 이 아닐경우  마이페이지/로그아웃 출력, null 일경우 로그인 페이지로 이동-->

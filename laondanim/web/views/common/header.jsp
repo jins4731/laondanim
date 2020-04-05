@@ -4,23 +4,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
- <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-        integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
-        integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 <title>라온다님 메인</title>
- 	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
 /* 헤더 푸터 값조절 */
 html,body {
@@ -56,7 +53,7 @@ section {
 
 footer {
 
-    /* position:absolute; */
+    position:absolute;
 	bottom:0;
 	width:100%;
 	height:70px;   
@@ -123,7 +120,7 @@ header li>a {
 
 					<!-- Links -->
 					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath() %>/trip/list.do">여행기</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">여행기</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">여행정보</a></li>
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">커뮤니티</a>
@@ -132,6 +129,7 @@ header li>a {
 								<a class="dropdown-item" href="#">커뮤니티</a>
 							</div>
 						</li>
+						<!-- 세션의 멤버 값을 가져와서 null 이 아닐경우  마이페이지/로그아웃 출력, null 일경우 로그인 페이지로 이동-->
 						<li class="nav-item"><a class="nav-link"
 							href="<%=request.getContextPath()%>/login.do"> <img
 								src="<%=request.getContextPath()%>/icon/profile_icon.png"

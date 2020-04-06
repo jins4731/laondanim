@@ -6,7 +6,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-<%@ include file="/views/common/header.jsp"%>
+<%-- <%@ include file="/views/common/header.jsp"%> --%>
    <div class="container">
    <div class="row">
    	<div class="col-4">
@@ -25,22 +25,53 @@
 	</div>
 	</div>
 </div>
-<%@ include file="/views/common/footer.jsp"%> 
-
+<%-- <%@ include file="/views/common/footer.jsp"%>  --%>
+<input type="hidden" name="id" value="USER_ID 001">
 
 <script>
-	<%-- $(function(){
+	$(function(){
+		$.ajax({
+			url:"<%=request.getContextPath()%>/myPage/myPageContent",
+			data:id="id",
+			dataType:"html",
+			success:(data)=>{
+				$("#myPageView").html(data);
+			}
+		});
+		
 		$("#myCon").click(()=>{
 			$.ajax({
 				url:"<%=request.getContextPath()%>/myPage/myPageContent",
-				data:{id:"ddd"},
+				data:id="id",
 				dataType:"html",
 				success:(data)=>{
-					$("#myPageview").html(data);
+					$("#myPageView").html(data);
 				}
 			});
 		});
-	}); --%>
+		
+		$("#myH").click(()=>{
+			$.ajax({
+				url:"<%=request.getContextPath()%>/myPage/myPageHeart",
+				data:id="id",
+				dataType:"html",
+				success:(data)=>{
+					$("#myPageView").html(data);
+				}
+			});
+		});
+		
+		$("#myDh").click(()=>{
+			$.ajax({
+				url:"<%=request.getContextPath()%>/myPage/myPageDong",
+				data:id="id",
+				dataType:"html",
+				success:(data)=>{
+					$("#myPageView").html(data);
+				}
+			});
+		});
+	});
 </script>
 
 <style>
@@ -61,5 +92,6 @@
 	#myMenuBtn>button{	
 		width:150px;
 		margin: 20px;
+    	border-radius: 100px;
 	}
 </style>

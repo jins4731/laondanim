@@ -44,8 +44,8 @@
 		                     	<div class="dhCk3" style="margin:10px;">
 									<input type="checkbox" class="dhCks">
 								</div>
-		                        <div class="card" style="width: 235px; height: 415px;" >
-		                            <div class="d-flex justify-content-between p-2">
+		                        <div class="card" style="width: 155px; height: 255px;" >
+		                            <div class="d-flex justify-content-between p-2" style="font-size:5px;">
 		                                <span>모집여부</span>
 		                                <span>2020-02-08</span>
 		                            </div>
@@ -63,9 +63,9 @@
 											    </div>
 											</div>
 		                            	</div>
-		                            	<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="235px" height="235px">
+		                            	<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
 		                            </div>
-		                            <div class="d-flex flex-column justify-content-center card-body p-2" style="line-height: 22px;">
+		                            <div class="d-flex flex-column justify-content-center p-2" style="font-size:7px;">
 		                                <p class="mb-0">제목을 넣을 자리</p>
 		                                <ul class="p-0 m-0">
 		                                    <li>동행지역 : <span>경상북도 경주시</span></li>
@@ -79,11 +79,11 @@
 					</table>
 				</div>
 				
-				<a class="carousel-control-prev" href="#gallery" role="button" data-slide="prev">
+				<a class="carousel-control-prev" href="#gallery" role="button" data-slide="prev" style="width:30px;">
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 					<span class="sr-only">Previous</span>
 				</a>
-				<a class="carousel-control-next" href="#gallery" role="button" data-slide="next">
+				<a class="carousel-control-next" href="#gallery" role="button" data-slide="next" style="width:30px;">
 					<span class="carousel-control-next-icon" aria-hidden="true"></span>
 					<span class="sr-only">Next</span>
 				</a>
@@ -93,7 +93,7 @@
 	</div>
 	
 	<!-- 참여중인 동행 -->
-	<div class="menu">
+	<div class="menu" style="padding-top:20px;">
 		<div class="manuBar">
 			<div>
 				<span>참여중인 동행</span>
@@ -130,8 +130,8 @@
 		                     	<div class="jDhCk3" style="margin:10px;">
 									<input type="checkbox" class="jDhCks">
 								</div>
-		                        <div class="card" style="width: 235px; height: 415px;" >
-		                            <div class="d-flex justify-content-between p-2">
+		                        <div class="card" style="width: 155px; height: 255px;" >
+		                            <div class="d-flex justify-content-between p-2" style="font-size:5px;">
 		                                <span>동행상태</span>
 		                                <span>2020-02-08</span>
 		                            </div>
@@ -148,9 +148,9 @@
 											    </div>
 											</div>
 		                            	</div>
-		                            	<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="235px" height="235px">
+		                            	<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
 		                            </div>
-		                            <div class="d-flex flex-column justify-content-center card-body p-2" style="line-height: 22px;">
+		                            <div class="d-flex flex-column justify-content-center card-body p-2" style="font-size:7px;">
 		                                <p class="mb-0">제목을 넣을 자리</p>
 		                                <ul class="p-0 m-0">
 		                                    <li>동행지역 : <span>경상북도 경주시</span></li>
@@ -164,11 +164,11 @@
 					</table>
 				</div>
 				
-				<a class="carousel-control-prev" href="#gallery" role="button" data-slide="prev">
+				<a class="carousel-control-prev" href="#gallery" role="button" data-slide="prev" style="width:30px;">
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 					<span class="sr-only">Previous</span>
 				</a>
-				<a class="carousel-control-next" href="#gallery" role="button" data-slide="next">
+				<a class="carousel-control-next" href="#gallery" role="button" data-slide="next" style="width:30px;">
 					<span class="carousel-control-next-icon" aria-hidden="true"></span>
 					<span class="sr-only">Next</span>
 				</a>

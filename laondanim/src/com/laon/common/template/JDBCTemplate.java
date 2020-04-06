@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import com.laon.common.CommonKey;
+
 
 public class JDBCTemplate {
 	//Connection 객체 생성해서 반환하는 기능
@@ -16,9 +18,9 @@ public class JDBCTemplate {
 		try {
 			Properties prop=new Properties();
 			prop.load(new FileReader(JDBCTemplate.class.getResource("/sql/driver/driver.properties").getPath()));
-			Class.forName(prop.getProperty("driver"));
-			conn=DriverManager.getConnection(prop.getProperty("url"),
-					prop.getProperty("user"),prop.getProperty("pwd"));
+			Class.forName(prop.getProperty(CommonKey.DRIVER));
+			conn=DriverManager.getConnection(prop.getProperty(CommonKey.URL),
+					prop.getProperty(CommonKey.USER),prop.getProperty(CommonKey.PASSWORD));
 			conn.setAutoCommit(false);
 		}catch(Exception e) {
 			e.printStackTrace();

@@ -1,6 +1,6 @@
-package com.laon.common.key;
+package com.laon.common;
 
-public class UserKey {
+public class UserPKey {
 	public static final String NO = "no"; 
 	public static final String CREATED_DATE = "createdDate"; 
 	public static final String USER_ID = "userId"; 

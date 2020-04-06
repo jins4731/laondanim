@@ -42,10 +42,13 @@ public class BoardListViewServlet extends HttpServlet {
 		List<Board> list = new BoardService().selectBoardPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
 		int totalRowCount = new BoardService().selectBoardCount();
 		String pageBar = getPageBar(totalRowCount, currentPage, pagePerRow, request, "");
+		System.out.println(list);
+		
+		
 		
 		request.setAttribute(CommonKey.LIST, list);
 		request.setAttribute(CommonKey.PAGE_BAR, pageBar);
-		request.getRequestDispatcher("").forward(request, response);
+//		request.getRequestDispatcher("").forward(request, response);
 		
 		
 	}

@@ -18,6 +18,7 @@ import static com.laon.common.template.JDBCTemplate.*;
 public class BoardDao {
 	private Properties prop = new Properties();
 	
+	// board
 	 private String no = "no";
 	 private String userNo = "user_no";
 	 private String category = "category";
@@ -27,6 +28,9 @@ public class BoardDao {
 	 private String title = "title";
 	 private String content = "content";
 	 private String deleted = "deleted";
+	 
+	 
+	 
 	 
 	 
 	 private String selectBoard = "selectBoard";
@@ -101,6 +105,7 @@ public class BoardDao {
 		String sql = prop.getProperty(selectBoardPage);
 		List<Board> list = null;
 		try {
+			System.out.println("start : " + start + " end : " + end);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);

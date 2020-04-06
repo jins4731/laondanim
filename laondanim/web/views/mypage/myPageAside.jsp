@@ -14,7 +14,7 @@
 						<p class="card-text">닉네임 자리</p>
 					</div>
 					<div>
-						<a href="#" class="btn btn-info">정보수정</a>
+						<a href="#" class="btn btn-info" style="border-radius: 100px;">정보수정</a>
 					</div>
 				</div>
 			</div>

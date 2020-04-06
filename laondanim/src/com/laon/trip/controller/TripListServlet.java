@@ -37,7 +37,10 @@ public class TripListServlet extends HttpServlet {
 		
 		//검색버튼 눌렀을 때, keyword 값 가져오기 , null 이면 검색 안한거 있으면 검색한거
 		String keyword = request.getParameter("keyword");
-		
+		//전체 여행기 클릭 시, category 값 가져오기
+		String category = request.getParameter("category");
+		System.out.println(category);
+		System.out.println(keyword);
 		int cPage;
 			
 		try {
@@ -50,7 +53,7 @@ public class TripListServlet extends HttpServlet {
 		int totalData=0;
 		ArrayList<Trip> list = null;
 		
-		if(keyword==null) {
+		if((keyword==null && category==null) || category.equals("전체 여행기")) {
 			totalData = new TripService().getTotalData();
 			list = new TripService().searchList(cPage, perPage);	//여행기 리스트 가져오기
 			//사진 리스트 가져오기 추가
@@ -59,8 +62,16 @@ public class TripListServlet extends HttpServlet {
 			totalData = new TripService().getTotalData(keyword);
 			list = new TripService().searchList(cPage, perPage, keyword);
 		}
+		
+		//category의 값이 있으면 select 박스를 바꿧다는 얘기 해당 category 에 해당하는 데이터 출력
+		if(category!=null && !category.equals("전체 여행기")) {
+			category = category.equals("여행 일정")?"plan":"review";
+			totalData = new TripService().getTotalDataPr(category);
+			list = new TripService().searchListPr(cPage, perPage, category);
+			request.setAttribute("category", category);
+		}
 				
-		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/list.do", totalData, cPage, perPage, keyword); //페이지바 가져오기
+		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/list.do", totalData, cPage, perPage, keyword, category); //페이지바 가져오기
 		
 		request.setAttribute("triplist", list);	//여행기 리스트 저장
 		//request.setAttribute("picture", picture); //사진 리스트 저장 

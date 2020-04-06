@@ -5,10 +5,30 @@
     <!--section-->
     <%
     	ArrayList<Trip> list = (ArrayList<Trip>)request.getAttribute("triplist");
+    	System.out.println(list);
     	String pageBar = (String)request.getAttribute("pageBar");
     	int totalData= Integer.parseInt(request.getAttribute("totalData").toString());
+    	
+    	//여행 일정 / 후기 게시물에 따른 분기 처리
+    	String category = (String)request.getAttribute("category");	//전체 여행기 select 값 가져오기
+		if(category !=null){
+	    	switch(category){
+	    	case "plan":
+	    		category = "여행 일정";
+	    		break;
+	    		
+	    	case "review":
+	    		category = "여행 후기";
+	    		break;
+	    	default:
+	    		category = "전체 여행기";
+	    		break;
+	    	}
+		}
      %>
     <section>
+    	<!--필터 버튼 눌렀을 때 데이터 처리-->
+     	<input type="hidden" value="<%=category==null?"전체 여행기":category %>" id="category"/> <!-- category 저장 input 태그 -->
      
         <!-- 검색창 -->
         <div class="container mb-5 mt-4">
@@ -30,10 +50,23 @@
             $(function(){            
             	//검색 버튼 클릭했을 때 검색한 값 쿼리스트링으로 전송
             	$("#btn-search").click(function(){      
-                	var keyword = $("#search").val();
-                	console.log(keyword);
+                	var keyword = $("#search").val();                	
                     location.replace('<%=request.getContextPath()%>/trip/list.do?keyword='+keyword);
-                });            	        
+                });
+            	
+            	//여행 category 드랍 다운 선택 시 서블릿 요청 필터 처리 
+            	$("#plan-review").siblings("div").children().each(function(i,v){
+                    $(this).click(function(){
+                        var category = $(this).html();
+                        $("#plan-review").html(category);
+                        location.replace('<%=request.getContextPath()%>/trip/list.do?category='+category);
+                    })
+                })
+                
+                //여행 category 드랍다운 선택 시 선택 버튼 체인지
+                var category = $("#category").val().trim();
+                $("#plan-review").html(category);
+            	
             });
             
             
@@ -55,18 +88,27 @@
 
             </datalist>
         <!----------------------->
-
+		<style>
+			
+		</style>
         <!-- 필터 / 작성 -->
         <div class="container">
            <div class="row justify-content-between" >
-                <div class="col-3  d-flex flex-row my-auto">
-                    <select class="selectpicker border border-secondary w-50 rounded mr-5" data-style="bg-white" id="plan-review">
-                        <option>전체 여행기</option>
-                        <option value="plan">여행 일정</option>
-                        <option value="review">여행 후기</option>
-                    </select>
+                <div class="col-3  d-flex flex-row my-auto">              
+               		<div class="dropdown">
+ 						<button class="btn btn-light dropdown-toggle border border-secondary rounded mr-3" type="button" id="plan-review" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   							전체여행기
+ 						</button>
+ 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+   						<a class="dropdown-item" href="#">전체 여행기</a>
+						<a class="dropdown-item" href="#">여행 일정</a>
+						<a class="dropdown-item" href="#">여행 후기</a>
+					</div>
+				</div>						
+						
+   
 
-                    <select class="selectpicker border border-secondary w-50 rounded" data-style="bg-white" id="lo">
+                    <!-- <select class="selectpicker border border-secondary w-50 rounded" data-style="bg-white" id="lo">
                         <option>전체 지역별</option>
                         <option value="seoul">서울</option>
                         <option value="pusan">부산</option>
@@ -76,7 +118,7 @@
                         <option value="daejeon">대전</option>
                         <option value="ulsan">울산</option>
                         <option value="sejong">세종</option>
-                    </select>
+                    </select> -->
                 </div>
 
                 <div class="col-2 d-flex flex-row my-auto">
@@ -87,7 +129,7 @@
         </div>
 
         <style>
-            * {
+            /* * {
                 /*모든 요소 초기화*/
                 border-collapse: collapse;
                 margin: 0px;
@@ -95,7 +137,7 @@
                 text-decoration: none;
                 color: black;
                 list-style: none;
-            }
+            } */
 
             /* div{
                 border:1px solid black;

@@ -124,11 +124,15 @@ public class TripDao {
 		
 		ArrayList<Trip> list = new ArrayList<Trip>();
 		String sql = prop.getProperty("searchtriplistpr"); 
+		
+		String category = "";
+		category=type.equals("plan")?"여행 일정":"여행 후기";
+		
 		Trip t = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, type);
+			pstmt.setString(1, category);
 			pstmt.setInt(2, (cPage-1)*perPage+1);
 			pstmt.setInt(3, cPage*perPage);
 			
@@ -221,12 +225,15 @@ public class TripDao {
 		ResultSet rs = null;
 		
 		String sql = prop.getProperty("totladatapr");
+		String category = "";
+		
+		category = type.equals("plan")?"여행 일정":"여행 후기";
 		
 		int count = 0;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, type);
+			pstmt.setString(1, category);
 			
 			rs = pstmt.executeQuery();
 			

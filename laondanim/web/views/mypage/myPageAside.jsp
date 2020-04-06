@@ -21,11 +21,35 @@
 		</div>
 		
 		<!-- 알람 -->
-		<div id="alram">
+		<div id="alram" data-toggle="modal" data-target="#myModal">
 			<label>
-				<img src="<%=request.getContextPath() %>/images/icon.png">
+				<img src="<%=request.getContextPath() %>/images/alram.png">
 				<span>? 개의 알림이 있습니다.</span>
 			</label>
+		</div>
+		
+		<div class="modal fade" id="myModal">
+		    <div class="modal-dialog modal-lg">
+		      <div class="modal-content">
+		      
+		        <!-- Modal Header -->
+		        <div class="modal-header">
+		          <h4 class="modal-title">알림</h4>
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        </div>
+		        
+		        <!-- Modal body -->
+		        <div class="modal-body">
+		          <table class="table">
+		          	<tr>
+		          		<td>카테고리</td>
+		          		<td>내용</td>
+		          		<td>삭제</td>
+		          	</tr>
+		          </table>
+		        </div>
+		      </div>
+		    </div>
 		</div>
 		
 		<!-- 팁 -->

@@ -12,6 +12,7 @@ public class TripService {
 
 	private TripDao dao = new TripDao();
 	
+	//selectList
 	public ArrayList<Trip> searchList(int cPage, int perPage){ //전체 검색
 		Connection conn = getConnection();
 		ArrayList<Trip> list = dao.searchList(conn, cPage, perPage);
@@ -34,6 +35,15 @@ public class TripService {
 		return list;
 	}
 	
+//	public ArrayList<Trip> searchListRe(String keyword, String category){
+//		Connection conn = getConnection();
+//		ArrayList<Trip> list = dao.searchListRe(conn, keyword, category);
+//		close(conn);
+//		return list;
+//	}
+	
+	
+	//get totalData
 	public int getTotalData() {
 		Connection conn= getConnection();
 		int count = dao.getTotalData(conn);
@@ -54,4 +64,11 @@ public class TripService {
 		close(conn);
 		return count;
 	}
+	
+//	public int getTotalDataRe(String keyword, String category) {
+//		Connection conn = getConnection();
+//		int count = dao.getTotalDataRe(conn,keyword,category);
+//		close(conn);
+//		return count;
+//	}
 }

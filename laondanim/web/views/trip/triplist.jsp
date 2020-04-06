@@ -11,32 +11,19 @@
     	
     	//여행 일정 / 후기 게시물에 따른 분기 처리
     	String category = (String)request.getAttribute("category");	//전체 여행기 select 값 가져오기
-		if(category !=null){
-	    	switch(category){
-	    	case "plan":
-	    		category = "여행 일정";
-	    		break;
-	    		
-	    	case "review":
-	    		category = "여행 후기";
-	    		break;
-	    	default:
-	    		category = "전체 여행기";
-	    		break;
-	    	}
-		}
+    	
      %>
     <section>
     	<!--필터 버튼 눌렀을 때 데이터 처리-->
      	<input type="hidden" value="<%=category==null?"전체 여행기":category %>" id="category"/> <!-- category 저장 input 태그 -->
-     
+     	     	
         <!-- 검색창 -->
         <div class="container mb-5 mt-4">
             <div class="row justify-content-center">
                 <div class="col-7 border border-secondary rounded d-flex flex-row justify-content-between p-0">
-                    <div class="d-flex flex-row mr-2">
-                        <button class="btn btn-light border-0" id="btn-search"><i class="fas fa-search"></i> 키워드 검색</button>
-                        <input type="text" placeholder="키워드로 검색하세요 :)" class="form-control border-0 ml-2" size="100" id="search">
+                    <div class="d-flex flex-row mr-2 dd">
+                        <button class="btn btn-light border-0" id="btn-search" style="width:140px">키워드 검색</button>
+                        <input type="text" placeholder="키워드로 검색하세요 :)" class="form-control border-0 ml-2" size="100" id="search"/>
                     </div>
 
                     <div>
@@ -59,14 +46,22 @@
                     $(this).click(function(){
                         var category = $(this).html();
                         $("#plan-review").html(category);
+                        console.log("category는 몬가요 : "+ category);
                         location.replace('<%=request.getContextPath()%>/trip/list.do?category='+category);
                     })
                 })
                 
                 //여행 category 드랍다운 선택 시 선택 버튼 체인지
                 var category = $("#category").val().trim();
+            	console.log("여행 or 후기 : "+ category);
                 $("#plan-review").html(category);
             	
+                //최근순 버튼 클릭 시 정렬 최근순으로 정렬
+                $("#recent").click(function(){
+                	var recent = 'recent';
+                	location.replace('<%=request.getContextPath()%>/trip/list.do?recent='+recent);
+                });
+                
             });
             
             
@@ -168,8 +163,8 @@
                 </div>
 
                 <div class="col-3 d-flex justify-content-end">
-                    <button class="btn btn-mg btn-outline-secondary border-0" id="recent">최근순</button>   <!--ajax 정렬-->
-                    <button class="btn btn-mg btn-outline-secondary border-0" id="like">좋아요순</button> <!--ajax 정렬-->
+                    <button class="btn btn-mg btn-outline-secondary border-0" id="recent">최근순</button>  
+                    <button class="btn btn-mg btn-outline-secondary border-0" id="like">좋아요순</button> 
                 </div>
             </div>
         </div>
@@ -186,7 +181,7 @@
         <!-- 가져온 리스트의 데이터 개수에 따라 일의 자리숫자에 따라서 div태그 추가할지 안할지 결정 -->
         <!--  -->
         
-        <div class="container mt-3 bg-white justify-content-center" style="height:640px;">
+        <div class="container mt-3 justify-content-center" style="height:640px;">
             <div class="row mb-2 h-50 row1">
             <%
             int size = list.size();

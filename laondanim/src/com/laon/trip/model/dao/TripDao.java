@@ -125,14 +125,12 @@ public class TripDao {
 		ArrayList<Trip> list = new ArrayList<Trip>();
 		String sql = prop.getProperty("searchtriplistpr"); 
 		
-		String category = "";
-		category=type.equals("plan")?"여행 일정":"여행 후기";
 		
 		Trip t = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, category);
+			pstmt.setString(1, type);
 			pstmt.setInt(2, (cPage-1)*perPage+1);
 			pstmt.setInt(3, cPage*perPage);
 			
@@ -225,15 +223,12 @@ public class TripDao {
 		ResultSet rs = null;
 		
 		String sql = prop.getProperty("totladatapr");
-		String category = "";
-		
-		category = type.equals("plan")?"여행 일정":"여행 후기";
 		
 		int count = 0;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, category);
+			pstmt.setString(1, type);
 			
 			rs = pstmt.executeQuery();
 			
@@ -250,4 +245,16 @@ public class TripDao {
 		return count;
 		
 	}
+	
+//	public int getTotalDataRe(Connection conn, String keyword, String category) {
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		String sql = "";
+//		
+//		if(keyword==null && category==null) {
+//			sql = prop.getProperty("recentsortall");
+//		}else if(keyword!=null && category==null) {
+//			sql = prop.getProperty("recentsortcategory");
+//		}
+//	}
 }

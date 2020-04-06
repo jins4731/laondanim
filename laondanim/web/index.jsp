@@ -7,5 +7,6 @@
 		<h2 align='center' style='margin-top:200px'>
 			라온다님 메인페이지
 		</h2>
+		<a href="<%=request.getContextPath() %>/mypage/mypageMain">mypage</a>
 </section>
 <%@ include file="/views/common/footer.jsp"%> 

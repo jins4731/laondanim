@@ -38,8 +38,12 @@ public class TripListServlet extends HttpServlet {
 		//검색버튼 눌렀을 때, keyword 값 가져오기 , null 이면 검색 안한거 있으면 검색한거
 		String keyword = request.getParameter("keyword");
 		//전체 여행기 클릭 시, category 값 가져오기
-		String category = request.getParameter("category");
-		System.out.println(category);
+		String category = request.getParameter("category")==null?"전체 여행기":request.getParameter("category");
+		//최근순 클릭스 recent 값 가져오기
+		String recent = request.getParameter("recent");
+		System.out.println("recent의 값은?"+recent);
+		
+		System.out.println("category:"+category);
 		System.out.println(keyword);
 		int cPage;
 			
@@ -58,19 +62,27 @@ public class TripListServlet extends HttpServlet {
 			list = new TripService().searchList(cPage, perPage);	//여행기 리스트 가져오기
 			//사진 리스트 가져오기 추가
 		}
-		else if(keyword!=null){	//검색 버튼을 눌러서 keyword 값을 쿼리 스트링 형식으로 전송했기 때문에 값이 있다.
+		
+		//검색 버튼을 눌러서 keyword 값을 쿼리 스트링 형식으로 전송했기 때문에 값이 있다.
+		if(keyword!=null){	
 			totalData = new TripService().getTotalData(keyword);
 			list = new TripService().searchList(cPage, perPage, keyword);
 		}
 		
 		//category의 값이 있으면 select 박스를 바꿧다는 얘기 해당 category 에 해당하는 데이터 출력
 		if(category!=null && !category.equals("전체 여행기")) {
-			category = category.equals("여행 일정")?"plan":"review";
+			//category = category.equals("여행 일정")?"plan":"review";
 			totalData = new TripService().getTotalDataPr(category);
 			list = new TripService().searchListPr(cPage, perPage, category);
 			request.setAttribute("category", category);
 		}
-				
+		
+		//정렬 버튼(최근순) 눌렀을 때
+//		if(recent!=null) {
+//			totalData = new TripService().getTotalDataRe(keyword,category);
+//			list = new TripService().searchListRe(keyword,category);
+//		}
+		
 		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/list.do", totalData, cPage, perPage, keyword, category); //페이지바 가져오기
 		
 		request.setAttribute("triplist", list);	//여행기 리스트 저장

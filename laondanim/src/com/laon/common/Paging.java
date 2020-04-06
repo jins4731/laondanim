@@ -17,7 +17,7 @@ public class Paging {
 		int rowNum = (cPage-1)/pageBarSize*pageBarSize+1;
 		int pageLast = rowNum+pageBarSize-1;
 		
-		if(rowNum == cPage) {
+		if(rowNum == 1) {
 			pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&lt;</a></li>";
 		}else {
 			pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?cPage=" + (rowNum-1) +"&keyword="+keyword+"&category="+category+"' area-label='Previous'>&lt;</a></li>";

@@ -9,6 +9,8 @@
     	String pageBar = (String)request.getAttribute("pageBar");
     	int totalData= Integer.parseInt(request.getAttribute("totalData").toString());
     	
+    	//검색 태그 값
+    	String keyword = (String)request.getAttribute("keyword");
     	//여행 일정 / 후기 게시물에 따른 분기 처리
     	String category = (String)request.getAttribute("category");	//전체 여행기 select 값 가져오기
     	
@@ -16,6 +18,7 @@
     <section>
     	<!--필터 버튼 눌렀을 때 데이터 처리-->
      	<input type="hidden" value="<%=category==null?"전체 여행기":category %>" id="category"/> <!-- category 저장 input 태그 -->
+     	<input type="hidden" value="<%=keyword %>" id="keyword"/>
      	     	
         <!-- 검색창 -->
         <div class="container mb-5 mt-4">
@@ -45,9 +48,10 @@
             	$("#plan-review").siblings("div").children().each(function(i,v){
                     $(this).click(function(){
                         var category = $(this).html();
+                        var keyword = $("#keyword").val();
                         $("#plan-review").html(category);
                         console.log("category는 몬가요 : "+ category);
-                        location.replace('<%=request.getContextPath()%>/trip/list.do?category='+category);
+                        location.replace('<%=request.getContextPath()%>/trip/list.do?category='+category+'&keyword='+keyword);
                     })
                 })
                 

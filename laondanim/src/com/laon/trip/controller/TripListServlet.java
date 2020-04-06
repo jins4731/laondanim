@@ -67,21 +67,19 @@ public class TripListServlet extends HttpServlet {
 		if(keyword!=null){	
 			totalData = new TripService().getTotalData(keyword);
 			list = new TripService().searchList(cPage, perPage, keyword);
+			request.setAttribute("keyword", keyword);
 		}
 		
 		//category의 값이 있으면 select 박스를 바꿧다는 얘기 해당 category 에 해당하는 데이터 출력
 		if(category!=null && !category.equals("전체 여행기")) {
 			//category = category.equals("여행 일정")?"plan":"review";
-			totalData = new TripService().getTotalDataPr(category);
-			list = new TripService().searchListPr(cPage, perPage, category);
+			totalData = new TripService().getTotalDataPr(category, keyword);
+			System.out.println("totalData"+ totalData);
+			list = new TripService().searchListPr(cPage, perPage, category, keyword);
 			request.setAttribute("category", category);
 		}
 		
-		//정렬 버튼(최근순) 눌렀을 때
-//		if(recent!=null) {
-//			totalData = new TripService().getTotalDataRe(keyword,category);
-//			list = new TripService().searchListRe(keyword,category);
-//		}
+		
 		
 		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/list.do", totalData, cPage, perPage, keyword, category); //페이지바 가져오기
 		

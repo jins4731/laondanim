@@ -28,9 +28,9 @@ public class TripService {
 		return list;
 	}
 	
-	public ArrayList<Trip> searchListPr(int cPage, int perPage, String type){ //키워드 검색 태그
+	public ArrayList<Trip> searchListPr(int cPage, int perPage, String type, String keyword){ //키워드 검색 태그
 		Connection conn = getConnection();
-		ArrayList<Trip> list = dao.searchListPr(conn, cPage, perPage, type);
+		ArrayList<Trip> list = dao.searchListPr(conn, cPage, perPage, type, keyword);
 		close(conn);
 		return list;
 	}
@@ -58,17 +58,12 @@ public class TripService {
 		return count;
 	}
 	
-	public int getTotalDataPr(String type) {
+	public int getTotalDataPr(String type, String keyword) {
 		Connection conn = getConnection();
-		int count = dao.getTotalDataPr(conn,type);
+		int count = dao.getTotalDataPr(conn,type, keyword);
 		close(conn);
 		return count;
 	}
 	
-//	public int getTotalDataRe(String keyword, String category) {
-//		Connection conn = getConnection();
-//		int count = dao.getTotalDataRe(conn,keyword,category);
-//		close(conn);
-//		return count;
-//	}
+
 }

@@ -118,22 +118,34 @@ public class TripDao {
 	}
 	
 	
-	public ArrayList<Trip> searchListPr(Connection conn, int cPage, int perPage, String type){
+	public ArrayList<Trip> searchListPr(Connection conn, int cPage, int perPage, String type, String keyword){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		ArrayList<Trip> list = new ArrayList<Trip>();
-		String sql = prop.getProperty("searchtriplistpr"); 
+		
+		String sql = "";
+		if(keyword==null) {
+			sql = prop.getProperty("searchtriplistpr");
+		}else {
+			sql = prop.getProperty("searchtriplistprkeyword");
+		} 
 		
 		
 		Trip t = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, type);
-			pstmt.setInt(2, (cPage-1)*perPage+1);
-			pstmt.setInt(3, cPage*perPage);
-			
+			if(keyword==null) {
+				pstmt.setString(1, type);
+				pstmt.setInt(2, (cPage-1)*perPage+1);
+				pstmt.setInt(3, cPage*perPage);
+			}else {
+				pstmt.setString(1, type);
+				pstmt.setString(2, "%"+keyword+"%");
+				pstmt.setInt(3, (cPage-1)*perPage+1);
+				pstmt.setInt(4, cPage*perPage);
+			}
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -218,18 +230,27 @@ public class TripDao {
 		return count;
 	}
 	
-	public int getTotalDataPr(Connection conn, String type) {
+	public int getTotalDataPr(Connection conn, String type, String keyword) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
-		String sql = prop.getProperty("totladatapr");
+	
+		String sql = "";
+		if(keyword==null) {
+			sql = prop.getProperty("totaldatapr");
+		}else {
+			sql = prop.getProperty("totaldataprkeyword");
+		}
 		
 		int count = 0;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, type);
-			
+			if(keyword==null) {
+				pstmt.setString(1, type);
+			}else {
+				pstmt.setString(1, type);
+				pstmt.setString(2, "%"+keyword+"%");
+			}
 			rs = pstmt.executeQuery();
 			
 			rs.next();
@@ -245,16 +266,4 @@ public class TripDao {
 		return count;
 		
 	}
-	
-//	public int getTotalDataRe(Connection conn, String keyword, String category) {
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		String sql = "";
-//		
-//		if(keyword==null && category==null) {
-//			sql = prop.getProperty("recentsortall");
-//		}else if(keyword!=null && category==null) {
-//			sql = prop.getProperty("recentsortcategory");
-//		}
-//	}
 }

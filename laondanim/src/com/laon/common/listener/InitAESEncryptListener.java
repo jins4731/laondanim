@@ -32,7 +32,7 @@ public class InitAESEncryptListener implements ServletContextListener {
      */
     public void contextInitialized(ServletContextEvent arg0)  { 
     	String path = arg0.getServletContext().getRealPath("/WEB-INF");
-    	new AESEncrypt(path);
+//    	new AESEncrypt(path);
     }
 	
 }

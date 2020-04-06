@@ -35,56 +35,63 @@
 			</div>
 		</div>
 		<!-- 게시글위치 -->
-		<div>
-			<table id="dnTbl">
-				<tr>
-					<td class="p-1">
-						<div class="dnCk3" style="margin:10px;">
-							<input type="checkbox" class="dnCks">
-						</div>
-						<div class="card" style="width: 235px; height: 350px;" >
-                            <div class="d-flex justify-content-between p-2">
-                                <span>다님후기</span>
-                                <span>2020-02-08</span>
-                            </div>
-                            <div>
-                            	<div style="position: absolute;">
-	                            	<div class="dropdown" style="position: relative;">
-									    <button type="button" class="btn" data-toggle="dropdown">
-									      ...
-									    </button>
-									    <div class="dropdown-menu">
-									      <a class="dropdown-item" href="#">Link 1</a>
-									      <a class="dropdown-item" href="#">Link 2</a>
-									      <a class="dropdown-item" href="#">Link 3</a>
-									    </div>
+		<div class="carousel slide" data-ride="carousel" data-interval="false">
+			<div class="carousel-inner">
+				<div class="carousel-item active d-flex justify-content-center" >
+					<table id="dnTbl">
+						<tr>
+							<td class="p-1">
+								<div class="dnCk3" style="margin:10px;">
+									<input type="checkbox" class="dnCks">
+								</div>
+								<div class="card" style="width: 155px; height: 255px;" >
+									<div class="d-flex justify-content-between p-2" style="font-size:5px;">
+					    				<span>다님후기</span>
+					    				<span>2020-02-08</span>
 									</div>
-                            	</div>
-                            	<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="235px" height="235px">
-                            </div>
-                            <div class="d-flex card-body p-2" style="line-height: 22px;">
-                            	<div>
-                            		<img src="<%=request.getContextPath() %>/images/images.jpeg" width="50px" height="50px" style="border-radius: 70%">
-                            	</div>
-                            	<div style="width:150px;">
-	                                <p class="mb-0">제목을 넣을 자리</p>
-	                                <p class="mb-0">닉네임</p>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-				</tr>
-				<tr>
-					<td colspan="3">
-						<span>+ 더보기</span>
-					</td>
-				</tr>
-			</table>
+									<div>
+										<div style="position: absolute;">
+			                            	<div class="dropdown" style="position: relative;">
+											    <button type="button" class="btn" data-toggle="dropdown">
+											      ...
+											    </button>
+											    <div class="dropdown-menu">
+											      <a class="dropdown-item" href="#">Link 1</a>
+											      <a class="dropdown-item" href="#">Link 2</a>
+											      <a class="dropdown-item" href="#">Link 3</a>
+											    </div>
+											</div>
+		                            	</div>
+										<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+									</div>
+									<div class="d-flex card-body p-2">
+										<div>
+											<img src="<%=request.getContextPath() %>/images/images.jpeg" width="40px" height="40px" style="border-radius: 70%">
+										</div>
+										<div style="width:150px;font-size:12px;">
+											<p class="mb-0">제목을 넣을 자리</p>
+											<p class="mb-0">닉네임</p>
+										</div>
+									</div>
+								</div>
+								<a class="carousel-control-prev" href="#gallery" role="button" data-slide="prev" style="width:30px;">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="sr-only">Previous</span>
+								</a>
+								<a class="carousel-control-next" href="#gallery" role="button" data-slide="next" style="width:30px;">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="sr-only">Next</span>
+								</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 		
 	<!-- 내 게시글 -->
-	<div class="menu">
+	<div class="menu" style="padding-top:20px;">
 		<div class="manuBar">
 			<div>
 				<span>내 게시글</span>

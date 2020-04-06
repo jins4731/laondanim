@@ -6,6 +6,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
+<%@ include file="/views/common/header.jsp"%>
    <div class="container">
    <div class="row">
    	<div class="col-4">
@@ -24,6 +25,8 @@
 	</div>
 	</div>
 </div>
+<%@ include file="/views/common/footer.jsp"%> 
+
 
 <script>
 	<%-- $(function(){

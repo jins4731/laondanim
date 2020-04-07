@@ -95,7 +95,7 @@ public class TripListServlet extends HttpServlet {
 //			System.out.println("list의 값은 과연??"+list);
 //		}
 		totalData = new TripService().getTotalDataLo(lo, category, keyword);
-		list = new TripService().searchList(cPage, perPage, lo, category, keyword, recent);
+		list = new TripService().searchList(cPage, perPage, lo, category, keyword);
 		
 		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/list.do", totalData, cPage, perPage, keyword, category, lo); //페이지바 가져오기
 		
@@ -103,7 +103,6 @@ public class TripListServlet extends HttpServlet {
 		request.setAttribute("keyword", keyword);
 		request.setAttribute("category", category);
 		request.setAttribute("lo", lo);
-		request.setAttribute("recent", recent);
 		
 		request.setAttribute("triplist", list);	//여행기 리스트 저장
 		//request.setAttribute("picture", picture); //사진 리스트 저장 

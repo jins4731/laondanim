@@ -5,7 +5,6 @@
     <!--section-->
     <%
     	ArrayList<Trip> list = (ArrayList<Trip>)request.getAttribute("triplist");
-    	System.out.println(list);
     	String pageBar = (String)request.getAttribute("pageBar");
     	int totalData= Integer.parseInt(request.getAttribute("totalData").toString());
     	
@@ -13,13 +12,15 @@
     	String keyword = (String)request.getAttribute("keyword");
     	//여행 일정 / 후기 게시물에 따른 분기 처리
     	String category = (String)request.getAttribute("category");	//전체 여행기 select 값 가져오기
-    	
+    	//지역 에 따른 분기  처리
+    	String lo = (String)request.getAttribute("lo");
      %>
     <section>
     	<!--필터 버튼 눌렀을 때 데이터 처리-->
      	<input type="hidden" value="<%=category==null?"전체 여행기":category %>" id="category"/> <!-- category 저장 input 태그 -->
      	<input type="hidden" value="<%=keyword %>" id="keyword"/>
-     	     	
+     	<input type="hidden" value="<%=lo==null?"선택 지역별":lo %>" id="location"/>     	
+        
         <!-- 검색창 -->
         <div class="container mb-5 mt-4">
             <div class="row justify-content-center">
@@ -50,8 +51,19 @@
                         var category = $(this).html();
                         var keyword = $("#keyword").val();
                         $("#plan-review").html(category);
-                        console.log("category는 몬가요 : "+ category);
                         location.replace('<%=request.getContextPath()%>/trip/list.do?category='+category+'&keyword='+keyword);
+                    })
+                })
+                
+                //지역 lo 드랍 다운 선택 시 서블릿 요청 필터 처리
+                $("#lo").siblings("div").children().each(function(i,v){
+                    $(this).click(function(){
+                    	var lo = $(this).html();
+                        console.log(lo);
+                    	var keyword = $("#keyword").val();
+                        var category = $("#category").val();
+                        $("#lo").html(lo);
+                        location.replace('<%=request.getContextPath()%>/trip/list.do?category='+category+'&keyword='+keyword+'&lo='+lo);
                     })
                 })
                 
@@ -60,6 +72,11 @@
             	console.log("여행 or 후기 : "+ category);
                 $("#plan-review").html(category);
             	
+                //lo 드랍다운 선택시 선택 버튼 체인지
+                var lo = $("#location").val().trim();
+                console.log(lo);
+                $("#lo").html(lo);
+                
                 //최근순 버튼 클릭 시 정렬 최근순으로 정렬
                 $("#recent").click(function(){
                 	var recent = 'recent';
@@ -68,7 +85,6 @@
                 
             });
             
-            
             //검색창 x 버튼 클릭시 클리어
             function searchCancel(){
                 $("#cancel").click(function(){
@@ -76,7 +92,11 @@
                     $("#search").val("");
                 });
             }
-
+			
+  
+            
+            
+            
             //데이터리스트에서 keyup 할때마다 태그 값들 가져오기 
         </script>
 
@@ -93,33 +113,40 @@
         <!-- 필터 / 작성 -->
         <div class="container">
            <div class="row justify-content-between" >
-                <div class="col-3  d-flex flex-row my-auto">              
+                <div class="d-flex flex-row">
+                <div class="col-3  d-flex flex-row my-auto mr-5">              
                		<div class="dropdown">
  						<button class="btn btn-light dropdown-toggle border border-secondary rounded mr-3" type="button" id="plan-review" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
    							전체여행기
  						</button>
- 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-   						<a class="dropdown-item" href="#">전체 여행기</a>
-						<a class="dropdown-item" href="#">여행 일정</a>
-						<a class="dropdown-item" href="#">여행 후기</a>
-					</div>
-				</div>						
+ 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+   							<a class="dropdown-item" href="#">전체 여행기</a>
+							<a class="dropdown-item" href="#">여행 일정</a>
+							<a class="dropdown-item" href="#">여행 후기</a>
+						</div>
+					</div>	
+				</div>					
 						
-   
-
-                    <!-- <select class="selectpicker border border-secondary w-50 rounded" data-style="bg-white" id="lo">
-                        <option>전체 지역별</option>
-                        <option value="seoul">서울</option>
-                        <option value="pusan">부산</option>
-                        <option value="daegu">대구</option>
-                        <option value="incheon">인천</option>
-                        <option value="gwangju">광주</option>
-                        <option value="daejeon">대전</option>
-                        <option value="ulsan">울산</option>
-                        <option value="sejong">세종</option>
-                    </select> -->
+   				<div class="col-3  d-flex flex-row my-auto">              
+               		<div class="dropdown">
+ 						<button class="btn btn-light dropdown-toggle border border-secondary rounded mr-3" type="button" id="lo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   							선택 지역별
+ 						</button>
+ 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+   							<a class="dropdown-item" href="#">선택 지역별</a>
+   							<a class="dropdown-item" href="#">서울</a>
+							<a class="dropdown-item" href="#">부산</a>
+							<a class="dropdown-item" href="#">대구</a>
+							<a class="dropdown-item" href="#">인천</a>
+							<a class="dropdown-item" href="#">광주</a>
+							<a class="dropdown-item" href="#">대전</a>
+							<a class="dropdown-item" href="#">울산</a>
+							<a class="dropdown-item" href="#">세종</a>
+						</div>
+					</div>
                 </div>
-
+				</div>
+				
                 <div class="col-2 d-flex flex-row my-auto">
                     <button class="btn btn-lg btn-outline-secondary border-0" style="text-decoration: underline;" onclick="location.href('trip/wrtie')">다님길 작성 <i class="fas fa-edit fa-2x"></i></button> <!--클릭 했을 때 작성 서블릿으로-->
                     

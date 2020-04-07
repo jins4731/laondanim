@@ -48,7 +48,12 @@ public class TripListServlet extends HttpServlet {
 		//최근순 클릭스 recent 값 가져오기
 		String recent = request.getParameter("recent");
 		recent=recent==null?"null":recent;
+		//좋아요 순 클릭스 like 값 가져오기
+		String like = request.getParameter("like");
+		like=like==null?"null":like;
 		
+		System.out.println("서블릿 recent : " + recent);
+		System.out.println("서블릿 like : " + like);
 		int cPage;
 			
 		try {
@@ -95,14 +100,16 @@ public class TripListServlet extends HttpServlet {
 //			System.out.println("list의 값은 과연??"+list);
 //		}
 		totalData = new TripService().getTotalDataLo(lo, category, keyword);
-		list = new TripService().searchList(cPage, perPage, lo, category, keyword);
+		list = new TripService().searchList(cPage, perPage, lo, category, keyword, recent,like);
 		
-		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/list.do", totalData, cPage, perPage, keyword, category, lo); //페이지바 가져오기
+		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/list.do", totalData, cPage, perPage, keyword, category, lo, recent, like); //페이지바 가져오기
 		
 		//쿼리스트링 저장
 		request.setAttribute("keyword", keyword);
 		request.setAttribute("category", category);
 		request.setAttribute("lo", lo);
+		request.setAttribute("recent", recent);
+		request.setAttribute("like", like);
 		
 		request.setAttribute("triplist", list);	//여행기 리스트 저장
 		//request.setAttribute("picture", picture); //사진 리스트 저장 

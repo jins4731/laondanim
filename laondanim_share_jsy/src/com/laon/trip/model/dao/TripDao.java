@@ -1,5 +1,7 @@
 package com.laon.trip.model.dao;
 
+import static com.laon.common.JDBCTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -7,11 +9,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.laon.trip.model.vo.Trip;
-import static com.laon.common.JDBCTemplate.*;
 
 public class TripDao {
 
@@ -267,21 +269,49 @@ public class TripDao {
 		
 	}
 	
-	public ArrayList<Trip> searchList(Connection conn, int cPage, int perPage, String lo, String category, String keyword){
+	public ArrayList<Trip> searchList(Connection conn, int cPage, int perPage, String lo, String category, String keyword, String recent, String like){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = prop.getProperty("searchtriplist2");
+		String sql = "";
+		int check = 0;
+		System.out.println("category : " + category);
+		System.out.println("keyword : " + keyword);
+		System.out.println("lo : " + lo);
+		System.out.println("like : "+ like);
+		System.out.println("recent : " + recent);
+		Pattern pattern = Pattern.compile("(?==[^?])="); // 검색할 문자 패턴
+		   String str = "SELECT * FROM (SELECT * FROM (SELECT A.*, ROWNUM AS R FROM (SELECT * FROM TRIP_TB WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ?)A) WHERE R BETWEEN ? AND ?)B JOIN (SELECT TRIP_NO, COUNT(*)AS COUNT FROM (SELECT * FROM TRIP_TB  JOIN LIKE_TB ON TRIP_TB.NO=LIKE_TB.TRIP_NO) GROUP BY TRIP_NO)C ON B.NO=C.TRIP_NO ORDER BY WRITE_DATE DESC";
+		   Matcher matcher = pattern.matcher(str); // 패턴을 이용해 Matcher객체 반환
+		   while (matcher.find()) { // Matcher객체로 문자 탐색  
+		      System.out.println("matcher.group() : "+ matcher.group()); 
+		   }
+		if(!like.equals("null")&&!recent.equals("null"))
+			sql = prop.getProperty("sortlistwritelike");
+		if(!like.equals("null"))
+			sql = prop.getProperty("sortlistlike");
+		if(!recent.equals("null"))
+			System.out.println("sortlistwrite들어오냐");
+			sql = prop.getProperty("sortlistwrite");
+		if(like.equals("null")&&recent.equals("null")) {
+			System.out.println("둘다 널일떄 찍힘?");
+			sql = prop.getProperty("searchtriplist2");
+			check=1;
+		}
 		System.out.println("변화전 : " + sql);
-
+		
 		if(category.equals("null") || category.equals("전체 여행기")) {
 			sql =sql.replaceFirst("=", "!=");
 			
 		}
 		if(lo.equals("null") || lo.equals("선택 지역별")) {
-			sql = replaceLast(sql, "=", "!=");	
+			if(check==1)
+				sql = replaceLast(sql, "=", "!=", 0);
+			else
+				sql = replaceLast(sql, "=", "!=", 1);
 		}
 		if(keyword.trim().equals("null")) {			
-			sql = sql.replace("LIKE", "!=");	
+			sql = sql.replaceFirst("LIKE", "!=");
+			System.out.println("4번    여기여기");
 		}
 		System.out.println("변화 : " + sql);
 		
@@ -345,13 +375,12 @@ public class TripDao {
 
 		if(category.equals("null") || category.equals("전체 여행기")) {
 			sql =sql.replaceFirst("=", "!=");
-			
 		}
 		if(lo.equals("null") || lo.equals("선택 지역별")) {
-			sql = replaceLast(sql, "=", "!=");	
+			sql = replaceLast(sql, "=", "!=",0);
 		}
-		if(keyword.trim().equals("null")) {			
-			sql = sql.replace("LIKE", "!=");	
+		if(keyword.equals("null")) {			
+			sql = sql.replaceFirst("LIKE", "!=");
 		}
 		
 		int count = 0;
@@ -382,10 +411,12 @@ public class TripDao {
 		return count;
 	}
 	
-	private static String replaceLast(String string, String toReplace, String replacement) {    
+	private static String replaceLast(String string, String toReplace, String replacement, int check) {    
 
-		   int pos = string.lastIndexOf(toReplace);     
-
+		   int pos = 0;
+		   if(check==0) pos = string.lastIndexOf(toReplace);     
+		   else pos = string.lastIndexOf(toReplace,3);
+		   
 		   if (pos > -1) {        
 
 		   return string.substring(0, pos)+ replacement + string.substring(pos +   toReplace.length(), string.length());     
@@ -398,7 +429,36 @@ public class TripDao {
 
 		} 
 
-
+	public String[] getTagList(Connection conn, String search){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("tagdatalist");
+		ArrayList<String> tagList = new ArrayList<String>();
+		String tag = "";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, search);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				tag = rs.getString("TAG");
+				
+				tagList.add(tag);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		String[] arrTag = new String[tagList.size()];
+		tagList.toArray(arrTag);
+		
+		return arrTag;
+	}
 
 	
 }

@@ -10,6 +10,7 @@
     	
     	//검색 태그 값
     	String keyword = (String)request.getAttribute("keyword");
+    	System.out.println("jsp keyword : "+ keyword);
     	//여행 일정 / 후기 게시물에 따른 분기 처리
     	String category = (String)request.getAttribute("category");	//전체 여행기 select 값 가져오기
     	//지역 에 따른 분기  처리
@@ -20,7 +21,7 @@
      	<input type="hidden" value="<%=category==null?"전체 여행기":category %>" id="category"/> <!-- category 저장 input 태그 -->
      	<input type="hidden" value="<%=keyword %>" id="keyword"/>
      	<input type="hidden" value="<%=lo==null?"선택 지역별":lo %>" id="location"/>     	
-        
+        <input type="hidden" value="aa" id="rl" />
         <!-- 검색창 -->
         <div class="container mb-5 mt-4">
             <div class="row justify-content-center">
@@ -38,7 +39,26 @@
         </div>
 
           <script>
-            $(function(){            
+            $(function(){   
+            	$("#search").keyup(function(){
+            		$.ajax({
+            			url : '<%=request.getContextPath()%>/trip/datalist.do',
+            			data : {search : $("#search").val()}, 
+            			success : function(data){
+            				let tags = data.split(",");	//배열로 저장
+            				for(let i=0; i<tags.length; i++){
+            					let op = $("<option>").attr("value", tags[i]).html(tags[i]);
+            					if(i==0) $("#data").html(op);
+            					else $("#data").append(op);
+            				}
+            				$("#data")
+            			}
+            		});
+            	});
+            	
+            	var key = $("#keyword").val();
+            	console.log(key);
+            	if(key!='null') $("#search").val(key);
             	//검색 버튼 클릭했을 때 검색한 값 쿼리스트링으로 전송
             	$("#btn-search").click(function(){      
                 	var keyword = $("#search").val();                	
@@ -79,12 +99,22 @@
                 
                 //최근순 버튼 클릭 시 정렬 최근순으로 정렬
                 $("#recent").click(function(){
+                	var keyword = $("#keyword").val();
+                    var category = $("#category").val();
+                    var lo = $("#location").val();
                 	var recent = 'recent';
-                	location.replace('<%=request.getContextPath()%>/trip/list.do?recent='+recent);
+                	location.href="<%=request.getContextPath()%>/trip/list.do?category="+category+"&keyword="+keyword+"&lo="+lo+"&recent="+recent;
                 });
                 
+                //좋아요 순 버튼 클릭시 정렬 많은 순으로 정렬
+                $("#like").click(function(){
+                	var keyword = $("#keyword").val();
+                    var category = $("#category").val();
+                    var lo = $("#location").val();
+                	var like = 'like';
+                	location.href="<%=request.getContextPath()%>/trip/list.do?category="+category+"&keyword="+keyword+"&lo="+lo+"&like="+like;
+                });
             });
-            
             
             //검색창 x 버튼 클릭시 클리어
             function searchCancel(){
@@ -93,7 +123,11 @@
                     $("#search").val("");
                 });
             }
-
+			
+  
+            
+            
+            
             //데이터리스트에서 keyup 할때마다 태그 값들 가져오기 
         </script>
 

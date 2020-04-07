@@ -267,7 +267,7 @@ public class TripDao {
 		
 	}
 	
-	public ArrayList<Trip> searchList(Connection conn, int cPage, int perPage, String lo, String category, String keyword, String recent){
+	public ArrayList<Trip> searchList(Connection conn, int cPage, int perPage, String lo, String category, String keyword){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = prop.getProperty("searchtriplist2");

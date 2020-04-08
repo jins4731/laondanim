@@ -28,9 +28,9 @@ public class TripService {
 		return list;
 	}
 	
-	public ArrayList<Trip> searchList(int cPage, int perPage, String lo, String category, String keyword, String recent){ //키워드 검색 태그
+	public ArrayList<Trip> searchList(int cPage, int perPage, String lo, String category, String keyword, String recent, String like){ //키워드 검색 태그
 		Connection conn = getConnection();
-		ArrayList<Trip> list = dao.searchList(conn, cPage, perPage, lo, category, keyword, recent);
+		ArrayList<Trip> list = dao.searchList(conn, cPage, perPage, lo, category, keyword, recent, like);
 		close(conn);
 		return list;
 	}

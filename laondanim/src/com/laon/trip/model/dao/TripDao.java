@@ -267,18 +267,26 @@ public class TripDao {
 		
 	}
 	
-	public ArrayList<Trip> searchList(Connection conn, int cPage, int perPage, String lo, String category, String keyword, String recent){
+	public ArrayList<Trip> searchList(Connection conn, int cPage, int perPage, String lo, String category, String keyword, String recent, String like){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = prop.getProperty("searchtriplist2");
+		String sql = "";
+		if(!like.equals("null")&&!recent.equals("null"))
+			prop.getProperty("sortlistwritelike");
+		if(!like.equals("null"))
+			prop.getProperty("sortlistlike");
+		if(!recent.equals("null"))
+			prop.getProperty("sortlistwrite");
+		if(like.equals("null")&&recent.equals("null"))
+			prop.getProperty("searchtriplist2");
 		System.out.println("변화전 : " + sql);
-
+		
 		if(category.equals("null") || category.equals("전체 여행기")) {
 			sql =sql.replaceFirst("=", "!=");
 			
 		}
 		if(lo.equals("null") || lo.equals("선택 지역별")) {
-			sql = replaceLast(sql, "=", "!=");	
+			sql = replaceLast(sql, "=", "!=",1);	
 		}
 		if(keyword.trim().equals("null")) {			
 			sql = sql.replace("LIKE", "!=");	
@@ -348,7 +356,7 @@ public class TripDao {
 			
 		}
 		if(lo.equals("null") || lo.equals("선택 지역별")) {
-			sql = replaceLast(sql, "=", "!=");	
+			sql = replaceLast(sql, "=", "!=",0);	
 		}
 		if(keyword.trim().equals("null")) {			
 			sql = sql.replace("LIKE", "!=");	
@@ -382,10 +390,12 @@ public class TripDao {
 		return count;
 	}
 	
-	private static String replaceLast(String string, String toReplace, String replacement) {    
+	private static String replaceLast(String string, String toReplace, String replacement, int check) {    
 
-		   int pos = string.lastIndexOf(toReplace);     
-
+		   int pos = 0;
+		   if(check==0) pos = string.lastIndexOf(toReplace);     
+		   else pos = string.lastIndexOf(toReplace,3);
+		   
 		   if (pos > -1) {        
 
 		   return string.substring(0, pos)+ replacement + string.substring(pos +   toReplace.length(), string.length());     

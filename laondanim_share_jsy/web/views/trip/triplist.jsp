@@ -113,7 +113,8 @@
                     var category = $("#category").val();
                     var lo = $("#location").val();
                 	var recent = 'recent';
-                	location.href="<%=request.getContextPath()%>/trip/list.do?category="+category+"&keyword="+keyword+"&lo="+lo+"&recent="+recent;
+                	var like='null';
+                	location.href="<%=request.getContextPath()%>/trip/list.do?category="+category+"&keyword="+keyword+"&lo="+lo+"&recent="+recent+"&like="+like;
                 });
                 
                 //좋아요 순 버튼 클릭시 정렬 많은 순으로 정렬
@@ -121,8 +122,9 @@
                 	var keyword = $("#keyword").val();
                     var category = $("#category").val();
                     var lo = $("#location").val();
+                    var recent ='null';
                 	var like = 'like';
-                	location.href="<%=request.getContextPath()%>/trip/list.do?category="+category+"&keyword="+keyword+"&lo="+lo+"&like="+like;
+                	location.href="<%=request.getContextPath()%>/trip/list.do?category="+category+"&keyword="+keyword+"&lo="+lo+"&recent="+recent+"&like="+like;
                 });
             });
             
@@ -280,7 +282,7 @@
                             <span>닉네임</span>
                             <div>
                                 <span><i class="fas fa-thumbs-up"></i></span> <!--<i class="far fa-thumbs-up"></i>-->
-                                <span>2025</span>   <!--좋아요 수 가져오기 !!-->
+                                <span>2020</span>   <!--좋아요 수 가져오기 !!-->
                             </div>
                         </div>
                     </div>
@@ -308,21 +310,21 @@
     		else count = 5;
             System.out.println("count : " + count);
             
-            	for(int i=0; i<5; i++){      		
+            	for(int i=5; i<10; i++){      		
             %>
             <input type="hidden" value="<%=count %>" id="count2"/>
                 <div class="col h-100 p-0 mr-2">
                     <div class="card h-100" >
                         <div class="card-header h-20 p-1 d-flex justify-content-between bg-white border-bottom-0">
-                            <span class="ml-1"><%=i<count?list.get(i).getCategory():"" %></span>
+                            <span class="ml-1"><%=i-5<count?list.get(i).getCategory():"" %></span>
                             
-                            <span class="mr-1"><%=i<count?list.get(i).getWriteDate():"" %></span>
+                            <span class="mr-1"><%=i-5<count?list.get(i).getWriteDate():"" %></span>
                         </div>
                         <div class="card-body h-50 w-100 p-0 border-0">
                             <img src="plane-solid.svg" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
                         </div>
                         <div class="card-footer h-30 d-flex flex-column p-1 text-center bg-white">
-                            <span><%=i<count?list.get(i).getTitle():"" %></span>
+                            <span><%=i-5<count?list.get(i).getTitle():"" %></span>
                             <span>닉네임</span>
                             <div>
                                 <span><i class="fas fa-thumbs-up"></i></span> <!--<i class="far fa-thumbs-up"></i>-->

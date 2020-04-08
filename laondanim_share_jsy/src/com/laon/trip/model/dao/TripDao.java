@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.laon.trip.model.vo.Trip;
+import com.laon.trip.model.vo.TripPicture;
 
 public class TripDao {
 
@@ -278,56 +279,86 @@ public class TripDao {
 		System.out.println("keyword : " + keyword);
 		System.out.println("lo : " + lo);
 		System.out.println("like : "+ like);
-		System.out.println("recent : " + recent);
-
-		Pattern pattern = Pattern.compile("(?==[^?])=");
-		   String str = "SELECT * FROM (SELECT * FROM (SELECT A.*, ROWNUM AS R FROM (SELECT * FROM TRIP_TB WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ?)A) WHERE R BETWEEN ? AND ?)B JOIN (SELECT TRIP_NO, COUNT(*)AS COUNT FROM (SELECT * FROM TRIP_TB  JOIN LIKE_TB ON TRIP_TB.NO=LIKE_TB.TRIP_NO) GROUP BY TRIP_NO)C ON B.NO=C.TRIP_NO ORDER BY WRITE_DATE DESC";
-		   Matcher matcher = pattern.matcher(str);
-		   int count = 0;
-		   while (matcher.find()) {
-		      count++;
-		   }
-		   matcher.reset();
-		   int[] indexs = new int[count];
-		   int i = 0;
-		   while (matcher.find()) {
-		      indexs[i] =  matcher.start();
-		      System.out.println(indexs[i]);
-		      i++;
-		   }
-		   System.out.println("indexs.length : " + indexs.length);
-		   int targetIndex = indexs[0];
-		   String newStr = str.substring(0, targetIndex) + "바꿀 문자열" + str.substring(targetIndex+1, str.length());
-		   System.out.println(newStr);
-		   
+		System.out.println("recent : " + recent);				   
 		
-		if(!like.equals("null")&&!recent.equals("null"))
+		if(!like.equals("null")&&!recent.equals("null")) {
 			sql = prop.getProperty("sortlistwritelike");
-		if(!like.equals("null"))
+		}
+		if(!like.equals("null") && recent.equals("null")) {
+			System.out.println("like클릭했을 떄 들어오는 dao 입니다.");
 			sql = prop.getProperty("sortlistlike");
-		if(!recent.equals("null"))
+		}
+		if(!recent.equals("null") && like.equals("null")) {
 			System.out.println("sortlistwrite들어오냐");
 			sql = prop.getProperty("sortlistwrite");
+		}
 		if(like.equals("null")&&recent.equals("null")) {
 			System.out.println("둘다 널일떄 찍힘?");
 			sql = prop.getProperty("searchtriplist2");
 			check=1;
 		}
-		System.out.println("변화전 : " + sql);
 		
+		System.out.println("변화전 : " + sql);
 		if(category.equals("null") || category.equals("전체 여행기")) {
-			sql =sql.replaceFirst("=", "!=");
-			
+			Pattern pattern = Pattern.compile("=");
+			   Matcher matcher = pattern.matcher(sql);
+			   int count = 0;
+			   while (matcher.find()) {
+			      count++;
+			   }
+			   matcher.reset();
+			   int[] indexs = new int[count];
+			   int i = 0;
+			   while (matcher.find()) {
+			      indexs[i] =  matcher.start();
+			      System.out.println(indexs[i]);
+			      i++;
+			   }
+			   System.out.println("indexs.length : " + indexs.length);
+			   int targetIndex = indexs[1];
+			   
+			   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+1, sql.length());
 		}
 		if(lo.equals("null") || lo.equals("선택 지역별")) {
-			if(check==1)
-				sql = replaceLast(sql, "=", "!=", 0);
-			else
-				sql = replaceLast(sql, "=", "!=", 1);
+			Pattern pattern = Pattern.compile("=");
+			   Matcher matcher = pattern.matcher(sql);
+			   int count = 0;
+			   while (matcher.find()) {
+			      count++;
+			   }
+			   matcher.reset();
+			   int[] indexs = new int[count];
+			   int i = 0;
+			   while (matcher.find()) {
+			      indexs[i] =  matcher.start();
+			      System.out.println(indexs[i]);
+			      i++;
+			   }
+			   System.out.println("indexs.length : " + indexs.length);
+			   int targetIndex = indexs[2];
+			   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+1, sql.length());
 		}
-		if(keyword.trim().equals("null")) {			
-			sql = sql.replaceFirst("LIKE", "!=");
-			System.out.println("4번    여기여기");
+		
+		if(keyword.equals("null")) {
+			System.out.println("sql 모길래 : " + sql);
+			Pattern pattern = Pattern.compile("LIKE");
+			   Matcher matcher = pattern.matcher(sql);
+			   int count = 0;
+			   while (matcher.find()) {
+			      count++;
+			   }
+			   matcher.reset();
+			   int[] indexs = new int[count];
+			   int i = 0;
+			   while (matcher.find()) {
+			      indexs[i] =  matcher.start();
+			      System.out.println(indexs[i]);
+			      i++;
+			   }
+			   System.out.println("indexs.length : " + indexs.length);
+			   int targetIndex = indexs[1];
+			   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+4, sql.length());
+
 		}
 		System.out.println("변화 : " + sql);
 		
@@ -476,5 +507,37 @@ public class TripDao {
 		return arrTag;
 	}
 
+	public ArrayList<TripPicture> searchPicture(Connection conn){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<TripPicture> pictureList = new ArrayList();
+		
+		String sql = prop.getProperty("searchpicture");
+		
+		TripPicture tp = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				tp = new TripPicture();
+				tp.setNo(rs.getInt("NO"));
+				tp.setTRIP_NO(rs.getInt("TRIP_NO"));
+				tp.setImage(rs.getString("IMAGE"));
+				
+				pictureList.add(tp);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return pictureList;
+	}
+	
 	
 }

@@ -1,12 +1,14 @@
 package com.laon.trip.service;
 
+import static com.laon.common.JDBCTemplate.close;
+import static com.laon.common.JDBCTemplate.getConnection;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.laon.trip.model.dao.TripDao;
 import com.laon.trip.model.vo.Trip;
-
-import static com.laon.common.JDBCTemplate.*;
+import com.laon.trip.model.vo.TripPicture;
 
 public class TripService {
 
@@ -84,5 +86,12 @@ public class TripService {
 		String arrTag[] = dao.getTagList(conn, search);
 		close(conn);
 		return arrTag;
+	}
+	
+	public ArrayList<TripPicture> searchPicture(){
+		Connection conn = getConnection();
+		ArrayList<TripPicture> pictureList = dao.searchPicture(conn);
+		close(conn);
+		return pictureList;
 	}
 }

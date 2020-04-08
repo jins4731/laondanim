@@ -96,6 +96,7 @@
 		</div>
 	</div>
 </div>
+<%@ include file="/views/common/footer.jsp"%>
 
 <style>
 	div.menu{

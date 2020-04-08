@@ -117,7 +117,7 @@
 							</div>
 							<div id="bdCk2">
 								<label><input type="checkbox" id="bdAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
+								<button class="btn" onclick="fnBoardDel();">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
 								<button class="btn" id="bdEndBtn">돌아가기</button>
 							</div>
 						</div>
@@ -263,4 +263,8 @@
 			flag=true;
 		}
 	});
+	
+	function fnBoardDel(){
+		
+	}
 </script>

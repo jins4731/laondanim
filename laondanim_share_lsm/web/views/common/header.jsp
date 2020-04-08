@@ -17,7 +17,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
-<title>라온다님 메인</title>
+<title>라온다님</title>
 <style>
 /* 헤더 푸터 값조절 */
 html,body {
@@ -105,37 +105,36 @@ header li>a {
 <body>
 	<div class="body-wrapper">
 	<header>
+			<div class="title-container">
+				<h1>
+					<div class="mainTitle-container">
+						<a href="<%=request.getContextPath() %>">라온다님</a>
+					</div>
+				</h1>
+			</div>	
+			<div class="header-container">
+				<div class="nav-container">
+					<nav class="navbar navbar-expand-sm ">
 	
-		<div class="title-container">
-			<h1>
-				<div class="mainTitle-container"><a href="" >라온다님</a></div>
-			</h1>
-		</div>	
-		<div class="header-container">
-		
-			<div class="nav-container">
-				<nav class="navbar navbar-expand-sm ">
-
-					<!-- Links -->
-					<ul class="navbar-nav main-nav">
-						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/trip/list.do">여행기</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">여행정보</a></li>
-						<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">커뮤니티</a>
-							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#">동행찾기</a> 
-								<a class="dropdown-item" href="#">게시판</a>
-							</div>
-						</li>
-						<!-- 세션의 멤버 값을 가져와서 null 이 아닐경우  마이페이지/로그아웃 출력, null 일경우 로그인 페이지로 이동-->
-						<li class="nav-item">
-						<a class="nav-link"href="<%=request.getContextPath()%>/login.do"> 
-							<%-- <img src="<%=request.getContextPath()%>/icon/profile_icon.png" width="50px" height="50px"> --%>
-						</a>
-						</li>
-					</ul>
-
-				</nav>
+						<!-- Links -->
+						<ul class="navbar-nav main-nav">
+							<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/trip/list.do">여행기</a></li>
+							<li class="nav-item"><a class="nav-link" href="#">여행정보</a></li>
+							<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">커뮤니티</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="#">동행찾기</a> 
+									<a class="dropdown-item" href="#">게시판</a>
+								</div>
+							</li>
+							<!-- 세션의 멤버 값을 가져와서 null 이 아닐경우  마이페이지/로그아웃 출력, null 일경우 로그인 페이지로 이동-->
+							<li class="nav-item">
+								<a class="nav-link"href="<%=request.getContextPath()%>/login.do"> 
+									<img src="<%=request.getContextPath()%>/images/images.jpeg" width="50px" height="50px">
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
 			</div>
-		</div>
 	</header>

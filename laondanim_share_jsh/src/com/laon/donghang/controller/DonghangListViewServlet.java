@@ -42,9 +42,10 @@ public class DonghangListViewServlet extends HttpServlet {
 		
 		int currentPage = getCurrentPage(request);
 		int pagePerRow = 10;
+		
 		List<Donghang> list = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
 		int totalRowCount = new DonghangService().selectDonghangCount();
-		String pageBar = getPageBar(totalRowCount, currentPage, pagePerRow, request, "");
+		String pageBar = getPageBar(totalRowCount, currentPage, pagePerRow, request, "/donghang/donghangListView.do");
 		
 		request.setAttribute(CommonKey.LIST, list);
 		request.setAttribute(CommonKey.PAGE_BAR, pageBar);

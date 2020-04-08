@@ -4,29 +4,30 @@
 <%@page import="com.laon.common.CommonKey" %>
 <%@page import="java.util.List" %>
 <%@page import="java.util.ArrayList" %>
+<%@page import="java.text.SimpleDateFormat" %>
 <%@page import="com.laon.donghang.model.vo.Donghang" %>
 
 <%@ include file="/views/common/header.jsp"%>
 
 <%
 	List<Donghang> list = (List)request.getAttribute(CommonKey.LIST);
-	//윗 줄 리스트
+
 	int count = 0;
 	List<Donghang> topList = new ArrayList();
 	List<Donghang> bottomList = new ArrayList();
+	
 	for(Donghang dh : list){
 		count++;
-		if(count > 6){
+		if(count <= 5){
 			topList.add(dh);
 		}else{
 			bottomList.add(dh);
-		}
-		
+		}		
 	}
+	
+	SimpleDateFormat newFm = new SimpleDateFormat("yy-MM-dd");
 %>
 
-<section id='content' style="height: 560px">
-    
     <section class="d-flex flex-row justify-content-center">
         <div style="width: 1366px;" class="border pt-5 pb-5">
 
@@ -140,7 +141,7 @@
 	            margin: 0px;
 	            padding: 0px;
 	            color: white;
-	            border: 1px solid white;
+	            /* border: 1px solid white; */
 	            list-style: none;
 	        }
 	
@@ -164,7 +165,7 @@
 					for(Donghang dh : topList){				
 				%>
                 <div class="col h-100 p-0 mr-2">
-                    <div class="card m-0" style="height: 100%; width: 20%;" >
+                    <div class="card m-0" style="height: 100%;" >
 
                         <!--헤더-->
                         <div class="card-header h-20 p-1 d-flex justify-content-between bg-white align-items-center border-0" style="height: 9%;">
@@ -179,7 +180,7 @@
                                 <%if(!dh.getTag().isEmpty()){
                                 	String[] tagArr = dh.getTag().split(",");	
                                 	for(String tag : tagArr){%>
-                                    <li><a><%=tag%></a></li>
+                                    <li><a>#<%=tag%></a></li>
                                 <%} } %>
                             </div>                        
                             <img src="img/god.jpg" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
@@ -196,7 +197,7 @@
                                 </p>
                                 <p class="m-0">
                                     <span>동행기간 : </span>
-                                    <%=dh.getTravleStartDate()%> ~ <%=dh.getTravleEndDate()%>
+                                    <%=newFm.format(dh.getTravleStartDate())%> ~ <%=newFm.format(dh.getTravleEndDate())%>
                                 </p>
                                 <p class="m-0">
                                     <span>동행인원 : </span>
@@ -210,13 +211,12 @@
 				<%} %>
             </div>
             <div class="row h-50 mt-2">
-                <div class="col h-100 p-0 mr-2">
 
 				<%
 					for(Donghang dh : topList){				
 				%>
                 <div class="col h-100 p-0 mr-2">
-                    <div class="card m-0" style="height: 100%; width: 20%;" >
+                    <div class="card m-0" style="height: 100%;" >
 
                         <!--헤더-->
                         <div class="card-header h-20 p-1 d-flex justify-content-between bg-white align-items-center border-0" style="height: 9%;">
@@ -231,7 +231,7 @@
                                 <%if(!dh.getTag().isEmpty()){
                                 	String[] tagArr = dh.getTag().split(",");	
                                 	for(String tag : tagArr){%>
-                                    <li><a><%=tag%></a></li>
+                                    <li><a>#<%=tag%></a></li>
                                 <%} } %>
                             </div>                        
                             <img src="img/god.jpg" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
@@ -248,7 +248,7 @@
                                 </p>
                                 <p class="m-0">
                                     <span>동행기간 : </span>
-                                    <%=dh.getTravleStartDate()%> ~ <%=dh.getTravleEndDate()%>
+                                    <%=newFm.format(dh.getTravleStartDate())%> ~ <%=newFm.format(dh.getTravleEndDate())%>
                                 </p>
                                 <p class="m-0">
                                     <span>동행인원 : </span>
@@ -260,7 +260,6 @@
                     </div>
                 </div>
 				<%} %>
-                </div>
             </div>
         </div>
         <!--카드 스타일-->
@@ -301,7 +300,7 @@
 
 
         <!--페이지 버튼-->
-        <div>
+        <div class="d-flex justify-content-center align-items-center">
         	<%=request.getAttribute(CommonKey.PAGE_BAR) %>
         </div>
 

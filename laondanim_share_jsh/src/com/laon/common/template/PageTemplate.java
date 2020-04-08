@@ -10,7 +10,8 @@ public class PageTemplate {
 		return (currentPage-1)*pagePerRow+1;
 	}
 	public static int getEndNum(int currentPage, int pagePerRow) {
-		return (currentPage-1)*pagePerRow+1 + (pagePerRow-1);
+//		return (currentPage-1)*pagePerRow+1 + (pagePerRow-1);
+		return currentPage*pagePerRow;
 	}
 	
 	public static int getCurrentPage(HttpServletRequest request) {

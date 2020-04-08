@@ -33,12 +33,12 @@ html,body {
 }
 
 /* body안의 전체를 감싸는 wrapper컨테이너 */
-.wrapper {
+/* .wrapper {
 
 	position:relative;
 	min-height:100%;
 
-}
+} */
 
 header {
 
@@ -57,7 +57,7 @@ section {
 
 footer {
 
-    position:absolute;
+/*     position:absolute; */
 	bottom:0;
 	width:100%;
 	height:70px;   
@@ -109,7 +109,7 @@ header li>a {
 </style>
 </head>
 <body>
-	<div class="wrapper">
+<!-- 	<div class="wrapper"> -->
 	<header>
 	
 		<div class="title-container">

@@ -1,6 +1,6 @@
 package com.laon.donghang.model.dao;
 
-import static com.laon.common.template.template.JDBCTemplate.close;
+import static com.laon.common.template.JDBCTemplate.close;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.laon.common.template.PropPath;
+//import com.laon.common.template.PropPath;
 import com.laon.donghang.model.vo.Donghang;
 
 public class DonghangDao {

@@ -28,7 +28,7 @@
 				<div id="myMenuBtn">
 					<button type="button" id="myCon" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageContent')">내 컨텐츠</button>
 					<button type="button" id="myH" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageHeart')">내 마음함</button>
-					<button type="button" id="myDh" class="btn btn-info">내 동행</button>
+					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong')">내 동행</button>
 				</div>
 				<div id="myPageView">
 					<!-- 내 다님길 -->
@@ -177,7 +177,7 @@
         text-decoration: none;
         color:black;
         list-style:none;
-        /* border:1px solid green; */
+        border:1px solid green;
     }
     
     #myDNInfo,#myBDInfo,.manuBar{

@@ -61,6 +61,14 @@ public class MypageService {
 		return list;
 	}
 	
+	public List<Donghang> selectMyDHAll(int start,int end){
+		Connection conn=getConnection();
+		List<Donghang> list=dao.selectMyDHAll(conn,start,end);
+		close(conn);
+		
+		return list;
+	}
+	
 	public int selectMyDongCount() {
 		Connection conn = getConnection();
 		int result = dao.selectMyDongCount(conn);
@@ -68,4 +76,5 @@ public class MypageService {
 		
 		return result;
 	}
+	
 }

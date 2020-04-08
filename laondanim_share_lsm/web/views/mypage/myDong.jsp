@@ -43,18 +43,10 @@
 							<div style="height:45px;">
 								<span>총 <%=myDongCount %>개의 동행</span>
 							</div>
-							<div id="dhCk1">
-								<button class="btn">선택삭제</button>
-							</div>
-							<div id="dhCk2">
-								<label><input type="checkbox" id="dhAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn" id="dhEndBtn">돌아가기</button>
-							</div>
 						</div>
 						<!-- 게시글위치 -->
 						<table id="dhTbl">
-							<tr>
+							<tr class="d-flex flex-wrap justify-content-center">
 							<%for(Donghang d:myDong){ %>
 								<td class="p-1">
 				                    <div class="dhCk3" style="margin:10px;">
@@ -84,7 +76,7 @@
 				                        <div class="d-flex flex-column justify-content-center p-2" style="font-size:7px;">
 				                        	<p class="mb-0"><%=d.getTitle() %></p>
 				                       		<ul class="p-0 m-0">
-				                            	<li>동행지역 : <span><%-- <%=d.getTravleLocale() %> --%></span></li>
+				                            	<li class="tover">동행지역 : <span><%=d.getTravleLocale() %></span></li>
 				                            	<li>기간 : <span><%=d.getTravleStartDate() %> ~ <%=d.getTravleEndDate() %></span></li>
 				                            	<li>인원 : <span><%=d.getJoinPeopleNo() %> / <%=d.getRecruitPeopleNo() %></span></li>
 				                           	</ul>
@@ -95,7 +87,7 @@
 							</tr>
 							<tr>
 								<td colspan="4" style="text-align: center;">
-									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myDong')">+더보기</button>
+									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myDongMyDH')">+더보기</button>
 								</td>
 							</tr>
 						</table>
@@ -131,7 +123,7 @@
 						</div>
 						<!-- 게시글위치 -->
 						<table id="dhTbl">
-							<tr>
+							<tr class="d-flex flex-wrap justify-content-center">
 								<td class="p-1">
 			                    	<div class="jDhCk3" style="margin:10px;">
 										<input type="checkbox" class="jDhCks">
@@ -189,7 +181,7 @@
         text-decoration: none;
         color:black;
         list-style:none;
-        /* border:1px solid green; */
+        border:1px solid green;
     }
     
     #myDHInfo,#joinDHInfo,.manuBar{
@@ -211,6 +203,12 @@
 		width:150px;
 		margin: 20px;
     	border-radius: 100px;
+	}
+	
+	.tover{
+		white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 	}
 </style>
 

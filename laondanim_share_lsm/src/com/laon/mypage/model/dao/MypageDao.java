@@ -180,6 +180,39 @@ public class MypageDao {
 		return list;
 	}
 	
+	public List<Donghang> selectMyDHAll(Connection conn,int start,int end){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Donghang> list=new ArrayList<Donghang>();
+		String sql=prop.getProperty("selectMyDHAll");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Donghang d=new Donghang();
+				d.setNo(rs.getInt("no"));
+				d.setEnded(rs.getString("ended"));
+				d.setWriteDate(rs.getDate("write_date"));
+				d.setTitle(rs.getString("title"));
+				d.setTravleLocale(rs.getString("travle_locale"));
+				d.setTravleStartDate(rs.getDate("travle_start_date"));
+				d.setTravleEndDate(rs.getDate("travle_end_date"));
+				d.setJoinPeopleNo(rs.getInt("join_people_no"));
+				d.setRecruitPeopleNo(rs.getInt("recruit_people_no"));
+				list.add(d);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
 	public int selectMyDongCount(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

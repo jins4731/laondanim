@@ -236,27 +236,23 @@ public class TripDao {
 
 		} 
 
-	public ArrayList<TripPicture> searchPicture(Connection conn){
+	public String[] getTagList(Connection conn, String search){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
-		ArrayList<TripPicture> pictureList = new ArrayList();
-		
-		String sql = prop.getProperty("searchpicture");
-		
-		TripPicture tp = null;
+		String sql = prop.getProperty("tagdatalist");
+		ArrayList<String> tagList = new ArrayList<String>();
+		String tag = "";
 		try {
 			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "%"+search+"%");
 			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				tp = new TripPicture();
-				tp.setNo(rs.getInt("NO"));
-				tp.setTRIP_NO(rs.getInt("TRIP_NO"));
-				tp.setImage(rs.getString("IMAGE"));
+				tag = rs.getString("TAG");
 				
-				pictureList.add(tp);
+				tagList.add(tag);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -265,8 +261,13 @@ public class TripDao {
 			close(pstmt);
 		}
 		
-		return pictureList;
+		String[] arrTag = new String[tagList.size()];
+		tagList.toArray(arrTag);
+		
+		return arrTag;
 	}
+
+	
 	
 	
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.laon.board.model.vo.Board;
+import com.laon.donghang.model.vo.Donghang;
 import com.laon.trip.model.vo.Trip;
 
 public class MypageDao {
@@ -132,6 +133,57 @@ public class MypageDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = prop.getProperty("selectMyBoardCount");
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			result = rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public List<Donghang> selectMyDong(Connection conn){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Donghang> list=new ArrayList<Donghang>();
+		String sql=prop.getProperty("selectMyDong");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Donghang d=new Donghang();
+				d.setNo(rs.getInt("no"));
+				d.setEnded(rs.getString("ended"));
+				d.setWriteDate(rs.getDate("write_date"));
+				d.setTitle(rs.getString("title"));
+				d.setTravleLocale(rs.getString("travle_locale"));
+				d.setTravleStartDate(rs.getDate("travle_start_date"));
+				d.setTravleEndDate(rs.getDate("travle_end_date"));
+				d.setJoinPeopleNo(rs.getInt("join_people_no"));
+				d.setRecruitPeopleNo(rs.getInt("recruit_people_no"));
+				list.add(d);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public int selectMyDongCount(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectMyDongCount");
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);

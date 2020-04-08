@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.laon.board.model.vo.Board;
+import com.laon.donghang.model.vo.Donghang;
 import com.laon.mypage.model.dao.MypageDao;
 import com.laon.trip.model.vo.Trip;
 
@@ -48,6 +49,23 @@ public class MypageService {
 		Connection conn = getConnection();
 		int result = dao.selectMyBoardCount(conn);
 		close(conn);
+		
+		return result;
+	}
+	
+	public List<Donghang> selectMyDong(){
+		Connection conn=getConnection();
+		List<Donghang> list=dao.selectMyDong(conn);
+		close(conn);
+		
+		return list;
+	}
+	
+	public int selectMyDongCount() {
+		Connection conn = getConnection();
+		int result = dao.selectMyDongCount(conn);
+		close(conn);
+		
 		return result;
 	}
 }

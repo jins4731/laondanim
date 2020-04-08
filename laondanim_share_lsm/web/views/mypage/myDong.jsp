@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.List,com.laon.donghang.model.vo.Donghang" %>
 <%
-	
+	List<Donghang> myDong=(List)request.getAttribute("myDong");
+	int myDongCount=(int)request.getAttribute("myDongCount");
 %>
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -39,7 +41,7 @@
 						<!-- 정보 -->
 						<div id="myDHInfo">
 							<div style="height:45px;">
-								<span>총 ?개의 동행</span>
+								<span>총 <%=myDongCount %>개의 동행</span>
 							</div>
 							<div id="dhCk1">
 								<button class="btn">선택삭제</button>
@@ -53,14 +55,15 @@
 						<!-- 게시글위치 -->
 						<table id="dhTbl">
 							<tr>
+							<%for(Donghang d:myDong){ %>
 								<td class="p-1">
 				                    <div class="dhCk3" style="margin:10px;">
 										<input type="checkbox" class="dhCks">
 									</div>
-				                    <div class="card" style="width: 155px; height: 255px;" >
+				                    <div class="card" style="width: 155px; height: 275px;" >
 				                    	<div class="d-flex justify-content-between p-2" style="font-size:5px;">
-				                        	<span>모집여부</span>
-				                            <span>2020-02-08</span>
+				                        	<span><%=d.getEnded() %></span>
+				                            <span><%=d.getWriteDate() %></span>
 				                        </div>
 				                        <div>
 				                        	<div style="position: absolute;">
@@ -79,15 +82,16 @@
 											<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
 										</div>
 				                        <div class="d-flex flex-column justify-content-center p-2" style="font-size:7px;">
-				                        	<p class="mb-0">제목을 넣을 자리</p>
+				                        	<p class="mb-0"><%=d.getTitle() %></p>
 				                       		<ul class="p-0 m-0">
-				                            	<li>동행지역 : <span>경상북도 경주시</span></li>
-				                            	<li>기간 : <span>20-03-09 ~ 20-03-30</span></li>
-				                            	<li>인원 : <span>6 / 7</span></li>
+				                            	<li>동행지역 : <span><%-- <%=d.getTravleLocale() %> --%></span></li>
+				                            	<li>기간 : <span><%=d.getTravleStartDate() %> ~ <%=d.getTravleEndDate() %></span></li>
+				                            	<li>인원 : <span><%=d.getJoinPeopleNo() %> / <%=d.getRecruitPeopleNo() %></span></li>
 				                           	</ul>
 										</div>
 									</div>
 								</td>
+							<%} %>
 							</tr>
 							<tr>
 								<td colspan="4" style="text-align: center;">
@@ -185,7 +189,7 @@
         text-decoration: none;
         color:black;
         list-style:none;
-        border:1px solid green;
+        /* border:1px solid green; */
     }
     
     #myDHInfo,#joinDHInfo,.manuBar{

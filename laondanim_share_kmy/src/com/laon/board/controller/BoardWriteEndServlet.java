@@ -30,7 +30,13 @@ public class BoardWriteEndServlet extends HttpServlet {
 		String category=request.getParameter("board-selector");
 		String title=request.getParameter("boardWrite-title");
 		String userId=(String)request.getSession().getAttribute("loginUser");
-		
+		String text=request.getParameter("smarteditor");
+		String tag=request.getParameter("boardTag");
+		System.out.println(category);
+		System.out.println(title);
+		System.out.println(userId);
+		System.out.println(text);
+		System.out.println(tag);
 		
 		
 	}

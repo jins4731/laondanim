@@ -35,7 +35,7 @@
         	} */
     </style>
 <section>
-<form action="<%=request.getContextPath()%>/board/boardWriteEnd.do %>" method="post" id="boardText"> 
+<form action="<%=request.getContextPath()%>/board/boardWriteEnd.do" method="post" id="boardText"> 
 
 <table class="boardWrite-container">
 <tr>

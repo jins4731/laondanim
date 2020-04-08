@@ -135,7 +135,7 @@
 								<tr>
 									<td style="width:50px;">
 										<div class="bdCk3">
-											<input type="checkbox" class="bdCks">
+											<input type="checkbox" class="bdCks" name="bdCks">
 										</div>
 									</td>
 									<td style="width:100px;">
@@ -263,8 +263,13 @@
 			flag=true;
 		}
 	});
-	
-	function fnBoardDel(){
+	<%-- $(function(){
 		
-	}
+		function fnBoardDel(){
+			$("input[name=bdCks]:checked").each(function() {
+				var bdCks[] = $(this).val();
+				return location.href='<%=request.getContextPath()%>/mypage/myBoardDel';
+			}
+		}
+	}); --%>
 </script>

@@ -18,9 +18,6 @@
 <%@ include file="/views/common/header.jsp"%>
 <style>
 .login-container {
-	/* 	border:1px solid black;
-		border-radius:5px;
-		box-shadow: grey 1px 1px 5px; */
 	height: 500px;
 	width: 400px;
 	text-decoration: none;
@@ -78,9 +75,6 @@
 	text-align: left;
 }
 </style>
-</head>
-<body>
-
 <!-- 로그인 페이지 -->
 <div class="login-container">
 	<div id="title">

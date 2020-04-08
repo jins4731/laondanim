@@ -31,7 +31,7 @@ private Properties prop=new Properties();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		User u=null;
-		String sql=prop.getProperty("selectUser");
+		String sql=prop.getProperty("login");
 	try{pstmt=conn.prepareStatement(sql);
 		pstmt.setString(1, id);
 		pstmt.setString(2, pw);

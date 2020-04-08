@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class userEnrollServlet
  */
-@WebServlet("/user/enroll.do")
+@WebServlet(name="UserEnrollServlet", urlPatterns = "/user/enroll.do")
 public class UserEnrollServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -26,7 +26,7 @@ public class UserEnrollServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//È¸¿ø°¡ÀÔ È­¸éÀ¸·Î ÀÌµ¿½ÃÅ°´Â ±â´É
+		//íšŒì›ê°€ì… í™”ë©´ìœ¼ë¡œ ì´ë™ì‹œí‚¤ëŠ” ê¸°ëŠ¥
 		request.getRequestDispatcher("/views/user/enroll.jsp").forward(request, response);
 	}
 

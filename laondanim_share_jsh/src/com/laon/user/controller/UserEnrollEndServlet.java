@@ -30,7 +30,7 @@ public class UserEnrollEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//È¸¿øÀÌ ¾´ input³»¿ëÀ» ¹Þ¾Æ DB¿¡ ÀúÀå
+		//íšŒì›ì´ ì“´ inputë‚´ìš©ì„ ë°›ì•„ DBì— ì €ìž¥
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("userPw");
 		String name = request.getParameter("userName");
@@ -42,30 +42,30 @@ public class UserEnrollEndServlet extends HttpServlet {
 		String likeArea = request.getParameter("likeArea");
 		String[] likeTag = request.getParameterValues("likeTag");
 		
-		//»ý³â¿ùÀÏÀ» Date·Î º¯°æ
+		//ìƒë…„ì›”ì¼ì„ Dateë¡œ ë³€ê²½
 		java.sql.Date birthday = java.sql.Date.valueOf(inputBirthday);
 		
-		//°ü½ÉÅÂ±× ÇÕÄ¡±â
+		//ê´€ì‹¬íƒœê·¸ í•©ì¹˜ê¸°
 		String strLikeTag = String.join(",", likeTag);
 		String tag = likeArea + "," + strLikeTag;
 		
-		//User °´Ã¼¿¡ ÀúÀå
+		//User ê°ì²´ì— ì €ìž¥
 		User u = new User(0, null, userId, password, name, nickName, birthday, gender, phone, email, tag);
 		
 		//JDBC
 		int result = new UserService().userInsert(u);
 
-		//ÀÀ´äÆäÀÌÁö ÀÛ¼ºÇÏ±â
+		//ì‘ë‹µíŽ˜ì´ì§€ ìž‘ì„±í•˜ê¸°
 		String msg="";
 		String loc="";
 		if(result>0) {
-			//È¸¿ø°¡ÀÔ¼º°ø
-			msg="¶ó¿Â´Ù´Ô¿¡ ¿À½Å°ÍÀ» È¯¿µÇÕ´Ï´Ù :)";
+			//íšŒì›ê°€ìž…ì„±ê³µ
+			msg="ë¼ì˜¨ë‹¤ë‹˜ì— ì˜¤ì‹ ê²ƒì„ í™˜ì˜í•©ë‹ˆë‹¤ :)";
 			loc="";
 		}else {
-			//È¸¿ø°¡ÀÔ½ÇÆÐ
-			msg="È¸¿ø°¡ÀÔ¿¡ ½ÇÆÐÇÏ¿´½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØÁÖ¼¼¿ä.";
-			//È¸¿ø°¡ÀÔÆäÀÌÁö
+			//íšŒì›ê°€ìž…ì‹¤íŒ¨
+			msg="íšŒì›ê°€ìž…ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•´ì£¼ì„¸ìš”.";
+			//íšŒì›ê°€ìž…íŽ˜ì´ì§€
 			loc="/user/enroll.do";
 		}
 		request.setAttribute("msg", msg);

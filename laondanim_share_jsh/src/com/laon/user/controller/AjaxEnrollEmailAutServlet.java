@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class AjaxEnrollEmailAutServlet
  */
-@WebServlet("/user/enrollEmailAut.do")
+@WebServlet(name="AjaxEnrollEmailAutServlet", urlPatterns = "/user/enrollEmailAut.do")
 public class AjaxEnrollEmailAutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,13 +35,13 @@ public class AjaxEnrollEmailAutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//À¯Àú ÀÌ¸ŞÀÏ ¹Ş±â
+		//ìœ ì € ì´ë©”ì¼ ë°›ê¸°
 		String userEmail = request.getParameter("userEmail");
-		//¸ŞÀÏ º¸³»±â
-        //mail server ¼³Á¤
+		//ë©”ì¼ ë³´ë‚´ê¸°
+        //mail server ì„¤ì •
         String host = "smtp.google.com";
-        String laonEmail = "laondanim@gmail.com"; //¶ó¿Â´Ù´Ô ±¸±Û °èÁ¤
-        String laonPw = "rclasspm!";//¶ó¿Â´Ù´Ô ³×ÀÌ¹ö ÆĞ½º¿öµå
+        String laonEmail = "laondanim@gmail.com"; //ë¼ì˜¨ë‹¤ë‹˜ êµ¬ê¸€ ê³„ì •
+        String laonPw = "rclasspm!";//ë¼ì˜¨ë‹¤ë‹˜ ë„¤ì´ë²„ íŒ¨ìŠ¤ì›Œë“œ
         
 
         Properties props = new Properties();
@@ -51,7 +51,7 @@ public class AjaxEnrollEmailAutServlet extends HttpServlet {
         props.put("mail.smtp.port", "587");
 
 
-        //ÀÎÁõ ¹øÈ£ »ı¼º±â
+        //ì¸ì¦ ë²ˆí˜¸ ìƒì„±ê¸°
         StringBuffer temp = new StringBuffer();
         Random rnd = new Random();
         for(int i=0;i<10;i++)
@@ -73,7 +73,7 @@ public class AjaxEnrollEmailAutServlet extends HttpServlet {
             }
         }        
 
-        //ÀÎÁõ¹øÈ£
+        //ì¸ì¦ë²ˆí˜¸
         String AuthenticationKey = temp.toString();
         
         Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
@@ -82,21 +82,21 @@ public class AjaxEnrollEmailAutServlet extends HttpServlet {
             }
         });
         
-        //email Àü¼Û
+        //email ì „ì†¡
         try {
             MimeMessage msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress(laonEmail, "¶ó¿Â´Ù´Ô"));
+            msg.setFrom(new InternetAddress(laonEmail, "ë¼ì˜¨ë‹¤ë‹˜"));
             msg.addRecipient(Message.RecipientType.TO, new InternetAddress(userEmail));
             
-            //¸ŞÀÏ Á¦¸ñ
-            msg.setSubject("¶ó¿Â´Ù´Ô °¡ÀÔ ÀÎÁõÄÚµåÀÔ´Ï´Ù.");
-            //¸ŞÀÏ ³»¿ë
-            msg.setContent("<h3 style='color: #00abbf; font-weight: 600;'>¶ó¿Â´Ù´Ô °¡ÀÔ ÀÎÁõÄÚµå</h3>"
+            //ë©”ì¼ ì œëª©
+            msg.setSubject("ë¼ì˜¨ë‹¤ë‹˜ ê°€ì… ì¸ì¦ì½”ë“œì…ë‹ˆë‹¤.");
+            //ë©”ì¼ ë‚´ìš©
+            msg.setContent("<h3 style='color: #00abbf; font-weight: 600;'>ë¼ì˜¨ë‹¤ë‹˜ ê°€ì… ì¸ì¦ì½”ë“œ</h3>"
             				+ "<p>"+temp+"</p>"
             		, "text/html; charset=UTF-8");
             
             Transport.send(msg);
-            System.out.println("ÀÌ¸ŞÀÏ Àü¼Û");
+            System.out.println("ì´ë©”ì¼ ì „ì†¡");
             
         }catch (Exception e) {
             e.printStackTrace();

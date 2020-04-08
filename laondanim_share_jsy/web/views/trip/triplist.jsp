@@ -28,7 +28,7 @@
                 <div class="col-7 border border-secondary rounded d-flex flex-row justify-content-between p-0">
                     <div class="d-flex flex-row mr-2 dd">
                         <button class="btn btn-light border-0" id="btn-search" style="width:140px">키워드 검색</button>
-                        <input type="text" placeholder="키워드로 검색하세요 :)" class="form-control border-0 ml-2" size="100" id="search"/>
+                        <input type="text" placeholder="키워드로 검색하세요 :)" class="form-control border-0 ml-2" size="100" list="data" id="search"/>
                     </div>
 
                     <div>
@@ -46,12 +46,22 @@
             			data : {search : $("#search").val()}, 
             			success : function(data){
             				let tags = data.split(",");	//배열로 저장
+            				let da = ['1'];
+            				let check = 0;
             				for(let i=0; i<tags.length; i++){
-            					let op = $("<option>").attr("value", tags[i]).html(tags[i]);
-            					if(i==0) $("#data").html(op);
-            					else $("#data").append(op);
+            					for(let j=0; j<da.length; j++){
+            						if(da[j]==tags[i])
+            							check=1;
+            					}
+            					if(check==0)
+            						da.push(tags[i]);
             				}
-            				$("#data")
+            				console.log(da);
+            				for(let i=0; i<da.length; i++){
+            					let op = $("<option>").attr("value", da[i]).html(da[i]);
+	    						if(i==0) $("#data").html(op);
+	    						else $("#data").append(op);
+            				}
             			}
             		});
             	});

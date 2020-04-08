@@ -279,12 +279,28 @@ public class TripDao {
 		System.out.println("lo : " + lo);
 		System.out.println("like : "+ like);
 		System.out.println("recent : " + recent);
-		Pattern pattern = Pattern.compile("(?==[^?])="); // 검색할 문자 패턴
+
+		Pattern pattern = Pattern.compile("(?==[^?])=");
 		   String str = "SELECT * FROM (SELECT * FROM (SELECT A.*, ROWNUM AS R FROM (SELECT * FROM TRIP_TB WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ?)A) WHERE R BETWEEN ? AND ?)B JOIN (SELECT TRIP_NO, COUNT(*)AS COUNT FROM (SELECT * FROM TRIP_TB  JOIN LIKE_TB ON TRIP_TB.NO=LIKE_TB.TRIP_NO) GROUP BY TRIP_NO)C ON B.NO=C.TRIP_NO ORDER BY WRITE_DATE DESC";
-		   Matcher matcher = pattern.matcher(str); // 패턴을 이용해 Matcher객체 반환
-		   while (matcher.find()) { // Matcher객체로 문자 탐색  
-		      System.out.println("matcher.group() : "+ matcher.group()); 
+		   Matcher matcher = pattern.matcher(str);
+		   int count = 0;
+		   while (matcher.find()) {
+		      count++;
 		   }
+		   matcher.reset();
+		   int[] indexs = new int[count];
+		   int i = 0;
+		   while (matcher.find()) {
+		      indexs[i] =  matcher.start();
+		      System.out.println(indexs[i]);
+		      i++;
+		   }
+		   System.out.println("indexs.length : " + indexs.length);
+		   int targetIndex = indexs[0];
+		   String newStr = str.substring(0, targetIndex) + "바꿀 문자열" + str.substring(targetIndex+1, str.length());
+		   System.out.println(newStr);
+		   
+		
 		if(!like.equals("null")&&!recent.equals("null"))
 			sql = prop.getProperty("sortlistwritelike");
 		if(!like.equals("null"))
@@ -438,7 +454,7 @@ public class TripDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, search);
+			pstmt.setString(1, "%"+search+"%");
 			
 			rs = pstmt.executeQuery();
 			

@@ -9,22 +9,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.laon.common.CommonKey;
 import com.laon.common.Paging;
+import com.laon.etc.model.vo.Like;
+import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.vo.Trip;
-import com.laon.trip.model.vo.TripPicture;
 import com.laon.trip.service.TripService;
-
 /**
  * Servlet implementation class TripListServlet
  */
-@WebServlet("/trip/list.do")
-public class TripListServlet extends HttpServlet {
+@WebServlet("/trip/tripListView.do")
+public class TripListViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TripListServlet() {
+    public TripListViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -60,16 +61,21 @@ public class TripListServlet extends HttpServlet {
 		}
 		
 		int perPage = 10;
-		int totalData=0;
-		ArrayList<Trip> list = null;
-		ArrayList<TripPicture> pictureList = null;
-
-		totalData = new TripService().getTotalData(lo, category, keyword);
-		list = new TripService().searchList(cPage, perPage, lo, category, keyword, recent,like);
-		//리스트에서 가져오고 해당 리스트로 매칭되는 picture 가져오기
-//		pictureList = new TripService().searchPicture();
+		int totalItemCount=0;
 		
-		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/list.do", totalData, cPage, perPage, keyword, category, lo, recent, like); //페이지바 가져오기
+		ArrayList<Trip> list = null;
+		ArrayList<Picture> pictureList = null;
+		ArrayList<Like> likeList = null;
+		
+		totalItemCount = new TripService().selectTripCount(lo, category, keyword);
+		list = new TripService().selectTripPage(cPage, perPage, lo, category, keyword, recent,like);
+		//리스트에서 가져오고 해당 리스트로 매칭되는 picture 가져오기
+		pictureList = new TripService().selectPicture(list);
+		
+		//해당 리스트로 매칭되는 좋아요 수 가져오기
+		likeList = new TripService().selectLike(list);
+		
+		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/tripListView.do", totalItemCount, cPage, perPage, keyword, category, lo, recent, like); //페이지바 가져오기
 		
 		//쿼리스트링 저장
 		request.setAttribute("keyword", keyword);
@@ -78,11 +84,12 @@ public class TripListServlet extends HttpServlet {
 		request.setAttribute("recent", recent);
 		request.setAttribute("like", like);
 		
-		request.setAttribute("triplist", list);	//여행기 리스트 저장
-		request.setAttribute("picture", pictureList); //사진 리스트 저장 
-		request.setAttribute("pageBar", pageBar);	//pageBar 저장
-		request.setAttribute("totalData", totalData);
-		request.getRequestDispatcher("/views/trip/triplist.jsp").forward(request, response);
+		request.setAttribute(CommonKey.LIST, list);	//여행기 리스트 저장
+		request.setAttribute("pictureList", pictureList); //사진 리스트 저장 
+		request.setAttribute("likeList", likeList);//좋아요 리스트 저장
+		request.setAttribute(CommonKey.PAGE_BAR, pageBar);	//pageBar 저장
+		request.setAttribute(CommonKey.totalItemCount, totalItemCount);
+		request.getRequestDispatcher("/views/trip/tripListPage.jsp").forward(request, response);
 	}
 
 	/**

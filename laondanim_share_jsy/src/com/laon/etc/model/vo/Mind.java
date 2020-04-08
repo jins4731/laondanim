@@ -1,42 +1,50 @@
 package com.laon.etc.model.vo;
 
-//좋아요 테이블
-public class Like {
+//찜목록 테이블
+public class Mind {
 
- // 넘버 좋아요 기본키
+ // 넘버 찜 기본키
  private int no;
 
  // 유저 테이블 넘버 회원 참조키
  private int userNo;
 
- // 여행기 테이블 넘버 여행기 참조키
- private int tripNo;
+ // 여행정보 테이블 넘버 여행 정보 참조키
+ private int tripinfoNo;
 
  // 취소여부 취소 여부
  private String cancled;
- 
- 
- // 좋아요 개수
- private int likeCount;
- 
- public Like() {
+		 
+
+public Mind() {
 	// TODO Auto-generated constructor stub
 }
- 
- 
 
 
 
 
 
 
- public Like(int no, int userNo, int tripNo, String cancled, int likeCount) {
+
+
+ public Mind(int no, int userNo, int tripinfoNo, String cancled) {
 	super();
 	this.no = no;
 	this.userNo = userNo;
-	this.tripNo = tripNo;
+	this.tripinfoNo = tripinfoNo;
 	this.cancled = cancled;
-	this.likeCount = likeCount;
+}
+
+
+
+
+
+
+
+
+@Override
+public String toString() {
+	return "Mind [no=" + no + ", userNo=" + userNo + ", tripinfoNo=" + tripinfoNo + ", cancled=" + cancled + "]";
 }
 
 
@@ -90,8 +98,8 @@ public void setUserNo(int userNo) {
 
 
 
-public int getTripNo() {
-	return tripNo;
+public int getTripinfoNo() {
+	return tripinfoNo;
 }
 
 
@@ -101,8 +109,8 @@ public int getTripNo() {
 
 
 
-public void setTripNo(int tripNo) {
-	this.tripNo = tripNo;
+public void setTripinfoNo(int tripinfoNo) {
+	this.tripinfoNo = tripinfoNo;
 }
 
 
@@ -134,34 +142,12 @@ public void setCancled(String cancled) {
 
 
 
-public int getLikeCount() {
-	return likeCount;
-}
-
-
-
-
-
-
-
-
-public void setLikeCount(int likeCount) {
-	this.likeCount = likeCount;
-}
-
-
-
-
-
-
-
-
-// LikeTb 모델 복사
- public void CopyData(Like param)
+// MindTb 모델 복사
+ public void CopyData(Mind param)
  {
      this.no = param.getNo();
      this.userNo = param.getUserNo();
-     this.tripNo = param.getTripNo();
+     this.tripinfoNo = param.getTripinfoNo();
      this.cancled = param.getCancled();
  }
 }

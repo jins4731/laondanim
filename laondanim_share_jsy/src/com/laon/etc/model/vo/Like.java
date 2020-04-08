@@ -1,22 +1,22 @@
 package com.laon.etc.model.vo;
 
-//ì¢‹ì•„ìš” í…Œì´ë¸”
+//ÁÁ¾Æ¿ä Å×ÀÌºí
 public class Like {
 
- // ë„˜ë²„ ì¢‹ì•„ìš” ê¸°ë³¸í‚¤
+ // ³Ñ¹ö ÁÁ¾Æ¿ä ±âº»Å°
  private int no;
 
- // ìœ ì € í…Œì´ë¸” ë„˜ë²„ íšŒì› ì°¸ì¡°í‚¤
+ // À¯Àú Å×ÀÌºí ³Ñ¹ö È¸¿ø ÂüÁ¶Å°
  private int userNo;
 
- // ì—¬í–‰ê¸° í…Œì´ë¸” ë„˜ë²„ ì—¬í–‰ê¸° ì°¸ì¡°í‚¤
+ // ¿©Çà±â Å×ÀÌºí ³Ñ¹ö ¿©Çà±â ÂüÁ¶Å°
  private int tripNo;
 
- // ì·¨ì†Œì—¬ë¶€ ì·¨ì†Œ ì—¬ë¶€
+ // Ãë¼Ò¿©ºÎ Ãë¼Ò ¿©ºÎ
  private String cancled;
  
  
- // ì¢‹ì•„ìš” ê°œìˆ˜
+ // ÁÁ¾Æ¿ä °³¼ö
  private int likeCount;
  
  public Like() {
@@ -156,7 +156,7 @@ public void setLikeCount(int likeCount) {
 
 
 
-// LikeTb ëª¨ë¸ ë³µì‚¬
+// LikeTb ¸ğµ¨ º¹»ç
  public void CopyData(Like param)
  {
      this.no = param.getNo();
@@ -164,4 +164,19 @@ public void setLikeCount(int likeCount) {
      this.tripNo = param.getTripNo();
      this.cancled = param.getCancled();
  }
+
+
+
+
+
+
+
+
+@Override
+public String toString() {
+	return "Like [no=" + no + ", userNo=" + userNo + ", tripNo=" + tripNo + ", cancled=" + cancled + ", likeCount="
+			+ likeCount + "]";
+}
+ 
+ 
 }

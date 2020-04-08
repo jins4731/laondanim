@@ -13,8 +13,9 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.laon.etc.model.vo.Like;
+import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.vo.Trip;
-import com.laon.trip.model.vo.TripPicture;
 
 public class TripDao {
 
@@ -30,7 +31,7 @@ public class TripDao {
 		}
 	}
 	
-	public ArrayList<Trip> searchList(Connection conn, int cPage, int perPage, String lo, String category, String keyword, String recent, String like){
+	public ArrayList<Trip> selectTripPage(Connection conn, int cPage, int perPage, String lo, String category, String keyword, String recent, String like){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "";
@@ -42,19 +43,17 @@ public class TripDao {
 		System.out.println("recent : " + recent);				   
 		
 		if(!like.equals("null")&&!recent.equals("null")) {
-			sql = prop.getProperty("sortlistwritelike");
+			sql = prop.getProperty("selectTripPageSortAll");
 		}
 		if(!like.equals("null") && recent.equals("null")) {
-			System.out.println("like클릭했을 떄 들어오는 dao 입니다.");
-			sql = prop.getProperty("sortlistlike");
+			sql = prop.getProperty("selectTripPageSortLike");
 		}
 		if(!recent.equals("null") && like.equals("null")) {
-			System.out.println("sortlistwrite들어오냐");
-			sql = prop.getProperty("sortlistwrite");
+			sql = prop.getProperty("selectTripPageSortWrite");
 		}
 		if(like.equals("null")&&recent.equals("null")) {
 			System.out.println("둘다 널일떄 찍힘?");
-			sql = prop.getProperty("searchtriplist");
+			sql = prop.getProperty("selectTripPage");
 			check=1;
 		}
 		
@@ -169,14 +168,14 @@ public class TripDao {
 		return list;
 	}
 	
-	public int getTotalData(Connection conn, String lo, String category, String keyword) {
+	public int selectTripCount(Connection conn, String lo, String category, String keyword) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		System.out.println("lo : " + lo);
 		System.out.println("category : " + category);
 		System.out.println("keyword : " + keyword);
 		
-		String sql = prop.getProperty("totaldatafilter");
+		String sql = prop.getProperty("selectTripCount");
 		//SELECT COUNT(*) FROM TRIP_TB WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ?
 		System.out.println("변화전 : " + sql);
 
@@ -239,7 +238,7 @@ public class TripDao {
 	public String[] getTagList(Connection conn, String search){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = prop.getProperty("tagdatalist");
+		String sql = prop.getProperty("selectTagDataList");
 		ArrayList<String> tagList = new ArrayList<String>();
 		String tag = "";
 		try {
@@ -267,7 +266,84 @@ public class TripDao {
 		return arrTag;
 	}
 
+	public ArrayList<Picture> selectPicture(Connection conn, ArrayList<Trip> list){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<Picture> pictureList = new ArrayList<Picture>();
+		String sql = prop.getProperty("selectPicture");
+		
+		Picture p = new Picture();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			for(int i=0; i<list.size(); i++) {
+				pstmt.setInt(1, list.get(i).getNo());
+				rs = pstmt.executeQuery();
+				
+				//private int no;
+				//private int TRIP_NO;
+				//private String image;
+				
+				while(rs.next()) {
+					p = new Picture();
+					p.setNo(rs.getInt("NO"));
+					p.setTripNo(rs.getInt("TRIP_NO"));
+					p.setTripinfoNo(rs.getInt("TRIPINFO_NO"));
+					p.setDonghangNo(rs.getInt("DONGHANG_NO"));
+					p.setUserNo(rs.getInt("USER_NO"));
+					p.setImage(rs.getString("IMAGE"));
+					
+					pictureList.add(p);
+				}
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return pictureList;
+	}
 	
-	
+	public ArrayList<Like> selectLike(Connection conn, ArrayList<Trip> list){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = prop.getProperty("selectLike");
+		
+		ArrayList<Like> likeList = new ArrayList<Like>();
+		Like l = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			for(int i=0; i<list.size(); i++) {
+				System.out.println("dao에서 list(trip no) 값 : " + list.get(i).getNo()); //여기서 1 int형 나와요
+				//DAO 에서 pstmt.setInt 할때 오류가 납니다 ..
+				
+				pstmt.setInt(1, list.get(i).getNo());	//여기서 이값은
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					l = new Like();
+					l.setTripNo(rs.getInt("NO"));
+					l.setLikeCount(rs.getInt("CNT"));
+					
+					likeList.add(l);
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return likeList;
+	}
 	
 }

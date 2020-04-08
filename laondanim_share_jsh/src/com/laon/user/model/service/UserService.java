@@ -1,9 +1,9 @@
 package com.laon.user.model.service;
 
-import static com.laon.common.JDBCTemplate.close;
-import static com.laon.common.JDBCTemplate.getConnection;
-import static com.laon.common.JDBCTemplate.commit;
-import static com.laon.common.JDBCTemplate.rollback;
+import static com.laon.common.template.JDBCTemplate.close;
+import static com.laon.common.template.JDBCTemplate.commit;
+import static com.laon.common.template.JDBCTemplate.getConnection;
+import static com.laon.common.template.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 

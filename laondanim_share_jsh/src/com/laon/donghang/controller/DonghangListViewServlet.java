@@ -1,9 +1,9 @@
 package com.laon.donghang.controller;
 
-import static com.laon.common.template.PageTemplate.getCurrentPage;
-import static com.laon.common.template.PageTemplate.getEndNum;
-import static com.laon.common.template.PageTemplate.getPageBar;
-import static com.laon.common.template.PageTemplate.getStartNum;
+import static com.laon.common.template.template.PageTemplate.getCurrentPage;
+import static com.laon.common.template.template.PageTemplate.getEndNum;
+import static com.laon.common.template.template.PageTemplate.getPageBar;
+import static com.laon.common.template.template.PageTemplate.getStartNum;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.laon.common.CommonKey;
+import com.laon.common.template.CommonKey;
 import com.laon.donghang.model.service.DonghangService;
 import com.laon.donghang.model.vo.Donghang;
 

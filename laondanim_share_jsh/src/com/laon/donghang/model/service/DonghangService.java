@@ -1,7 +1,7 @@
 package com.laon.donghang.model.service;
 
-import static com.laon.common.template.JDBCTemplate.close;
-import static com.laon.common.template.JDBCTemplate.getConnection;
+import static com.laon.common.template.template.JDBCTemplate.close;
+import static com.laon.common.template.template.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
 import java.util.List;

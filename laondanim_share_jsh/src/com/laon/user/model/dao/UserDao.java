@@ -1,6 +1,6 @@
 package com.laon.user.model.dao;
 
-import static com.laon.common.JDBCTemplate.close;
+import static com.laon.common.template.JDBCTemplate.close;
 
 import java.io.FileReader;
 import java.io.IOException;

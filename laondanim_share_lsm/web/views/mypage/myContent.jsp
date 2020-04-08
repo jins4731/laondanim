@@ -3,7 +3,6 @@
 <%@ page import="java.util.List,com.laon.trip.model.vo.Trip,com.laon.board.model.vo.Board" %>
 <%
 	List<Trip> trip=(List)request.getAttribute("trip");
-	String tripPasing=(String)request.getAttribute("tripPasing");
 	int tripCount=(int)request.getAttribute("tripCount");
 
 	List<Board> board=(List)request.getAttribute("board");
@@ -11,10 +10,10 @@
 	int boardCount=(int)request.getAttribute("boardCount");
 %>
     
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
 
 
 
@@ -24,14 +23,13 @@
 	   	<div class="col-4">
 			<%@ include file="/views/mypage/myPageAside.jsp" %>
 		</div>
-	
-	<div class="col-8">
-		<section>
-			<div id="myMenuBtn">
-				<button type="button" id="myCon" class="btn btn-info">내 컨텐츠</button>
-				<button type="button" id="myH" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageHeart')">내 마음함</button>
-				<button type="button" id="myDh" class="btn btn-info">내 동행</button>
-			</div>
+		<div class="col-8">
+			<section>
+				<div id="myMenuBtn">
+					<button type="button" id="myCon" class="btn btn-info">내 컨텐츠</button>
+					<button type="button" id="myH" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageHeart')">내 마음함</button>
+					<button type="button" id="myDh" class="btn btn-info">내 동행</button>
+				</div>
 				<div id="myPageView">
 					<!-- 내 다님길 -->
 					<div class="menu">
@@ -62,62 +60,50 @@
 							</div>
 						</div>
 						<!-- 게시글위치 -->
-						<div class="carousel slide" data-ride="carousel" data-interval="false">
-							<div class="carousel-inner">
-								<div class="carousel-item active" >
-									<table id="dnTbl">
-										<tr>
-										<%for(Trip t:trip){ %>
-											<td class="p-1">
-												<div class="dnCk3" style="margin:10px;">
-													<input type="checkbox" class="dnCks" value="<%=t.getNo()%>">
+						<table id="dnTbl">
+							<tr>
+							<%for(Trip t:trip){ %>
+								<td class="p-1">
+									<div class="dnCk3" style="margin:10px;">
+										<input type="checkbox" class="dnCks" value="<%=t.getNo()%>">
+									</div>
+									<div class="card" style="width: 160px; height: 250px;" >
+										<div class="d-flex justify-content-between p-2" style="font-size:5px;">
+						    				<span><%=t.getCategory() %></span>
+						    				<span><%=t.getWriteDate() %></span>
+										</div>
+										<div>
+		                            		<div style="position: absolute;">
+			                            		<div class="dropdown" style="position: relative;">
+											    	<button type="button" class="btn" data-toggle="dropdown">
+											    	  ...
+											    	</button>
+											   	 	<div class="dropdown-menu">
+											      		<a class="dropdown-item" href="#">수정</a>
+											     		<a class="dropdown-item" href="#">삭제</a>
+											    	</div>
 												</div>
-												<div class="card" style="width: 155px; height: 255px;" >
-													<div class="d-flex justify-content-between p-2" style="font-size:5px;">
-									    				<span><%=t.getCategory() %></span>
-									    				<span><%=t.getWriteDate() %></span>
-													</div>
-													<div>
-						                            	<div style="position: absolute;">
-							                            	<div class="dropdown" style="position: relative;">
-															    <button type="button" class="btn" data-toggle="dropdown">
-															      ...
-															    </button>
-															    <div class="dropdown-menu">
-															      <a class="dropdown-item" href="#">신청서 수신함</a>
-															      <a class="dropdown-item" href="#">모집 마감</a>
-															      <a class="dropdown-item" href="#">동행 수정</a>
-															      <a class="dropdown-item" href="#">동행 삭제</a>
-															    </div>
-															</div>
-						                            	</div>
-						                            	<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
-						                            </div>
-													<div class="d-flex card-body p-2">
-														<div style="width:150px;font-size:12px;">
-															<p class="mb-0"><%=t.getTitle() %></p>
-															<span>좋아요</span>
-														</div>
-													</div>
-												</div>
-												<a class="carousel-control-prev" href="#gallery" role="button" data-slide="prev" style="width:30px;">
-													<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-													<span class="sr-only">Previous</span>
-												</a>
-												<a class="carousel-control-next" href="#gallery" role="button" data-slide="next" style="width:30px;">
-													<span class="carousel-control-next-icon" aria-hidden="true"></span>
-													<span class="sr-only">Next</span>
-												</a>
-											</td>
-										<%} %>
-										</tr>
-									</table>
-									<%=tripPasing %>
-								</div>
-							</div>
-						</div>
+											</div>
+											<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="160px" height="160px">
+			                           </div>
+			                           <div class="d-flex card-body p-2">
+			                           		<div style="width:150px;font-size:12px;">
+												<p class="mb-0"><%=t.getTitle() %></p>
+												<span>좋아요</span>
+											</div>
+										</div>
+									</div>
+								</td>
+							<%} %>
+							</tr>
+							<tr>
+								<td colspan="4" style="text-align: center;">
+									<button class="btn">+더보기</button>
+								</td>
+							</tr>
+						</table>
 					</div>
-				
+					
 					<!-- 내 게시글 -->
 					<div class="menu" style="padding-top:20px;">
 						<div class="manuBar">
@@ -200,7 +186,7 @@
         text-decoration: none;
         color:black;
         list-style:none;
-        border:1px solid green;
+        /* border:1px solid green; */
     }
     
     #myDNInfo,#myBDInfo,.manuBar{
@@ -208,11 +194,6 @@
     	justify-content: space-between;
     	margin-left: 40px;
     	margin-right: 40px;
-    }
-    
-    #dnTbl{
-    	margin-left: 60px;
-    	margin-right: 60px;
     }
 
 	#dnCk2,.dnCk3,#bdCk2,.bdCk3{

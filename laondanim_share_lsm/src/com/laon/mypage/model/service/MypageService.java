@@ -13,9 +13,9 @@ import com.laon.trip.model.vo.Trip;
 public class MypageService {
 	private MypageDao dao=new MypageDao();
 	
-	public List<Trip> selectMyTrip(int start,int end){
+	public List<Trip> selectMyTrip(){
 		Connection conn=getConnection();
-		List<Trip> list=dao.selectMyTrip(conn,start,end);
+		List<Trip> list=dao.selectMyTrip(conn);
 		close(conn);
 		
 		return list;

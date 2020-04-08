@@ -27,7 +27,7 @@ public class MypageDao {
 		}
 	}
 	
-	public List<Trip> selectMyTrip(Connection conn,int start,int end){
+	public List<Trip> selectMyTrip(Connection conn){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<Trip> list=new ArrayList<Trip>();
@@ -35,8 +35,6 @@ public class MypageDao {
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				Trip t=new Trip();

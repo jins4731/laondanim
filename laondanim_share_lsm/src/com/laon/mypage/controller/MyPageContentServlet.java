@@ -37,16 +37,14 @@ public class MyPageContentServlet extends HttpServlet {
 		int currentPage = getCurrentPage(request);
 		int pagePerRow = 4;
 		
-		List<Trip> trip=new MypageService().selectMyTrip(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
+		List<Trip> trip=new MypageService().selectMyTrip();
 		int tripCount = new MypageService().selectMyTripCount();
-		String tripPasing = getPageBar(tripCount, currentPage, pagePerRow, request, "/myPage/myPageContent");
 		
 		List<Board> board=new MypageService().selectMyBoard(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
 		int boardCount = new MypageService().selectMyBoardCount();
 		String boardPasing = getPageBar(boardCount, currentPage, pagePerRow, request, "/myPage/myPageContent");
 		
 		request.setAttribute("trip", trip);
-		request.setAttribute("tripPasing", tripPasing);
 		request.setAttribute("tripCount", tripCount);
 		
 		request.setAttribute("board", board);

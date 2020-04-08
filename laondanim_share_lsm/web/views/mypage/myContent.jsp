@@ -85,11 +85,13 @@
 								</td>
 							<%} %>
 							</tr>
+							<%if(trip.size()==4){ %>
 							<tr>
 								<td colspan="4" style="text-align: center;">
 									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myConTrip')">+더보기</button>
 								</td>
 							</tr>
+							<%} %>
 						</table>
 					</div>
 					

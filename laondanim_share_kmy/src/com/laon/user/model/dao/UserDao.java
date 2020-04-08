@@ -38,6 +38,7 @@ private Properties prop=new Properties();
 		rs=pstmt.executeQuery();
 		if(rs.next()){
 			u=new User();
+			u.setNo(rs.getInt("no"));
 			u.setUserId(rs.getString("user_id"));
 			u.setName(rs.getString("name"));
 			u.setEmail(rs.getString("email"));

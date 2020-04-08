@@ -53,7 +53,7 @@ public class DonghangListViewServlet extends HttpServlet {
 		
 		
 		
-		request.getRequestDispatcher("").forward(request, response);
+		request.getRequestDispatcher("/views/donghang/donghangList.jsp").forward(request, response);
 		
 		
 	}

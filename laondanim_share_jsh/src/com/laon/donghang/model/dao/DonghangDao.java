@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-//import com.laon.common.template.PropPath;
+import com.laon.common.PropPath; //<-com.laon.common.template.PropPath;로 되어있어 변경함
 import com.laon.donghang.model.vo.Donghang;
 
 public class DonghangDao {

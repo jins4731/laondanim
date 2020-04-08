@@ -53,6 +53,34 @@ public class MypageDao {
 		return list;
 	}
 	
+	public List<Trip> selectMyTripAll(Connection conn,int start,int end){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Trip> list=new ArrayList<Trip>();
+		String sql=prop.getProperty("selectMyTripAll");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Trip t=new Trip();
+				t.setNo(rs.getInt("no"));
+				t.setCategory(rs.getString("category"));
+				t.setWriteDate(rs.getDate("write_date"));
+				t.setTitle(rs.getString("title"));
+				list.add(t);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
 	public int selectMyTripCount(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

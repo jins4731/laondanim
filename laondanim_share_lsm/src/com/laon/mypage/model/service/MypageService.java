@@ -21,6 +21,14 @@ public class MypageService {
 		return list;
 	}
 	
+	public List<Trip> selectMyTripAll(int start,int end){
+		Connection conn=getConnection();
+		List<Trip> list=dao.selectMyTripAll(conn,start,end);
+		close(conn);
+		
+		return list;
+	}
+	
 	public int selectMyTripCount() {
 		Connection conn = getConnection();
 		int result = dao.selectMyTripCount(conn);

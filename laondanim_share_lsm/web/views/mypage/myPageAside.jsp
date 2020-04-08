@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <aside>
+	<div style="height:50px;"></div>
 	<div>
 		<!-- 프로필 -->
 		<div class="card" style="width: 300px">

@@ -31,13 +31,14 @@ private Properties prop=new Properties();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		User u=null;
-		String sql=prop.getProperty("selectUser");
+		String sql=prop.getProperty("login");
 	try{pstmt=conn.prepareStatement(sql);
 		pstmt.setString(1, id);
 		pstmt.setString(2, pw);
 		rs=pstmt.executeQuery();
 		if(rs.next()){
 			u=new User();
+			u.setNo(rs.getInt("no"));
 			u.setUserId(rs.getString("user_id"));
 			u.setName(rs.getString("name"));
 			u.setEmail(rs.getString("email"));

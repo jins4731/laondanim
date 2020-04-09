@@ -14,8 +14,8 @@ import java.util.Properties;
 
 import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.Donghang;
-import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.trip.model.vo.Trip;
+import com.laon.user.model.vo.User;
 
 public class MypageDao {
 	private Properties prop=new Properties();
@@ -27,6 +27,40 @@ public class MypageDao {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public User selectUserNo(Connection conn, int no) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		User u=null;
+		String sql=prop.getProperty("selectUserNo");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				u=new User();
+				u.setNo(rs.getInt("no"));
+				u.setCreatedDate(rs.getDate("created_date"));
+				u.setUserId(rs.getString("user_id"));
+				u.setPassword(rs.getString("password"));
+				u.setName(rs.getString("name"));
+				u.setNickName(rs.getString("nick_name"));
+				u.setBirthday(rs.getDate("birthday"));
+				u.setGender(rs.getString("gender"));
+				u.setPhone(rs.getInt("phone"));
+				u.setEmail(rs.getString("email"));
+				u.setTag(rs.getString("tag"));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return u;
 	}
 	
 	public List<Trip> selectMyTrip(Connection conn){

@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List,com.laon.trip.model.vo.Trip,com.laon.board.model.vo.Board" %>
 <%
+	
+	
 	List<Trip> trip=(List)request.getAttribute("trip");
 	int tripCount=(int)request.getAttribute("tripCount");
 
@@ -26,9 +28,9 @@
 		<div class="col-8">
 			<section>
 				<div id="myMenuBtn">
-					<button type="button" id="myCon" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageContent.do')">내 컨텐츠</button>
-					<button type="button" id="myH" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageHeart.do')">내 마음함</button>
-					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong.do')">내 동행</button>
+					<button type="button" id="myCon" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageContent.do?userNo=<%=loginUser.getNo()%>')">내 컨텐츠</button>
+					<button type="button" id="myH" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageHeart.do?userNo=<%=loginUser.getNo()%>')">내 마음함</button>
+					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong.do?userNo=<%=loginUser.getNo()%>')">내 동행</button>
 				</div>
 				<div id="myPageView">
 					<!-- 내 다님길 -->
@@ -88,7 +90,7 @@
 							<%if(trip.size()==4){ %>
 							<tr>
 								<td colspan="4" style="text-align: center;">
-									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myConTrip.do')">+더보기</button>
+									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myConTrip.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>
 								</td>
 							</tr>
 							<%} %>

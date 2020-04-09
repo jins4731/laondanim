@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.laon.mypage.model.service.MypageService;
 import com.laon.trip.model.vo.Trip;
+import com.laon.user.model.vo.User;
 
 /**
  * Servlet implementation class MyPageContentDetailServlet
@@ -36,12 +37,17 @@ public class MyPageContentTripServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int userNo=Integer.parseInt(request.getParameter("userNo"));
+		User u=new MypageService().selectUserNo(userNo);
+		
 		int currentPage = getCurrentPage(request);
 		int pagePerRow = 20;
 		
 		List<Trip> trip=new MypageService().selectMyTripAll(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
 		int tripCount = new MypageService().selectMyTripCount();
 		String tripPasing = getPageBar(tripCount, currentPage, pagePerRow, request, "/myPage/myConTrip.do");
+		
+		request.setAttribute("user", u);
 		
 		request.setAttribute("trip", trip);
 		request.setAttribute("tripPasing", tripPasing);

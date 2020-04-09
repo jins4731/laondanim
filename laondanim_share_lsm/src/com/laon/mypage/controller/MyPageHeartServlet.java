@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.laon.mind.model.vo.Mind;
 import com.laon.mypage.model.service.MypageService;
+import com.laon.user.model.vo.User;
 
 /**
  * Servlet implementation class MyPageHeartServlet
@@ -31,7 +32,12 @@ public class MyPageHeartServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int userNo=Integer.parseInt(request.getParameter("userNo"));
+		User u=new MypageService().selectUserNo(userNo);
+		
 //		List<Mind> mind=new MypageService().selectMindRes();
+		
+		request.setAttribute("user", u);
 		
 		request.getRequestDispatcher("/views/mypage/myHeart.jsp").forward(request, response);
 	}

@@ -113,7 +113,7 @@ header li>a {
 	
 		<div class="title-container">
 			<h1>
-				<div class="mainTitle-container"><a href="" >라온다님</a></div>
+				<div class="mainTitle-container"><a href="<%=request.getContextPath() %>" >라온다님</a></div>
 			</h1>
 		</div>	
 		<div class="header-container">
@@ -145,7 +145,7 @@ header li>a {
 							<img src="<%=request.getContextPath()%>/images/images.jpeg" width="50px" height="50px">
 						</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myPageContent.do">마이페이지</a> 
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myPageContent.do?userNo=<%=loginUser.getNo()%>">마이페이지</a> 
 								<a class="dropdown-item" href="<%=request.getContextPath()%>/user/logout.do">로그아웃</a>
 							</div>
 						</li>

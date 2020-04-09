@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.laon.user.model.vo.User" %>	
+<%
+	User u=(User)request.getAttribute("user");
+%>
 <aside>
 	<div style="height:50px;"></div>
 	<div>
@@ -11,8 +15,8 @@
 			<div class="card-body">
 				<div id="myProfile">
 					<div>
-						<h4 class="card-title">아이디 자리</h4>
-						<p class="card-text">닉네임 자리</p>
+						<h4 class="card-title"><%=u.getUserId() %></h4>
+						<p class="card-text"><%=u.getNickName() %></p>
 					</div>
 					<div>
 						<a href="#" class="btn btn-info" style="border-radius: 100px;">정보수정</a>

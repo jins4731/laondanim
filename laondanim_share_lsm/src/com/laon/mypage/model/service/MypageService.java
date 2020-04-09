@@ -8,12 +8,20 @@ import java.util.List;
 
 import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.Donghang;
-import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.mypage.model.dao.MypageDao;
 import com.laon.trip.model.vo.Trip;
+import com.laon.user.model.vo.User;
 
 public class MypageService {
 	private MypageDao dao=new MypageDao();
+	
+	public User selectUserNo(int no) {
+		Connection conn=getConnection();
+		User u=dao.selectUserNo(conn,no);
+		close(conn);
+		
+		return u;
+	}
 	
 	public List<Trip> selectMyTrip(){
 		Connection conn=getConnection();

@@ -10,6 +10,7 @@ import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.Donghang;
 import com.laon.mypage.model.dao.MypageDao;
 import com.laon.trip.model.vo.Trip;
+import com.laon.trip.model.vo.TripMyCon;
 import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
@@ -24,9 +25,9 @@ public class MypageService {
 		return up;
 	}
 	
-	public List<Trip> selectMyTrip(){
+	public List<TripMyCon> selectMyTrip(int userNo){
 		Connection conn=getConnection();
-		List<Trip> list=dao.selectMyTrip(conn);
+		List<TripMyCon> list=dao.selectMyTrip(conn,userNo);
 		close(conn);
 		
 		return list;

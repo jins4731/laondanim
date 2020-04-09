@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.laon.board.model.vo.Board;
 import com.laon.mypage.model.service.MypageService;
 import com.laon.trip.model.vo.Trip;
+import com.laon.trip.model.vo.TripMyCon;
 import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
@@ -45,7 +46,7 @@ public class MyPageContentServlet extends HttpServlet {
 		int currentPage = getCurrentPage(request);
 		int pagePerRow = 5;
 		
-		List<Trip> trip=new MypageService().selectMyTrip();
+		List<TripMyCon> trip=new MypageService().selectMyTrip(userNo);
 		int tripCount = new MypageService().selectMyTripCount();
 		
 		List<Board> board=new MypageService().selectMyBoard(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));

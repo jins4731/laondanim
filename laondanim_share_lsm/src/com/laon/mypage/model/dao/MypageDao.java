@@ -15,6 +15,7 @@ import java.util.Properties;
 import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.Donghang;
 import com.laon.trip.model.vo.Trip;
+import com.laon.trip.model.vo.TripMyCon;
 import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
@@ -65,21 +66,23 @@ public class MypageDao {
 		return up;
 	}
 	
-	public List<Trip> selectMyTrip(Connection conn){
+	public List<TripMyCon> selectMyTrip(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		List<Trip> list=new ArrayList<Trip>();
+		List<TripMyCon> list=new ArrayList<TripMyCon>();
 		String sql=prop.getProperty("selectMyTrip");
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				Trip t=new Trip();
+				TripMyCon t=new TripMyCon();
 				t.setNo(rs.getInt("no"));
 				t.setCategory(rs.getString("category"));
 				t.setWriteDate(rs.getDate("write_date"));
 				t.setTitle(rs.getString("title"));
+				t.setImage(rs.getString("image"));
 				list.add(t);
 			}
 		}catch(SQLException e) {

@@ -1,10 +1,11 @@
+<%@page import="com.laon.trip.model.vo.TripMyCon"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,com.laon.trip.model.vo.Trip,com.laon.board.model.vo.Board" %>
+<%@ page import="java.util.List,com.laon.trip.model.vo.TripMyCon,com.laon.board.model.vo.Board" %>
 <%
 	
 	
-	List<Trip> trip=(List)request.getAttribute("trip");
+	List<TripMyCon> trip=(List)request.getAttribute("trip");
 	int tripCount=(int)request.getAttribute("tripCount");
 
 	List<Board> board=(List)request.getAttribute("board");
@@ -56,7 +57,7 @@
 						<!-- 게시글위치 -->
 						<table id="dnTbl">
 							<tr>
-							<%for(Trip t:trip){ %>
+							<%for(TripMyCon t:trip){ %>
 								<td class="p-1">
 									<div class="card" style="width: 160px; height: 250px;" >
 										<div class="d-flex justify-content-between p-2" style="font-size:5px;">
@@ -75,7 +76,7 @@
 											    	</div>
 												</div>
 											</div>
-											<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="160px" height="160px">
+											<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage %>" class="card-img" alt="..." width="160px" height="160px">
 			                           </div>
 			                           <div class="d-flex card-body p-2">
 			                           		<div style="width:150px;font-size:12px;">
@@ -205,6 +206,7 @@
     	border-radius: 100px;
 	}
 </style>
+
 <script>
 	/* 다님길 */
 	$(function(){

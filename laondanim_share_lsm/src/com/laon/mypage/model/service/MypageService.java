@@ -11,16 +11,17 @@ import com.laon.donghang.model.vo.Donghang;
 import com.laon.mypage.model.dao.MypageDao;
 import com.laon.trip.model.vo.Trip;
 import com.laon.user.model.vo.User;
+import com.laon.user.model.vo.UserProfile;
 
 public class MypageService {
 	private MypageDao dao=new MypageDao();
 	
-	public User selectUserNo(int no) {
+	public UserProfile selectUserNo(int no) {
 		Connection conn=getConnection();
-		User u=dao.selectUserNo(conn,no);
+		UserProfile up=dao.selectUserNo(conn,no);
 		close(conn);
 		
-		return u;
+		return up;
 	}
 	
 	public List<Trip> selectMyTrip(){

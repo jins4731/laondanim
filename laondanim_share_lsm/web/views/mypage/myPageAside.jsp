@@ -1,8 +1,9 @@
+<%@page import="com.laon.user.model.vo.UserProfile"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.laon.user.model.vo.User" %>	
 <%
-	User u=(User)request.getAttribute("user");
+	UserProfile up=(UserProfile)request.getAttribute("userProfile");
 %>
 <aside>
 	<div style="height:50px;"></div>
@@ -10,13 +11,13 @@
 		<!-- 프로필 -->
 		<div class="card" style="width: 300px">
 			<img class="card-img-top"
-				src="<%=request.getContextPath() %>/images/images.jpeg"
+				src="<%=request.getContextPath() %>/views/picture/profile/<%=up.getImage() %>"
 				alt="Card image" style="width: 100%">
 			<div class="card-body">
 				<div id="myProfile">
 					<div>
-						<h4 class="card-title"><%=u.getUserId() %></h4>
-						<p class="card-text"><%=u.getNickName() %></p>
+						<h4 class="card-title"><%=up.getUserId() %></h4>
+						<p class="card-text"><%=up.getNickName() %></p>
 					</div>
 					<div>
 						<a href="#" class="btn btn-info" style="border-radius: 100px;">정보수정</a>

@@ -16,6 +16,7 @@ import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.Donghang;
 import com.laon.trip.model.vo.Trip;
 import com.laon.user.model.vo.User;
+import com.laon.user.model.vo.UserProfile;
 
 public class MypageDao {
 	private Properties prop=new Properties();
@@ -29,10 +30,10 @@ public class MypageDao {
 		}
 	}
 	
-	public User selectUserNo(Connection conn, int no) {
+	public UserProfile selectUserNo(Connection conn, int no) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		User u=null;
+		UserProfile up=null;
 		String sql=prop.getProperty("selectUserNo");
 		
 		try {
@@ -41,18 +42,19 @@ public class MypageDao {
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
-				u=new User();
-				u.setNo(rs.getInt("no"));
-				u.setCreatedDate(rs.getDate("created_date"));
-				u.setUserId(rs.getString("user_id"));
-				u.setPassword(rs.getString("password"));
-				u.setName(rs.getString("name"));
-				u.setNickName(rs.getString("nick_name"));
-				u.setBirthday(rs.getDate("birthday"));
-				u.setGender(rs.getString("gender"));
-				u.setPhone(rs.getInt("phone"));
-				u.setEmail(rs.getString("email"));
-				u.setTag(rs.getString("tag"));
+				up=new UserProfile();
+				up.setNo(rs.getInt("no"));
+				up.setCreatedDate(rs.getDate("created_date"));
+				up.setUserId(rs.getString("user_id"));
+				up.setPassword(rs.getString("password"));
+				up.setName(rs.getString("name"));
+				up.setNickName(rs.getString("nick_name"));
+				up.setBirthday(rs.getDate("birthday"));
+				up.setGender(rs.getString("gender"));
+				up.setPhone(rs.getInt("phone"));
+				up.setEmail(rs.getString("email"));
+				up.setTag(rs.getString("tag"));
+				up.setImage(rs.getString("image"));
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -60,7 +62,7 @@ public class MypageDao {
 			close(rs);
 			close(pstmt);
 		}
-		return u;
+		return up;
 	}
 	
 	public List<Trip> selectMyTrip(Connection conn){

@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.laon.common.CommonKey;
@@ -45,7 +46,7 @@ public class LoginCheckFilter implements Filter {
 		HttpSession session  = ((HttpServletRequest)request).getSession();
 		User m = (User) session.getAttribute(CommonKey.LOGGIN_USER);
 		if(m ==null) {
-			sendMSG("로그인해 주세요.", "/", request, response);
+			sendMSG("로그인해 주세요.", "/", (HttpServletRequest)request, (HttpServletResponse)response);
 		}else {
 			chain.doFilter(request, response);
 		}

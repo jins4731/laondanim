@@ -1,7 +1,14 @@
 package com.laon.etc.model.vo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.laon.common.robot.LaonRobot;
+import com.oreilly.servlet.MultipartRequest;
+
 //좋아요 테이블
-public class Like {
+public class Like implements LaonRobot<Like>{
 
  // 넘버 좋아요 기본키
  private int no;
@@ -149,4 +156,51 @@ public void setCancled(String cancled) {
      this.tripNo = param.getTripNo();
      this.cancled = param.getCancled();
  }
+
+//Like
+	private String cNo = "no";
+	private String cUserNo = "user_no";
+	private String cTripNo = "category";
+	private String cCancled = "write_date";
+
+
+@Override
+public List<Like> rsProcess(List<Like> list, ResultSet rs) throws SQLException {
+	while (rs.next()) {
+		Like item = new Like();
+		item.setNo(rs.getInt(cNo));
+		item.setUserNo(rs.getInt(cUserNo));
+		item.setTripNo(rs.getInt(cTripNo));
+		item.setCancled(rs.getString(cCancled));
+		list.add(item);
+	}
+	return list;
+}
+
+
+
+
+@Override
+public Like rsProcess(Like item, ResultSet rs) throws SQLException {
+	while (rs.next()) {
+		item.setNo(rs.getInt(cNo));
+		item.setUserNo(rs.getInt(cUserNo));
+		item.setTripNo(rs.getInt(cTripNo));
+		item.setCancled(rs.getString(cCancled));
+	}
+	return item;
+}
+
+
+
+
+
+
+
+
+@Override
+public Like mrProcess(Like item, MultipartRequest mr, Picture pic) {
+	// TODO Auto-generated method stub
+	return null;
+}
 }

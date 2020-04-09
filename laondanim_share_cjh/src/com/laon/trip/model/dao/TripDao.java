@@ -14,29 +14,25 @@ import java.util.Properties;
 
 import com.laon.board.model.vo.Board;
 import com.laon.common.PropPath;
+import com.laon.common.robot.LaonRobot;
 import com.laon.trip.model.vo.Trip;
+import com.laon.trip.model.vo.TripSchedule;
 
 public class TripDao {
 	private Properties prop = new Properties();
-
-	private String no = "no";
-	private String userNo = "user_no";
-	private String category = "category";
-	private String writeDate = "write_date";
-	private String tag = "tag";
-	private String title = "title";
-	private String content = "content";
-	private String travleLocale = "travle_locale";
-	private String peopleNum = "people_num";
-	private String travleType = "travle_type";
-	private String travleStartDate = "travle_start_date";
-	private String travleEndDate = "travle_end_date";
-	private String publicEnabled = "public_enabled";
-	private String deleted = "deleted";
+	
+	
 
 	private String selectTrip = "selectTrip";
 	private String selectTripPage = "selectTripPage";
 	private String selectTripCount = "selectTripCount";
+	
+	 private String selectTripScheduleList = "selectTripScheduleList";
+	 
+	 
+	 
+	 
+	 
 
 	public TripDao() {
 		try {
@@ -46,47 +42,23 @@ public class TripDao {
 		}
 	}
 
-	public Trip rsProcess(ResultSet rs, Trip trip) throws SQLException {
-		while (rs.next()) {
-			trip.setNo(rs.getInt(no));
-			trip.setUserNo(rs.getInt(userNo));
-			trip.setCategory(rs.getString(category));
-			trip.setWriteDate(rs.getDate(writeDate));
-			trip.setTag(rs.getString(tag));
-			trip.setTitle(rs.getString(title));
-			trip.setContent(rs.getString(content));
-			trip.setTravleLocale(rs.getString(travleLocale));
-			trip.setPeopleNum(rs.getInt(peopleNum));
-			trip.setTravleType(rs.getString(travleType));
-			trip.setTravleStartDate(rs.getDate(travleStartDate));
-			trip.setTravleEndDate(rs.getDate(travleEndDate));
-			trip.setPublicEnabled(rs.getString(publicEnabled));
-			trip.setDeleted(rs.getString(deleted));
+	public <E> E rsProcess(ResultSet rs, E item) throws SQLException {
+		if(item instanceof LaonRobot) {
+			LaonRobot<E> robot = (LaonRobot<E>)item;
+			item = robot.rsProcess(item,rs);
 		}
-		return trip;
+		return item;
 	}
 
-	public List<Trip> rsProcess(ResultSet rs, List<Trip> list) throws SQLException {
-		while (rs.next()) {
-			Trip trip = new Trip();
-			trip.setNo(rs.getInt(no));
-			trip.setUserNo(rs.getInt(userNo));
-			trip.setCategory(rs.getString(category));
-			trip.setWriteDate(rs.getDate(writeDate));
-			trip.setTag(rs.getString(tag));
-			trip.setTitle(rs.getString(title));
-			trip.setContent(rs.getString(content));
-			trip.setTravleLocale(rs.getString(travleLocale));
-			trip.setPeopleNum(rs.getInt(peopleNum));
-			trip.setTravleType(rs.getString(travleType));
-			trip.setTravleStartDate(rs.getDate(travleStartDate));
-			trip.setTravleEndDate(rs.getDate(travleEndDate));
-			trip.setPublicEnabled(rs.getString(publicEnabled));
-			trip.setDeleted(rs.getString(deleted));
-			list.add(trip);
+	public <E> List<E> rsProcess(ResultSet rs, List<E> list,E item) throws SQLException {
+		List<E> newlist = null;
+		if(item instanceof LaonRobot) {
+			LaonRobot<E> robot = (LaonRobot<E>)item;
+			newlist = robot.rsProcess(list,rs);
 		}
-		return list;
+		return newlist;
 	}
+	
 
 	public Trip selectTrip(Connection conn, String no) {
 		PreparedStatement pstmt = null;
@@ -117,7 +89,7 @@ public class TripDao {
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
 			rs = pstmt.executeQuery();
-			list = rsProcess(rs, new ArrayList<Trip>());
+			list = rsProcess(rs, new ArrayList<Trip>(),new Trip());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -144,6 +116,25 @@ public class TripDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public List<TripSchedule> selectTripScheduleList(Connection conn, int no2) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty(selectTripScheduleList);
+		List<TripSchedule> list = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no2);
+			rs = pstmt.executeQuery();
+			list = rsProcess(rs, new ArrayList<TripSchedule>(), new TripSchedule());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
 	}
 
 }

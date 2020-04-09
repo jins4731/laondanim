@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 import com.laon.common.CommonKey;
-import com.laon.common.UserPKey;
+import com.laon.common.UserKey;
 import com.laon.common.encrypt.AESEncrypt;
 import com.laon.user.model.vo.User;
 
@@ -25,13 +25,13 @@ public class EncryptRequestWrapper extends HttpServletRequestWrapper {
 	public String getParameter(String keyName) {
 		String value = "";
 		if(keyName != null) {
-		if(keyName.equals(UserPKey.PASSWORD)) {
+		if(keyName.equals(UserKey.PASSWORD)) {
 			System.out.println("암호화 되기전 "+super.getParameter(keyName));
 			value = getSha512(super.getParameter(keyName));
 			System.out.println("암호화된 후 " + value);
-		}else if(keyName.equals(UserPKey.EMAIL)) {
+		}else if(keyName.equals(UserKey.EMAIL)) {
 			AESEncrypt.encrypt(super.getParameter(keyName));
-		}else if(keyName.equals(UserPKey.PHONE)) {
+		}else if(keyName.equals(UserKey.PHONE)) {
 			AESEncrypt.encrypt(super.getParameter(keyName));			
 		}else {
 			value = super.getParameter(keyName);

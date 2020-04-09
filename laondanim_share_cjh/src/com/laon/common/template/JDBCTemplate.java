@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.Properties;
 
 import com.laon.common.CommonKey;
+import com.laon.common.PropPath;
 
 
 public class JDBCTemplate {
@@ -17,7 +18,7 @@ public class JDBCTemplate {
 		Connection conn=null;
 		try {
 			Properties prop=new Properties();
-			prop.load(new FileReader(JDBCTemplate.class.getResource("/sql/driver/driver.properties").getPath()));
+			prop.load(new FileReader(JDBCTemplate.class.getResource(PropPath.DRIVER).getPath()));
 			Class.forName(prop.getProperty(CommonKey.DRIVER));
 			conn=DriverManager.getConnection(prop.getProperty(CommonKey.URL),
 					prop.getProperty(CommonKey.USER),prop.getProperty(CommonKey.PASSWORD));

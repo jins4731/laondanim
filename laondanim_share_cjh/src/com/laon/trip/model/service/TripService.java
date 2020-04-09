@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.laon.trip.model.dao.TripDao;
 import com.laon.trip.model.vo.Trip;
+import com.laon.trip.model.vo.TripSchedule;
 
 public class TripService {
 private TripDao dao = new TripDao();
@@ -32,4 +33,13 @@ private TripDao dao = new TripDao();
 		close(conn);
 		return result;
 	}
+
+	public List<TripSchedule> selectTripScheduleList(int no) {
+		// TODO Auto-generated method stub
+		Connection conn = getConnection();
+		List<TripSchedule> schedulelist = dao.selectTripScheduleList(conn,no);
+		close(conn);
+		return schedulelist;
+	}
+	
 }

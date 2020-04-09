@@ -1,9 +1,21 @@
 package com.laon.trip.model.vo;
 
+
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.laon.common.PictureKey;
+import com.laon.common.TripKey;
+import com.laon.common.robot.LaonRobot;
+import com.laon.etc.model.vo.Picture;
+import com.oreilly.servlet.MultipartRequest;
 
 //여행기 테이블
-public class Trip {
+public class Trip implements LaonRobot<Trip>{
+	
+private Picture picture;
 
  // 넘버 여행기 기본키
  private int no;
@@ -334,4 +346,99 @@ public void setDeleted(String deleted) {
      this.publicEnabled = param.getPublicEnabled();
      this.deleted = param.getDeleted();
  }
+
+
+//Trip
+		private String cNo = "no";
+		private String cUserNo = "user_no";
+		private String cCategory = "category";
+		private String cWriteDate = "write_date";
+		private String cTag = "tag";
+		private String cTitle = "title";
+		private String cContent = "content";
+		private String cTravleLocale = "travle_locale";
+		private String cPeopleNum = "people_num";
+		private String cTravleType = "travle_type";
+		private String cTravleStartDate = "travle_start_date";
+		private String cTravleEndDate = "travle_end_date";
+		private String cPublicEnabled = "public_enabled";
+		private String cDeleted = "deleted";
+ 
+ 
+
+
+@Override
+public List<Trip> rsProcess(List<Trip> list, ResultSet rs) throws SQLException {
+	
+	while (rs.next()) {
+	Trip trip = new Trip();
+	trip.setNo(rs.getInt(cNo));
+	trip.setUserNo(rs.getInt(cUserNo));
+	trip.setCategory(rs.getString(cCategory));
+	trip.setWriteDate(rs.getDate(cWriteDate));
+	trip.setTag(rs.getString(cTag));
+	trip.setTitle(rs.getString(cTitle));
+	trip.setContent(rs.getString(cContent));
+	trip.setTravleLocale(rs.getString(cTravleLocale));
+	trip.setPeopleNum(rs.getInt(cPeopleNum));
+	trip.setTravleType(rs.getString(cTravleType));
+	trip.setTravleStartDate(rs.getDate(cTravleStartDate));
+	trip.setTravleEndDate(rs.getDate(cTravleEndDate));
+	trip.setPublicEnabled(rs.getString(cPublicEnabled));
+	trip.setDeleted(rs.getString(cDeleted));
+	list.add(trip);
+}
+	
+	return list;
+}
+
+
+
+
+
+@Override
+public Trip rsProcess(Trip item, ResultSet rs) throws SQLException {
+	// TODO Auto-generated method stub
+	while (rs.next()) {
+		item.setNo(rs.getInt(cNo));
+		item.setUserNo(rs.getInt(cUserNo));
+		item.setCategory(rs.getString(cCategory));
+		item.setWriteDate(rs.getDate(cWriteDate));
+		item.setTag(rs.getString(cTag));
+		item.setTitle(rs.getString(cTitle));
+		item.setContent(rs.getString(cContent));
+		item.setTravleLocale(rs.getString(cTravleLocale));
+		item.setPeopleNum(rs.getInt(cPeopleNum));
+		item.setTravleType(rs.getString(cTravleType));
+		item.setTravleStartDate(rs.getDate(cTravleStartDate));
+		item.setTravleEndDate(rs.getDate(cTravleEndDate));
+		item.setPublicEnabled(rs.getString(cPublicEnabled));
+		item.setDeleted(rs.getString(cDeleted));
+	}
+	return item;
+}
+
+
+
+
+
+@Override
+public Trip mrProcess(Trip item, MultipartRequest mr, Picture pic) {
+	picture = pic;
+	picture.setImage(mr.getOriginalFileName(PictureKey.IMAGE));
+	item.setUserNo(Integer.parseInt(mr.getParameter(TripKey.USER_NO)));
+	item.setCategory(mr.getParameter(TripKey.CATEGORY));
+	item.setWriteDate(Date.valueOf(mr.getParameter(TripKey.WRITE_DATE)));
+	item.setTag(mr.getParameter(TripKey.TAG));
+	item.setTitle(mr.getParameter(TripKey.TITLE));
+	item.setContent(mr.getParameter(TripKey.CONTENT));
+	item.setTravleLocale(mr.getParameter(TripKey.TRAVLE_lOCALE));
+	item.setPeopleNum(Integer.parseInt(mr.getParameter(TripKey.PEOPLE_NUM)));
+	item.setTravleType(mr.getParameter(TripKey.TRAVLE_TYPE));
+	item.setTravleStartDate(Date.valueOf(mr.getParameter(TripKey.TRAVLE_START_DATE)));
+	item.setTravleEndDate(Date.valueOf(mr.getParameter(TripKey.TRAVLE_END_DATE)));
+	item.setPublicEnabled(mr.getParameter(TripKey.PUBLIC_ENABLED));
+	item.setDeleted(mr.getParameter(TripKey.DELETED));
+	return item;
+}
 }

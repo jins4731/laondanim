@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.Donghang;
+import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.mypage.model.dao.MypageDao;
 import com.laon.trip.model.vo.Trip;
 
@@ -75,6 +76,14 @@ public class MypageService {
 		close(conn);
 		
 		return result;
+	}
+	
+	public List selectJoinDong(){
+		Connection conn=getConnection();
+		List list=dao.selectJoinDong(conn);
+		close(conn);
+		
+		return list;
 	}
 	
 }

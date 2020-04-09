@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.Donghang;
+import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.trip.model.vo.Trip;
 
 public class MypageDao {
@@ -230,5 +231,26 @@ public class MypageDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	public List selectJoinDong(Connection conn){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List list=new ArrayList();
+		String sql=prop.getProperty("selectJoinDong");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
 	}
 }

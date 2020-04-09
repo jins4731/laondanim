@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.laon.donghang.model.vo.Donghang;
+import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.mypage.model.service.MypageService;
 
 /**
@@ -33,7 +34,9 @@ public class MyPageDongServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Donghang> myDong=new MypageService().selectMyDong();
 		int myDongCount=new MypageService().selectMyDongCount();
-		System.out.println(myDong);
+		
+//		List joinDong=new MypageService().selectJoinDong();
+		
 		request.setAttribute("myDong", myDong);
 		request.setAttribute("myDongCount", myDongCount);
 		

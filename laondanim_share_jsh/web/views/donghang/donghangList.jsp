@@ -40,8 +40,10 @@
                     <option value="">지역검색</option>
                     <option value="">키워드 검색</option>                    
                 </select>
-
-                <input type="text" class="pl-2">
+                <input type="text" id="searchKeyword" name="searchKeyword" class="pl-2">
+                <button onclick="fn_donghangSearch();">
+                	<img src="<%=request.getContextPath()%>/image/inactiveSearch_icon.png" alt="searchIcon" id="searchIcon"/>
+                </button>
             </div>
         </div>
         <!--검색창 스타일-->
@@ -61,20 +63,55 @@
                 color: white;
                 padding-left: 20px;
                 -webkit-appearance: none;
-                background-image: url('icon/down_icon.png');
+                background-image: url('<%=request.getContextPath()%>/image/down_icon.png');
                 background-repeat: no-repeat;
                 background-position: right center;
                 background: ;
             }
             #searchDIV input[type="text"]{
-                width: 67%;
+                width: 57%;
                 height: 100%;
                 border: none;
             }
             #searchDIV input[type="text"]:focus{
                 outline: none;
             }
+            #searchDIV button{
+            	width: 10%;
+            	height: 100%;
+            	padding: 0px;
+            	margin: 0px;
+            	border: none;
+            	background: white;
+            }
+            #searchDIV button:focus{
+                outline: none;
+            }            
         </style>
+       	<!-- 검색 스크립트 -->
+        <script>
+				
+			$("#searchKeyword").focus(()=>{
+				$("#searchIcon").fadeOut(200, ()=>{
+					$("#searchIcon").attr('src','<%=request.getContextPath()%>/image/search_icon.png').fadeIn(300);
+				})
+			});
+			$("#searchKeyword").focusout(()=>{
+				$("#searchIcon").fadeOut(200, ()=>{
+					$("#searchIcon").attr('src','<%=request.getContextPath()%>/image/inactiveSearch_icon.png').fadeIn(300);
+				})
+			});
+			
+			let keyword = $("#searchKeyword").val(); 	
+    		function fn_donghangSearch(){
+    			if($("#searchKeyword").val()==null||$("#searchKeyword").val().trim()==""){
+    					alert("검색어를 입력해주세요!");
+    			}else{
+    				location.replace('<%=request.getContextPath()%>/donghang/donghangSearch.do');	      					
+    			}
+    		}
+
+        </script>
 
         <!-- 작성 -->
         <div class="d-flex justify-content-center">
@@ -82,7 +119,7 @@
                 <button class="btn btn-lg btn-outline-secondary d-flex align-items-end justify-content-center mt-3 mb-3" 
                         onclick="" id="dhWriteBtn">
                     <p class="m-0">다님길 작성</p>                    
-                    <img src="icon/write_icon.png" class="ml-2 w-25">
+                    <img src="<%=request.getContextPath()%>/image/write_icon.png" class="ml-2 w-25">
                 </button>            
             </div>
         </div>

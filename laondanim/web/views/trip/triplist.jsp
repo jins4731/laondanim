@@ -83,6 +83,10 @@
                 	location.replace('<%=request.getContextPath()%>/trip/list.do?recent='+recent);
                 });
                 
+                $("#like").click(function(){
+                	var like = 'like';
+                	location.replace('<%=request.getContextPath()%>/trip/list.do?like='+like);
+                });
             });
             
             //검색창 x 버튼 클릭시 클리어

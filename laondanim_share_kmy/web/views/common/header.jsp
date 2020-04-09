@@ -22,6 +22,12 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+<!-- naver SmartEditor -->
+<script type="text/javascript" src="<%=request.getContextPath()%>/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+
+
+
+
 <title>라온다님 메인</title>
 <style>
 /* 헤더 푸터 값조절 */
@@ -100,10 +106,10 @@ header li>a {
 }
 
 	/* 메뉴에 마우스 커서만 올려도 드롭다운 메뉴가 자동으로 나오게 */
-.dropdown:hover .dropdown-menu {
+/* .dropdown:hover .dropdown-menu {
 	display: block;
 	margin-top: 0;
-}
+} */
 
 </style>
 </head>
@@ -129,7 +135,7 @@ header li>a {
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">커뮤니티</a>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="#">동행찾기</a> 
-								<a class="dropdown-item" href="#">게시판</a>
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/board/list.do">게시판</a>
 							</div>
 						</li>
 						<%if(loginUser==null){ %>

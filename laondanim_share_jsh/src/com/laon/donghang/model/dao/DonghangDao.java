@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -123,22 +124,32 @@ public class DonghangDao {
 		return donghang;
 	}
 
-	public List<Donghang> selectDonghangPage(Connection conn, int start, int end) {
-		PreparedStatement pstmt = null;
+	public List<Donghang> selectDonghangPage(Connection conn, int start, int end, String userTag) {
+		Statement stmt = null;
 		ResultSet rs = null;
-		String sql = prop.getProperty(selectDonghangPage);
+		String sql = "";
 		List<Donghang> list = null;
+		//태그길이만큼  when~then sql문 만들기
+		String[] userTagArr = userTag.split(",");
+		String likeSql = "";
+		for(String tag : userTagArr) {
+			likeSql += "WHEN TAG LIKE '%" + tag + "%' THEN '1' ";
+		}
+		
 		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
-			rs = pstmt.executeQuery();
+			stmt = conn.createStatement();
+			sql = "SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT DH.*, CASE "
+					+ likeSql 
+					+"ELSE '0' END AS TAG_COUNT FROM DONGHANG_TB DH ORDER BY TAG_COUNT DESC) A) WHERE RNUM BETWEEN "+ start +" AND "+end;
+			System.out.println("와우와우와우:");
+			System.out.println(sql);
+			rs = stmt.executeQuery(sql);
 			list = rsProcess(rs, new ArrayList<Donghang>());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
-			close(pstmt);
+			close(stmt);
 		}
 		return list;
 	}
@@ -160,5 +171,27 @@ public class DonghangDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public String selectUserTag(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectUserTag");
+		String userTag = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			userTag = rs.getString("TAG");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return userTag;
 	}
 }

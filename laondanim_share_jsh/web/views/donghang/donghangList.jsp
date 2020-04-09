@@ -36,9 +36,9 @@
         <div class="d-flex justify-content-center align-items-center">
             <div id="searchDIV" class="d-flex justify-content-center align-items-center m-5">
                 <select class="form-control border-0 rounded-0" name="searchFilter" id="searchFilter">
-                    <option value="">전체 검색</option>
-                    <option value="">키워드 검색</option>
+                    <!-- <option value="">전체 검색</option> -->
                     <option value="">지역검색</option>
+                    <option value="">키워드 검색</option>                    
                 </select>
 
                 <input type="text" class="pl-2">
@@ -106,7 +106,6 @@
                 </div>
 
                 <div class="col d-flex justify-content-end">
-                    <button class="btn btn-outline-secondary border-0">관심태그 순</button>   <!--ajax 정렬-->
                     <button class="btn btn-outline-secondary border-0">최근 순</button>   <!--ajax 정렬-->
                     <button class="btn btn-outline-secondary border-0">조회수 순</button> <!--ajax 정렬-->
                     <button class="btn btn-outline-secondary border-0">가까운 일정 순</button> <!--ajax 정렬-->
@@ -183,6 +182,7 @@
                                 	for(String tag : tagArr){%>
                                     <li><a>#<%=tag%></a></li>
                                 <%} } %>
+                                </ul>
                             </div>                        
                             <img src="img/god.jpg" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
                         </div>
@@ -234,6 +234,7 @@
                                 	for(String tag : tagArr){%>
                                     <li><a>#<%=tag%></a></li>
                                 <%} } %>
+                                </ul>
                             </div>                        
                             <img src="img/god.jpg" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
                         </div>

@@ -19,9 +19,9 @@ public class DonghangService {
 		return donghang;
 	}
 	
-	public List<Donghang> selectDonghangPage(int start,int end){
+	public List<Donghang> selectDonghangPage(int start,int end, String userTag){
 		Connection conn = getConnection();
-		List<Donghang> list = dao.selectDonghangPage(conn, start ,end);
+		List<Donghang> list = dao.selectDonghangPage(conn, start ,end, userTag);
 		close(conn);
 		return list;
 	}
@@ -31,5 +31,12 @@ public class DonghangService {
 		int result = dao.selectDonghangCount(conn);
 		close(conn);
 		return result;
+	}
+
+	public String selectUserTag(String userId) {
+		Connection conn = getConnection();
+		String userTag = dao.selectUserTag(conn, userId);
+		close(conn);
+		return userTag;
 	}
 }

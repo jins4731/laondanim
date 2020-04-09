@@ -54,6 +54,7 @@ public class UserDao {
 			u.setUserId(rs.getString("user_id"));
 			u.setName(rs.getString("name"));
 			u.setEmail(rs.getString("email"));
+			u.setTag(rs.getString("tag"));
 			
 		}
 		

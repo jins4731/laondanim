@@ -18,7 +18,7 @@ import static com.laon.common.MyPaging.*;
 /**
  * Servlet implementation class MyPageContentServlet
  */
-@WebServlet("/myPage/myPageContent")
+@WebServlet("/myPage/myPageContent.do")
 public class MyPageContentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -42,7 +42,7 @@ public class MyPageContentServlet extends HttpServlet {
 		
 		List<Board> board=new MypageService().selectMyBoard(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
 		int boardCount = new MypageService().selectMyBoardCount();
-		String boardPasing = getPageBar(boardCount, currentPage, pagePerRow, request, "/myPage/myPageContent");
+		String boardPasing = getPageBar(boardCount, currentPage, pagePerRow, request, "/myPage/myPageContent.do");
 		
 		request.setAttribute("trip", trip);
 		request.setAttribute("tripCount", tripCount);

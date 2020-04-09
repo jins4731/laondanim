@@ -3,6 +3,6 @@
 
 	<div class="container row">
 		<section>
-			<a href="<%=request.getContextPath()%>/myPage/myPageContent">mypage!</a>
+			<a href="<%=request.getContextPath()%>/myPage/myPageContent.do">mypage!</a>
 		</section>
 	</div>

@@ -20,7 +20,7 @@ import com.laon.mypage.model.service.MypageService;
 /**
  * Servlet implementation class MyPageDongMyDHServlet
  */
-@WebServlet("/myPage/myDongMyDH")
+@WebServlet("/myPage/myDongMyDH.do")
 public class MyPageDongMyDHServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -41,7 +41,7 @@ public class MyPageDongMyDHServlet extends HttpServlet {
 		
 		List<Donghang> myDong=new MypageService().selectMyDHAll(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
 		int myDHCount = new MypageService().selectMyTripCount();
-		String myDHPasing = getPageBar(myDHCount, currentPage, pagePerRow, request, "/myPage/myConTrip");
+		String myDHPasing = getPageBar(myDHCount, currentPage, pagePerRow, request, "/myPage/myConTrip.do");
 		
 		request.setAttribute("myDong", myDong);
 		request.setAttribute("myDHPasing", myDHPasing);

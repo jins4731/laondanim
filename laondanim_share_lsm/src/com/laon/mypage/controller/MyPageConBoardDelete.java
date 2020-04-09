@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class MyPageConBoardDelete
  */
-@WebServlet("/mypage/myBoardDel")
+@WebServlet("/mypage/myBoardDel.do")
 public class MyPageConBoardDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

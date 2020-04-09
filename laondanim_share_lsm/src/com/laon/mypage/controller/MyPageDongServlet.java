@@ -15,7 +15,7 @@ import com.laon.mypage.model.service.MypageService;
 /**
  * Servlet implementation class MyPageDongServlet
  */
-@WebServlet("/myPage/myPageDong")
+@WebServlet("/myPage/myPageDong.do")
 public class MyPageDongServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

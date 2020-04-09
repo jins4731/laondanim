@@ -20,7 +20,7 @@ import com.laon.trip.model.vo.Trip;
 /**
  * Servlet implementation class MyPageContentDetailServlet
  */
-@WebServlet("/myPage/myConTrip")
+@WebServlet("/myPage/myConTrip.do")
 public class MyPageContentTripServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -41,7 +41,7 @@ public class MyPageContentTripServlet extends HttpServlet {
 		
 		List<Trip> trip=new MypageService().selectMyTripAll(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
 		int tripCount = new MypageService().selectMyTripCount();
-		String tripPasing = getPageBar(tripCount, currentPage, pagePerRow, request, "/myPage/myConTrip");
+		String tripPasing = getPageBar(tripCount, currentPage, pagePerRow, request, "/myPage/myConTrip.do");
 		
 		request.setAttribute("trip", trip);
 		request.setAttribute("tripPasing", tripPasing);

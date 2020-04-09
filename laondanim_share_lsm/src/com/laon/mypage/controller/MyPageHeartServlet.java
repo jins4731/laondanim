@@ -15,7 +15,7 @@ import com.laon.mypage.model.service.MypageService;
 /**
  * Servlet implementation class MyPageHeartServlet
  */
-@WebServlet("/myPage/myPageHeart")
+@WebServlet("/myPage/myPageHeart.do")
 public class MyPageHeartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

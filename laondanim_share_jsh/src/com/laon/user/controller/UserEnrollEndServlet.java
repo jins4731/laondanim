@@ -37,7 +37,7 @@ public class UserEnrollEndServlet extends HttpServlet {
 		String nickName = request.getParameter("userNickName");
 		String inputBirthday = request.getParameter("userBirth");
 		String gender = request.getParameter("gender");
-		int phone = Integer.parseInt(request.getParameter("userPhone"));
+		String phone = request.getParameter("userPhone");
 		String email = request.getParameter("userEmail");
 		String likeArea = request.getParameter("likeArea");
 		String[] likeTag = request.getParameterValues("likeTag");

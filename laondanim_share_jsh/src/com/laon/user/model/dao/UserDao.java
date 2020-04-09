@@ -102,7 +102,7 @@ public class UserDao {
 			pstmt.setString(4, u.getNickName());
 			pstmt.setDate(5, u.getBirthday());
 			pstmt.setString(6, u.getGender());
-			pstmt.setInt(7, u.getPhone());
+			pstmt.setString(7, u.getPhone());
 			pstmt.setString(8, u.getEmail());
 			pstmt.setString(9, u.getTag());			
 			

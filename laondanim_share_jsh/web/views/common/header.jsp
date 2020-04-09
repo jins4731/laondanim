@@ -134,7 +134,7 @@ header li>a {
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">커뮤니티</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#">동행찾기</a> 
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangListView.do">동행찾기</a> 
 								<a class="dropdown-item" href="<%=request.getContextPath()%>/board/list.do">게시판</a>
 							</div>
 						</li>

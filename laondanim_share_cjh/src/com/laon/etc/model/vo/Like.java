@@ -22,6 +22,10 @@ public class Like implements LaonRobot<Like>{
  // 취소여부 취소 여부
  private String cancled;
  
+ 
+ // 좋아요 개수
+ private int likeCount;
+ 
  public Like() {
 	// TODO Auto-generated constructor stub
 }
@@ -33,24 +37,13 @@ public class Like implements LaonRobot<Like>{
 
 
 
- public Like(int no, int userNo, int tripNo, String cancled) {
+ public Like(int no, int userNo, int tripNo, String cancled, int likeCount) {
 	super();
 	this.no = no;
 	this.userNo = userNo;
 	this.tripNo = tripNo;
 	this.cancled = cancled;
-}
-
-
-
-
-
-
-
-
-@Override
-public String toString() {
-	return "Like [no=" + no + ", userNo=" + userNo + ", tripNo=" + tripNo + ", cancled=" + cancled + "]";
+	this.likeCount = likeCount;
 }
 
 
@@ -139,6 +132,28 @@ public String getCancled() {
 
 public void setCancled(String cancled) {
 	this.cancled = cancled;
+}
+
+
+
+
+
+
+
+
+public int getLikeCount() {
+	return likeCount;
+}
+
+
+
+
+
+
+
+
+public void setLikeCount(int likeCount) {
+	this.likeCount = likeCount;
 }
 
 

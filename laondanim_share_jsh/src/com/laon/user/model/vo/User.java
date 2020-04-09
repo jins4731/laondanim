@@ -35,7 +35,7 @@ public class User {
  // 이메일 이메일
  private String email;
  
- public User() {
+ public User() {//기본생성자
 	// TODO Auto-generated constructor stub
 }
 

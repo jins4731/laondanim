@@ -2,40 +2,40 @@ package com.laon.user.model.vo;
 
 import java.sql.Date;
 
-//È¸¿ø Å×ÀÌºí
+//íšŒì› í…Œì´ë¸”
 public class User {
 
-	 // ³Ñ¹ö È¸¿ø ±âº»Å°
+	 // ë„˜ë²„ íšŒì› ê¸°ë³¸í‚¤
 	 private int no;
 	
-	 // »ı¼ºµÈ ³¯Â¥ °¡ÀÔ ³¯Â¥
+	 // ìƒì„±ëœ ë‚ ì§œ ê°€ì… ë‚ ì§œ
 	 private Date createdDate;
 	
-	 // À¯Àú ¾ÆÀÌµğ È¸¿ø ¾ÆÀÌµğ
+	 // ìœ ì € ì•„ì´ë”” íšŒì› ì•„ì´ë””
 	 private String userId;	
 
-	// ºñ¹Ğ¹øÈ£ ºñ¹Ğ¹øÈ£
+	 // ë¹„ë°€ë²ˆí˜¸ ë¹„ë°€ë²ˆí˜¸
 	 private String password;
 	
-	 // ÀÌ¸§ È¸¿ø ÀÌ¸§
+	 // ì´ë¦„ íšŒì› ì´ë¦„
 	 private String name;
 	
-	 // ´Ğ ÀÌ¸§ ³Ø³×ÀÓ
+	 // ë‹‰ ì´ë¦„ ë‹‰ë„¤ì„
 	 private String nickName;
 	
-	 // »ı³â¿ùÀÏ »ı³â¿ùÀÏ
+	 // ìƒë…„ì›”ì¼ ìƒë…„ì›”ì¼
 	 private Date birthday;
 	
-	 // ¼ºº° ¼ºº°
+	 // ì„±ë³„ ì„±ë³„
 	 private String gender;
 	
-	 // ÈŞ´ëÀüÈ­ ÈŞ´ëÀüÈ­
+	 // íœ´ëŒ€ì „í™” íœ´ëŒ€ì „í™”
 	 private int phone;
 	
-	 // ÀÌ¸ŞÀÏ ÀÌ¸ŞÀÏ
+	 // ì´ë©”ì¼ ì´ë©”ì¼
 	 private String email;
 	
-	 // ÅÂ±× °¡ÀÔ½Ã Ãß°¡ÇÏ´Â °ü½É ÅÂ±×
+	// íƒœê·¸ ê°€ì…ì‹œ ì¶”ê°€í•˜ëŠ” ê´€ì‹¬ íƒœê·¸
 	 private String tag;
 	
 	 public int getNo() {
@@ -126,7 +126,7 @@ public class User {
 	     this.tag = tag;
 	 }
 	
-	 // User ¸ğµ¨ º¹»ç
+	 // UserTB ëª¨ë¸ ë³µì‚¬
 	 public void CopyData(User param)
 	 {
 	     this.no = param.getNo();

@@ -62,6 +62,12 @@ public class Donghang {
  // 참여 인원 넘버 동행 참여 인원
  private int joinPeopleNo;
  
+ // 닉네임
+ private String nickName;
+ 
+ // 사진 (사진테이블)
+ private String image; 
+ 
  public Donghang() {
 	// TODO Auto-generated constructor stub
 }
@@ -92,6 +98,38 @@ public class Donghang {
 	this.deleted = deleted;
 	this.recruitPeopleNo = recruitPeopleNo;
 	this.joinPeopleNo = joinPeopleNo;
+}
+
+
+ 
+
+
+public Donghang(int no, int userNo, int tripNo, Date writeDate, int viewcount, String tag, String title, String content,
+		String travleLocale, Date travleStartDate, Date travleEndDate, Date recruitStartDate, Date recruitEndDate,
+		int pw, String publicEnabled, String ended, String deleted, int recruitPeopleNo, int joinPeopleNo,
+		String nickName, String image) {
+	super();
+	this.no = no;
+	this.userNo = userNo;
+	this.tripNo = tripNo;
+	this.writeDate = writeDate;
+	this.viewcount = viewcount;
+	this.tag = tag;
+	this.title = title;
+	this.content = content;
+	this.travleLocale = travleLocale;
+	this.travleStartDate = travleStartDate;
+	this.travleEndDate = travleEndDate;
+	this.recruitStartDate = recruitStartDate;
+	this.recruitEndDate = recruitEndDate;
+	this.pw = pw;
+	this.publicEnabled = publicEnabled;
+	this.ended = ended;
+	this.deleted = deleted;
+	this.recruitPeopleNo = recruitPeopleNo;
+	this.joinPeopleNo = joinPeopleNo;
+	this.nickName = nickName;
+	this.image = image;
 }
 
 
@@ -371,6 +409,34 @@ public int getJoinPeopleNo() {
 
 public void setJoinPeopleNo(int joinPeopleNo) {
 	this.joinPeopleNo = joinPeopleNo;
+}
+
+
+
+
+public String getNickName() {
+	return nickName;
+}
+
+
+
+
+public void setNickName(String nickName) {
+	this.nickName = nickName;
+}
+
+
+
+
+public String getImage() {
+	return image;
+}
+
+
+
+
+public void setImage(String image) {
+	this.image = image;
 }
 
 

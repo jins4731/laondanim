@@ -102,7 +102,7 @@
         <div class="container mt-4 ">
             <div class="row justify-content-between">
                 <div class="col d-flex align-items-center">
-                    <h6 class="display-6 mt-2">총 빰 변수넣기 빰건의 여행기가 있습니다.</h6>
+                    <h6 class="display-6 mt-2">총 <%=request.getAttribute("totalContent")%>건의 동행이 있습니다.</h6>
                 </div>
 
                 <div class="col d-flex justify-content-end">

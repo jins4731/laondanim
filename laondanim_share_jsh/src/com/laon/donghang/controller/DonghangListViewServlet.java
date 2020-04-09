@@ -50,7 +50,9 @@ public class DonghangListViewServlet extends HttpServlet {
 		request.setAttribute(CommonKey.LIST, list);
 		request.setAttribute(CommonKey.PAGE_BAR, pageBar);
 		
-		
+		//총 콘텐츠 수 가져오기
+		int totalContent = new DonghangService().selectDonghangCount();
+		request.setAttribute("totalContent", totalContent);
 		
 		
 		

@@ -142,13 +142,13 @@
                 </div>
 
                 <div class="d-flex flex-column mt-5 mb-3 justify-content-center align-self-center text-center" style="width: 400px; height: auto;">
-                    <p class="m-0 " style="font-weight: 600;">(선택) 회원님의 여행 관심사를 알려주세요<span>&#x1F60A</span></p>                  
+                    <p class="m-0 " style="font-weight: 600;">회원님의 여행 관심사를 알려주세요<span>&#x1F60A</span></p>                  
                 </div>              
                 
                 <div class="form-group d-flex flex-column justify-content-center mt-4" style="width: 400px;">
                     <p class="mb-2 ml-2 align-items-start">관심지역을 <strong>선택</strong>해주세요.</p>
                     <div class="form-group">
-                        <select name="likeArea" class="form-control" id="likeAreaSelect">
+                        <select name="likeArea" class="form-control" id="likeAreaSelect" required>
                           <option value="" disabled selected>관심지역 선택</option>
                           <option>서울</option>
                           <option>부산</option>
@@ -650,7 +650,13 @@
         if(autP!=="인증이 완료되었습니다! 가입을 진행해주세요."){
         	alert("메일인증을 다시 시도해주세요.");
         	return false;        	
-        }
+        }        
+        //관심사 태그 체크박스 하나 이상 확인
+        if( $("input[type=checkbox][name=likeTag]:checked").length == 0 ){
+		    alert("관심 태그 항목을 하나 이상 체크해 주세요.");
+            return false; 
+		}
+
         return true;
 	}  		
 	

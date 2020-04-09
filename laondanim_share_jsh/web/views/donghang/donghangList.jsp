@@ -98,17 +98,18 @@
             }
         </style>
 
-        <!-- 전체 목록 개수 / 필터 -->
+        <!-- 전체 목록 개수 / 순서정렬 필터 -->
         <div class="container mt-4 ">
             <div class="row justify-content-between">
-                <div class="col-4 d-flex align-items-center">
+                <div class="col d-flex align-items-center">
                     <h6 class="display-6 mt-2">총 빰 변수넣기 빰건의 여행기가 있습니다.</h6>
                 </div>
 
-                <div class="col-3 d-flex justify-content-end">
-                    <button class="btn btn-mg btn-outline-secondary border-0">최근순</button>   <!--ajax 정렬-->
-                    <button class="btn btn-mg btn-outline-secondary border-0">조회수 순</button> <!--ajax 정렬-->
-                    <button class="btn btn-mg btn-outline-secondary border-0">가까운 일정 순</button> <!--ajax 정렬-->
+                <div class="col d-flex justify-content-end">
+                    <button class="btn btn-outline-secondary border-0">관심태그 순</button>   <!--ajax 정렬-->
+                    <button class="btn btn-outline-secondary border-0">최근 순</button>   <!--ajax 정렬-->
+                    <button class="btn btn-outline-secondary border-0">조회수 순</button> <!--ajax 정렬-->
+                    <button class="btn btn-outline-secondary border-0">가까운 일정 순</button> <!--ajax 정렬-->
                 </div>
             </div>
         </div> 

@@ -12,10 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.laon.board.model.service.BoardService;
 import com.laon.board.model.vo.Board;
 import com.laon.common.CommonKey;
-import com.laon.common.template.PageTemplate;
 
 import static com.laon.common.template.PageTemplate.*;
-import static com.laon.common.template.MsgTemplate.*;
 
 /**
  * Servlet implementation class BoardListViewServlet
@@ -46,7 +44,7 @@ public class BoardListViewServlet extends HttpServlet {
 		
 		
 		
-		request.setAttribute(CommonKey.LIST, list);
+		request.setAttribute(CommonKey.BOARD_LIST, list);
 		request.setAttribute(CommonKey.PAGE_BAR, pageBar);
 //		request.getRequestDispatcher("").forward(request, response);
 		

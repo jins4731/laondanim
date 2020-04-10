@@ -2,171 +2,170 @@ package com.laon.user.model.vo;
 
 import java.sql.Date;
 
-//È¸¿ø Å×ÀÌºí
+//íšŒì› í…Œì´ë¸”
 public class User {
 
-	 // ³Ñ¹ö È¸¿ø ±âº»Å°
-	 private int no;
-	
-	 // »ı¼ºµÈ ³¯Â¥ °¡ÀÔ ³¯Â¥
-	 private Date createdDate;
-	
-	 // À¯Àú ¾ÆÀÌµğ È¸¿ø ¾ÆÀÌµğ
-	 private String userId;	
+ // ë„˜ë²„ íšŒì› ê¸°ë³¸í‚¤
+ private int no;
 
-	// ºñ¹Ğ¹øÈ£ ºñ¹Ğ¹øÈ£
-	 private String password;
-	
-	 // ÀÌ¸§ È¸¿ø ÀÌ¸§
-	 private String name;
-	
-	 // ´Ğ ÀÌ¸§ ³Ø³×ÀÓ
-	 private String nickName;
-	
-	 // »ı³â¿ùÀÏ »ı³â¿ùÀÏ
-	 private Date birthday;
-	
-	 // ¼ºº° ¼ºº°
-	 private String gender;
-	
-	 // ÈŞ´ëÀüÈ­ ÈŞ´ëÀüÈ­
-	 private int phone;
-	
-	 // ÀÌ¸ŞÀÏ ÀÌ¸ŞÀÏ
-	 private String email;
-	
-	 // ÅÂ±× °¡ÀÔ½Ã Ãß°¡ÇÏ´Â °ü½É ÅÂ±×
-	 private String tag;
-	
-	 public int getNo() {
-	     return no;
-	 }
-	
-	 public void setNo(int no) {
-	     this.no = no;
-	 }
-	
-	 public Date getCreatedDate() {
-	     return createdDate;
-	 }
-	
-	 public void setCreatedDate(Date createdDate) {
-	     this.createdDate = createdDate;
-	 }
-	
-	 public String getUserId() {
-	     return userId;
-	 }
-	
-	 public void setUserId(String userId) {
-	     this.userId = userId;
-	 }
-	
-	 public String getPassword() {
-	     return password;
-	 }
-	
-	 public void setPassword(String password) {
-	     this.password = password;
-	 }
-	
-	 public String getName() {
-	     return name;
-	 }
-	
-	 public void setName(String name) {
-	     this.name = name;
-	 }
-	
-	 public String getNickName() {
-	     return nickName;
-	 }
-	
-	 public void setNickName(String nickName) {
-	     this.nickName = nickName;
-	 }
-	
-	 public Date getBirthday() {
-	     return birthday;
-	 }
-	
-	 public void setBirthday(Date birthday) {
-	     this.birthday = birthday;
-	 }
-	
-	 public String getGender() {
-	     return gender;
-	 }
-	
-	 public void setGender(String gender) {
-	     this.gender = gender;
-	 }
-	
-	 public int getPhone() {
-	     return phone;
-	 }
-	
-	 public void setPhone(int phone) {
-	     this.phone = phone;
-	 }
-	
-	 public String getEmail() {
-	     return email;
-	 }
-	
-	 public void setEmail(String email) {
-	     this.email = email;
-	 }
-	
-	 public String getTag() {
-	     return tag;
-	 }
-	
-	 public void setTag(String tag) {
-	     this.tag = tag;
-	 }
-	
-	 // User ¸ğµ¨ º¹»ç
-	 public void CopyData(User param)
-	 {
-	     this.no = param.getNo();
-	     this.createdDate = param.getCreatedDate();
-	     this.userId = param.getUserId();
-	     this.password = param.getPassword();
-	     this.name = param.getName();
-	     this.nickName = param.getNickName();
-	     this.birthday = param.getBirthday();
-	     this.gender = param.getGender();
-	     this.phone = param.getPhone();
-	     this.email = param.getEmail();
-	     this.tag = param.getTag();
-	 }
-	 
-	 @Override
-	public String toString() {
-		return "User [no=" + no + ", createdDate=" + createdDate + ", userId=" + userId + ", password=" + password
-				+ ", name=" + name + ", nickName=" + nickName + ", birthday=" + birthday + ", gender=" + gender
-				+ ", phone=" + phone + ", email=" + email + ", tag=" + tag + "]";
-	}
-	 
-	public User() {
-		// TODO Auto-generated constructor stub
-	}
+ // ìƒì„±ëœ ë‚ ì§œ ê°€ì… ë‚ ì§œ
+ private Date createdDate;
 
-	public User(int no, Date createdDate, String userId, String password, String name, String nickName, Date birthday,
-			String gender, int phone, String email, String tag) {
-		super();
-		this.no = no;
-		this.createdDate = createdDate;
-		this.userId = userId;
-		this.password = password;
-		this.name = name;
-		this.nickName = nickName;
-		this.birthday = birthday;
-		this.gender = gender;
-		this.phone = phone;
-		this.email = email;
-		this.tag = tag;
-	}
-	
+ // ìœ ì € ì•„ì´ë”” íšŒì› ì•„ì´ë””
+ private String userId;
+
+ // ë¹„ë°€ë²ˆí˜¸ ë¹„ë°€ë²ˆí˜¸
+ private String password;
+
+ // ì´ë¦„ íšŒì› ì´ë¦„
+ private String name;
+
+ // ë‹‰ ì´ë¦„ ë„¥ë„¤ì„
+ private String nickName;
+
+ // ìƒë…„ì›”ì¼ ìƒë…„ì›”ì¼
+ private Date birthday;
+
+ // ì„±ë³„ ì„±ë³„
+ private String gender;
+
+ // íœ´ëŒ€ì „í™” íœ´ëŒ€ì „í™”
+ private String phone;
+
+ // ì´ë©”ì¼ ì´ë©”ì¼
+ private String email;
+ 
+ public User() {//ê¸°ë³¸ìƒì„±ì
+	// TODO Auto-generated constructor stub
+}
+
+ public User(int no, Date createdDate, String userId, String password, String name, String nickName, Date birthday,
+		String gender, String phone, String email, String tag) {
+	super();
+	this.no = no;
+	this.createdDate = createdDate;
+	this.userId = userId;
+	this.password = password;
+	this.name = name;
+	this.nickName = nickName;
+	this.birthday = birthday;
+	this.gender = gender;
+	this.phone = phone;
+	this.email = email;
+	this.tag = tag;
+}
+
+@Override
+public String toString() {
+	return "UserTb [no=" + no + ", createdDate=" + createdDate + ", userId=" + userId + ", password=" + password
+			+ ", name=" + name + ", nickName=" + nickName + ", birthday=" + birthday + ", gender=" + gender + ", phone="
+			+ phone + ", email=" + email + ", tag=" + tag + "]";
+}
+
+// íƒœê·¸ ê°€ì…ì‹œ ì¶”ê°€í•˜ëŠ” ê´€ì‹¬ íƒœê·¸
+ private String tag;
+
+ public int getNo() {
+     return no;
+ }
+
+ public void setNo(int no) {
+     this.no = no;
+ }
+
+ public Date getCreatedDate() {
+     return createdDate;
+ }
+
+ public void setCreatedDate(Date createdDate) {
+     this.createdDate = createdDate;
+ }
+
+ public String getUserId() {
+     return userId;
+ }
+
+ public void setUserId(String userId) {
+     this.userId = userId;
+ }
+
+ public String getPassword() {
+     return password;
+ }
+
+ public void setPassword(String password) {
+     this.password = password;
+ }
+
+ public String getName() {
+     return name;
+ }
+
+ public void setName(String name) {
+     this.name = name;
+ }
+
+ public String getNickName() {
+     return nickName;
+ }
+
+ public void setNickName(String nickName) {
+     this.nickName = nickName;
+ }
+
+ public Date getBirthday() {
+     return birthday;
+ }
+
+ public void setBirthday(Date birthday) {
+     this.birthday = birthday;
+ }
+
+ public String getGender() {
+     return gender;
+ }
+
+ public void setGender(String gender) {
+     this.gender = gender;
+ }
+
+ public String getPhone() {
+     return phone;
+ }
+
+ public void setPhone(String phone) {
+     this.phone = phone;
+ }
+
+ public String getEmail() {
+     return email;
+ }
+
+ public void setEmail(String email) {
+     this.email = email;
+ }
+
+ public String getTag() {
+     return tag;
+ }
+
+ public void setTag(String tag) {
+     this.tag = tag;
+ }
+
+ // UserTb ëª¨ë¸ ë³µì‚¬
+ public void CopyData(User param)
+ {
+     this.no = param.getNo();
+     this.createdDate = param.getCreatedDate();
+     this.userId = param.getUserId();
+     this.password = param.getPassword();
+     this.name = param.getName();
+     this.nickName = param.getNickName();
+     this.birthday = param.getBirthday();
+     this.gender = param.getGender();
+     this.phone = param.getPhone();
+     this.email = param.getEmail();
+     this.tag = param.getTag();
+ }
 }

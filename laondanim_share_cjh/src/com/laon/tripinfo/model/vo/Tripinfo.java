@@ -1,7 +1,19 @@
 package com.laon.tripinfo.model.vo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.laon.common.PictureKey;
+import com.laon.common.TripinfoKey;
+import com.laon.common.robot.LaonRobot;
+import com.laon.etc.model.vo.Picture;
+import com.oreilly.servlet.MultipartRequest;
+
 //여행정보 테이블
-public class Tripinfo {
+public class Tripinfo implements LaonRobot<Tripinfo>{
+	
+private Picture picture;
 
  // 넘버 여행정보 기본키
  private int no;
@@ -154,4 +166,74 @@ public int getNo() {
      this.naver = param.getNaver();
      this.sns = param.getSns();
  }
+
+ 
+ 
+ private String cNo = "no";
+ private String cCategory   = "category";
+ private String cTag = "tag";
+ private String cName = "name";
+ private String cAddress = "address";
+ private String cBusinessHours = "business_hours";
+ private String cTel = "tel";
+ private String cHomepage = "homepage";
+ private String cNaver = "naver";
+ private String cSns = "sns";
+
+@Override
+public List<Tripinfo> rsProcess(List<Tripinfo> list, ResultSet rs) throws SQLException {
+	while (rs.next()) {
+		Tripinfo item = new Tripinfo();
+		item.setNo(rs.getInt(cNo));
+		item.setCategory(rs.getString(cCategory));
+		item.setTag(rs.getString(cTag));
+		item.setName(rs.getString(cName));
+		item.setAddress(rs.getString(cAddress));
+		item.setBusinessHours(rs.getString(cBusinessHours));
+		item.setTel(rs.getString(cTel));
+		item.setHomepage(rs.getString(cHomepage));
+		item.setNaver(rs.getString(cNaver));
+		item.setSns(rs.getString(cSns));
+		list.add(item);
+	}
+	return list;
+}
+
+
+@Override
+public Tripinfo rsProcess(Tripinfo item, ResultSet rs) throws SQLException {
+	// TODO Auto-generated method stub
+	while (rs.next()) {
+		item.setNo(rs.getInt(cNo));
+		item.setCategory(rs.getString(cCategory));
+		item.setTag(rs.getString(cTag));
+		item.setName(rs.getString(cName));
+		item.setAddress(rs.getString(cAddress));
+		item.setBusinessHours(rs.getString(cBusinessHours));
+		item.setTel(rs.getString(cTel));
+		item.setHomepage(rs.getString(cHomepage));
+		item.setNaver(rs.getString(cNaver));
+		item.setSns(rs.getString(cSns));
+	}
+	return item;
+}
+
+
+@Override
+public Tripinfo mrProcess(Tripinfo item, MultipartRequest mr, Picture pic) {
+	// TODO Auto-generated method stub
+	picture = pic;
+	picture.setImage(mr.getOriginalFileName(PictureKey.IMAGE));
+	item.setNo(Integer.parseInt(mr.getParameter(TripinfoKey.NO)));
+	item.setCategory(mr.getParameter(TripinfoKey.CATEGORY));
+	item.setTag(mr.getParameter(TripinfoKey.TAG));
+	item.setName(mr.getParameter(TripinfoKey.NAME));
+	item.setAddress(mr.getParameter(TripinfoKey.ADDRESS));
+	item.setBusinessHours(mr.getParameter(TripinfoKey.BUSINESS_HOURS));
+	item.setTel(mr.getParameter(TripinfoKey.TEL));
+	item.setHomepage(mr.getParameter(TripinfoKey.HOMEPAGE));
+	item.setNaver(mr.getParameter(TripinfoKey.NAVER));
+	item.setSns(mr.getParameter(TripinfoKey.SNS));
+	return item;
+}
 }

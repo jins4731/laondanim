@@ -1,9 +1,6 @@
 package com.laon.tripinfo.controller;
 
-import static com.laon.common.template.PageTemplate.getCurrentPage;
-import static com.laon.common.template.PageTemplate.getEndNum;
-import static com.laon.common.template.PageTemplate.getPageBar;
-import static com.laon.common.template.PageTemplate.getStartNum;
+import static com.laon.common.template.PageTemplate.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -45,7 +42,7 @@ public class TripinfoListViewServlet extends HttpServlet {
 		int totalRowCount = new TripinfoService().selectTripinfoCount();
 		String pageBar = getPageBar(totalRowCount, currentPage, pagePerRow, request, "");
 		
-		request.setAttribute(CommonKey.LIST, list);
+		request.setAttribute(CommonKey.TRIPINFO_LIST, list);
 		request.setAttribute(CommonKey.PAGE_BAR, pageBar);
 		request.getRequestDispatcher("").forward(request, response);
 	}

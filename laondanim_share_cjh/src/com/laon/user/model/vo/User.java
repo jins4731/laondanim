@@ -1,9 +1,20 @@
 package com.laon.user.model.vo;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.laon.common.PictureKey;
+import com.laon.common.UserKey;
+import com.laon.common.robot.LaonRobot;
+import com.laon.etc.model.vo.Picture;
+import com.oreilly.servlet.MultipartRequest;
 
 //회원 테이블
-public class User {
+public class User implements LaonRobot<User>{
+
+private Picture picture;
 
  // 넘버 회원 기본키
  private int no;
@@ -168,4 +179,70 @@ public String toString() {
      this.email = param.getEmail();
      this.tag = param.getTag();
  }
+
+ 	
+    private String cNo = "no";
+	private String cCreatedDate = "created_date";
+	private String cUserId = "user_id";
+	private String cPassword = "password";
+	private String cName = "name";
+	private String cNickName = "nick_name";
+	private String cBirthday = "birthday";
+	private String cGender = "gender";
+	private String cPhone = "phone";
+	private String cEmail = "email";
+	
+	
+ 
+@Override
+public List<User> rsProcess(List<User> list, ResultSet rs) throws SQLException {
+	while (rs.next()) {
+		User item = new User();
+		item.setNo(rs.getInt(cNo));
+		item.setCreatedDate(rs.getDate(cCreatedDate));
+		item.setUserId(rs.getString(cUserId));
+		item.setPassword(rs.getString(cPassword));
+		item.setName(rs.getString(cName));
+		item.setNickName(rs.getString(cNickName));
+		item.setBirthday(rs.getDate(cBirthday));
+		item.setGender(rs.getString(cGender));
+		item.setPhone(rs.getString(cPhone));
+		item.setEmail(rs.getString(cEmail));
+		list.add(item);
+	}
+	return list;
+}
+
+@Override
+public User rsProcess(User item, ResultSet rs) throws SQLException {
+	while (rs.next()) {
+		item.setNo(rs.getInt(cNo));
+		item.setCreatedDate(rs.getDate(cCreatedDate));
+		item.setUserId(rs.getString(cUserId));
+		item.setPassword(rs.getString(cPassword));
+		item.setName(rs.getString(cName));
+		item.setNickName(rs.getString(cNickName));
+		item.setBirthday(rs.getDate(cBirthday));
+		item.setGender(rs.getString(cGender));
+		item.setPhone(rs.getString(cPhone));
+		item.setEmail(rs.getString(cEmail));
+	}
+	return item;
+}
+
+
+@Override
+public User mrProcess(User item, MultipartRequest mr, Picture pic) {
+	picture = pic;
+	picture.setImage(mr.getOriginalFileName(PictureKey.IMAGE));
+	item.setUserId(mr.getParameter(UserKey.USER_ID));
+	item.setPassword(mr.getParameter(UserKey.PASSWORD));
+	item.setName(mr.getParameter(UserKey.NAME));
+	item.setNickName(mr.getParameter(UserKey.NICK_NAME));
+	item.setBirthday(Date.valueOf(mr.getParameter(UserKey.BIRTHDAY)));
+	item.setGender(mr.getParameter(UserKey.GENDER));
+	item.setPhone(mr.getParameter(UserKey.PHONE));
+	item.setEmail(mr.getParameter(UserKey.EMAIL));
+	return item;
+}
 }

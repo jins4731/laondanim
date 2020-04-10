@@ -1,9 +1,21 @@
 package com.laon.donghang.model.vo;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.laon.common.DonghangKey;
+import com.laon.common.PictureKey;
+import com.laon.common.robot.LaonRobot;
+import com.laon.etc.model.vo.Picture;
+import com.oreilly.servlet.MultipartRequest;
 
 //동행 테이블
-public class Donghang {
+public class Donghang implements LaonRobot<Donghang>{
+		
+	
+private Picture picture;
 
  // 넘버 동행 기본키
  private int no;
@@ -399,4 +411,116 @@ public void setJoinPeopleNo(int joinPeopleNo) {
      this.recruitPeopleNo = param.getRecruitPeopleNo();
      this.joinPeopleNo = param.getJoinPeopleNo();
  }
+
+
+
+ 
+ private String cNo = "no";
+ private String cUserNo = "userNo;";
+ private String cTripNo = "tripNo;";
+ private String cWriteDate = "write_date";
+ private String cViewcount = "view_count";
+ private String cTag = "tag";
+ private String cTitle = "title";
+ private String cContent = "content";
+ private String cTravleLocale = "travle_locale";
+ private String cTravleStartDate = "travle_start_date";
+ private String cTravleEndDate = "travle_end_date";
+ private String cRecruitStartDate = "recruit_start_date";
+ private String cRecruitEndDate = "recruit_end_date";
+ private String cPw = "pw";
+ private String cPublicEnabled = "public_enabled";
+ private String cEnded = "ended";
+ private String cDeleted = "deleted";
+ private String cRecruitPeopleNo = "recruit_people_no";
+ private String cJoinPeopleNo = "join_people_no";
+ 
+
+@Override
+public List<Donghang> rsProcess(List<Donghang> list, ResultSet rs) throws SQLException {
+	// TODO Auto-generated method stub
+	while (rs.next()) {
+		Donghang item = new Donghang();
+		item.setNo(rs.getInt(cNo));
+		item.setUserNo(rs.getInt(cUserNo));
+		item.setTripNo(rs.getInt(cTripNo));
+		item.setWriteDate(rs.getDate(cWriteDate));
+		item.setViewcount(rs.getInt(cViewcount));
+		item.setTag(rs.getString(cTag));
+		item.setTitle(rs.getString(cTitle));
+		item.setContent(rs.getString(cContent));
+		item.setTravleLocale(rs.getString(cTravleLocale));
+		item.setTravleStartDate(rs.getDate(cTravleStartDate));
+		item.setTravleEndDate(rs.getDate(cTravleEndDate));
+		item.setRecruitStartDate(rs.getDate(cRecruitStartDate));
+		item.setRecruitEndDate(rs.getDate(cRecruitEndDate));
+		item.setPw(rs.getInt(cPw));
+		item.setPublicEnabled(rs.getString(cPublicEnabled));
+		item.setEnded(rs.getString(cEnded));
+		item.setDeleted(rs.getString(cDeleted));
+		item.setRecruitPeopleNo(rs.getInt(cRecruitPeopleNo));
+		item.setJoinPeopleNo(rs.getInt(cJoinPeopleNo));
+		list.add(item);
+	}
+	return list;
+}
+
+
+
+
+@Override
+public Donghang rsProcess(Donghang item, ResultSet rs) throws SQLException {
+	// TODO Auto-generated method stub
+	while (rs.next()) {
+		item.setNo(rs.getInt(cNo));
+		item.setUserNo(rs.getInt(cUserNo));
+		item.setTripNo(rs.getInt(cTripNo));
+		item.setWriteDate(rs.getDate(cWriteDate));
+		item.setViewcount(rs.getInt(cViewcount));
+		item.setTag(rs.getString(cTag));
+		item.setTitle(rs.getString(cTitle));
+		item.setContent(rs.getString(cContent));
+		item.setTravleLocale(rs.getString(cTravleLocale));
+		item.setTravleStartDate(rs.getDate(cTravleStartDate));
+		item.setTravleEndDate(rs.getDate(cTravleEndDate));
+		item.setRecruitStartDate(rs.getDate(cRecruitStartDate));
+		item.setRecruitEndDate(rs.getDate(cRecruitEndDate));
+		item.setPw(rs.getInt(cPw));
+		item.setPublicEnabled(rs.getString(cPublicEnabled));
+		item.setEnded(rs.getString(cEnded));
+		item.setDeleted(rs.getString(cDeleted));
+		item.setRecruitPeopleNo(rs.getInt(cRecruitPeopleNo));
+		item.setJoinPeopleNo(rs.getInt(cJoinPeopleNo));
+	}
+	return item;
+}
+
+
+
+
+@Override
+public Donghang mrProcess(Donghang item, MultipartRequest mr, Picture pic) {
+	picture = pic;
+	picture.setImage(mr.getOriginalFileName(PictureKey.IMAGE));
+	item.setNo(Integer.parseInt(mr.getParameter(DonghangKey.NO)));
+	item.setUserNo(Integer.parseInt(mr.getParameter(DonghangKey.USER_NO)));
+	item.setTripNo(Integer.parseInt(mr.getParameter(DonghangKey.TRIP_NO)));
+	item.setWriteDate(Date.valueOf(mr.getParameter(DonghangKey.WRITE_DATE)));
+	item.setViewcount(Integer.parseInt(mr.getParameter(DonghangKey.VIEWCOUNT)));
+	item.setTag(mr.getParameter(DonghangKey.TAG));
+	item.setTitle(mr.getParameter(DonghangKey.TITLE));
+	item.setContent(mr.getParameter(DonghangKey.CONTENT));
+	item.setTravleLocale(mr.getParameter(DonghangKey.TRAVLE_LOCALE));
+	item.setTravleStartDate(Date.valueOf(mr.getParameter(DonghangKey.TRAVLE_START_DATE)));
+	item.setTravleEndDate(Date.valueOf(mr.getParameter(DonghangKey.TRAVLE_END_DATE)));
+	item.setRecruitStartDate(Date.valueOf(mr.getParameter(DonghangKey.RECRUIT_START_DATE)));
+	item.setRecruitEndDate(Date.valueOf(mr.getParameter(DonghangKey.RECRUIT_END_DATE)));
+	item.setPw(Integer.parseInt(mr.getParameter(DonghangKey.PW)));
+	item.setPublicEnabled(mr.getParameter(DonghangKey.PUBLIC_ENABLED));
+	item.setEnded(mr.getParameter(DonghangKey.ENDED));
+	item.setDeleted(mr.getParameter(DonghangKey.DELETED));
+	item.setRecruitPeopleNo(Integer.parseInt(mr.getParameter(DonghangKey.RECRUIT_PEOPLE_NO)));
+	item.setJoinPeopleNo(Integer.parseInt(mr.getParameter(DonghangKey.JOIN_PEOPLE_NO)));
+	return item;
+}
 }

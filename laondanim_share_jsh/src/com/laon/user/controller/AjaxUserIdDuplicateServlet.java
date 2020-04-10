@@ -12,7 +12,7 @@ import com.laon.user.model.service.UserService;
 /**
  * Servlet implementation class AjaxUserIdDuplicateServlet
  */
-@WebServlet("/user/idCheck.do")
+@WebServlet(name="AjaxUserIdDuplicateServlet", urlPatterns = "/user/idCheck.do")
 public class AjaxUserIdDuplicateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,17 +30,17 @@ public class AjaxUserIdDuplicateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		//È­¸é¿¡¼­ È¸¿øÀÌ ÀÔ·ÂÇÑ id°ª ¹Ş¾Æ¿À±â
+		//í™”ë©´ì—ì„œ íšŒì›ì´ ì…ë ¥í•œ idê°’ ë°›ì•„ì˜¤ê¸°
 		String userId = request.getParameter("userId");
-		//JDBC ¾ÆÀÌµğ Áßº¹ È®ÀÎ
+		//JDBC ì•„ì´ë”” ì¤‘ë³µ í™•ì¸
 		boolean isUseable = new UserService().userIdDuplicate(userId);
-			//¾ÆÀÌµğ°¡ ÀÖÀ¸¸é true(=>»ç¿ëºÒ°¡ ¾ÆÀÌµğ)
+			//ì•„ì´ë””ê°€ ìˆìœ¼ë©´ true(=>ì‚¬ìš©ë¶ˆê°€ ì•„ì´ë””)
 		
 		if(isUseable) {
 			response.getWriter().write(
-					"<span class='ml-2'>&#x274C</span>"+"<strong>"+userId+"</strong><span id='idCheckEnd'>(Àº)´Â <span style='color:red;'>ÀÌ¹Ì »ç¿ëÁßÀÎ</span> ¾ÆÀÌµğÀÔ´Ï´Ù.</span>");
+					"<span class='ml-2'>&#x274C</span>"+"<strong>"+userId+"</strong><span id='idCheckEnd'>(ì€)ëŠ” <span style='color:red;'>ì´ë¯¸ ì‚¬ìš©ì¤‘ì¸</span> ì•„ì´ë””ì…ë‹ˆë‹¤.</span>");
 		} else {
-			response.getWriter().write("<span class='ml-2'>&#x1F44D</span>"+"<strong>"+userId+"</strong><span id='idCheckEnd'>´Â <span style='color:green;'>»ç¿ë°¡´ÉÇÑ</span> ¾ÆÀÌµğÀÔ´Ï´Ù.</span>");
+			response.getWriter().write("<span class='ml-2'>&#x1F44D</span>"+"<strong>"+userId+"</strong><span id='idCheckEnd'>ëŠ” <span style='color:green;'>ì‚¬ìš©ê°€ëŠ¥í•œ</span> ì•„ì´ë””ì…ë‹ˆë‹¤.</span>");
 		}
 		
 		

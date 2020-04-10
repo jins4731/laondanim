@@ -46,7 +46,7 @@ public class TripListViewServlet extends HttpServlet {
 		int totalRowCount = new TripService().selectTripCount();
 		String pageBar = getPageBar(totalRowCount, currentPage, pagePerRow, request, "");
 		
-		request.setAttribute(CommonKey.LIST, list);
+		request.setAttribute(CommonKey.TRIP_LIST, list);
 		request.setAttribute(CommonKey.PAGE_BAR, pageBar);
 		request.getRequestDispatcher("").forward(request, response);
 	}

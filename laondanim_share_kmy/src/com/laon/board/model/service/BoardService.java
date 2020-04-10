@@ -68,6 +68,13 @@ public class BoardService {
 		
 	}
 	
+	public List<BoardJoinUser> searchBoard(int cPage,int perPage,String category,String searchDetail,String searchBox,String recent,String viewCount){
+		Connection conn=getConnection();
+		List<BoardJoinUser> list=dao.searchBoard(conn,cPage,perPage,category,searchDetail,searchBox,recent,viewCount);
+		close(conn);
+		return list;
+	}
+	
 	
 	
 	

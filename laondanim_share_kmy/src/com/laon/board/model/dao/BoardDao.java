@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.laon.board.model.vo.Board;
 import com.laon.board.model.vo.BoardJoinUser;
@@ -148,6 +150,71 @@ public class BoardDao {
 	}return result;
 	}
 	
+	public List<BoardJoinUser> searchBoard(Connection conn,int cPage,int perPage,String category,String searchDetail,String searchBox,String recent,String viewCount){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<BoardJoinUser> list=new ArrayList();
+		String sql="";
+		
+		//검색창부터
+		//작성자writer 제목+내용titleContent 제목title 내용content 키워드 태그tags
+		if(searchDetail.equals("writer")) {
+			sql="selectBoardSortWriter";
+		}else if(searchDetail.equals("titleContent")) {
+			sql="selectBoardSortTitleContent";
+		}else if(searchDetail.equals("title")) {
+			sql="selectBoardSortTitle";
+		}else if(searchDetail.equals("content")) {
+			sql="selectBoardSortContent";
+		}else if(searchDetail.equals("tags")) {
+			sql="selectBoardSortTag";
+		}
+		System.out.println("패턴적용전:"+sql);
+		if(category.equals("null")||category.equals("all")) {
+			//전체를 출력할경우 category= 이거를 category!= 이걸로 바꿔줘야함
+			Pattern pattern=Pattern.compile("=");
+			Matcher matcher=pattern.matcher(sql);
+			int count=0;
+			while(matcher.find()) {
+				count++;
+			}
+			matcher.reset();
+			int[] indexs=new int[count];
+			int i=0;
+			while(matcher.find()) {
+				indexs[i]=matcher.start();
+				i++;
+			}
+		System.out.println("indexs.length:"+indexs.length);
+		int targetIndex=indexs[1];
+		sql=sql.substring(0,targetIndex)+"!="+sql.substring(targetIndex+1,sql.length());
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
 	
 	
 }

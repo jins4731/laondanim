@@ -78,7 +78,7 @@ public class BoardSearchServlet extends HttpServlet {
 			category="all";
 		}*/
 		
-		List<BoardJoinUser> list=new BoardService().searchBoard(); 
+		List<BoardJoinUser> list=new BoardService().searchBoard(cPage,perPage,category,searchDetail,searchBox,recent,viewCount); 
 		
 		String pageBar=new Paging().pageBar(request.getContextPath()+"/board/search.do",
 				totalItemCount,cPage,perPage,category,searchDetail,searchBox,recent,viewCount);

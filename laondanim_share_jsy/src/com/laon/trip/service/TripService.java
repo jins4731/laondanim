@@ -2,6 +2,9 @@ package com.laon.trip.service;
 
 import static com.laon.common.JDBCTemplate.close;
 import static com.laon.common.JDBCTemplate.getConnection;
+import static com.laon.common.JDBCTemplate.commit;
+import static com.laon.common.JDBCTemplate.rollback;
+
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -10,6 +13,7 @@ import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.dao.TripDao;
 import com.laon.trip.model.vo.Trip;
+import com.laon.user.model.vo.User;
 
 public class TripService {
 
@@ -46,11 +50,46 @@ public class TripService {
 		return pictureList;
 	}
 	
-	//좋아요 리스트 가져오기
-	public ArrayList<Like> selectLike(ArrayList<Trip> list){
+	//좋아요 개수 리스트 가져오기
+	public ArrayList<Like> selectLikeCount(ArrayList<Trip> list){
 		Connection conn = getConnection();
-		ArrayList<Like> likeList = dao.selectLike(conn, list);
+		ArrayList<Like> likeCountList = dao.selectLikeCount(conn, list);
+		return likeCountList;
+	}
+	
+	//좋아요 모든정보 리스트 가져오기
+	public ArrayList<Like> selectLike(int loginNo){
+		Connection conn = getConnection();
+		ArrayList<Like> likeList = dao.selectLike(conn, loginNo);
 		return likeList;
 	}
 	
+	//회원 리스트 가져오기
+	public ArrayList<User> selectUser(ArrayList<Trip> list){
+		Connection conn = getConnection();
+		ArrayList<User> userList = dao.selectUser(conn, list);
+		return userList;
+	}
+	
+	//좋아요 버튼 업데이터
+	public int updateLike(int tripNo, int userNo) {
+		Connection conn = getConnection();
+		String cancled="";
+		int insertResult = 0;
+		int result = 0;
+		
+		cancled = dao.selectLikeCancled(conn, tripNo, userNo);
+		
+		if(cancled.equals("")) {
+			insertResult = dao.insertLike(conn, tripNo, userNo);
+		}
+		else if(insertResult>0 || !cancled.equals("")){
+			result = dao.updateLike(conn, tripNo, userNo, cancled);
+		}
+		
+		if(result>0)commit(conn);
+		else rollback(conn);
+		
+		return result;
+	}
 }

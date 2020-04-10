@@ -9,11 +9,12 @@
     	int totalItemCount= Integer.parseInt(request.getAttribute("totalItemCount").toString());
     	//사진 리스트 가져오기
     	ArrayList<Picture> pictureList = (ArrayList<Picture>)request.getAttribute("pictureList");
-    	ArrayList<Like> likeList = (ArrayList<Like>)request.getAttribute("likeList");
-    	System.out.println("jsp 페이지에서 likelist 잘 들어왓나?" + likeList);
+    	ArrayList<Like> likeCountList = (ArrayList<Like>)request.getAttribute("likeCountList");
+    	ArrayList<User> userList = (ArrayList<User>)request.getAttribute("userList");
+    	ArrayList<Like> likeList = (ArrayList<Like>)request.getAttribute(CommonKey.LIKE_LIST);
+    	
     	//검색 태그 값
     	String keyword = (String)request.getAttribute("keyword");
-    	System.out.println("jsp keyword : "+ keyword);
     	//여행 일정 / 후기 게시물에 따른 분기 처리
     	String category = (String)request.getAttribute("category");	//전체 여행기 select 값 가져오기
     	//지역 에 따른 분기  처리
@@ -129,6 +130,35 @@
                 	var like = 'like';
                 	location.href="<%=request.getContextPath()%>/trip/tripListView.do?category="+category+"&keyword="+keyword+"&lo="+lo+"&recent="+recent+"&like="+like;
                 });
+            	
+                //좋아요 아이콘 클릭시 up & down 
+                $(".ck").click(function(e){
+      				$.ajax({
+      					url:"<%=request.getContextPath()%>/trip/tripCheckLike.do",
+      					data:{tripNo : $(this).parent().find("input").val()},
+      					success:function(data){
+      						//data : result 값
+      						console.log("data : " + data);
+      						if(data>0){
+      							let src = $(e.target).parent().find("img").attr("src");
+      							console.log("src = " + src);
+      							console.log(e.target);
+      							if(src == "<%=request.getContextPath()%>/views/picture/trip/likeChecked.png"){
+      								$(e.target).attr("src", "<%=request.getContextPath()%>/views/picture/trip/likeUnchecked.png");
+      								let minus = $(e.target).parent().parent().next().text().trim();
+      								$(e.target).parent().parent().next().text(parseInt(minus)-1);
+      							}else{
+      								$(e.target).attr("src", "<%=request.getContextPath()%>/views/picture/trip/likeChecked.png");
+      								let plus = $(e.target).parent().parent().next().text().trim();
+      								$(e.target).parent().parent().next().text(parseInt(plus)+1);
+      							}
+      							console.log("html : " + $(e.target).parent().parent().next().text());
+      							
+      							
+      						}				
+      					}
+      				});
+      			})
             });
             
             //검색창 x 버튼 클릭시 클리어
@@ -139,7 +169,7 @@
                 });
             }
 			
-  
+  			 
             
             
             
@@ -276,7 +306,17 @@
                             
                             <span class="mr-1"><%=i<count?list.get(i).getWriteDate():"" %></span>
                         </div>
+                       
                         <div class="card-body h-50 w-100 p-0 border-0">
+                            <div class="hdTagBox">
+                                 <ul class="hdTag">                            
+	                                <%if(i<count&&list.get(i).getTag()!=null){
+                                   String[] tagArr = list.get(i).getTag().split(",");   
+                                   for(String tag : tagArr){%>
+                                    <li><a>#<%=tag%></a></li>
+                                	<%} } %> 
+	                            </ul>                              
+                            </div>  
                             <img src="<%
                             String picture="";
                             for(int j=0; j<pictureList.size(); j++){ 
@@ -286,23 +326,101 @@
                             	}
                             	//picture=pictureList.get(5).getImage(); //나중에 삭제 테스트용
                             }
-                            %><%=request.getContextPath()+picture%>" class="img-thumbnail p-0 h-100 w-100 rounded-0 border-0"/>
+                            %><%=request.getContextPath()+"/views/picture/trip/"+picture%>" class="img-thumbnail p-0 h-100 w-100 rounded-0 border-0" style="height:50%"/> 
+                                          
                         </div>
+     <style>
+              
+           .card-body{
+               position: relative;
+           }
+   
+           .hdTagBox{
+               width: 100%;
+               height: 100%;
+               position: absolute;
+               background-color: rgba(0, 0, 0, 0.63);
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               visibility: hidden;
+           }
+   
+           .hdTag{
+               width: 90%;
+               margin: 0px;
+               padding: 0px;
+               color: white;
+               /* border: 1px solid white; */
+               list-style: none;
+           }
+   
+           .hdTag li{
+               display: inline;
+               padding-right: 5px;
+           }
+   
+           .card-body:hover .hdTagBox{
+               visibility: visible;
+           }
+   
+           .hdTagBox:hover{
+           }
+       </style>
                         <div class="card-footer h-30 d-flex flex-column p-1 text-center bg-white">
                             <span><%=i<count?list.get(i).getTitle():"" %></span>
-                            <span>닉네임</span>
-                            <div>
-                                <span><i class="fas fa-thumbs-up"></i></span> <!--<i class="far fa-thumbs-up"></i>-->
-                                <span>
+                            <span>
+                            	<%
+                            	String userNick = "";
+                            		for(User u : userList){
+                            			if(i<count && list.get(i).getUserTbNo()==u.getNo()){
+                            				userNick = u.getNickName();
+                            				break;
+                            			}
+                            		}
+                            	%>
+                            	<%=userNick %>
+                            </span>
+                            
+                            <%
+                           		int loginNo = loginUser.getNo();	//로그인된 유저 아이디 
+                           		String likeCheck = "";
+                           		for(Like like : likeList){
+                           			if(like.getUserNo()==loginNo){
+                           				if(i<count&&like.getTripNo()==list.get(i).getNo()){
+                           					likeCheck = like.getCancled();	// 게시물에 대한 좋아요 체크 여부 'N' OR 'Y'
+                           				}
+                           			}
+                           		} 
+                           %>
+                            
+                           <div class="d-flex flex-row justify-content-center align-items-center">
+                                <div class="mr-2">
+                                	<input type="hidden" value="<%=i<count?list.get(i).getNo():""%>"/>
                                 	<%
+                                	String src="";
+                                	
+                                	if(i<count&&likeCheck.equals("N")||likeCheck.equals("")){ 
+                                		src = request.getContextPath()+"/views/picture/trip/likeUnchecked.png";
+                                	}else{
+                                		src = request.getContextPath()+"/views/picture/trip/likeChecked.png";
+                                	}
+                                	%>                           
+                                	<button class="ck">
+                                		<img src="<%=src%>" class="like-ck" width="30px" height="30px">                                                           	                                	                 	                              
+                                	</button>                                                           	                                	                 	                              
+                                </div>
+                             
+                                <div>
+									<%
                                 	int likeCount = 0;
-                                	for(int j=0; j<likeList.size(); j++){ 
-                                		if(i<count&&list.get(i).getNo()==likeList.get(j).getTripNo())
-                                			likeCount = likeList.get(j).getLikeCount();
+                                	for(int j=0; j<likeCountList.size(); j++){ 
+                                		if(i<count&&list.get(i).getNo()==likeCountList.get(j).getTripNo())
+                                			likeCount = likeCountList.get(j).getLikeCount();
                                 	}
                                 	%>
                                 	<%=likeCount %>
-                                </span>   <!--좋아요 수 가져오기 !!-->
+								</div>   <!--좋아요 수 가져오기 !!-->
                             </div>
                         </div>
                     </div>
@@ -339,6 +457,16 @@
                             <span class="mr-1"><%=i-5<count?list.get(i).getWriteDate():"" %></span>
                         </div>
                         <div class="card-body h-50 w-100 p-0 border-0">
+                        	<div class="hdTagBox">
+                                <ul class="hdTag">                            
+	                                <%if(i-5<count&&list.get(i).getTag()!=null){
+                                   String[] tagArr = list.get(i).getTag().split(",");   
+                                   for(String tag : tagArr){%>
+                                    <li><a>#<%=tag%></a></li>
+                                	<%} } %> 
+	                            </ul>                               
+                            </div>
+                            
                              <img src="<%
                             String picture="";
                             for(int j=1; j<pictureList.size(); j++){ 
@@ -348,23 +476,61 @@
                             	}
                             	//picture=pictureList.get(6).getImage(); //나중에 삭제 테스트용
                             }
-                            %><%=request.getContextPath()+picture%>" class="img-thumbnail p-0 h-100 w-100 rounded-0 border-0"/>
+                            %><%=request.getContextPath()+"/views/picture/trip/"+picture%>" class="img-thumbnail p-0 h-100 w-100 rounded-0 border-0"/>
                         </div>
                         <div class="card-footer h-30 d-flex flex-column p-1 text-center bg-white">
                             <span><%=i-5<count?list.get(i).getTitle():"" %></span>
-                            <span>닉네임</span>
-                            <div>
-                                <span><i class="fas fa-thumbs-up"></i></span> <!--<i class="far fa-thumbs-up"></i>-->
-                                <span>
+                            <span>
+                            	<%
+                            	String userNick = "";
+                            
+                            		for(User u : userList){
+                            			if(i-5<count && list.get(i).getUserTbNo()==u.getNo()){
+                            				userNick = u.getNickName();
+                            			}
+                            		}
+                            	%>
+                            	<%=userNick%>
+                            </span>
+                           <%
+                           		int loginNo = loginUser.getNo();	//로그인된 유저 아이디 
+                           		
+                           		String likeCheck = "";
+                           		
+                           		for(Like like : likeList){                        			
+                           			if(like.getUserNo()==loginNo){                  
+                           				if(i-5<count&&like.getTripNo()==list.get(i).getNo()){
+                           					likeCheck = like.getCancled();	// 게시물에 대한 좋아요 체크 여부 'N' OR 'Y'
+                           				}
+                           			}
+                           		}
+                           %>
+                            <div class="d-flex flex-row justify-content-center align-items-center">
+                                <div class="mr-2">
+                                	<input type="hidden" value="<%=i-5<count?list.get(i).getNo():""%>"/>
+                                	<%
+                                	String src="";
+                                	if(i-5<count&&likeCheck.equals("N")||likeCheck.equals("")){ 
+                                		src = request.getContextPath()+"/views/picture/trip/likeUnchecked.png";
+                                	}else{
+                                		src = request.getContextPath()+"/views/picture/trip/likeChecked.png";
+                                	}
+                                	%>                           
+                                	<button class="ck">
+                                		<img src="<%=src%>" class="like-ck" width="30px" height="30px">                                                           	                                	                 	                              
+                                	</button>
+                                </div>
+                             
+                                <div>
 									<%
                                 	int likeCount = 0;
-                                	for(int j=0; j<likeList.size(); j++){ 
-                                		if(i-5<count&&list.get(i).getNo()==likeList.get(j).getTripNo())
-                                			likeCount = likeList.get(j).getLikeCount();
+                                	for(int j=0; j<likeCountList.size(); j++){ 
+                                		if(i-5<count&&list.get(i).getNo()==likeCountList.get(j).getTripNo())
+                                			likeCount = likeCountList.get(j).getLikeCount();
                                 	}
                                 	%>
                                 	<%=likeCount %>
-								</span>   <!--좋아요 수 가져오기 !!-->
+								</div>   <!--좋아요 수 가져오기 !!-->
                             </div>
                         </div>
                     </div>
@@ -390,7 +556,7 @@
         <div class="container mt-3">
                 <%=pageBar %>
         </div>
-
+	
   
     </section>
     <style>

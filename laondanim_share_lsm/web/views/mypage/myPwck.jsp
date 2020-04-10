@@ -21,13 +21,13 @@
 				</div>
 				<div id="myPageView">
 					<div class="d-flex flex-column justify-content-center align-items-center">
-						<div class="d-flex flex-column justify-content-center align-items-center" id="pwCk">
+						<div class="d-flex flex-column justify-content-center align-items-center" id="pwCk" style="text-align:center;">
 							<div>
 								<span>
 									정보 수정을 위한 확인이 필요합니다.
 								</span>
 							</div>
-							<div>
+							<div style="width:380px;height:40px;">
 								<span>
 									여기에 유효성체크
 								</span>
@@ -58,7 +58,7 @@
         text-decoration: none;
         color:black;
         list-style:none;
-		/* border:1px solid green; */
+		border:1px solid green;
     }
     
     #pwCk{

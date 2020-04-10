@@ -22,24 +22,19 @@
 				<div id="myPageView">
 					<div class="d-flex flex-column justify-content-center align-items-center">
 						<div class="d-flex flex-column justify-content-center align-items-center" id="pwCk" style="text-align:center;">
-							<div>
+							<div style="margin:5px;">
 								<span>
 									정보 수정을 위한 확인이 필요합니다.
 								</span>
 							</div>
-							<div style="width:380px;height:40px;">
-								<span>
-									여기에 유효성체크
-								</span>
-							</div>
-							
-							<div>
-								<input type="text" placeholder="비밀번호 입력" class="d-flex text-center border-0 p-2" style="width:380px;">
+							<div id="pwCkView" style="width:380px;height:40px;"></div>
+							<div style="margin:5px;">
+								<input type="text" name="pw" id="pw" placeholder="비밀번호 입력" class="d-flex text-center border-0 p-2" style="width:380px;">
 								<hr style="width:380px;">
 							</div>
 							
 							<div class=" align-self-end mr-2">
-								<input type="button" style="border-radius: 100px;width:80px;" class="btn btn-info text-align" value="확인">
+								<button type="button" style="border-radius:100px;width:80px;" class="btn btn-info text-align" onclick="location.replace('<%=request.getContextPath()%>/myPage/myInfo?userNo=<%=loginUser.getNo()%>')">확인</button>
 							</div>
 						</div>
 					</div>
@@ -58,7 +53,7 @@
         text-decoration: none;
         color:black;
         list-style:none;
-		border:1px solid green;
+		/* border:1px solid green; */
     }
     
     #pwCk{
@@ -75,3 +70,22 @@
     	border-radius: 100px;
 	}
 </style>
+
+<script>
+	$(function(){
+		$("#pw").keyup(()=>{
+			$.ajax({
+				url:"<%=request.getContextPath()%>/myPage/myPwckEnd?userNo=<%=loginUser.getNo()%>",
+				dataType:"json",
+				data:{pw:$("#pw").val()},
+				success:data=>{
+					if(data==true){
+						let ck=$("#pwCkView").attr("class","alert alert-success m-0 p-2 text-center").html("비밀번호가 일치합니다.");
+					}else{
+						let ck=$("#pwCkView").attr("class","alert alert-danger m-0 p-2 text-center").html("비밀번호가 일치하지 않습니다.");
+					}
+				}
+			});
+		});
+	});
+</script>

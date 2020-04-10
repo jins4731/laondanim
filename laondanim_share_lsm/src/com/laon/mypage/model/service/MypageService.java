@@ -24,6 +24,14 @@ public class MypageService {
 		return up;
 	}
 	
+	public boolean selectPwck(int userNo,String pw){
+		Connection conn=getConnection();
+		boolean flag=dao.selectPwck(conn,userNo,pw);
+		close(conn);
+		
+		return flag;
+	}
+	
 	public List<TripMyCon> selectMyTrip(int userNo){
 		Connection conn=getConnection();
 		List<TripMyCon> list=dao.selectMyTrip(conn,userNo);

@@ -42,10 +42,9 @@ public class MypageDao {
 			pstmt.setInt(1, no);
 			rs=pstmt.executeQuery();
 			
-			if(rs.next()) {
+			while(rs.next()) {
 				up=new UserProfile();
 				up.setNo(rs.getInt("no"));
-				up.setCreatedDate(rs.getDate("created_date"));
 				up.setUserId(rs.getString("user_id"));
 				up.setPassword(rs.getString("password"));
 				up.setName(rs.getString("name"));
@@ -64,6 +63,29 @@ public class MypageDao {
 			close(pstmt);
 		}
 		return up;
+	}
+	
+	public boolean selectPwck(Connection conn,int userNo,String pw){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		boolean flag=false;
+		String sql=prop.getProperty("selectPwck");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			pstmt.setString(2, pw);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				flag=true;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return flag;
 	}
 	
 	public List<TripMyCon> selectMyTrip(Connection conn,int userNo){

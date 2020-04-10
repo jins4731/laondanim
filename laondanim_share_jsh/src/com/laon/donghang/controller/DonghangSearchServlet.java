@@ -37,7 +37,7 @@ public class DonghangSearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//검색키워드 값 받기
-		String keyword = request.getParameter("searchKeyword");
+		String keyword = request.getParameter("keyword");
 		
 		int currentPage = getCurrentPage(request);
 		int pagePerRow = 10;
@@ -45,6 +45,7 @@ public class DonghangSearchServlet extends HttpServlet {
 		List<Donghang> list = new DonghangService().selectDonghangKeyword(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), keyword);
 		int totalRowCount = new DonghangService().selectDonghangKeywordCount(keyword);
 
+		System.out.println("검색리스트 사이즈 "+list.size());
 		//page바 서블릿에서 구현
 		int totalPageSize = (int) Math.ceil((double)totalRowCount/pagePerRow); // 총 페이지 갯수
 		

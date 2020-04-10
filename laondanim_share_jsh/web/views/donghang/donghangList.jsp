@@ -196,7 +196,7 @@
 	    </style>
         <!-- 동행 데이터 목록 / 카드-->        
         <div class="container mt-5 mb-5 bg-white justify-content-center" style="height:760px; width: 1140px;">
-            <div class="row h-50 mb- 2">
+            <div class="row h-50 mb-2">
 
 				<%
 					for(Donghang dh : topList){				
@@ -247,11 +247,17 @@
                     </div>
                 </div>
 				<%} %>
+				<%for(int i=0; i<5-topList.size(); i++){ %>
+                <div class="col h-100 p-0 mr-2">
+                    <div style="height: 100%;" >
+                    </div>
+                </div>
+                <%} %>
             </div>
             <div class="row h-50 mt-2">
 
 				<%
-					for(Donghang dh : topList){				
+					for(Donghang dh : bottomList){				
 				%>
                 <div class="col h-100 p-0 mr-2">
                     <div class="card m-0" style="height: 100%;" >
@@ -299,6 +305,12 @@
                     </div>
                 </div>
 				<%} %>
+				<%for(int i=0; i<5-bottomList.size(); i++){ %>
+                <div class="col h-100 p-0 mr-2">
+                    <div style="height: 100%;" >
+                    </div>
+                </div>
+                <%} %>
             </div>
         </div>
         <!--카드 스타일-->

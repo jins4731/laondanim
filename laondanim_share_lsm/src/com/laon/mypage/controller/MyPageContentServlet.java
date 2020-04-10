@@ -54,7 +54,6 @@ public class MyPageContentServlet extends HttpServlet {
 		String boardPasing = getPageBar(boardCount, currentPage, pagePerRow, request, "/myPage/myPageContent.do");
 		
 		request.setAttribute("userProfile", up);
-		System.out.println(up.getImage());
 		
 		request.setAttribute("trip", trip);
 		request.setAttribute("tripCount", tripCount);

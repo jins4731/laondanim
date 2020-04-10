@@ -76,7 +76,11 @@
 											    	</div>
 												</div>
 											</div>
-											<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage %>" class="card-img" alt="..." width="160px" height="160px">
+											<%if(t.getImage()==null){ %>
+												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="160px" height="160px">
+											<%}else{ %>
+												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage()%>" class="card-img" alt="..." width="160px" height="160px">
+											<%} %>
 			                           </div>
 			                           <div class="d-flex card-body p-2">
 			                           		<div style="width:150px;font-size:12px;">

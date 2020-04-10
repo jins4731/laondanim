@@ -152,9 +152,7 @@
       								let plus = $(e.target).parent().parent().next().text().trim();
       								$(e.target).parent().parent().next().text(parseInt(plus)+1);
       							}
-      							console.log("html : " + $(e.target).parent().parent().next().text());
-      							
-      							
+      							console.log("html : " + $(e.target).parent().parent().next().text());     							
       						}				
       					}
       				});

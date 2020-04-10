@@ -79,11 +79,14 @@ public class TripService {
 		int result = 0;
 		
 		cancled = dao.selectLikeCancled(conn, tripNo, userNo);
+		System.out.println("service ¿¡¼­ cancled : " + cancled);
 		
 		if(cancled.equals("")) {
 			insertResult = dao.insertLike(conn, tripNo, userNo);
+			if(insertResult>0) commit(conn);
+			else rollback(conn);
 		}
-		else if(insertResult>0 || !cancled.equals("")){
+		if(insertResult>0 || !cancled.equals("")){
 			result = dao.updateLike(conn, tripNo, userNo, cancled);
 		}
 		

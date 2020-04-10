@@ -52,8 +52,6 @@ public class TripDao {
 			check=1;
 		}
 		
-		System.out.println("바꿀 문자열 : "+ sql);
-		
 		if(category.equals("null") || category.equals("전체 여행기")) {
 			Pattern pattern = Pattern.compile("=");
 			   Matcher matcher = pattern.matcher(sql);
@@ -115,7 +113,6 @@ public class TripDao {
 		ArrayList<Trip> list = new ArrayList<Trip>();
 		Trip t = null;
 		try {
-			System.out.println("변화 후 sql : " + sql);
 			pstmt = conn.prepareStatement(sql);
 			
 			if(category.equals("null") || category.equals("전체 여행기")) pstmt.setString(1, "null");
@@ -148,7 +145,7 @@ public class TripDao {
 				t.setEndDate(rs.getDate("TRAVLE_END_DATE"));
 				t.setPublicEnabled(rs.getString("PUBLIC_ENABLED").charAt(0));
 				t.setDeleted(rs.getString("DELETED").charAt(0));
-				System.out.println("dao 에서 출력 : " + t);
+				
 				list.add(t);
 			}
 		}catch(SQLException e) {

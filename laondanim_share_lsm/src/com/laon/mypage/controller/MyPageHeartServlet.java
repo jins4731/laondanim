@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.laon.mind.model.vo.Mind;
+import com.laon.etc.model.vo.Mind;
 import com.laon.mypage.model.service.MypageService;
 import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;

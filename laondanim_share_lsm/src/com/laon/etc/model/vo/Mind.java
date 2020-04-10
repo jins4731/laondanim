@@ -1,4 +1,4 @@
-package com.laon.mind.model.vo;
+package com.laon.etc.model.vo;
 
 public class Mind {
 	private int no;

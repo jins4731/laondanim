@@ -33,12 +33,20 @@ public class MypageService {
 		return list;
 	}
 	
-	public List<Trip> selectMyTripAll(int start,int end){
+	public List<TripMyCon> selectMyTripAll(int userNo,int start,int end){
 		Connection conn=getConnection();
-		List<Trip> list=dao.selectMyTripAll(conn,start,end);
+		List<TripMyCon> list=dao.selectMyTripAll(conn,userNo,start,end);
 		close(conn);
 		
 		return list;
+	}
+	
+	public List selectTripLike(int userNo) {
+		Connection conn=getConnection();
+		List like=dao.selectTripLike(conn,userNo);
+		close(conn);
+		
+		return like;
 	}
 	
 	public int selectMyTripCount() {

@@ -1,12 +1,11 @@
 <%@page import="com.laon.trip.model.vo.TripMyCon"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,com.laon.trip.model.vo.TripMyCon,com.laon.board.model.vo.Board" %>
+<%@ page import="java.util.List,com.laon.trip.model.vo.TripMyCon,com.laon.board.model.vo.Board,com.laon.etc.model.vo.Like" %>
 <%
-	
-	
 	List<TripMyCon> trip=(List)request.getAttribute("trip");
 	int tripCount=(int)request.getAttribute("tripCount");
+	List<Like> tripLike=(List)request.getAttribute("tripLike");
 
 	List<Board> board=(List)request.getAttribute("board");
 	String boardPasing=(String)request.getAttribute("boardPasing");
@@ -56,10 +55,10 @@
 						</div>
 						<!-- 게시글위치 -->
 						<table id="dnTbl">
-							<tr>
+							<tr class="d-flex flex-wrap justify-content-center">
 							<%for(TripMyCon t:trip){ %>
 								<td class="p-1">
-									<div class="card" style="width: 160px; height: 250px;" >
+									<div class="card" style="width: 155px; height: 250px;" >
 										<div class="d-flex justify-content-between p-2" style="font-size:5px;">
 						    				<span><%=t.getCategory() %></span>
 						    				<span><%=t.getWriteDate() %></span>
@@ -77,15 +76,18 @@
 												</div>
 											</div>
 											<%if(t.getImage()==null){ %>
-												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="160px" height="160px">
+												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
 											<%}else{ %>
-												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage()%>" class="card-img" alt="..." width="160px" height="160px">
+												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
 											<%} %>
 			                           </div>
 			                           <div class="d-flex card-body p-2">
 			                           		<div style="width:150px;font-size:12px;">
 												<p class="mb-0"><%=t.getTitle() %></p>
-												<span>좋아요</span>
+												<%for(Like l:tripLike){%>
+												<%if(t.getNo()==l.getNo()) {%>
+													<span><%=l.getLikeCount() %></span>
+												<%} }%>
 											</div>
 										</div>
 									</div>

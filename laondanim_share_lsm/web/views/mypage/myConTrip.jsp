@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,com.laon.trip.model.vo.Trip,com.laon.board.model.vo.Board" %>
+<%@ page import="java.util.List,com.laon.trip.model.vo.TripMyCon,com.laon.board.model.vo.Board,com.laon.etc.model.vo.Like" %>
 <%
-	List<Trip> trip=(List)request.getAttribute("trip");
+	List<TripMyCon> trip=(List)request.getAttribute("trip");
 	int tripCount=(int)request.getAttribute("tripCount");
+	List<Like> tripLike=(List)request.getAttribute("tripLike");
 	String tripPasing=(String)request.getAttribute("tripPasing");
 %>
 <%@ include file="/views/common/header.jsp"%>
@@ -50,11 +51,11 @@
 						<!-- 게시글위치 -->
 						<table id="dnTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
-							<%for(Trip t:trip){ %>
+							<%for(TripMyCon t:trip){ %>
 								<td class="p-1">
 									<div class="dnCk3" style="margin:10px;">
 										<label style="width:130px;">
-											<input type="checkbox" class="dnCks" value="<%=t.getNo()%>">
+											<input type="checkbox" class="dhCks">
 										</label>
 									</div>
 									<div class="card" style="width: 155px; height: 250px;" >
@@ -74,12 +75,19 @@
 											    	</div>
 												</div>
 											</div>
-											<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+											<%if(t.getImage()==null){ %>
+												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+											<%}else{ %>
+												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
+											<%} %>
 			                           </div>
 			                           <div class="d-flex card-body p-2">
 			                           		<div style="width:150px;font-size:12px;">
 												<p class="mb-0"><%=t.getTitle() %></p>
-												<span>좋아요</span>
+												<%for(Like l:tripLike){%>
+												<%if(t.getNo()==l.getNo()) {%>
+													<span><%=l.getLikeCount() %></span>
+												<%} }%>
 											</div>
 										</div>
 									</div>

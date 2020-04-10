@@ -14,9 +14,9 @@ import java.util.Properties;
 
 import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.Donghang;
+import com.laon.etc.model.vo.Like;
 import com.laon.trip.model.vo.Trip;
 import com.laon.trip.model.vo.TripMyCon;
-import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
 public class MypageDao {
@@ -94,23 +94,25 @@ public class MypageDao {
 		return list;
 	}
 	
-	public List<Trip> selectMyTripAll(Connection conn,int start,int end){
+	public List<TripMyCon> selectMyTripAll(Connection conn,int userNo,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		List<Trip> list=new ArrayList<Trip>();
+		List<TripMyCon> list=new ArrayList<TripMyCon>();
 		String sql=prop.getProperty("selectMyTripAll");
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				Trip t=new Trip();
+				TripMyCon t=new TripMyCon();
 				t.setNo(rs.getInt("no"));
 				t.setCategory(rs.getString("category"));
 				t.setWriteDate(rs.getDate("write_date"));
 				t.setTitle(rs.getString("title"));
+				t.setImage(rs.getString("image"));
 				list.add(t);
 			}
 		}catch(SQLException e) {
@@ -120,6 +122,32 @@ public class MypageDao {
 			close(pstmt);
 		}
 		return list;
+	}
+	
+	public List selectTripLike(Connection conn,int userNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List like=new ArrayList();
+		Like l=null;
+		String sql = prop.getProperty("selectTripLike");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {				
+				l=new Like();
+				l.setNo(rs.getInt("no"));
+				l.setLikeCount(rs.getInt("lk"));
+				like.add(l);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return like;
 	}
 	
 	public int selectMyTripCount(Connection conn) {

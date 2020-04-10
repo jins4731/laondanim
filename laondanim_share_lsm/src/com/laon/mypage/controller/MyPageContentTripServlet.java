@@ -15,8 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.laon.mypage.model.service.MypageService;
-import com.laon.trip.model.vo.Trip;
-import com.laon.user.model.vo.User;
+import com.laon.trip.model.vo.TripMyCon;
 import com.laon.user.model.vo.UserProfile;
 
 /**
@@ -44,11 +43,14 @@ public class MyPageContentTripServlet extends HttpServlet {
 		int currentPage = getCurrentPage(request);
 		int pagePerRow = 20;
 		
-		List<Trip> trip=new MypageService().selectMyTripAll(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
+		List<TripMyCon> trip=new MypageService().selectMyTripAll(userNo,getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
 		int tripCount = new MypageService().selectMyTripCount();
 		String tripPasing = getPageBar(tripCount, currentPage, pagePerRow, request, "/myPage/myConTrip.do");
 		
+		List tripLike=new MypageService().selectTripLike(userNo);
+		
 		request.setAttribute("userProfile", up);
+		request.setAttribute("tripLike", tripLike);
 		
 		request.setAttribute("trip", trip);
 		request.setAttribute("tripPasing", tripPasing);

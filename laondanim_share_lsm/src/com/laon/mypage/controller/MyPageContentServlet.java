@@ -48,6 +48,7 @@ public class MyPageContentServlet extends HttpServlet {
 		
 		List<TripMyCon> trip=new MypageService().selectMyTrip(userNo);
 		int tripCount = new MypageService().selectMyTripCount();
+		List tripLike=new MypageService().selectTripLike(userNo);
 		
 		List<Board> board=new MypageService().selectMyBoard(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
 		int boardCount = new MypageService().selectMyBoardCount();
@@ -57,6 +58,7 @@ public class MyPageContentServlet extends HttpServlet {
 		
 		request.setAttribute("trip", trip);
 		request.setAttribute("tripCount", tripCount);
+		request.setAttribute("tripLike", tripLike);
 		
 		request.setAttribute("board", board);
 		request.setAttribute("boardPasing", boardPasing);

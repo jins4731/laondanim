@@ -8,10 +8,9 @@ import java.util.List;
 
 import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.Donghang;
+import com.laon.donghang.model.vo.MyDong;
 import com.laon.mypage.model.dao.MypageDao;
-import com.laon.trip.model.vo.Trip;
 import com.laon.trip.model.vo.TripMyCon;
-import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
 public class MypageService {
@@ -49,9 +48,9 @@ public class MypageService {
 		return like;
 	}
 	
-	public int selectMyTripCount() {
+	public int selectMyTripCount(int userNo) {
 		Connection conn = getConnection();
-		int result = dao.selectMyTripCount(conn);
+		int result = dao.selectMyTripCount(conn,userNo);
 		close(conn);
 		return result;
 	}
@@ -72,25 +71,25 @@ public class MypageService {
 		return result;
 	}
 	
-	public List<Donghang> selectMyDong(){
+	public List<MyDong> selectMyDong(int userNo){
 		Connection conn=getConnection();
-		List<Donghang> list=dao.selectMyDong(conn);
+		List<MyDong> list=dao.selectMyDong(conn,userNo);
 		close(conn);
 		
 		return list;
 	}
 	
-	public List<Donghang> selectMyDHAll(int start,int end){
+	public List<MyDong> selectMyDHAll(int userNo,int start,int end){
 		Connection conn=getConnection();
-		List<Donghang> list=dao.selectMyDHAll(conn,start,end);
+		List<MyDong> list=dao.selectMyDHAll(conn,userNo,start,end);
 		close(conn);
 		
 		return list;
 	}
 	
-	public int selectMyDongCount() {
+	public int selectMyDongCount(int userNo) {
 		Connection conn = getConnection();
-		int result = dao.selectMyDongCount(conn);
+		int result = dao.selectMyDongCount(conn,userNo);
 		close(conn);
 		
 		return result;

@@ -49,13 +49,13 @@
 							</div>
 						</div>
 						<!-- 게시글위치 -->
-						<table id="dnTbl">
-							<tr class="d-flex flex-wrap justify-content-center">
+						<table id="dnTbl" class="d-flex justify-content-center">
+							<tr class="d-flex flex-wrap">
 							<%for(TripMyCon t:trip){ %>
 								<td class="p-1">
 									<div class="dnCk3" style="margin:10px;">
 										<label style="width:130px;">
-											<input type="checkbox" class="dhCks">
+											<input type="checkbox" class="dnCks">
 										</label>
 									</div>
 									<div class="card" style="width: 155px; height: 250px;" >

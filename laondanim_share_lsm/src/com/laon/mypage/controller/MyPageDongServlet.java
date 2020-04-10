@@ -9,10 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.laon.donghang.model.vo.Donghang;
-import com.laon.donghang.model.vo.DonghangJoin;
+import com.laon.donghang.model.vo.MyDong;
 import com.laon.mypage.model.service.MypageService;
-import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
 /**
@@ -37,8 +35,8 @@ public class MyPageDongServlet extends HttpServlet {
 		int userNo=Integer.parseInt(request.getParameter("userNo"));
 		UserProfile up=new MypageService().selectUserNo(userNo);
 		
-		List<Donghang> myDong=new MypageService().selectMyDong();
-		int myDongCount=new MypageService().selectMyDongCount();
+		List<MyDong> myDong=new MypageService().selectMyDong(userNo);
+		int myDongCount=new MypageService().selectMyDongCount(userNo);
 		
 //		List joinDong=new MypageService().selectJoinDong();
 		

@@ -14,8 +14,8 @@ import java.util.Properties;
 
 import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.Donghang;
+import com.laon.donghang.model.vo.MyDong;
 import com.laon.etc.model.vo.Like;
-import com.laon.trip.model.vo.Trip;
 import com.laon.trip.model.vo.TripMyCon;
 import com.laon.user.model.vo.UserProfile;
 
@@ -150,13 +150,14 @@ public class MypageDao {
 		return like;
 	}
 	
-	public int selectMyTripCount(Connection conn) {
+	public int selectMyTripCount(Connection conn,int userNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = prop.getProperty("selectMyTripCount");
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
 			rs = pstmt.executeQuery();
 			rs.next();
 			result = rs.getInt(1);
@@ -216,18 +217,18 @@ public class MypageDao {
 		return result;
 	}
 	
-	public List<Donghang> selectMyDong(Connection conn){
+	public List<MyDong> selectMyDong(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		List<Donghang> list=new ArrayList<Donghang>();
+		List<MyDong> list=new ArrayList<MyDong>();
 		String sql=prop.getProperty("selectMyDong");
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
-			
+			pstmt.setInt(1, userNo);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				Donghang d=new Donghang();
+				MyDong d=new MyDong();
 				d.setNo(rs.getInt("no"));
 				d.setEnded(rs.getString("ended"));
 				d.setWriteDate(rs.getDate("write_date"));
@@ -237,6 +238,7 @@ public class MypageDao {
 				d.setTravleEndDate(rs.getDate("travle_end_date"));
 				d.setJoinPeopleNo(rs.getInt("join_people_no"));
 				d.setRecruitPeopleNo(rs.getInt("recruit_people_no"));
+				d.setImage(rs.getString("image"));
 				list.add(d);
 			}
 		}catch(SQLException e) {
@@ -248,19 +250,20 @@ public class MypageDao {
 		return list;
 	}
 	
-	public List<Donghang> selectMyDHAll(Connection conn,int start,int end){
+	public List<MyDong> selectMyDHAll(Connection conn,int userNo,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		List<Donghang> list=new ArrayList<Donghang>();
+		List<MyDong> list=new ArrayList<MyDong>();
 		String sql=prop.getProperty("selectMyDHAll");
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				Donghang d=new Donghang();
+				MyDong d=new MyDong();
 				d.setNo(rs.getInt("no"));
 				d.setEnded(rs.getString("ended"));
 				d.setWriteDate(rs.getDate("write_date"));
@@ -270,6 +273,7 @@ public class MypageDao {
 				d.setTravleEndDate(rs.getDate("travle_end_date"));
 				d.setJoinPeopleNo(rs.getInt("join_people_no"));
 				d.setRecruitPeopleNo(rs.getInt("recruit_people_no"));
+				d.setImage(rs.getString("image"));
 				list.add(d);
 			}
 		}catch(SQLException e) {
@@ -281,13 +285,14 @@ public class MypageDao {
 		return list;
 	}
 	
-	public int selectMyDongCount(Connection conn) {
+	public int selectMyDongCount(Connection conn,int userNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = prop.getProperty("selectMyDongCount");
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
 			rs = pstmt.executeQuery();
 			rs.next();
 			result = rs.getInt(1);

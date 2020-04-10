@@ -188,7 +188,7 @@
         text-decoration: none;
         color:black;
         list-style:none;
-        border:1px solid green;
+        /* border:1px solid green; */
     }
     
     #myDNInfo,#myBDInfo,.manuBar{

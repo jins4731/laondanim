@@ -14,9 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.laon.donghang.model.vo.Donghang;
+import com.laon.donghang.model.vo.MyDong;
 import com.laon.mypage.model.service.MypageService;
-import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
 /**
@@ -44,8 +43,8 @@ public class MyPageDongMyDHServlet extends HttpServlet {
 		int currentPage = getCurrentPage(request);
 		int pagePerRow = 20;
 		
-		List<Donghang> myDong=new MypageService().selectMyDHAll(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
-		int myDHCount = new MypageService().selectMyTripCount();
+		List<MyDong> myDong=new MypageService().selectMyDHAll(userNo, getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
+		int myDHCount = new MypageService().selectMyDongCount(userNo);
 		String myDHPasing = getPageBar(myDHCount, currentPage, pagePerRow, request, "/myPage/myConTrip.do");
 		
 		request.setAttribute("userProfile", up);

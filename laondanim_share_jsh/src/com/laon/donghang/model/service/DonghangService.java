@@ -39,4 +39,18 @@ public class DonghangService {
 		close(conn);
 		return userTag;
 	}
+
+	public List<Donghang> selectDonghangKeyword(int start, int end, String keyword) {
+		Connection conn = getConnection();
+		List<Donghang> list = dao.selectDonghangKeyword(conn, start ,end, keyword);
+		close(conn);
+		return list;
+	}
+
+	public int selectDonghangKeywordCount(String keyword) {
+		Connection conn = getConnection();
+		int result = dao.selectDonghangKeywordCount(conn, keyword);
+		close(conn);
+		return result;
+	}
 }

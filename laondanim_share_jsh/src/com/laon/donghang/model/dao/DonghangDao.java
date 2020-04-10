@@ -141,8 +141,7 @@ public class DonghangDao {
 			sql = "SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT DH.*, CASE "
 					+ likeSql 
 					+"ELSE '0' END AS TAG_COUNT FROM DONGHANG_TB DH ORDER BY TAG_COUNT DESC) A) WHERE RNUM BETWEEN "+ start +" AND "+end;
-			System.out.println("와우와우와우:");
-			System.out.println(sql);
+			
 			rs = stmt.executeQuery(sql);
 			list = rsProcess(rs, new ArrayList<Donghang>());
 		} catch (Exception e) {
@@ -193,5 +192,46 @@ public class DonghangDao {
 			close(pstmt);
 		}
 		return userTag;
+	}
+
+	public List<Donghang> selectDonghangKeyword(Connection conn, int start, int end, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectDonghangKeyword");
+		List<Donghang> list = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			rs = pstmt.executeQuery();
+			list = rsProcess(rs, new ArrayList<Donghang>());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public int selectDonghangKeywordCount(Connection conn, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectDonghangKeywordCount");
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+keyword+"%");
+			rs = pstmt.executeQuery();
+			rs.next();
+			result = rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
 	}
 }

@@ -102,12 +102,12 @@
 				})
 			});
 			
-			let keyword = $("#searchKeyword").val(); 	
+			/* let keyword = $("#searchKeyword").val(); 이거 왜 안먹힐까..? */
     		function fn_donghangSearch(){
     			if($("#searchKeyword").val()==null||$("#searchKeyword").val().trim()==""){
     					alert("검색어를 입력해주세요!");
     			}else{
-    				location.replace('<%=request.getContextPath()%>/donghang/donghangSearch.do');	      					
+    				location.replace('<%=request.getContextPath()%>/donghang/donghangSearch.do?keyword='+ $("#searchKeyword").val());
     			}
     		}
 
@@ -139,7 +139,7 @@
         <div class="container mt-4 ">
             <div class="row justify-content-between">
                 <div class="col d-flex align-items-center">
-                    <h6 class="display-6 mt-2">총 <%=request.getAttribute("totalContent")%>건의 동행이 있습니다.</h6>
+                    <h6 class="display-6 mt-2">총 <%=request.getAttribute("totalRowCount")%>건의 동행이 있습니다.</h6>
                 </div>
 
                 <div class="col d-flex justify-content-end">

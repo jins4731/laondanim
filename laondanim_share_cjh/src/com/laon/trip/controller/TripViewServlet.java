@@ -57,6 +57,7 @@ public class TripViewServlet extends HttpServlet {
 		request.setAttribute(CommonKey.TRIP_ITEM, trip);
 		request.setAttribute(CommonKey.USER_ITEM, user);
 		request.setAttribute(CommonKey.SCHEDULE_LIST, scheduleList);
+		request.setAttribute(CommonKey.PICTURE_ITEM, pic);
 		request.getRequestDispatcher("/views/trip/tripView.jsp").forward(request, response);
 	}
 

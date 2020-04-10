@@ -1,3 +1,4 @@
+<%@page import="com.laon.etc.model.vo.Picture"%>
 <%@page import="java.util.List"%>
 <%@page import="com.laon.trip.model.vo.TripSchedule"%>
 <%@page import="com.laon.user.model.vo.User"%>
@@ -7,20 +8,25 @@
     pageEncoding="UTF-8"%>
     
 <%
-	Object tripO = request.getAttribute(CommonKey.TRIP_ITEM);
+	Object oTrip = request.getAttribute(CommonKey.TRIP_ITEM);
 	Trip trip = null;
-	if(tripO != null){
-		trip = (Trip)tripO;
+	if(oTrip != null){
+		trip = (Trip)oTrip;
 	}
-	Object userO = request.getAttribute(CommonKey.USER_ITEM);
+	Object oUser = request.getAttribute(CommonKey.USER_ITEM);
 	User user = null;
-	if(userO != null){
-		user = (User)userO;
+	if(oUser != null){
+		user = (User)oUser;
 	}
-	Object scheduleListO = request.getAttribute(CommonKey.SCHEDULE_LIST);
+	Object oScheduleList = request.getAttribute(CommonKey.SCHEDULE_LIST);
 	List<TripSchedule> scheduleList = null;
-	if(scheduleListO != null){
-		scheduleList = (List)scheduleListO;
+	if(oScheduleList != null){
+		scheduleList = (List)oScheduleList;
+	}
+	Object oPicture = request.getAttribute(CommonKey.PICTURE_ITEM);
+	Picture picture = null;
+	if(oPicture != null){
+		picture = (Picture)oPicture;
 	}
 
 
@@ -122,8 +128,10 @@
 
 
             <div class="row justify-content-center">
-                <span id="tag" class="w-50">#태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그#태그 #태그 #태그 #태그#태그
-                    #태그 #태그 #태그#태그 #태그 #태그 #태그</span>
+                <div>
+                    <span id="tag" class="w-50"><%=trip.getTag() %></span>
+                </div>
+                
             </div>
 
 
@@ -133,22 +141,22 @@
                 <div class="col-4 font-weight-bold text-dark">
                     <div class="row align-items-center p-1">
                         <label for="travleLocale" class="col-4 m-0 ">여행지역</label>
-                        <span id="taravle-locale" class="col-8 border-bottom border-secondary"><%=trip.getTravleLocale() %></span>
+                        <span id="taravleLocale" class="col-8 border-bottom border-secondary"><%=trip.getTravleLocale() %></span>
                     </div>
                     <div class="row align-items-center p-1">
                         <label for="travleLocale" class="col-4 m-0 ">인원 수</label>
-                        <span id="people-num" class="col-8 border-bottom border-secondary"><%=trip.getPeopleNum() %>명</span>
+                        <span id="peopleNum" class="col-8 border-bottom border-secondary"><%=trip.getPeopleNum() %>명</span>
                     </div>
                     <div class="row align-items-center p-1">
                         <label for="travleLocale" class="col-4 m-0 ">여행유형</label>
-                        <span id="travle-type" class="col-8 border-bottom border-secondary"><%=trip.getTravleType() %></span>
+                        <span id="travleType" class="col-8 border-bottom border-secondary"><%=trip.getTravleType() %></span>
                     </div>
                     <div class="row align-items-center p-1">
                         <label for="travleLocale" class="col-4 m-0 ">여행일</label>
                         <div class="d-flex align-items-center col-8 border-bottom border-secondary ">
                             <img src="./icon/calendar.png" width="20px" alt="">
-                            <span id="travle-start-date" class="ml-2"><%=trip.getTravleStartDate() %></span>~
-                            <span id="travle-end-date"><%=trip.getTravleEndDate() %></span>
+                            <span id="travleStartDate" class="ml-2"><%=trip.getTravleStartDate() %></span>~
+                            <span id="travleEndDate"><%=trip.getTravleEndDate() %></span>
                         </div>
                     </div>
                 </div>
@@ -163,15 +171,15 @@
                             </div>
                             <div class="row h-25 p-1 align-items-center justify-content-end">
                                 <div class="d-flex border border-danger justify-content-center">
-                                    <img id="image" class="d-block rounded-circle" width="20px"
-                                        src="https://image.chosun.com/sitedata/image/201705/08/2017050801699_0.jpg"
+                                    <img id="image" class="d-block rounded-circle" width="20px" height="20px"
+                                        src="<%=request.getContextPath()+"/"+picture.getImage() %>"
                                         alt="frog">
                                 </div>
                                 <label class=" m-0 border border-primary text-center" for="image"
                                     id="nickName"><%=user.getNickName() %></label>
                                     <div class="dropdown">
                                         <a class=" m-0 p-0 border border-success text-center dropdown-toggle-split" data-toggle="dropdown" href=""><img
-                                            class="align-text-top" src="./icon/menu.png" width="20px" alt="menu"></a>
+                                            class="align-text-top" src="./icon/menu.png" width="20px" height="20px" alt="menu"></a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <div class="dropdown-item bg-transparent">
                                                 <a href="javascript:void(0)" onclick="singoBt()" ><img src="./icon/siren.png" width="20px" alt="">신고하기</a> 
@@ -191,10 +199,10 @@
         <div id="body" class="body col pt-4">
             <div class="row pl-2">
                 <div class="d-flex col-3">
-                    <a id="course-type" onclick="courseTypeBt()" href="javascript:void(0)" class="col-5 d-block btn btn-outline-secondary py-1 active">
+                    <a id="courseType" onclick="courseTypeBt()" href="javascript:void(0)" class="col-5 d-block btn btn-outline-secondary py-1 <%=trip.getCategory().equals("코스")?"active":"" %>">
                         코스
                     </a>
-                    <a id="review-type" onclick="reviewTypeBt()" href="javascript:void(0)" class="col-5 d-block btn btn-outline-secondary ml-3 py-1 ">
+                    <a id="reviewType" onclick="reviewTypeBt()" href="javascript:void(0)" class="col-5 d-block btn btn-outline-secondary ml-3 py-1 disabled <%=trip.getCategory().equals("코스")?"disabled":"" %>">
                         후기
                     </a>
                 </div>
@@ -260,9 +268,11 @@
 
         });
 
+        let time = $("#courseType").prop("activated");
 
         function courseTypeBt(){
             console.log("courseTypeBt")
+            console.log(time);
         }
 
         function reviewTypeBt(){

@@ -18,12 +18,17 @@ public class CommonKey {
 	public static final String TRIPINFO_LIST = "tripList";
 	public static final String DONGHANG_LIST = "donghangList";
 	public static final String BOARD_LIST = "boardList";
+	public static final String PICTURE_LIST = "pictureList";
+	
 	
 	
 	public static final String TRIP_ITEM = "tripItem";
 	public static final String USER_ITEM = "userItem";
-	public static final String PAGE_BAR = "pageBar";
+	public static final String PICTURE_ITEM = "pictureItem";
 	
+	
+	
+	public static final String PAGE_BAR = "pageBar";
 	public static final String NO = "no";
 	
 	

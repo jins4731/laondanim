@@ -1,4 +1,4 @@
-package com.laon.common;
+package com.laon.common.template;
 
 import java.io.FileReader;
 import java.sql.Connection;

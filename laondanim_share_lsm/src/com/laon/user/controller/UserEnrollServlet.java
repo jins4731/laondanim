@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class EnterLoginPageServlet
+ * Servlet implementation class userEnrollServlet
  */
-@WebServlet("/user/loginPage.do")
-public class EnterLoginPageServlet extends HttpServlet {
+@WebServlet(name="UserEnrollServlet", urlPatterns = "/user/enroll.do")
+public class UserEnrollServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EnterLoginPageServlet() {
+    public UserEnrollServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,9 +26,8 @@ public class EnterLoginPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//로그인 페이지에 접속하는 서블릿
-		//로그인클릭-> 로그인 페이지로 이동
-		request.getRequestDispatcher("/views/user/login.jsp").forward(request, response);
+		//회원가입 화면으로 이동시키는 기능
+		request.getRequestDispatcher("/views/user/enroll.jsp").forward(request, response);
 	}
 
 	/**

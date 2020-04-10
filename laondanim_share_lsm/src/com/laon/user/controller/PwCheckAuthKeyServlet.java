@@ -28,21 +28,23 @@ public class PwCheckAuthKeyServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//이메일로 발송된 인증번호가 세션에 저장된 인증번호와 같은지 확인하는 로직
 		
-		String AuthenticationKey=(String)request.getSession().getAttribute("AuthenticationKey");
-		String AuthenticationUser=request.getParameter("userKey");
-		String AuthId=(String)request.getSession().getAttribute("AuthId");
+				String AuthenticationKey=(String)request.getSession().getAttribute("AuthenticationKey");
+				String AuthenticationUser=request.getParameter("userKey");
+				String AuthId=(String)request.getSession().getAttribute("AuthId");
+				
+				//여기서 아이디를 *로 가려주기 !!
+				
+				
+				
+				
+				if(!AuthenticationKey.equals(AuthenticationUser)) {
+					response.getWriter().write("false");
+					//일치하지 않을경우
+				}else {
+					response.getWriter().write("true");
+				}
+				
 		
-		//여기서 아이디를 *로 가려주기 !!
-		
-		
-		
-		
-		if(!AuthenticationKey.equals(AuthenticationUser)) {
-			response.getWriter().write("false");
-			//일치하지 않을경우
-		}else {
-			response.getWriter().write("true");
-		}
 	}
 
 	/**

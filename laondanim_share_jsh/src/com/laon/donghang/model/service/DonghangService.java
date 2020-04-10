@@ -20,9 +20,9 @@ public class DonghangService {
 		return donghang;
 	}
 	
-	public List<DonghangJoinUserPicture> selectDonghangPage(int start,int end){
+	public List<DonghangJoinUserPicture> selectDonghangPage(int start,int end, String keyword, String recent, String viewcount, String nearSchedule){
 		Connection conn = getConnection();
-		List<DonghangJoinUserPicture> list = dao.selectDonghangPage(conn, start ,end);
+		List<DonghangJoinUserPicture> list = dao.selectDonghangPage(conn, start ,end, keyword, recent, viewcount, nearSchedule);
 		close(conn);
 		return list;
 	}

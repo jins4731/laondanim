@@ -47,6 +47,12 @@ public class DonghangDao {
 	private String selectDonghangPage = "selectDonghangPage";
 	private String selectDonghangCount = "selectDonghangCount";
 	private String selectDonghangKeywordCount = "selectDonghangKeywordCount";
+	private String selectDonghangKeywordRecent = "selectDonghangKeywordRecent";
+	private String selectDonghangKeywordViewcount = "selectDonghangKeywordViewcount";
+	private String selectDonghangKeywordNearSchedule = "selectDonghangKeywordNearSchedule";
+	private String selectDonghangRecent = "selectDonghangRecent";
+	private String selectDonghangViewcount = "selectDonghangViewcount";
+	private String selectDonghangNearSchedule = "selectDonghangNearSchedule";
 
 	public DonghangDao() {
 		try {
@@ -158,15 +164,43 @@ public class DonghangDao {
 		return donghang;
 	}
 
-	public List<DonghangJoinUserPicture> selectDonghangPage(Connection conn, int start, int end) {
+	public List<DonghangJoinUserPicture> selectDonghangPage(Connection conn, int start, int end, String keyword, String recent, String viewcount, String nearSchedule) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = prop.getProperty(selectDonghangPage);
+		String sql="";
 		List<DonghangJoinUserPicture> list = null;
+		boolean haveLike = true;
+
+		//sql문 나누기
+		if( !keyword.equals("null") && !recent.equals("null") ) { //키워드 O, 최신순
+			sql = prop.getProperty(selectDonghangKeywordRecent);
+		}else if( !keyword.equals("null") && !viewcount.equals("null") ) { //키워드 O, 조회수순
+			sql = prop.getProperty(selectDonghangKeywordViewcount);
+		}else if( !keyword.equals("null") && !nearSchedule.equals("null") ) { //키워드 O, 가까운 일정순
+			sql = prop.getProperty(selectDonghangKeywordNearSchedule);
+		}else if( keyword.equals("null") && !recent.equals("null") ) { //키워드 X, 최근순
+			sql = prop.getProperty(selectDonghangRecent);
+		}else if( keyword.equals("null") && !viewcount.equals("null") ) { //키워드 X, 조회수순
+			sql = prop.getProperty(selectDonghangViewcount);
+		}else if( keyword.equals("null") && !nearSchedule.equals("null") ) { //키워드 X, 가까운 일정순
+			sql = prop.getProperty(selectDonghangNearSchedule);
+		}else if( !keyword.equals("null") && recent.equals("null") && viewcount.equals("null") && nearSchedule.equals("null")) {
+			sql = prop.getProperty(selectDonghangKeywordRecent); //검색만 했을 때! (기본 최신순 정렬)
+		}else {
+			sql = prop.getProperty(selectDonghangPage);
+		}
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
+			//키워드 o, x 분기
+			if(!keyword.equals("null")) {
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
+			}else {
+				pstmt.setInt(1, start);
+				pstmt.setInt(2, end);
+			}
 			rs = pstmt.executeQuery();
 			list = joinRsProcess(rs, new ArrayList<DonghangJoinUserPicture>());
 		} catch (Exception e) {

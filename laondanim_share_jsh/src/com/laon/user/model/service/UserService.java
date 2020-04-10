@@ -72,5 +72,11 @@ public class UserService {
 		return result;
 	}
 
+	public User selectUser(int no) {
+		Connection conn=getConnection();
+		User user = dao.selectUser(conn, no);
+		close(conn);
+		return user;
+	}
 
 }

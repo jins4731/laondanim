@@ -27,6 +27,9 @@
 	}
 	
 	SimpleDateFormat newFm = new SimpleDateFormat("yy-MM-dd");
+	
+	String keyword = (String)request.getAttribute(CommonKey.KEYWORD);
+	System.out.println("jsp keyword : "+ keyword);
 %>
 
     <section class="d-flex flex-row justify-content-center">
@@ -41,7 +44,11 @@
                     <option value="">지역검색</option>
                     <option value="">키워드 검색</option>                    
                 </select>
-                <input type="text" id="keyword" name="keyword" class="pl-2">
+                <input type="text" id="keyword" name="keyword" class="pl-2" 
+                <%if(!keyword.equals("null")){ %>value='<%=keyword%>'
+                <%}else{%>
+                	value=""
+                <%}%>/>
                 <button id="inputKeywordBtn">
                 	<img src="<%=request.getContextPath()%>/image/inactiveSearch_icon.png" alt="searchIcon" id="searchIcon"/>
                 </button>
@@ -130,7 +137,7 @@
         <div class="container mt-4 ">
             <div class="row justify-content-between">
                 <div class="col d-flex align-items-center">
-                    <h6 class="display-6 mt-2">총 <%=request.getAttribute(CommonKey.TOTAL_ROWCOUNT)%>건의 동행이 있습니다.</h6>
+                    <h6 class="display-6 mt-2">총 <%=list.size()%>건의 동행이 있습니다.</h6>
                 </div>
 
                 <div class="col d-flex justify-content-end">
@@ -360,7 +367,7 @@
 			if(keyword==null||keyword.trim()==""){
 					alert("검색어를 입력해주세요!");
 			}else{
-				location.replace('<%=request.getContextPath()%>/donghangListView.do?keyword='+keyword);
+				location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword);
 			}
 		});
     	
@@ -373,7 +380,7 @@
     		let recent = 'recent';
     		let viewcount = 'null';
     		let nearSchedule = 'null';
-    		location.replace('<%=request.getContextPath()%>/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
+    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
     	})
 	    //조회수 버튼
     	$("#inputViewCountBtn").click(()=>{
@@ -384,7 +391,7 @@
     		let recent = 'null';
     		let viewcount = 'viewcount';
     		let nearSchedule = 'null';
-    		location.replace('<%=request.getContextPath()%>/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
+    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
     	})
     	//가까운일정순 버튼
     	$("#inputNearScheduleBtn").click(()=>{
@@ -395,7 +402,7 @@
     		let recent = 'null';
     		let viewcount = 'null';
     		let nearSchedule = 'nearSchedule';
-    		location.replace('<%=request.getContextPath()%>/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
+    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
     	})
     </script>
 </section>

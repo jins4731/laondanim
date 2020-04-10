@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.laon.common.CommonKey;
+import com.laon.common.DonghangKey;
 import com.laon.common.Paging;
 import com.laon.donghang.model.service.DonghangService;
 import com.laon.donghang.model.vo.Donghang;
@@ -43,7 +44,6 @@ public class DonghangListViewServlet extends HttpServlet {
 		//검색 키워드 값 가져오기 
 		String keyword = request.getParameter("keyword");
 		keyword=(keyword==null?"null":keyword);
-		System.out.println("빠밤 키워드는 ? :"+keyword);
 		//최근순 클릭 recent값
 		String recent = request.getParameter("recent");
 		recent=(recent==null?"null":recent);
@@ -57,20 +57,17 @@ public class DonghangListViewServlet extends HttpServlet {
 		int currentPage = getCurrentPage(request);
 		int pagePerRow = 10;
 		
-		List<DonghangJoinUserPicture> list = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
+		List<DonghangJoinUserPicture> list = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), keyword, recent, viewcount, nearSchedule);
 		int totalRowCount = new DonghangService().selectDonghangCount(keyword);
+		
 		String pageBar = new Paging().pageBar(request.getContextPath()+"/donghang/donghangListView.do", totalRowCount, currentPage, pagePerRow, keyword, recent, viewcount, nearSchedule );
 		
 		//쿼리스트링 저장
-		request.setAttribute("keyword", keyword);
-		request.setAttribute("recent", recent);
-		request.setAttribute("viewcount", viewcount);
-		request.setAttribute("nearSchedule", nearSchedule);
+		request.setAttribute(CommonKey.KEYWORD, keyword);
 		
 		request.setAttribute(CommonKey.DONGHANG_LIST, list);
 		request.setAttribute(CommonKey.PAGE_BAR, pageBar);
 		request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount);
-		System.out.println("왜죠:"+totalRowCount);
 		
 		
 		request.getRequestDispatcher("/views/donghang/donghangList.jsp").forward(request, response);

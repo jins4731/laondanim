@@ -10,20 +10,20 @@ public class Paging {
 		
 		String pageBar = "<ul class=\"pagination justify-content-center\"> <li class='page-item'><a class='page-link' href='' area-label='Previous'>&laquo;</a></li>";
 		
-		int totalPage = totalData/perPage+1;
+		int totalPage = (int) Math.ceil((double)totalData/perPage);
 		
 		int pageBarSize = 5;
 	
-		int rowNum = (cPage-1)/pageBarSize*pageBarSize+1;
-		int pageLast = rowNum+pageBarSize-1;
+		int rowNum = ((cPage-1)/pageBarSize)*pageBarSize+1; // 페이지바 첫번째 숫자
+		int pageLast = rowNum + pageBarSize-1; // 페이지바 마지막 숫자
 		
 		if(rowNum == 1) {
-			pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&lt;</a></li>";
+			pageBar += "<li class='page-item'><a class='page-link' area-label='Previous'>&lt;</a></li>";
 		}else {
 			pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?cPage=" + (rowNum-1) +"&keyword="+keyword+"&category="+category+"&lo="+lo+"&recent="+recent+"&like="+like+"' area-label='Previous'>&lt;</a></li>";
 		}
 		
-		while(!(rowNum>pageLast || (rowNum>totalPage))) {
+		while(!(rowNum>pageLast || rowNum>totalPage)) {
 			if(cPage==rowNum) {
 				pageBar += "<li class='page-item'><a class='page-link' href=''>"+rowNum+"</a></li>";
 			}else {
@@ -50,12 +50,12 @@ public class Paging {
 		
 		String pageBar = "<ul class=\"pagination justify-content-center\"> <li class='page-item'><a class='page-link' href='' area-label='Previous'>&laquo;</a></li>";
 		
-		int totalPage = totalData/perPage+1;
+		int totalPage = (int) Math.ceil((double)totalData/perPage);
 		
 		int pageBarSize = 5;
 	
-		int rowNum = (cPage-1)/pageBarSize*pageBarSize+1;
-		int pageLast = rowNum+pageBarSize-1;
+		int rowNum = ((cPage-1)/pageBarSize)*pageBarSize+1; // 페이지바 첫번째 숫자
+		int pageLast = rowNum + pageBarSize-1; // 페이지바 마지막 숫자
 		
 		if(rowNum == 1) {
 			pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&lt;</a></li>";
@@ -63,7 +63,7 @@ public class Paging {
 			pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?cPage=" + (rowNum-1) +"&keyword="+keyword+"&recent="+recent+"&viewcount="+viewcount+"&nearSchedule="+nearSchedule+"' area-label='Previous'>&lt;</a></li>";
 		}
 		
-		while(!(rowNum>pageLast || (rowNum>totalPage))) {
+		while(!(rowNum>pageLast || rowNum>totalPage)) {
 			if(cPage==rowNum) {
 				pageBar += "<li class='page-item'><a class='page-link' href=''>"+rowNum+"</a></li>";
 			}else {

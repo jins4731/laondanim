@@ -1,4 +1,3 @@
-<%@page import="com.laon.trip.model.vo.TripMyCon"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List,com.laon.trip.model.vo.TripMyCon,com.laon.board.model.vo.Board,com.laon.etc.model.vo.Like" %>
@@ -6,19 +5,8 @@
 	List<TripMyCon> trip=(List)request.getAttribute("trip");
 	int tripCount=(int)request.getAttribute("tripCount");
 	List<Like> tripLike=(List)request.getAttribute("tripLike");
-
-	List<Board> board=(List)request.getAttribute("board");
-	String boardPasing=(String)request.getAttribute("boardPasing");
-	int boardCount=(int)request.getAttribute("boardCount");
+	String tripPasing=(String)request.getAttribute("tripPasing");
 %>
-    
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
-
-
-
 <%@ include file="/views/common/header.jsp"%>
 <div class="container">
 	<div class="row">
@@ -33,7 +21,6 @@
 					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong.do?userNo=<%=loginUser.getNo()%>')">내 동행</button>
 				</div>
 				<div id="myPageView">
-					<!-- 내 다님길 -->
 					<div class="menu">
 						<div class="manuBar">
 							<div>
@@ -49,15 +36,28 @@
 					<div>
 						<!-- 정보 -->
 						<div id="myDNInfo">
-							<div style="height:45px;">
+							<div>
 								<span>총 <%=tripCount %>개의 다님길</span>
+							</div>
+							<div id="dnCk1">
+								<button class="btn">선택삭제</button>
+							</div>
+							<div id="dnCk2">
+								<label><input type="checkbox" id="dnAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
+								<button class="btn">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
+								<button class="btn" id="dnEndBtn">돌아가기</button>
 							</div>
 						</div>
 						<!-- 게시글위치 -->
-						<table id="dnTbl">
-							<tr class="d-flex flex-wrap justify-content-center">
+						<table id="dnTbl" class="d-flex justify-content-center">
+							<tr class="d-flex flex-wrap">
 							<%for(TripMyCon t:trip){ %>
 								<td class="p-1">
+									<div class="dnCk3" style="margin:10px;">
+										<label style="width:130px;">
+											<input type="checkbox" class="dnCks">
+										</label>
+									</div>
 									<div class="card" style="width: 155px; height: 250px;" >
 										<div class="d-flex justify-content-between p-2" style="font-size:5px;">
 						    				<span><%=t.getCategory() %></span>
@@ -94,79 +94,9 @@
 								</td>
 							<%} %>
 							</tr>
-							<%if(trip.size()==4){ %>
-							<tr>
-								<td colspan="4" style="text-align: center;">
-									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myConTrip.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>
-								</td>
-							</tr>
-							<%} %>
 						</table>
-					</div>
-					
-					<!-- 내 게시글 -->
-					<div class="menu" style="padding-top:20px;">
-						<div class="manuBar">
-							<div>
-								<span>내 게시글</span>
-							</div>
-							<div>
-								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
-							</div>
-						</div>
-						<hr>
-					</div>
-					<!-- 닫힘 내용 -->
-					<div>
-						<!-- 정보 -->
-						<div id="myBDInfo">
-							<div>
-								<span>총 <%=boardCount %>개의 게시글</span>
-							</div>
-							<div id="bdCk1">
-								<button class="btn">선택삭제</button>
-							</div>
-							<div id="bdCk2">
-								<label><input type="checkbox" id="bdAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn" onclick="fnBoardDel();">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn" id="bdEndBtn">돌아가기</button>
-							</div>
-						</div>
-						<!-- 게시글위치 -->
 						<div>
-							<table id="bdTbl" class="table">
-								<tr>
-									<th style="width:50px;"></th>
-									<th>글종류</th>
-									<th>글제목</th>
-									<th>작성시간</th>
-									<th></th>
-								</tr>
-							<%for(Board b:board){ %>
-								<tr>
-									<td style="width:50px;">
-										<div class="bdCk3">
-											<input type="checkbox" class="bdCks" name="bdCks">
-										</div>
-									</td>
-									<td style="width:100px;">
-										<%=b.getCategory() %>
-									</td>
-									<td>
-										<a href="#"><%=b.getTitle() %></a>
-									</td>
-									<td style="width:150px;">
-										<%=b.getWriteDate() %>
-									</td>
-									<td style="width:80px;">
-										<button class="btn">수정</button>
-									</td>
-								</tr>
-							<%} %>
-							</table>
-							<div>
-								<%=boardPasing %>
-							</div>
+							<%=tripPasing %>
 						</div>
 					</div>
 				</div>
@@ -175,6 +105,7 @@
 	</div>
 </div>
 <%@ include file="/views/common/footer.jsp"%>
+
 <style>
 	div.menu{
 		width:auto;
@@ -188,17 +119,17 @@
         text-decoration: none;
         color:black;
         list-style:none;
-        /* border:1px solid green; */
+        border:1px solid green;
     }
     
-    #myDNInfo,#myBDInfo,.manuBar{
+    #myDNInfo,.manuBar{
     	display:flex;
     	justify-content: space-between;
     	margin-left: 40px;
     	margin-right: 40px;
     }
 
-	#dnCk2,.dnCk3,#bdCk2,.bdCk3{
+	#dnCk2,.dnCk3{
 		display:none;
 	}
 	
@@ -237,29 +168,6 @@
 		});
 	});
 	
-	/* 게시글 */
-	$(function(){
-		$("#bdCk1>button").click(()=>{
-			$("#bdCk1").css("display","none");
-			$("#bdCk2").css("display","block");
-			$(".bdCk3").css("display","block");
-		});
-		
-		$("#bdEndBtn").click(()=>{
-			$("#bdCk1").css("display","block");
-			$("#bdCk2").css("display","none");
-			$(".bdCk3").css("display","none");
-		});
-		
-		$("#bdAll").click(()=>{
-			if($("#bdAll").is(":checked")){							
-				$(".bdCks").prop("checked",true);
-			}else{
-				$(".bdCks").prop("checked",false);
-			}
-		});
-	});
-	
 	$(function(){
 		$(".imgDrop").stop().css({"transform":"rotate(90deg)"});
 	});
@@ -275,13 +183,4 @@
 			flag=true;
 		}
 	});
-	<%-- $(function(){
-		
-		function fnBoardDel(){
-			$("input[name=bdCks]:checked").each(function() {
-				var bdCks[] = $(this).val();
-				return location.href='<%=request.getContextPath()%>/mypage/myBoardDel';
-			}
-		}
-	}); --%>
 </script>

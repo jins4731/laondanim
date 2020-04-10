@@ -7,17 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.laon.mypage.model.service.MypageService;
+import com.laon.user.model.vo.UserProfile;
+
 /**
- * Servlet implementation class MyPageMainServlet
+ * Servlet implementation class MyPageInfoPwck
  */
-@WebServlet("/mypage/mypageMain.do")
-public class MyPageMainServlet extends HttpServlet {
+@WebServlet("/myPage/myInfoPwck")
+public class MyPageInfoPwck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageMainServlet() {
+    public MyPageInfoPwck() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +29,11 @@ public class MyPageMainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/views/mypage/myPageMain.jsp").forward(request, response);
+		int userNo=Integer.parseInt(request.getParameter("userNo"));
+		UserProfile up=new MypageService().selectUserNo(userNo);
+		
+		request.setAttribute("userProfile", up);
+		request.getRequestDispatcher("/views/mypage/myPwck.jsp").forward(request, response);
 	}
 
 	/**

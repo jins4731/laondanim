@@ -1,4 +1,4 @@
-package com.laon.mypage.controller;
+package com.laon.user.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class MyPageMainServlet
+ * Servlet implementation class EnterLoginPageServlet
  */
-@WebServlet("/mypage/mypageMain.do")
-public class MyPageMainServlet extends HttpServlet {
+@WebServlet("/user/loginPage.do")
+public class EnterLoginPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageMainServlet() {
+    public EnterLoginPageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +26,7 @@ public class MyPageMainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/views/mypage/myPageMain.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/user/login.jsp").forward(request, response);
 	}
 
 	/**

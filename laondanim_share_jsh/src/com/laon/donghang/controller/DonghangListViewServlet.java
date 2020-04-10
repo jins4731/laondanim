@@ -6,6 +6,7 @@ import static com.laon.common.template.PageTemplate.getPageBar;
 import static com.laon.common.template.PageTemplate.getStartNum;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -41,6 +42,8 @@ public class DonghangListViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//첫화면을 위해 태그 가져오기
+		String userTag = request.getParameter("userTag");
 		//검색 키워드 값 가져오기 
 		String keyword = request.getParameter("keyword");
 		keyword=(keyword==null?"null":keyword);
@@ -57,7 +60,13 @@ public class DonghangListViewServlet extends HttpServlet {
 		int currentPage = getCurrentPage(request);
 		int pagePerRow = 10;
 		
-		List<DonghangJoinUserPicture> list = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), keyword, recent, viewcount, nearSchedule);
+		List<DonghangJoinUserPicture> list = new ArrayList<DonghangJoinUserPicture>();
+		//Tag를 기준으로 첫화면 이후 화면 나누기
+		if(userTag!=null) {
+			list = new DonghangService().selectDonghangTag(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), userTag);
+		}else {
+			list = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), keyword, recent, viewcount, nearSchedule);
+		}
 		int totalRowCount = new DonghangService().selectDonghangCount(keyword);
 		
 		String pageBar = new Paging().pageBar(request.getContextPath()+"/donghang/donghangListView.do", totalRowCount, currentPage, pagePerRow, keyword, recent, viewcount, nearSchedule );

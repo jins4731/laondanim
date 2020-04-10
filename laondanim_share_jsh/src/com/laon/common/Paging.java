@@ -39,7 +39,7 @@ public class Paging {
 		}
 		
 		pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&raquo;</a></li> </ul>";
-		
+		System.out.println("왠지 아니??"+rowNum);
 		return pageBar;
 	}
 	
@@ -54,7 +54,7 @@ public class Paging {
 		
 		int pageBarSize = 5;
 	
-		int rowNum = ((cPage-1)/pageBarSize)*pageBarSize+1; // 페이지바 첫번째 숫자
+		int rowNum = (cPage-1)/pageBarSize*pageBarSize+1; // 페이지바 첫번째 숫자
 		int pageLast = rowNum + pageBarSize-1; // 페이지바 마지막 숫자
 		
 		if(rowNum == 1) {

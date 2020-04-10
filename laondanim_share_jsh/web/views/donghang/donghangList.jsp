@@ -29,7 +29,6 @@
 	SimpleDateFormat newFm = new SimpleDateFormat("yy-MM-dd");
 	
 	String keyword = (String)request.getAttribute(CommonKey.KEYWORD);
-	System.out.println("jsp keyword : "+ keyword);
 %>
 
     <section class="d-flex flex-row justify-content-center">
@@ -219,13 +218,13 @@
                                 <%} } %>
                                 </ul>
                             </div>                        
-                            <img src="img/god.jpg" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
+                            <img src="<%=request.getContextPath()%>/image/<%=dh.getImage()%>" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
                         </div>
 
                         <!--푸터-->
                         <div class="card-footer h-30 d-flex flex-column bg-white border-0 justify-content-around" style="height: 31%;">
                             <span><%=dh.getTitle()%></span>
-                            <span>닉넴(sql다시..)</span>
+                            <span><%=dh.getNickName()%></span>
                             <div>
                                 <p class="m-0">
                                     <span>동행지역 : </span>
@@ -277,13 +276,13 @@
                                 <%} } %>
                                 </ul>
                             </div>                        
-                            <img src="img/god.jpg" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
+                            <img src="<%=request.getContextPath()%>/image/<%=dh.getImage()%>" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
                         </div>
 
                         <!--푸터-->
                         <div class="card-footer h-30 d-flex flex-column bg-white border-0 justify-content-around" style="height: 31%;">
                             <span><%=dh.getTitle()%></span>
-                            <span>닉넴(sql다시..)</span>
+                            <span><%=dh.getNickName()%></span>
                             <div>
                                 <p class="m-0">
                                     <span>동행지역 : </span>

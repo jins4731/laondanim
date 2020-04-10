@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -257,5 +258,36 @@ public class DonghangDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public List<DonghangJoinUserPicture> selectDonghangTag(Connection conn, int start, int end, String userTag) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		List<DonghangJoinUserPicture> list = null;
+		//태그길이만큼  when~then sql문 만들기
+		String[] userTagArr = userTag.split(",");
+		String likeSql = "";
+		for(String tag : userTagArr) {
+			likeSql += "WHEN DH.TAG LIKE '%" + tag + "%' THEN '1' ";
+		}
+		
+		try {
+			stmt = conn.createStatement();
+			sql = "SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT DH.*, U.NICK_NAME, P.IMAGE, CASE "
+					+ likeSql 
+					+"ELSE '0' END AS TAG_COUNT FROM DONGHANG_TB DH "
+					+ "INNER JOIN USER_TB U ON DH.USER_NO = U.NO INNER JOIN PICTURE_TB P ON DH.NO = P.DONGHANG_NO ORDER BY TAG_COUNT DESC) A) "
+					+ "WHERE RNUM BETWEEN "+ start +" AND "+end;
+			
+			rs = stmt.executeQuery(sql);
+			list = joinRsProcess(rs, new ArrayList<DonghangJoinUserPicture>());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(stmt);
+		}
+		return list;
 	}
 }

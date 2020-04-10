@@ -40,4 +40,11 @@ public class DonghangService {
 		close(conn);
 		return result;
 	}
+
+	public List<DonghangJoinUserPicture> selectDonghangTag(int start, int end, String userTag) {
+		Connection conn = getConnection();
+		List<DonghangJoinUserPicture> list = dao.selectDonghangTag(conn, start ,end, userTag);
+		close(conn);
+		return list;
+	}
 }

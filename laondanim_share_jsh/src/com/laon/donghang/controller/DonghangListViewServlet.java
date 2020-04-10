@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.laon.common.CommonKey;
 import com.laon.donghang.model.service.DonghangService;
 import com.laon.donghang.model.vo.Donghang;
+import com.laon.donghang.model.vo.DonghangJoinUserPicture;
 import com.laon.user.model.vo.User;
 
 /**
@@ -48,7 +49,7 @@ public class DonghangListViewServlet extends HttpServlet {
 		int currentPage = getCurrentPage(request);
 		int pagePerRow = 10;
 		
-		List<Donghang> list = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), userTag);
+		List<DonghangJoinUserPicture> donghangList = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), userTag);
 		int totalRowCount = new DonghangService().selectDonghangCount();
 
 		//page바 서블릿에서 구현
@@ -87,7 +88,7 @@ public class DonghangListViewServlet extends HttpServlet {
 			pageBar += "<span>"+"다음"+"</span>";
 		}
 		
-		request.setAttribute(CommonKey.LIST, list);
+		request.setAttribute(CommonKey.DONGHANG_LIST, donghangList);
 		request.setAttribute(CommonKey.PAGE_BAR, pageBar);
 		
 		//총 콘텐츠 수 가져오기

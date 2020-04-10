@@ -42,10 +42,10 @@ public class DonghangSearchServlet extends HttpServlet {
 		int currentPage = getCurrentPage(request);
 		int pagePerRow = 10;
 		
-		List<Donghang> list = new DonghangService().selectDonghangKeyword(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), keyword);
+		List<Donghang> donghangList = new DonghangService().selectDonghangKeyword(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), keyword);
 		int totalRowCount = new DonghangService().selectDonghangKeywordCount(keyword);
 
-		System.out.println("검색리스트 사이즈 "+list.size());
+		System.out.println("검색리스트 사이즈 "+donghangList.size());
 		//page바 서블릿에서 구현
 		int totalPageSize = (int) Math.ceil((double)totalRowCount/pagePerRow); // 총 페이지 갯수
 		
@@ -82,7 +82,7 @@ public class DonghangSearchServlet extends HttpServlet {
 			pageBar += "<span>"+"다음"+"</span>";
 		}
 		
-		request.setAttribute(CommonKey.LIST, list);
+		request.setAttribute(CommonKey.DONGHANG_LIST, donghangList);
 		request.setAttribute(CommonKey.PAGE_BAR, pageBar);
 		
 		//총 콘텐츠 수 가져오기

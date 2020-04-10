@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import com.laon.common.PropPath; //<-com.laon.common.template.PropPath;로 되어있어 변경함
 import com.laon.donghang.model.vo.Donghang;
+import com.laon.donghang.model.vo.DonghangJoinUserPicture;
 
 public class DonghangDao {
 	private Properties prop = new Properties();
@@ -38,6 +39,8 @@ public class DonghangDao {
 	private String deleted = "deleted";
 	private String recruitPeopleNo = "recruit_people_no";
 	private String joinPeopleNo = "join_people_no";
+	private String nickName = "nick_name";
+	private String image = "image";
 
 	
 	
@@ -104,6 +107,35 @@ public class DonghangDao {
 		}
 		return list;
 	}
+	
+	public List<DonghangJoinUserPicture> joinRsProcess(ResultSet rs, ArrayList<DonghangJoinUserPicture> arrayList) throws SQLException {
+		while (rs.next()) {
+			DonghangJoinUserPicture donghang = new DonghangJoinUserPicture();
+			donghang.setNo(rs.getInt(no));
+			donghang.setUserNo(rs.getInt(userNo));
+			donghang.setTripNo(rs.getInt(tripNo));
+			donghang.setWriteDate(rs.getDate(writeDate));
+			donghang.setViewcount(rs.getInt(viewcount));
+			donghang.setTag(rs.getString(tag));
+			donghang.setTitle(rs.getString(title));
+			donghang.setContent(rs.getString(content));
+			donghang.setTravleLocale(rs.getString(travleLocale));
+			donghang.setTravleStartDate(rs.getDate(travleStartDate));
+			donghang.setTravleEndDate(rs.getDate(travleEndDate));
+			donghang.setRecruitStartDate(rs.getDate(recruitStartDate));
+			donghang.setRecruitEndDate(rs.getDate(recruitEndDate));
+			donghang.setPw(rs.getInt(pw));
+			donghang.setPublicEnabled(rs.getString(publicEnabled));
+			donghang.setEnded(rs.getString(ended));
+			donghang.setDeleted(rs.getString(deleted));
+			donghang.setRecruitPeopleNo(rs.getInt(recruitPeopleNo));
+			donghang.setJoinPeopleNo(rs.getInt(joinPeopleNo));
+			donghang.setNickName(rs.getString(nickName));
+			donghang.setImage(rs.getString(image));
+			arrayList.add(donghang);
+		}
+		return arrayList;
+	}	
 
 	public Donghang selectDonghang(Connection conn, String no) {
 		PreparedStatement pstmt = null;
@@ -124,11 +156,11 @@ public class DonghangDao {
 		return donghang;
 	}
 
-	public List<Donghang> selectDonghangPage(Connection conn, int start, int end, String userTag) {
+	public List<DonghangJoinUserPicture> selectDonghangPage(Connection conn, int start, int end, String userTag) {
 		Statement stmt = null;
 		ResultSet rs = null;
 		String sql = "";
-		List<Donghang> list = null;
+		List<DonghangJoinUserPicture> list = null;
 		//태그길이만큼  when~then sql문 만들기
 		String[] userTagArr = userTag.split(",");
 		String likeSql = "";
@@ -143,7 +175,7 @@ public class DonghangDao {
 					+"ELSE '0' END AS TAG_COUNT FROM DONGHANG_TB DH ORDER BY TAG_COUNT DESC) A) WHERE RNUM BETWEEN "+ start +" AND "+end;
 			
 			rs = stmt.executeQuery(sql);
-			list = rsProcess(rs, new ArrayList<Donghang>());
+			list = joinRsProcess(rs, new ArrayList<DonghangJoinUserPicture>());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

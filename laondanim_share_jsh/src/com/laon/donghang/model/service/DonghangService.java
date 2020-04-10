@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.laon.donghang.model.dao.DonghangDao;
 import com.laon.donghang.model.vo.Donghang;
+import com.laon.donghang.model.vo.DonghangJoinUserPicture;
 
 public class DonghangService {
 	private DonghangDao dao = new DonghangDao();
@@ -19,9 +20,9 @@ public class DonghangService {
 		return donghang;
 	}
 	
-	public List<Donghang> selectDonghangPage(int start,int end, String userTag){
+	public List<DonghangJoinUserPicture> selectDonghangPage(int start,int end, String userTag){
 		Connection conn = getConnection();
-		List<Donghang> list = dao.selectDonghangPage(conn, start ,end, userTag);
+		List<DonghangJoinUserPicture> list = dao.selectDonghangPage(conn, start ,end, userTag);
 		close(conn);
 		return list;
 	}

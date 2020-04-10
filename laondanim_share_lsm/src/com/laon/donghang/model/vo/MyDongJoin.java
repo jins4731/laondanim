@@ -1,11 +1,12 @@
 package com.laon.donghang.model.vo;
 
 public class MyDongJoin {
-	private int noDJT;
-	private int userTNo;
-	private int dongTNo;
+	private int noDJ;
 	private String confirmed;
 	private String cancled;
-	private String deletedDJT;
+	private int noD;
+	private int userNo;
+	
+	private String deleted;
 	
 }

@@ -10,7 +10,7 @@
 <%@ include file="/views/common/header.jsp"%>
 
 <%
-	List<Donghang> list = (List)request.getAttribute(CommonKey.LIST);
+	List<Donghang> list = (List)request.getAttribute(CommonKey.DONGHANG_LIST);
 
 	int count = 0;
 	List<Donghang> topList = new ArrayList();
@@ -40,8 +40,8 @@
                     <option value="">지역검색</option>
                     <option value="">키워드 검색</option>                    
                 </select>
-                <input type="text" id="searchKeyword" name="searchKeyword" class="pl-2">
-                <button onclick="fn_donghangSearch();">
+                <input type="text" id="keyword" name="keyword" class="pl-2">
+                <button id="inputKeywordBtn">
                 	<img src="<%=request.getContextPath()%>/image/inactiveSearch_icon.png" alt="searchIcon" id="searchIcon"/>
                 </button>
             </div>
@@ -88,29 +88,19 @@
                 outline: none;
             }            
         </style>
-       	<!-- 검색 스크립트 -->
+       	<!-- 검색 아이콘 스크립트 -->
         <script>
 				
-			$("#searchKeyword").focus(()=>{
+			$("#keyword").focus(()=>{
 				$("#searchIcon").fadeOut(200, ()=>{
 					$("#searchIcon").attr('src','<%=request.getContextPath()%>/image/search_icon.png').fadeIn(300);
 				})
 			});
-			$("#searchKeyword").focusout(()=>{
+			$("#keyword").focusout(()=>{
 				$("#searchIcon").fadeOut(200, ()=>{
 					$("#searchIcon").attr('src','<%=request.getContextPath()%>/image/inactiveSearch_icon.png').fadeIn(300);
 				})
 			});
-			
-			/* let keyword = $("#searchKeyword").val(); 이거 왜 안먹힐까..? */
-    		function fn_donghangSearch(){
-    			if($("#searchKeyword").val()==null||$("#searchKeyword").val().trim()==""){
-    					alert("검색어를 입력해주세요!");
-    			}else{
-    				location.replace('<%=request.getContextPath()%>/donghang/donghangSearch.do?keyword='+ $("#searchKeyword").val());
-    			}
-    		}
-
         </script>
 
         <!-- 작성 -->
@@ -143,9 +133,9 @@
                 </div>
 
                 <div class="col d-flex justify-content-end">
-                    <button class="btn btn-outline-secondary border-0">최근 순</button>   <!--ajax 정렬-->
-                    <button class="btn btn-outline-secondary border-0">조회수 순</button> <!--ajax 정렬-->
-                    <button class="btn btn-outline-secondary border-0">가까운 일정 순</button> <!--ajax 정렬-->
+                    <button class="btn btn-outline-secondary border-0" id="inputRecentBtn">최근 순</button>   <!--ajax 정렬-->
+                    <button class="btn btn-outline-secondary border-0" id="inputViewCountBtn">조회수 순</button> <!--ajax 정렬-->
+                    <button class="btn btn-outline-secondary border-0" id="inputNearScheduleBtn">가까운 일정 순</button> <!--ajax 정렬-->
                 </div>
             </div>
         </div> 
@@ -357,5 +347,30 @@
 
         </div>
     </section>
+    
+    
+    
+    <!-- INPUT SCRIPT -->
+    <script>
+    	//1) 검색텍스트를 넣고 버튼을 늘릭 했을 때 (검색어만 있고 최근순default)
+		$("#inputKeywordBtn").click(()=>{
+			let keyword = $("#keyword").val();
+			
+			if(keyword==null||keyword.trim()==""){
+					alert("검색어를 입력해주세요!");
+			}else{
+				location.replace('<%=request.getContextPath()%>/donghangListView.do?keyword='+keyword);
+			}
+		});
+    	
+    	//최근등록 버튼
+    	$("#inputRecentBtn").click(()=>{
+			let keyword = $("#keyword").val();
+    		let recent = 'recent';
+    		let viewcount = 'null';
+    		let nearSchedule = 'null';
+    		location.replace('<%=request.getContextPath()%>/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
+    	})
+    </script>
 </section>
 <%@ include file="/views/common/footer.jsp"%> 

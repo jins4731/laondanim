@@ -11,4 +11,5 @@ public class UserKey {
 	public static final String GENDER = "gender"; 
 	public static final String PHONE = "phone"; 
 	public static final String EMAIL = "email"; 
+	public static final String USER_TAG = "tag"; 
 }

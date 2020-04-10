@@ -32,7 +32,9 @@ public class CommonKey {
 	public static final String NO = "no";
 	
 	
-	
+	public static final String KEYWORD = "keyword";
+	public static final String RECENT = "recent";
+	public static final String NEAR_SCHEDULE = "nearSchedule";
 	
 
 }

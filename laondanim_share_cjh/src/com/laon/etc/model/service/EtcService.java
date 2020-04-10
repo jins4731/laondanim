@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.laon.etc.model.dao.EtcDao;
 import com.laon.etc.model.vo.Like;
+import com.laon.etc.model.vo.Picture;
 
 public class EtcService {
 	private EtcDao dao = new EtcDao();
@@ -19,6 +20,15 @@ public class EtcService {
 		List<Like> list = dao.selectLikeList(conn);
 		close(conn);
 		return list;
+	}
+
+
+
+	public Picture selectPictureUserNo(int no) {
+		Connection conn = getConnection();
+		Picture pic = dao.selectPictureUserNo(conn,no);
+		close(conn);
+		return pic;
 	}
 
 

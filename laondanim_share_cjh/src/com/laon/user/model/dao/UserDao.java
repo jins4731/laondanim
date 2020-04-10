@@ -13,21 +13,13 @@ import java.util.List;
 import java.util.Properties;
 
 import com.laon.common.PropPath;
+import com.laon.common.robot.LaonRobot;
 import com.laon.user.model.vo.User;
 
 public class UserDao {
 	private Properties prop = new Properties();
 
-	private String no = "no";
-	private String createdDate = "created_date";
-	private String userId = "user_id";
-	private String password = "password";
-	private String name = "name";
-	private String nickName = "nick_name";
-	private String birthday = "birthday";
-	private String gender = "gender";
-	private String phone = "phone";
-	private String email = "email";
+	
 
 	private String selectUser = "selectUser";
 	private String selectUserPage = "selectUserPage";
@@ -40,49 +32,32 @@ public class UserDao {
 			e.printStackTrace();
 		}
 	}
-
-	public User rsProcess(ResultSet rs, User user) throws SQLException {
-		while (rs.next()) {
-			user.setNo(rs.getInt(no));
-			user.setCreatedDate(rs.getDate(createdDate));
-			user.setUserId(rs.getString(userId));
-			user.setPassword(rs.getString(password));
-			user.setName(rs.getString(name));
-			user.setNickName(rs.getString(nickName));
-			user.setBirthday(rs.getDate(birthday));
-			user.setGender(rs.getString(gender));
-			user.setPhone(rs.getString(phone));
-			user.setEmail(rs.getString(email));
+	
+	public <E> E rsProcess(ResultSet rs, E item) throws SQLException {
+		if(item instanceof LaonRobot) {
+			LaonRobot<E> robot = (LaonRobot<E>)item;
+			item = robot.rsProcess(item,rs);
 		}
-		return user;
+		return item;
 	}
 
-	public List<User> rsProcess(ResultSet rs, List<User> list) throws SQLException {
-		while (rs.next()) {
-			User user = new User();
-			user.setNo(rs.getInt(no));
-			user.setCreatedDate(rs.getDate(createdDate));
-			user.setUserId(rs.getString(userId));
-			user.setPassword(rs.getString(password));
-			user.setName(rs.getString(name));
-			user.setNickName(rs.getString(nickName));
-			user.setBirthday(rs.getDate(birthday));
-			user.setGender(rs.getString(gender));
-			user.setPhone(rs.getString(phone));
-			user.setEmail(rs.getString(email));
-			list.add(user);
+	public <E> List<E> rsProcess(ResultSet rs, List<E> list,E item) throws SQLException {
+		List<E> newlist = null;
+		if(item instanceof LaonRobot) {
+			LaonRobot<E> robot = (LaonRobot<E>)item;
+			newlist = robot.rsProcess(list,rs);
 		}
-		return list;
+		return newlist;
 	}
 
-	public User selectUser(Connection conn, String no) {
+	public User selectUser(Connection conn, int no) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = prop.getProperty(selectUser);
 		User user = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, Integer.parseInt(no));
+			pstmt.setInt(1, no);
 			rs = pstmt.executeQuery();
 			user = rsProcess(rs, new User());
 		} catch (Exception e) {
@@ -104,7 +79,7 @@ public class UserDao {
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
 			rs = pstmt.executeQuery();
-			list = rsProcess(rs, new ArrayList<User>());
+			list = rsProcess(rs, new ArrayList<User>(), new User());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

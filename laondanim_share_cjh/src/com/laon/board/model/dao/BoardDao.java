@@ -12,6 +12,7 @@ import java.util.Properties;
 
 import com.laon.board.model.vo.Board;
 import com.laon.common.PropPath;
+import com.laon.common.robot.LaonRobot;
 
 import static com.laon.common.template.JDBCTemplate.*;
 
@@ -46,36 +47,23 @@ public class BoardDao {
 	}
 	
 	
-	public Board rsProcess(ResultSet rs, Board board) throws SQLException {
-		while(rs.next()) {
-			board.setNo(rs.getInt(no));
-			board.setUserNo(rs.getInt(userNo));
-			board.setCategory(rs.getString(category));
-			board.setWriteDate(rs.getDate(writeDate));
-			board.setViewcount(rs.getInt(viewcount));
-			board.setTag(rs.getString(tag));
-			board.setTitle(rs.getString(title));
-			board.setContent(rs.getString(content));
-			board.setDeleted(rs.getString(deleted));
+	public <E> E rsProcess(ResultSet rs, E item) throws SQLException {
+		if(item instanceof LaonRobot) {
+			LaonRobot<E> robot = (LaonRobot<E>)item;
+			item = robot.rsProcess(item,rs);
 		}
-		return board;
+		return item;
 	}
-	public List<Board> rsProcess(ResultSet rs, List<Board> list) throws SQLException {
-		while(rs.next()) {
-			Board board = new Board();
-			board.setNo(rs.getInt(no));
-			board.setUserNo(rs.getInt(userNo));
-			board.setCategory(rs.getString(category));
-			board.setWriteDate(rs.getDate(writeDate));
-			board.setViewcount(rs.getInt(viewcount));
-			board.setTag(rs.getString(tag));
-			board.setTitle(rs.getString(title));
-			board.setContent(rs.getString(content));
-			board.setDeleted(rs.getString(deleted));
-			list.add(board);
+
+	public <E> List<E> rsProcess(ResultSet rs, List<E> list,E item) throws SQLException {
+		List<E> newlist = null;
+		if(item instanceof LaonRobot) {
+			LaonRobot<E> robot = (LaonRobot<E>)item;
+			newlist = robot.rsProcess(list,rs);
 		}
-		return list;
+		return newlist;
 	}
+
 	
 	
 	
@@ -110,7 +98,7 @@ public class BoardDao {
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
 			rs = pstmt.executeQuery();
-			list = rsProcess(rs, new ArrayList<Board>());
+			list = rsProcess(rs, new ArrayList<Board>(), new Board());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {

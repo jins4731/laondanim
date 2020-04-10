@@ -1,6 +1,14 @@
 package com.laon.etc.model.vo;
 
-public class Picture {
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.laon.common.PictureKey;
+import com.laon.common.robot.LaonRobot;
+import com.oreilly.servlet.MultipartRequest;
+
+public class Picture implements LaonRobot<Picture>{
 
     // 넘버 사진 기본키
     private int no;
@@ -204,4 +212,78 @@ public class Picture {
         this.userNo = param.getUserNo();
         this.image = param.getImage();
     }
+
+
+    private String cNo = "no";
+    private String cTripNo = "trip_no";
+    private String cTripinfoNo = "tripinfo_no";
+    private String cDonghangNo = "donghang_no";
+    private String cUserNo = "user_no";
+    private String cImage = "image";
+
+
+
+
+
+	@Override
+	public List<Picture> rsProcess(List<Picture> list, ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		while (rs.next()) {
+			Picture item =  new Picture();
+			item.setNo(rs.getInt(cNo));
+			item.setTripNo(rs.getInt(cTripNo));
+			item.setTripinfoNo(rs.getInt(cTripinfoNo));
+			item.setDonghangNo(rs.getInt(cDonghangNo));
+			item.setUserNo(rs.getInt(cUserNo));
+			item.setImage(rs.getString(cImage));
+			list.add(item);
+		}
+		return list;
+	}
+
+
+
+
+
+
+
+
+	@Override
+	public Picture rsProcess(Picture item, ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		while (rs.next()) {
+			item.setNo(rs.getInt(cNo));
+			item.setTripNo(rs.getInt(cTripNo));
+			item.setTripinfoNo(rs.getInt(cTripinfoNo));
+			item.setDonghangNo(rs.getInt(cDonghangNo));
+			item.setUserNo(rs.getInt(cUserNo));
+			item.setImage(rs.getString(cImage));
+		}
+		return item;
+	}
+
+
+
+
+
+
+
+
+	@Override
+	public Picture mrProcess(Picture item, MultipartRequest mr, Picture pic) {
+		if(mr.getParameter(PictureKey.TRIP_NO)!=null) {
+			item.setTripNo(Integer.parseInt(mr.getParameter(PictureKey.TRIP_NO)));
+		} 
+		if(mr.getParameter(PictureKey.TRIPINFO_NO)!=null) {
+			item.setTripinfoNo(Integer.parseInt(mr.getParameter(PictureKey.TRIPINFO_NO)));
+		} 
+		if(mr.getParameter(PictureKey.DONGHANG_NO)!=null) {
+			item.setDonghangNo(Integer.parseInt(mr.getParameter(PictureKey.DONGHANG_NO)));
+		} 
+		if(mr.getParameter(PictureKey.USER_NO)!=null) {
+			item.setUserNo(Integer.parseInt(mr.getParameter(PictureKey.USER_NO)));
+		} 
+		item.setImage(mr.getOriginalFileName(PictureKey.IMAGE));
+		return item;
+	}
 }

@@ -3,14 +3,14 @@ package com.laon.common.template;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+
 public class MsgTemplate {
 
-	public static void sendMSG(String msg, String loc,ServletRequest request,ServletResponse response) throws ServletException, IOException {
+	public static void sendMSG(String msg, String loc,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
 		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);

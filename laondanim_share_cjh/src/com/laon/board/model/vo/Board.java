@@ -1,9 +1,16 @@
 package com.laon.board.model.vo;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.laon.common.robot.LaonRobot;
+import com.laon.etc.model.vo.Picture;
+import com.oreilly.servlet.MultipartRequest;
 
 //게시판 테이블
-public class Board {
+public class Board implements LaonRobot<Board>{
 
  // 넘버 게시판 기본키
  private int no;
@@ -208,4 +215,59 @@ public void setDeleted(String deleted) {
      this.content = param.getContent();
      this.deleted = param.getDeleted();
  }
+
+ private String cNo = "no";
+ private String cUserNo = "user_no";
+ private String cCategory = "category";
+ private String cWriteDate = "write_date";
+ private String cViewcount = "viewcount";
+ private String cTag = "tag";
+ private String cTitle = "title";
+ private String cContent = "content";
+ private String cDeleted = "deleted";
+
+
+@Override
+public List<Board> rsProcess(List<Board> list, ResultSet rs) throws SQLException {
+	while(rs.next()) {
+		Board item = new Board();
+		item.setNo(rs.getInt(cNo));
+		item.setUserNo(rs.getInt(cUserNo));
+		item.setCategory(rs.getString(cCategory));
+		item.setWriteDate(rs.getDate(cWriteDate));
+		item.setViewcount(rs.getInt(cViewcount));
+		item.setTag(rs.getString(cTag));
+		item.setTitle(rs.getString(cTitle));
+		item.setContent(rs.getString(cContent));
+		item.setDeleted(rs.getString(cDeleted));
+		list.add(item);
+	}
+	return list;
+}
+
+
+@Override
+public Board rsProcess(Board item, ResultSet rs) throws SQLException {
+	while(rs.next()) {
+		item.setNo(rs.getInt(cNo));
+		item.setUserNo(rs.getInt(cUserNo));
+		item.setCategory(rs.getString(cCategory));
+		item.setWriteDate(rs.getDate(cWriteDate));
+		item.setViewcount(rs.getInt(cViewcount));
+		item.setTag(rs.getString(cTag));
+		item.setTitle(rs.getString(cTitle));
+		item.setContent(rs.getString(cContent));
+		item.setDeleted(rs.getString(cDeleted));
+	}
+	return item;
+}
+
+
+
+
+@Override
+public Board mrProcess(Board item, MultipartRequest mr, Picture pic) {
+	// TODO Auto-generated method stub
+	return null;
+}
 }

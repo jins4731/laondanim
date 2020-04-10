@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.laon.common.PropPath;
+import com.laon.common.robot.LaonRobot;
 import com.laon.donghang.model.vo.Donghang;
 
 public class DonghangDao {
@@ -52,56 +53,21 @@ public class DonghangDao {
 		}
 	}
 
-	public Donghang rsProcess(ResultSet rs, Donghang donghang) throws SQLException {
-		while (rs.next()) {
-			donghang.setNo(rs.getInt(no));
-			donghang.setUserNo(rs.getInt(userNo));
-			donghang.setTripNo(rs.getInt(tripNo));
-			donghang.setWriteDate(rs.getDate(writeDate));
-			donghang.setViewcount(rs.getInt(viewcount));
-			donghang.setTag(rs.getString(tag));
-			donghang.setTitle(rs.getString(title));
-			donghang.setContent(rs.getString(content));
-			donghang.setTravleLocale(rs.getString(travleLocale));
-			donghang.setTravleStartDate(rs.getDate(travleStartDate));
-			donghang.setTravleEndDate(rs.getDate(travleEndDate));
-			donghang.setRecruitStartDate(rs.getDate(recruitStartDate));
-			donghang.setRecruitEndDate(rs.getDate(recruitEndDate));
-			donghang.setPw(rs.getInt(pw));
-			donghang.setPublicEnabled(rs.getString(publicEnabled));
-			donghang.setEnded(rs.getString(ended));
-			donghang.setDeleted(rs.getString(deleted));
-			donghang.setRecruitPeopleNo(rs.getInt(recruitPeopleNo));
-			donghang.setJoinPeopleNo(rs.getInt(joinPeopleNo));
+	public <E> E rsProcess(ResultSet rs, E item) throws SQLException {
+		if(item instanceof LaonRobot) {
+			LaonRobot<E> robot = (LaonRobot<E>)item;
+			item = robot.rsProcess(item,rs);
 		}
-		return donghang;
+		return item;
 	}
 
-	public List<Donghang> rsProcess(ResultSet rs, List<Donghang> list) throws SQLException {
-		while (rs.next()) {
-			Donghang donghang = new Donghang();
-			donghang.setNo(rs.getInt(no));
-			donghang.setUserNo(rs.getInt(userNo));
-			donghang.setTripNo(rs.getInt(tripNo));
-			donghang.setWriteDate(rs.getDate(writeDate));
-			donghang.setViewcount(rs.getInt(viewcount));
-			donghang.setTag(rs.getString(tag));
-			donghang.setTitle(rs.getString(title));
-			donghang.setContent(rs.getString(content));
-			donghang.setTravleLocale(rs.getString(travleLocale));
-			donghang.setTravleStartDate(rs.getDate(travleStartDate));
-			donghang.setTravleEndDate(rs.getDate(travleEndDate));
-			donghang.setRecruitStartDate(rs.getDate(recruitStartDate));
-			donghang.setRecruitEndDate(rs.getDate(recruitEndDate));
-			donghang.setPw(rs.getInt(pw));
-			donghang.setPublicEnabled(rs.getString(publicEnabled));
-			donghang.setEnded(rs.getString(ended));
-			donghang.setDeleted(rs.getString(deleted));
-			donghang.setRecruitPeopleNo(rs.getInt(recruitPeopleNo));
-			donghang.setJoinPeopleNo(rs.getInt(joinPeopleNo));
-			list.add(donghang);
+	public <E> List<E> rsProcess(ResultSet rs, List<E> list,E item) throws SQLException {
+		List<E> newlist = null;
+		if(item instanceof LaonRobot) {
+			LaonRobot<E> robot = (LaonRobot<E>)item;
+			newlist = robot.rsProcess(list,rs);
 		}
-		return list;
+		return newlist;
 	}
 
 	public Donghang selectDonghang(Connection conn, String no) {
@@ -133,7 +99,7 @@ public class DonghangDao {
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
 			rs = pstmt.executeQuery();
-			list = rsProcess(rs, new ArrayList<Donghang>());
+			list = rsProcess(rs, new ArrayList<Donghang>(),new Donghang());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

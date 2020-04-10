@@ -12,7 +12,7 @@ import com.laon.user.model.vo.User;
 public class UserService {
 private UserDao dao = new UserDao();
 	
-	public User selectUser(String no) {
+	public User selectUser(int no) {
 		Connection conn = getConnection();
 		User user = dao.selectUser(conn, no);
 		close(conn);

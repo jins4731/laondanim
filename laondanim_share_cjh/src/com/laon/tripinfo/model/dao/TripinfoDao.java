@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.laon.common.PropPath;
+import com.laon.common.robot.LaonRobot;
 import com.laon.tripinfo.model.vo.Tripinfo;
 
 public class TripinfoDao {
@@ -41,40 +42,24 @@ public class TripinfoDao {
 			e.printStackTrace();
 		}
 	}
-
-	public Tripinfo rsProcess(ResultSet rs, Tripinfo tripinfo) throws SQLException {
-		while (rs.next()) {
-			tripinfo.setNo(rs.getInt(no));
-			tripinfo.setCategory(rs.getString(category));
-			tripinfo.setTag(rs.getString(tag));
-			tripinfo.setName(rs.getString(name));
-			tripinfo.setAddress(rs.getString(address));
-			tripinfo.setBusinessHours(rs.getString(businessHours));
-			tripinfo.setTel(rs.getString(tel));
-			tripinfo.setHomepage(rs.getString(homepage));
-			tripinfo.setNaver(rs.getString(naver));
-			tripinfo.setSns(rs.getString(sns));
+	
+	public <E> E rsProcess(ResultSet rs, E item) throws SQLException {
+		if(item instanceof LaonRobot) {
+			LaonRobot<E> robot = (LaonRobot<E>)item;
+			item = robot.rsProcess(item,rs);
 		}
-		return tripinfo;
+		return item;
 	}
 
-	public List<Tripinfo> rsProcess(ResultSet rs, List<Tripinfo> list) throws SQLException {
-		while (rs.next()) {
-			Tripinfo tripinfo = new Tripinfo();
-			tripinfo.setNo(rs.getInt(no));
-			tripinfo.setCategory(rs.getString(category));
-			tripinfo.setTag(rs.getString(tag));
-			tripinfo.setName(rs.getString(name));
-			tripinfo.setAddress(rs.getString(address));
-			tripinfo.setBusinessHours(rs.getString(businessHours));
-			tripinfo.setTel(rs.getString(tel));
-			tripinfo.setHomepage(rs.getString(homepage));
-			tripinfo.setNaver(rs.getString(naver));
-			tripinfo.setSns(rs.getString(sns));
-			list.add(tripinfo);
+	public <E> List<E> rsProcess(ResultSet rs, List<E> list,E item) throws SQLException {
+		List<E> newlist = null;
+		if(item instanceof LaonRobot) {
+			LaonRobot<E> robot = (LaonRobot<E>)item;
+			newlist = robot.rsProcess(list,rs);
 		}
-		return list;
+		return newlist;
 	}
+	
 
 	public Tripinfo selectTripinfo(Connection conn, String no) {
 		PreparedStatement pstmt = null;
@@ -105,7 +90,7 @@ public class TripinfoDao {
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
 			rs = pstmt.executeQuery();
-			list = rsProcess(rs, new ArrayList<Tripinfo>());
+			list = rsProcess(rs, new ArrayList<Tripinfo>(), new Tripinfo());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

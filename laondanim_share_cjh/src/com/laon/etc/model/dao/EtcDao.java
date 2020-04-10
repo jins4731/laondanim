@@ -13,18 +13,23 @@ import java.util.List;
 import java.util.Properties;
 
 import com.laon.common.PropPath;
+import com.laon.common.robot.LaonRobot;
 import com.laon.etc.model.vo.Like;
+import com.laon.etc.model.vo.Picture;
 
 public class EtcDao {
 	private Properties prop = new Properties();
 
-	// Like
-	private String no = "no";
-	private String userNo = "user_no";
-	private String tripNo = "category";
-	private String cancled = "write_date";
+	
 	
 	private String selectLikeList = "selectLikeList";
+	
+	
+	
+	private String selectPictureUserNo = "selectPictureUserNo";
+	
+	
+	
 	
 
 	public EtcDao() {
@@ -34,27 +39,23 @@ public class EtcDao {
 			e.printStackTrace();
 		}
 	}
-
-	public Like rsProcess(ResultSet rs, Like like) throws SQLException {
-		while (rs.next()) {
-			like.setNo(rs.getInt(no));
-			like.setUserNo(rs.getInt(userNo));
-			like.setTripNo(rs.getInt(tripNo));
-			like.setCancled(rs.getString(cancled));
+	
+	
+	public <E> E rsProcess(ResultSet rs, E item) throws SQLException {
+		if(item instanceof LaonRobot) {
+			LaonRobot<E> robot = (LaonRobot<E>)item;
+			item = robot.rsProcess(item,rs);
 		}
-		return like;
+		return item;
 	}
 
-	public List<Like> rsProcess(ResultSet rs, List<Like> list) throws SQLException {
-		while (rs.next()) {
-			Like like = new Like();
-			like.setNo(rs.getInt(no));
-			like.setUserNo(rs.getInt(userNo));
-			like.setTripNo(rs.getInt(tripNo));
-			like.setCancled(rs.getString(cancled));
-			list.add(like);
+	public <E> List<E> rsProcess(ResultSet rs, List<E> list,E item) throws SQLException {
+		List<E> newlist = null;
+		if(item instanceof LaonRobot) {
+			LaonRobot<E> robot = (LaonRobot<E>)item;
+			newlist = robot.rsProcess(list,rs);
 		}
-		return list;
+		return newlist;
 	}
 
 
@@ -66,7 +67,7 @@ public class EtcDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			list = rsProcess(rs, new ArrayList<Like>());
+			list = rsProcess(rs, new ArrayList<Like>(), new Like());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -74,6 +75,26 @@ public class EtcDao {
 			close(pstmt);
 		}
 		return list;
+	}
+	
+	
+	public Picture selectPictureUserNo(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty(selectPictureUserNo);
+		Picture pic = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			pic = rsProcess(rs, new Picture());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return pic;
 	}
 
 	

@@ -30,6 +30,7 @@ public class CommonKey {
 	
 	public static final String PAGE_BAR = "pageBar";
 	public static final String NO = "no";
+	public static final String TOTAL_ROWCOUNT = "totalRowCount";
 	
 	
 	public static final String KEYWORD = "keyword";

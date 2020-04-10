@@ -1,3 +1,4 @@
+<%@page import="com.laon.donghang.model.vo.DonghangJoinUserPicture"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -10,13 +11,13 @@
 <%@ include file="/views/common/header.jsp"%>
 
 <%
-	List<Donghang> list = (List)request.getAttribute(CommonKey.DONGHANG_LIST);
+	List<DonghangJoinUserPicture> list = (List)request.getAttribute(CommonKey.DONGHANG_LIST);
 
 	int count = 0;
-	List<Donghang> topList = new ArrayList();
-	List<Donghang> bottomList = new ArrayList();
+	List<DonghangJoinUserPicture> topList = new ArrayList();
+	List<DonghangJoinUserPicture> bottomList = new ArrayList();
 	
-	for(Donghang dh : list){
+	for(DonghangJoinUserPicture dh : list){
 		count++;
 		if(count <= 5){
 			topList.add(dh);
@@ -129,7 +130,7 @@
         <div class="container mt-4 ">
             <div class="row justify-content-between">
                 <div class="col d-flex align-items-center">
-                    <h6 class="display-6 mt-2">총 <%=request.getAttribute("totalRowCount")%>건의 동행이 있습니다.</h6>
+                    <h6 class="display-6 mt-2">총 <%=request.getAttribute(CommonKey.TOTAL_ROWCOUNT)%>건의 동행이 있습니다.</h6>
                 </div>
 
                 <div class="col d-flex justify-content-end">
@@ -189,7 +190,7 @@
             <div class="row h-50 mb-2">
 
 				<%
-					for(Donghang dh : topList){				
+					for(DonghangJoinUserPicture dh : topList){				
 				%>
                 <div class="col h-100 p-0 mr-2">
                     <div class="card m-0" style="height: 100%;" >
@@ -247,7 +248,7 @@
             <div class="row h-50 mt-2">
 
 				<%
-					for(Donghang dh : bottomList){				
+					for(DonghangJoinUserPicture dh : bottomList){				
 				%>
                 <div class="col h-100 p-0 mr-2">
                     <div class="card m-0" style="height: 100%;" >
@@ -366,9 +367,34 @@
     	//최근등록 버튼
     	$("#inputRecentBtn").click(()=>{
 			let keyword = $("#keyword").val();
+			if(keyword.trim()==""){
+				keyword = "null";
+			}
     		let recent = 'recent';
     		let viewcount = 'null';
     		let nearSchedule = 'null';
+    		location.replace('<%=request.getContextPath()%>/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
+    	})
+	    //조회수 버튼
+    	$("#inputViewCountBtn").click(()=>{
+			let keyword = $("#keyword").val();
+			if(keyword.trim()==""){
+				keyword = "null";
+			}
+    		let recent = 'null';
+    		let viewcount = 'viewcount';
+    		let nearSchedule = 'null';
+    		location.replace('<%=request.getContextPath()%>/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
+    	})
+    	//가까운일정순 버튼
+    	$("#inputNearScheduleBtn").click(()=>{
+			let keyword = $("#keyword").val();
+			if(keyword.trim()==""){
+				keyword = "null";
+			}
+    		let recent = 'null';
+    		let viewcount = 'null';
+    		let nearSchedule = 'nearSchedule';
     		location.replace('<%=request.getContextPath()%>/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
     	})
     </script>

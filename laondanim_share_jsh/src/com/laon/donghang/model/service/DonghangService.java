@@ -20,9 +20,9 @@ public class DonghangService {
 		return donghang;
 	}
 	
-	public List<DonghangJoinUserPicture> selectDonghangPage(int start,int end, String userTag){
+	public List<DonghangJoinUserPicture> selectDonghangPage(int start,int end){
 		Connection conn = getConnection();
-		List<DonghangJoinUserPicture> list = dao.selectDonghangPage(conn, start ,end, userTag);
+		List<DonghangJoinUserPicture> list = dao.selectDonghangPage(conn, start ,end);
 		close(conn);
 		return list;
 	}
@@ -33,24 +33,10 @@ public class DonghangService {
 		close(conn);
 		return result;
 	}
-
-	public String selectUserTag(String userId) {
+	
+	public int selectDonghangCount(String keyword) {
 		Connection conn = getConnection();
-		String userTag = dao.selectUserTag(conn, userId);
-		close(conn);
-		return userTag;
-	}
-
-	public List<Donghang> selectDonghangKeyword(int start, int end, String keyword) {
-		Connection conn = getConnection();
-		List<Donghang> list = dao.selectDonghangKeyword(conn, start ,end, keyword);
-		close(conn);
-		return list;
-	}
-
-	public int selectDonghangKeywordCount(String keyword) {
-		Connection conn = getConnection();
-		int result = dao.selectDonghangKeywordCount(conn, keyword);
+		int result = dao.selectDonghangCount(conn, keyword);
 		close(conn);
 		return result;
 	}

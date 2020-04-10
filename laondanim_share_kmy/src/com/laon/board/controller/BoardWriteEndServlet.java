@@ -38,31 +38,31 @@ public class BoardWriteEndServlet extends HttpServlet {
 		String text=request.getParameter("smarteditor");
 		String tag=request.getParameter("boardTag");
 		
-		if(category.equals("qna")) {
-			category="질문글";
-		}else if(category.equals("others")) {
-			category="자유글";
-		}
+		
+		 if(category.equals("qna")) { 
+			 category="질문글"; 
+		 }else if(category.equals("others")) { 
+			 category="자유글"; }
+		
 		
 		//유저넘버는 회원 기본키
 		
 		int no=u.getNo();
 		System.out.println("유저넘버 :"+no);
-		//스마트에디터 된다는 전제하에
-		//디비가
-		//세션의 유저아이디를 가지고 유저 테이블에가서 유저넘버 가져오기************8
 		
+		//세션의 유저아이디를 가지고 유저 테이블에가서 유저넘버 가져오기
 		
 		Board b=new Board(0,no,category,null,0,tag,title,text,'N'); 
+		System.out.println("보드테이블의 유저넘버:"+b.getUserNo());
 		int result=new BoardService().insertBoard(b);
 		
 		//msg창을 이용해 result 분기처리 해주기 
 		if(result>0) {
-			request.setAttribute("msg", "글을 성공적으로 등록되었습니다");
+			request.setAttribute("msg", "글이 성공적으로 등록되었습니다");
 			request.setAttribute("loc", "/views/board/boardView.jsp");
 		}else {
 			request.setAttribute("msg", "게시글 등록에 실패하였습니다");
-			request.setAttribute("msg","/views/board/boardWrite.jsp");
+			request.setAttribute("loc","/views/board/boardWrite.jsp");
 		}
 		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		

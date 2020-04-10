@@ -1,35 +1,40 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@page import="com.laon.board.model.vo.BoardJoinUser" %>
+<%
+	BoardJoinUser b=(BoardJoinUser)request.getAttribute("BoardJoinUser");
+%>
 <%@ include file="/views/common/header.jsp"%>
 <style>
   
     .title{
-        border:1px solid red;
+        /* border:1px solid red; */
         margin-top: 2%;
     }
     .title>h4{
         text-decoration:underline;
     }
     .user-detail{
-        border:1px solid red;
+    
+   /* border:1px solid red;  */
         width:700px;
         height: 40px; 
         margin-left: auto;
         margin-right: auto;
-        padding-top: 5px;
+        
     }
     .user-detail>div{
         margin-left: 10px;
     }
     .comm-content{
-        border:1px solid red;
+       /*  border:1px solid red; */
         width:700px;
         height: 300px; 
         margin-left: auto;
         margin-right: auto;
     }
     .comment-title{
-        border:1px solid red;
+        /* border:1px solid red; */
         border-radius:15px;
         font-weight: bolder;
         background-color:royalblue;
@@ -60,21 +65,25 @@
     </style>
 <section>
     <div class="text-center">
-        <input type="button" value="<%=b.getCategory() %>">
-      
+    
+        <input type="button" class="btn btn-primary disabled" value="<%=b.getCategory()%>">
+    
     </div>
-    <div class="title text-center"><h4><%=c.getTitle()%></h4></div>
+    <div class="title text-center"><h4><%=b.getTitle()%></h4></div>
+    <hr width="720px"/>
     <div class="user-detail text-left">
         <div>
-            <img src="user.png" width="30px" height="30px"><%=m.getUserId()%><img src="menu-vertical_icon.png"width="25px" height="25px">
+        <!--  유저아이콘에 사진 넣을건지.. -->
+            <img src="<%=request.getContextPath()%>/views/picture/board/user.png" width="30px" height="30px"><%=b.getNickName()%><img src="<%=request.getContextPath()%>/views/picture/board/menu-vertical_icon.png"width="25px" height="25px">
             <sub>2020-02-29   15:56:05 작성</sub>
         </div>
     </div>
     <hr width="720px"/>
     <div class="comm-content">
-       <h1>작성내용 출력<h1>
+      <%=b.getContent() %>
 
     </div>
+    <hr width="720px"/>
     <div class="comment-title text-left">
     &nbsp;&nbsp;댓글
     </div>
@@ -82,13 +91,14 @@
         <!-- 댓글 출력하기 -->
 		<tr class="level1">
 			<td>
+				<button class="btn-reply" value="등록">등록</button>
+			</td>
+		<!-- 등록된 댓글이 있으면 -->	
+			<td>
 				<sub class="comment-writer">작성자닉네임</sub>
                 <sub class="comment-date">작성날짜</sub>
                 <sub class="comment-date">작성시간</sub>
 				<br>
-			</td>
-			<td>
-				<button class="btn-reply" value="등록">등록</button>
 			</td>
         </tr>
     </table>
@@ -98,3 +108,14 @@
 
 
 <%@ include file="/views/common/footer.jsp"%> 
+
+<script>
+$(function(){
+	$("#comm-content").html(<%=b.getContent()%>);
+	
+	
+});
+
+</script>
+
+

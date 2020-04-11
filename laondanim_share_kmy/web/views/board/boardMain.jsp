@@ -8,7 +8,7 @@
 	String category=(String)request.getAttribute("category");
 	String searchDetail=(String)request.getAttribute("searchDetail");
 	String searchBox=(String)request.getAttribute("searchBox");
-
+	int totalData=Integer.parseInt(request.getAttribute("totalData").toString());
 %>
 <style>
 .searchContainer {
@@ -164,7 +164,7 @@ table * {
 </div>
 <!--게시글 수 출력/필터링-->
 <div class="filter">
-    <div id="print-post">총 <%=list.size()%>건의 게시물이 있습니다</div>
+    <div id="print-post">총 <%=totalData%>건의 게시물이 있습니다</div>
     <div id="filter-container">
     <ul class="comm-filter">
     <li><button class="btn btn-mg btn-outline-secondary border-0" id="recent">최근 순</button></li>

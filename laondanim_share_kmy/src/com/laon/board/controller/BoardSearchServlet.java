@@ -53,17 +53,7 @@ public class BoardSearchServlet extends HttpServlet {
 		String viewCount=request.getParameter("viewCount");
 		viewCount=viewCount==null?"null":viewCount;
 		
-		System.out.println(category+":"+searchDetail+":"+searchBox+":"+recent+":"+viewCount);
-		/*category
-		 * 전체게시글all 질문글qna 자유글others
-		 * searchDetail
-		 * 작성자writer 제목+내용titleContent 제목title 내용content 키워드 태그tags
-		 */
-		/*
-		 * if(category.equals("qna")) { category="질문글"; }else
-		 * if(category.equals("others")) { category="자유글"; }else { category="all"; }
-		 * System.out.println("들어온 카테고리값 바꿈:"+category);
-		 */
+	
 		
 		int cPage;
 		
@@ -74,28 +64,20 @@ public class BoardSearchServlet extends HttpServlet {
 		}
 		int perPage = 5;
 		
-		
+		int totalData=new BoardService().searchCount(category,searchDetail,searchBox);
 	
-		
-		
-	/*	if(category.equals("qna")) {
-			category="질문글";
-		}else if(category.equals("others")) {
-			category="자유글";
-		}else {
-			category="all";
-		}*/
+		System.out.println("페이지바 파라미터:"+category+":"+searchDetail+":"+searchBox+":"+recent+":"+viewCount+":"+cPage);
+	
 		
 		List<BoardJoinUser> list=new BoardService().searchBoard(cPage,perPage,category,searchDetail,searchBox,recent,viewCount); 
 		System.out.println("검색된 갯수:"+list.size());
-		int totalItemCount=list.size();
 		String pageBar=new Paging().pageBar(request.getContextPath()+"/board/search.do",
-				totalItemCount,cPage,perPage,category,searchDetail,searchBox,recent,viewCount);
+				totalData,cPage,perPage,category,searchDetail,searchBox,recent,viewCount);
 		//버튼에 이용할 쿼리스트링 저장
 		request.setAttribute("category", category);
 		request.setAttribute("searchDetail", searchDetail);
 		request.setAttribute("searchBox", searchBox);
-		
+		request.setAttribute("totalData", totalData);
 		
 		
 		request.setAttribute("pageBar", pageBar);

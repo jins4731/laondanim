@@ -1,9 +1,6 @@
 package com.laon.board.model.service;
 
-import static com.kh.common.JDBCTemplate.close;
-import static com.kh.common.JDBCTemplate.commit;
-import static com.kh.common.JDBCTemplate.getConnection;
-import static com.kh.common.JDBCTemplate.rollback;
+
 import static com.laon.common.JDBCTemplate.close;
 import static com.laon.common.JDBCTemplate.commit;
 import static com.laon.common.JDBCTemplate.getConnection;
@@ -73,6 +70,13 @@ public class BoardService {
 		List<BoardJoinUser> list=dao.searchBoard(conn,cPage,perPage,category,searchDetail,searchBox,recent,viewCount);
 		close(conn);
 		return list;
+	}
+
+	public int searchCount(String category,String searchDetail,String searchBox) {
+		Connection conn=getConnection();
+		int count=dao.searchCount(conn,category,searchDetail,searchBox);
+		close(conn);
+		return count;
 	}
 	
 	

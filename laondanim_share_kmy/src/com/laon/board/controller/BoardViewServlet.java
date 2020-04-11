@@ -45,7 +45,7 @@ public class BoardViewServlet extends HttpServlet {
 			for(Cookie c:cookies) {
 				String name=c.getName();
 				String value=c.getValue();
-				System.out.println(name+":"+value);
+				System.out.println("쿠키값:"+name+":"+value);
 				if("boardCookie".equals(name)) {
 					cookieVal=value;
 					if(value.contains("|"+boardNo+"|")) {//"|"는 구분자. 앱에서 쿠키값 확인하면 이해 가능.

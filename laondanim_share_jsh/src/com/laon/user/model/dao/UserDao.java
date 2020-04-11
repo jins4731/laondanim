@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 
 import com.laon.user.model.vo.User;
@@ -38,6 +39,41 @@ public class UserDao {
 		}
 	}
 
+	public User rsProcess(ResultSet rs, User user) throws SQLException {
+		while (rs.next()) {
+			user.setNo(rs.getInt(no));
+			user.setCreatedDate(rs.getDate(createdDate));
+			user.setUserId(rs.getString(userId));
+			user.setPassword(rs.getString(password));
+			user.setName(rs.getString(name));
+			user.setNickName(rs.getString(nickName));
+			user.setBirthday(rs.getDate(birthday));
+			user.setGender(rs.getString(gender));
+			user.setPhone(rs.getString(phone));
+			user.setEmail(rs.getString(email));
+		}
+		return user;
+	}
+
+	public List<User> rsProcess(ResultSet rs, List<User> list) throws SQLException {
+		while (rs.next()) {
+			User user = new User();
+			user.setNo(rs.getInt(no));
+			user.setCreatedDate(rs.getDate(createdDate));
+			user.setUserId(rs.getString(userId));
+			user.setPassword(rs.getString(password));
+			user.setName(rs.getString(name));
+			user.setNickName(rs.getString(nickName));
+			user.setBirthday(rs.getDate(birthday));
+			user.setGender(rs.getString(gender));
+			user.setPhone(rs.getString(phone));
+			user.setEmail(rs.getString(email));
+			list.add(user);
+		}
+		return list;
+	}
+	
+	
 	public User login(Connection conn,String id,String pw) {
 		//로그인 했을때
 		PreparedStatement pstmt=null;
@@ -54,6 +90,7 @@ public class UserDao {
 			u.setUserId(rs.getString("user_id"));
 			u.setName(rs.getString("name"));
 			u.setEmail(rs.getString("email"));
+			u.setTag(rs.getString("tag"));
 			
 		}
 		
@@ -223,4 +260,22 @@ public class UserDao {
 	}
 
 
+	public User selectUser(Connection conn, int no) {
+	      PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      String sql = prop.getProperty(selectUser);
+	      User user = null;
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setInt(1, no);
+	         rs = pstmt.executeQuery();
+	         user = rsProcess(rs, new User());
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rs);
+	         close(pstmt);
+	      }
+	      return user;
+	   }	
 }

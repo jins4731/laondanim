@@ -121,6 +121,9 @@ table * {
 	margin-left: auto;
 	margin-right: 100px;
 }
+.print-post{
+	margin-left:100px;
+}
 
 .board-container {
 	width: 1000px;
@@ -133,7 +136,7 @@ table * {
 	<div class="searchContainer">
 		<div class="searchBox">
 			<!-- <div class="searchBoxElement" data-toggle="dropdown"> -->
-				<img src="<%=request.getContextPath()%>/icon/search_icon.png"
+				<img src="<%=request.getContextPath()%>/views/picture/board/search_icon.png"
 					alt="search_icon">
 				<form action="<%=request.getContextPath()%>/board/search.do" type="post" id="form">
 					<select name="category"  data-width="fit">
@@ -148,9 +151,9 @@ table * {
 						<option value="tags">키워드태그</option>
 					</select>
 		<!-- 	</div> -->
-				<input type="text" name="searchBox" id="search" size="40px">
+				<input type="text"  name="searchBox" id="search" size="40px" style="border-radius:5px;">
 				
-				<input type="submit" id="searchSubmit" value="검색">
+				<input type="submit" class="btn btn-secondary btn-sm" id="searchSubmit" value="검색">
 				<!-- 검색한후에 버튼 필터 사용시 -->
 				<input type="hidden" value="<%=searchBox %>" id="searchBox"/>
 				<input type="hidden" value="<%=category==null?"all":category %>" id="category"/>
@@ -160,11 +163,11 @@ table * {
 	</div>
 	<!--게시글 작성버튼-->
 <div class="write">
-    <a href="<%=request.getContextPath()%>/board/write.do">게시글 작성<img src="<%=request.getContextPath()%>/icon/pen_icon.png"></a>
+    <a href="<%=request.getContextPath()%>/board/write.do">게시글 작성<img src="<%=request.getContextPath()%>/views/picture/board/pen_icon.png"></a>
 </div>
 <!--게시글 수 출력/필터링-->
 <div class="filter">
-    <div id="print-post">총 <%=totalData%>건의 게시물이 있습니다</div>
+    <div class="print-post" style="text-decoration:underline;">총 <%=totalData%>건의 게시물이 있습니다</div>
     <div id="filter-container">
     <ul class="comm-filter">
     <li><button class="btn btn-mg btn-outline-secondary border-0" id="recent">최근 순</button></li>

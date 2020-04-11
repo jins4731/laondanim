@@ -39,8 +39,10 @@ public class BoardWriteEndServlet extends HttpServlet {
 		String text=request.getParameter("smarteditor");
 		String tag=request.getParameter("boardTag");
 		
-		
-		
+		//태그저장하기(앞뒤-사이공백없이,태그사이에 #으로 구분)
+		tag=tag.replaceAll(" ", "");
+		tag=tag.trim();
+		System.out.println("태그저장할 문자열 만듬:"+tag);
 		//유저넘버는 회원 기본키
 		
 		

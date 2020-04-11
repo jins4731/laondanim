@@ -8,5 +8,8 @@
 			라온다님 메인페이지
 		</h2>
 		<a href="<%=request.getContextPath() %>/mypage/mypageMain">mypage</a>
+		<div id="map" style="width:100%;height:350px;"></div>
+
+
 </section>
 <%@ include file="/views/common/footer.jsp"%> 

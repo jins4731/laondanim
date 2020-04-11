@@ -9,7 +9,7 @@ public class Trip {
 	private int userTbNo;
 	private String category;
 	private Date writeDate;
-	private String[] tag;
+	private String tag;
 	private String title;
 	private String content;
 	private String tripLocate;
@@ -24,7 +24,7 @@ public class Trip {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Trip(int no, int userTbNo, String category, Date writeDate, String[] tag, String title, String content,
+	public Trip(int no, int userTbNo, String category, Date writeDate, String tag, String title, String content,
 			String tripLocate, int peopleNum, String tripType, Date startDate, Date endDate, char publicEnabled,
 			char deleted) {
 		super();
@@ -76,11 +76,11 @@ public class Trip {
 		this.writeDate = writeDate;
 	}
 
-	public String[] getTag() {
+	public String getTag() {
 		return tag;
 	}
 
-	public void setTag(String[] tag) {
+	public void setTag(String tag) {
 		this.tag = tag;
 	}
 
@@ -159,10 +159,12 @@ public class Trip {
 	@Override
 	public String toString() {
 		return "Trip [no=" + no + ", userTbNo=" + userTbNo + ", category=" + category + ", writeDate=" + writeDate
-				+ ", tag=" + Arrays.toString(tag) + ", title=" + title + ", content=" + content + ", tripLocate="
-				+ tripLocate + ", peopleNum=" + peopleNum + ", tripType=" + tripType + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", publicEnabled=" + publicEnabled + ", deleted=" + deleted + "]";
+				+ ", tag=" + tag + ", title=" + title + ", content=" + content + ", tripLocate=" + tripLocate
+				+ ", peopleNum=" + peopleNum + ", tripType=" + tripType + ", startDate=" + startDate + ", endDate="
+				+ endDate + ", publicEnabled=" + publicEnabled + ", deleted=" + deleted + "]";
 	}
+
+	
 
 	
 	

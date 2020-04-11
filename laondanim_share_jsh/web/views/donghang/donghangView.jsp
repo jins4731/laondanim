@@ -1,12 +1,24 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.laon.donghang.model.vo.DonghangJoinUserPicture"%>
+<%@ page import="com.laon.user.model.vo.UserProfile"%>
+
 <%@ page import="com.laon.common.CommonKey"%>
+<%@ page import="com.laon.common.MypageKey"%>
+<%@page import="com.laon.common.DonghangKey"%>
+<%@page import="com.laon.common.UserKey"%>
+
+<%@ page import="java.util.List"%>
 
 <%@ include file="/views/common/header.jsp"%>
 
 <%
 	DonghangJoinUserPicture dh = (DonghangJoinUserPicture)request.getAttribute(CommonKey.DONGHANG_ITEM);
+	String userImage = (String)request.getAttribute(MypageKey.USER_IMAGE);
+	List<UserProfile> joinList = (List)request.getAttribute(DonghangKey.JOIN_PEOPLE);
+	
+	//페이지이용하고 있는 로그인 유저의 프로필 사진
+	String loginUserImg = (String)request.getAttribute(UserKey.IMAGE);
 %>
 
     <section class="d-flex flex-column justify-content-center align-items-center">
@@ -16,7 +28,7 @@
             <div class="d-flex flex-row justify-content-between align-items-center" style="width: 828px; height: 100px;">
                 <div class="d-flex flex-row justify-content-center align-items-center" style="width: 480px;">
                     <!--글쓴이 프사 넣기-->
-                    <img src="<%-- <%=%> --%>" alt="프로필사진" style="width: 50px; height: 50px;">
+                    <img src="<%=userImage%>" alt="" style="width: 50px; height: 50px;">
 
                     <div class="d-flex flex-column pl-1" style="width: 380px;">
                         <div class="d-flex flex-row align-items-center">
@@ -94,21 +106,19 @@
                     type="button" data-toggle="collapse" data-target="#detailText" aria-expanded="true" aria-controls="detailText">
                 </div>
                 <hr class="mt-2 mb-1" style="width: 828px; border-bottom: 2px solid #dadada;">
-                <div class="row collapse multi-collapse " id="detailText">                            
-                    <ul style="list-style: none;" class="d-flex">
-                        <li class="d-flex justify-content-center align-items-center m-2">
-                            <img src="icon/profile_icon.png" alt="프로필사진" style="width: 50px; height: 50px;">
-                            <p class="m-0">닉네임누구누구 님</p>
-                        </li>
-                        <li class="d-flex justify-content-center align-items-center m-2">
-                            <img src="icon/profile_icon.png" alt="프로필사진" style="width: 50px; height: 50px;">
-                            <p class="m-0">닉네임123 님</p>
-                        </li>
-                        <li class="d-flex justify-content-center align-items-center m-2">
-                            <img src="icon/profile_icon.png" alt="프로필사진" style="width: 50px; height: 50px;">
-                            <p class="m-0">유저01 님</p>
-                        </li>
-                    </ul>            
+                <div class="row collapse multi-collapse " id="detailText" style="width: 95%;">                            
+                    <div class="d-flex flex-wrap justify-content-between">
+                    <%if(joinList.size() == 0) {%>
+                    	<div>참여중인 동행인이 없습니다.</div>
+                    <%} else{
+                    	  for(UserProfile up : joinList){
+                    %>             
+                        <div class="d-flex justify-content-center align-items-center m-2">
+                            <img src="<%=up.getImage()%>" alt="프로필사진" style="width: 40px; height: 40px;">
+                            <p class="m-0"><%=up.getNickName()%></p>
+                        </div>
+                    <%}} %>  
+                    </div>            
                 </div>               
             </div>
 
@@ -152,7 +162,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-4" style="width: 650px; height: 160px;">
                             <div class="d-flex flex-column mr-4">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <img src="icon/profile_icon.png" alt="프로필사진" style="width: 70px; height: 70px;" class="m-0">
+                                    <img src="<%=loginUserImg%>" alt="프로필사진" style="width: 70px; height: 70px;" class="m-0">
                                 </div>
                                 <p class="m-0"><%=loginUser.getUserId()%></p>
                                 <p class="m-0"><%=loginUser.getNickName()%></p>
@@ -187,7 +197,9 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center border-top-0">
-                    <button id="danimJoinBtn" type="button" class="ldBtn mb-3" data-dismiss="modal">참여신청</button>
+                    <button id="danimJoinBtn" type="button" class="ldBtn mb-3" data-dismiss="modal">
+                    	참여신청
+                    </button>
                 </div>
             </div>
         </div>

@@ -204,7 +204,7 @@
 				%>
                 <div class="col h-100 p-0 mr-2">
                     <div class="card m-0" style="height: 100%;" 
-                    onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?no=<%=dh.getNo()%>');">
+                    onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo=<%=loginUser.getNo()%>&no=<%=dh.getNo()%>');">
 
                         <!--헤더-->
                         <div class="card-header h-20 p-1 d-flex justify-content-between bg-white align-items-center border-0" style="height: 9%;">
@@ -263,7 +263,7 @@
 				%>
                 <div class="col h-100 p-0 mr-2">
                     <div class="card m-0" style="height: 100%;" 
-                    onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?no=<%=dh.getNo()%>');">
+                    onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo=<%=loginUser.getNo()%>&no=<%=dh.getNo()%>');">
 
                         <!--헤더-->
                         <div class="card-header h-20 p-1 d-flex justify-content-between bg-white align-items-center border-0" style="height: 9%;">

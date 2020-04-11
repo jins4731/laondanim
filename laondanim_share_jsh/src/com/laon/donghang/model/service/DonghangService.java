@@ -11,6 +11,7 @@ import java.util.List;
 import com.laon.donghang.model.dao.DonghangDao;
 import com.laon.donghang.model.vo.Donghang;
 import com.laon.donghang.model.vo.DonghangJoinUserPicture;
+import com.laon.user.model.vo.UserProfile;
 
 public class DonghangService {
 	private DonghangDao dao = new DonghangDao();
@@ -66,5 +67,12 @@ public class DonghangService {
 		}
 		
 		return donghangItem;
+	}
+
+	public List<UserProfile> selectDonghangJoinMember(int no) {
+		Connection conn = getConnection();
+		List<UserProfile> joinList = dao.selectDonghangJoinMember(conn, no);
+		close(conn);
+		return joinList;
 	}
 }

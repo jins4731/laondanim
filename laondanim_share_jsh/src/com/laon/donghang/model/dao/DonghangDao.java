@@ -16,6 +16,7 @@ import java.util.Properties;
 import com.laon.common.PropPath; //<-com.laon.common.template.PropPath;로 되어있어 변경함
 import com.laon.donghang.model.vo.Donghang;
 import com.laon.donghang.model.vo.DonghangJoinUserPicture;
+import com.laon.user.model.vo.UserProfile;
 
 public class DonghangDao {
 	private Properties prop = new Properties();
@@ -55,6 +56,7 @@ public class DonghangDao {
 	private String selectDonghangViewcount = "selectDonghangViewcount";
 	private String selectDonghangNearSchedule = "selectDonghangNearSchedule";
 	private String selectDonghangView = "selectDonghangView";
+	private String selectDonghangJoinMember = "selectDonghangJoinMember";
 
 	public DonghangDao() {
 		try {
@@ -356,5 +358,34 @@ public class DonghangDao {
 		}
 		
 		return result;
+	}
+
+	public List<UserProfile> selectDonghangJoinMember(Connection conn, int no) {
+		PreparedStatement pstmt=null;
+		ResultSet rs = null;
+		String sql = prop.getProperty(selectDonghangJoinMember);
+		List<UserProfile> list = new ArrayList();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			
+			//▼기억하기
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				UserProfile up = new UserProfile(); 
+				up.setNickName(rs.getString("nick_name"));
+				up.setImage(rs.getString("image"));
+				list.add(up);
+			}
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);	
+		}
+		return list;
 	}
 }

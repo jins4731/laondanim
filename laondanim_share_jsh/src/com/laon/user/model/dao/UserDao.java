@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.laon.user.model.vo.User;
+import com.laon.user.model.vo.UserProfile;
 
 public class UserDao {
 	private Properties prop = new Properties();
@@ -76,7 +77,7 @@ public class UserDao {
 		return list;
 	}
 	
-	
+	//-----------------------------------------------------------------------------------> 수정했어요~!~!!!!!!!!!!!!!!!!!	
 	public User login(Connection conn,String id,String pw) {
 		//濡쒓렇�씤 �뻽�쓣�븣
 		PreparedStatement pstmt=null;
@@ -86,16 +87,8 @@ public class UserDao {
 	try{pstmt=conn.prepareStatement(sql);
 		pstmt.setString(1, id);
 		pstmt.setString(2, pw);
-		rs=pstmt.executeQuery();
-		if(rs.next()){
-			u=new User();
-			u.setNo(rs.getInt("no"));
-			u.setUserId(rs.getString("user_id"));
-			u.setName(rs.getString("name"));
-			u.setEmail(rs.getString("email"));
-			u.setTag(rs.getString("tag"));		
-		}
-		
+        rs = pstmt.executeQuery();
+        u = rsProcess(rs, new User());		
 	}catch(SQLException e) {
 		e.printStackTrace();
 	}finally {
@@ -279,5 +272,7 @@ public class UserDao {
 	         close(pstmt);
 	      }
 	      return user;
-	   }	
+	   }
+
+	   
 }

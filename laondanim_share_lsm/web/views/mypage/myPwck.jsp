@@ -29,7 +29,7 @@
 							</div>
 							<div id="pwCkView" style="width:380px;height:40px;"></div>
 							<div style="margin:5px;">
-								<input type="text" name="pw" id="pw" placeholder="비밀번호 입력" class="d-flex text-center border-0 p-2" style="width:380px;">
+								<input type="password" name="pw" id="pw" placeholder="비밀번호 입력" class="d-flex text-center border-0 p-2" style="width:380px;">
 								<hr style="width:380px;">
 							</div>
 							

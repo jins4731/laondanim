@@ -236,19 +236,19 @@ public class DonghangDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "";
+		
 		if(keyword.equals("null")) {			
 			sql = prop.getProperty(selectDonghangCount);
 		} else {
 			sql = prop.getProperty(selectDonghangKeywordCount);
 		}
-		System.out.println(sql);
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
+			pstmt = conn.prepareStatement(sql);			
 			if(!keyword.equals("null")) {	
 				pstmt.setString(1, "%"+keyword+"%");
 			}
+			rs = pstmt.executeQuery();
 			rs.next();
 			result = rs.getInt(1);
 		} catch (Exception e) {

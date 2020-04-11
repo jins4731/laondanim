@@ -39,7 +39,7 @@ public class Paging {
 		}
 		
 		pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&raquo;</a></li> </ul>";
-		System.out.println("왠지 아니??"+rowNum);
+		
 		return pageBar;
 	}
 	
@@ -79,7 +79,7 @@ public class Paging {
 		}
 		
 		pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&raquo;</a></li> </ul>";
-		
+
 		return pageBar;
 	}
 }

@@ -38,7 +38,7 @@ public class MyPageDongServlet extends HttpServlet {
 		List<MyDong> myDong=new MypageService().selectMyDong(userNo);
 		int myDongCount=new MypageService().selectMyDongCount(userNo);
 		
-//		List joinDong=new MypageService().selectJoinDong();
+		List<MyDong> joinDong=new MypageService().selectJoinDong(userNo);
 		
 		request.setAttribute("userProfile", up);
 		

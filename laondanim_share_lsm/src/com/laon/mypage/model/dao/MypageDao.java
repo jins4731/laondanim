@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Properties;
 
 import com.laon.board.model.vo.Board;
-import com.laon.donghang.model.vo.Donghang;
 import com.laon.donghang.model.vo.MyDong;
 import com.laon.etc.model.vo.Like;
 import com.laon.trip.model.vo.TripMyCon;
@@ -273,7 +272,7 @@ public class MypageDao {
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				MyDong d=new MyDong();
-				d.setNo(rs.getInt("no"));
+				d.setNoDH(rs.getInt("no"));
 				d.setEnded(rs.getString("ended"));
 				d.setWriteDate(rs.getDate("write_date"));
 				d.setTitle(rs.getString("title"));
@@ -308,7 +307,7 @@ public class MypageDao {
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				MyDong d=new MyDong();
-				d.setNo(rs.getInt("no"));
+				d.setNoDH(rs.getInt("no"));
 				d.setEnded(rs.getString("ended"));
 				d.setWriteDate(rs.getDate("write_date"));
 				d.setTitle(rs.getString("title"));
@@ -349,14 +348,15 @@ public class MypageDao {
 		return result;
 	}
 	
-	public List selectJoinDong(Connection conn){
+	public List<MyDong> selectJoinDong(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		List list=new ArrayList();
+		List<MyDong> list=new ArrayList<MyDong>();
 		String sql=prop.getProperty("selectJoinDong");
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				

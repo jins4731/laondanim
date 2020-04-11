@@ -2,14 +2,13 @@ package com.laon.mypage.model.service;
 
 import static com.laon.common.template.JDBCTemplate.close;
 import static com.laon.common.template.JDBCTemplate.commit;
-import static com.laon.common.template.JDBCTemplate.rollback;
 import static com.laon.common.template.JDBCTemplate.getConnection;
+import static com.laon.common.template.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
 
 import com.laon.board.model.vo.Board;
-import com.laon.donghang.model.vo.Donghang;
 import com.laon.donghang.model.vo.MyDong;
 import com.laon.mypage.model.dao.MypageDao;
 import com.laon.trip.model.vo.TripMyCon;
@@ -118,9 +117,9 @@ public class MypageService {
 		return result;
 	}
 	
-	public List selectJoinDong(){
+	public List<MyDong> selectJoinDong(int userNo){
 		Connection conn=getConnection();
-		List list=dao.selectJoinDong(conn);
+		List<MyDong> list=dao.selectJoinDong(conn,userNo);
 		close(conn);
 		
 		return list;

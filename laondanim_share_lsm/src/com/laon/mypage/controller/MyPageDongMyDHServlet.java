@@ -14,24 +14,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.laon.board.model.vo.Board;
+import com.laon.donghang.model.vo.MyDong;
 import com.laon.mypage.model.service.MypageService;
-import com.laon.trip.model.vo.Trip;
-import com.laon.trip.model.vo.TripMyCon;
-import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
 /**
- * Servlet implementation class MyPageContentServlet
+ * Servlet implementation class MyPageDongMyDHServlet
  */
-@WebServlet("/myPage/myPageContent.do")
-public class MyPageContentServlet extends HttpServlet {
+@WebServlet("/myPage/myDongMyDH.do")
+public class MyPageDongMyDHServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageContentServlet() {
+    public MyPageDongMyDHServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,26 +41,18 @@ public class MyPageContentServlet extends HttpServlet {
 		UserProfile up=new MypageService().selectUserNo(userNo);
 		
 		int currentPage = getCurrentPage(request);
-		int pagePerRow = 5;
+		int pagePerRow = 20;
 		
-		List<TripMyCon> trip=new MypageService().selectMyTrip(userNo);
-		int tripCount = new MypageService().selectMyTripCount(userNo);
-		List tripLike=new MypageService().selectTripLike(userNo);
-		
-		List<Board> board=new MypageService().selectMyBoard(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
-		int boardCount = new MypageService().selectMyBoardCount();
-		String boardPasing = getPageBar(boardCount, currentPage, pagePerRow, request, "/myPage/myPageContent.do");
+		List<MyDong> myDong=new MypageService().selectMyDHAll(userNo, getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
+		int myDHCount = new MypageService().selectMyDongCount(userNo);
+		String myDHPasing = getPageBar(myDHCount, currentPage, pagePerRow, request, "/myPage/myConTrip.do");
 		
 		request.setAttribute("userProfile", up);
 		
-		request.setAttribute("trip", trip);
-		request.setAttribute("tripCount", tripCount);
-		request.setAttribute("tripLike", tripLike);
-		
-		request.setAttribute("board", board);
-		request.setAttribute("boardPasing", boardPasing);
-		request.setAttribute("boardCount", boardCount);
-		request.getRequestDispatcher("/views/mypage/myContent.jsp").forward(request, response);
+		request.setAttribute("myDong", myDong);
+		request.setAttribute("myDHPasing", myDHPasing);
+		request.setAttribute("myDHCount", myDHCount);
+		request.getRequestDispatcher("/views/mypage/myDongMyDH.jsp").forward(request, response);
 	}
 
 	/**

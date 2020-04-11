@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class MyPageMainServlet
+ * Servlet implementation class MyPageConBoardDelete
  */
-@WebServlet("/mypage/mypageMain.do")
-public class MyPageMainServlet extends HttpServlet {
+@WebServlet("/mypage/myBoardDel.do")
+public class MyPageConBoardDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageMainServlet() {
+    public MyPageConBoardDelete() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +26,8 @@ public class MyPageMainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/views/mypage/myPageMain.jsp").forward(request, response);
+		String[] boardCk=request.getParameterValues("bdCks");
+		System.out.println(boardCk);
 	}
 
 	/**

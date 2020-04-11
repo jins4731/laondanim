@@ -1,4 +1,4 @@
-package com.laon.mypage.controller;
+package com.laon.user.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,20 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.laon.mypage.model.service.MypageService;
-import com.laon.user.model.vo.UserProfile;
-
 /**
- * Servlet implementation class MyPageInfoPwck
+ * Servlet implementation class userEnrollServlet
  */
-@WebServlet("/myPage/myInfoPwck")
-public class MyPageInfoPwck extends HttpServlet {
+@WebServlet(name="UserEnrollServlet", urlPatterns = "/user/enroll.do")
+public class UserEnrollServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageInfoPwck() {
+    public UserEnrollServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,11 +26,8 @@ public class MyPageInfoPwck extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int userNo=Integer.parseInt(request.getParameter("userNo"));
-		UserProfile up=new MypageService().selectUserNo(userNo);
-		
-		request.setAttribute("userProfile", up);
-		request.getRequestDispatcher("/views/mypage/myPwck.jsp").forward(request, response);
+		//회원가입 화면으로 이동시키는 기능
+		request.getRequestDispatcher("/views/user/enroll.jsp").forward(request, response);
 	}
 
 	/**

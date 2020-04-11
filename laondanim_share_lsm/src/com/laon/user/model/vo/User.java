@@ -1,159 +1,170 @@
 package com.laon.user.model.vo;
 
-import java.util.Date;
+import java.sql.Date;
 
+//회원 테이블
 public class User {
 
-		// 넘버 회원 기본키
-	    private int no;
+	// 넘버 회원 기본키
+	private int no;
 
-	    // 생성된 날짜 가입 날짜
-	    private Date createdDate;
+	// 생성된 날짜 가입 날짜
+	private Date createdDate;
 
-	    // 유저 아이디 회원 아이디
-	    private String userId;
+	// 유저 아이디 회원 아이디
+	private String userId;
 
-	    // 비밀번호 비밀번호
-	    private String password;
+	// 비밀번호 비밀번호
+	private String password;
 
-	    // 이름 회원 이름
-	    private String name;
+	// 이름 회원 이름
+	private String name;
 
-	    // 닉 이름 넥네임
-	    private String nickName;
+	// 닉 이름 넥네임
+	private String nickName;
 
-	    // 생년월일 생년월일
-	    private Date birthday;
+	// 생년월일 생년월일
+	private Date birthday;
 
-	    // 성별 성별
-	    private String gender;
+	// 성별 성별
+	private String gender;
 
-	    // 휴대전화 휴대전화
-	    private int phone;
+	// 휴대전화 휴대전화
+	private String phone;
 
-	    // 이메일 이메일
-	    private String email;
+	// 이메일 이메일
+	private String email;
 
-	    // 태그 가입시 추가하는 관심 태그
-	    private String tag;
+	public User() {// 기본생성자
+		// TODO Auto-generated constructor stub
+	}
 
-	    public User() {//기본생성자
-			// TODO Auto-generated constructor stub
-		}
- 
-	    
-	    public User(int no, Date createdDate, String userId, String password, String name, String nickName,
-				Date birthday, String gender, int phone, String email, String tag) {
-			super();
-			this.no = no;
-			this.createdDate = createdDate;
-			this.userId = userId;
-			this.password = password;
-			this.name = name;
-			this.nickName = nickName;
-			this.birthday = birthday;
-			this.gender = gender;
-			this.phone = phone;
-			this.email = email;
-			this.tag = tag;
-		}
+	public User(int no, Date createdDate, String userId, String password, String name, String nickName, Date birthday,
+			String gender, String phone, String email, String tag) {
+		super();
+		this.no = no;
+		this.createdDate = createdDate;
+		this.userId = userId;
+		this.password = password;
+		this.name = name;
+		this.nickName = nickName;
+		this.birthday = birthday;
+		this.gender = gender;
+		this.phone = phone;
+		this.email = email;
+		this.tag = tag;
+	}
 
+	@Override
+	public String toString() {
+		return "UserTb [no=" + no + ", createdDate=" + createdDate + ", userId=" + userId + ", password=" + password
+				+ ", name=" + name + ", nickName=" + nickName + ", birthday=" + birthday + ", gender=" + gender
+				+ ", phone=" + phone + ", email=" + email + ", tag=" + tag + "]";
+	}
 
-		public int getNo() {
-	        return no;
-	    }
+// 태그 가입시 추가하는 관심 태그
+	private String tag;
 
-	    public void setNo(int no) {
-	        this.no = no;
-	    }
+	public int getNo() {
+		return no;
+	}
 
-	    public Date getCreatedDate() {
-	        return createdDate;
-	    }
+	public void setNo(int no) {
+		this.no = no;
+	}
 
-	    public void setCreatedDate(Date createdDate) {
-	        this.createdDate = createdDate;
-	    }
+	public Date getCreatedDate() {
+		return createdDate;
+	}
 
-	    public String getUserId() {
-	        return userId;
-	    }
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
 
-	    public void setUserId(String userId) {
-	        this.userId = userId;
-	    }
+	public String getUserId() {
+		return userId;
+	}
 
-	    public String getPassword() {
-	        return password;
-	    }
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-	    public void setPassword(String password) {
-	        this.password = password;
-	    }
+	public String getPassword() {
+		return password;
+	}
 
-	    public String getName() {
-	        return name;
-	    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-	    public void setName(String name) {
-	        this.name = name;
-	    }
+	public String getName() {
+		return name;
+	}
 
-	    public String getNickName() {
-	        return nickName;
-	    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-	    public void setNickName(String nickName) {
-	        this.nickName = nickName;
-	    }
+	public String getNickName() {
+		return nickName;
+	}
 
-	    public Date getBirthday() {
-	        return birthday;
-	    }
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 
-	    public void setBirthday(Date birthday) {
-	        this.birthday = birthday;
-	    }
+	public Date getBirthday() {
+		return birthday;
+	}
 
-	    public String getGender() {
-	        return gender;
-	    }
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
 
-	    public void setGender(String gender) {
-	        this.gender = gender;
-	    }
+	public String getGender() {
+		return gender;
+	}
 
-	    public int getPhone() {
-	        return phone;
-	    }
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 
-	    public void setPhone(int phone) {
-	        this.phone = phone;
-	    }
+	public String getPhone() {
+		return phone;
+	}
 
-	    public String getEmail() {
-	        return email;
-	    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-	    public void setEmail(String email) {
-	        this.email = email;
-	    }
+	public String getEmail() {
+		return email;
+	}
 
-	    public String getTag() {
-	        return tag;
-	    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-	    public void setTag(String tag) {
-	        this.tag = tag;
-	    }
+	public String getTag() {
+		return tag;
+	}
 
-		@Override
-		public String toString() {
-			return "User [no=" + no + ", createdDate=" + createdDate + ", userId=" + userId + ", password=" + password
-					+ ", name=" + name + ", nickName=" + nickName + ", birthday=" + birthday + ", gender=" + gender
-					+ ", phone=" + phone + ", email=" + email + ", tag=" + tag + "]";
-		}
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
 
-
-	
+	// UserTb 모델 복사
+	public void CopyData(User param) {
+		this.no = param.getNo();
+		this.createdDate = param.getCreatedDate();
+		this.userId = param.getUserId();
+		this.password = param.getPassword();
+		this.name = param.getName();
+		this.nickName = param.getNickName();
+		this.birthday = param.getBirthday();
+		this.gender = param.getGender();
+		this.phone = param.getPhone();
+		this.email = param.getEmail();
+		this.tag = param.getTag();
+	}
 }

@@ -1,6 +1,6 @@
 package com.laon.mypage.model.dao;
 
-import static com.laon.common.JDBCTemplate.close;
+import static com.laon.common.template.JDBCTemplate.close;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.laon.board.model.vo.Board;
-import com.laon.donghang.model.vo.Donghang;
+import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.donghang.model.vo.MyDong;
 import com.laon.etc.model.vo.Like;
 import com.laon.trip.model.vo.TripMyCon;
@@ -42,10 +42,9 @@ public class MypageDao {
 			pstmt.setInt(1, no);
 			rs=pstmt.executeQuery();
 			
-			if(rs.next()) {
+			while(rs.next()) {
 				up=new UserProfile();
 				up.setNo(rs.getInt("no"));
-				up.setCreatedDate(rs.getDate("created_date"));
 				up.setUserId(rs.getString("user_id"));
 				up.setPassword(rs.getString("password"));
 				up.setName(rs.getString("name"));
@@ -64,6 +63,51 @@ public class MypageDao {
 			close(pstmt);
 		}
 		return up;
+	}
+	
+	public boolean selectPwck(Connection conn,int userNo,String pw){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		boolean flag=false;
+		String sql=prop.getProperty("selectPwck");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			pstmt.setString(2, pw);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				flag=true;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return flag;
+	}
+	
+	public int updateUserProfile(Connection conn,UserProfile up) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("updateUserInfo");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, up.getPassword());
+			pstmt.setString(2, up.getNickName());
+			pstmt.setInt(3, up.getPhone());
+			pstmt.setString(4, up.getEmail());
+			pstmt.setString(5, up.getTag());
+			pstmt.setInt(6, up.getNo());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 	public List<TripMyCon> selectMyTrip(Connection conn,int userNo){
@@ -305,17 +349,27 @@ public class MypageDao {
 		return result;
 	}
 	
-	public List selectJoinDong(Connection conn){
+	public List<DonghangJoin> selectJoin(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		List list=new ArrayList();
-		String sql=prop.getProperty("selectJoinDong");
+		List<DonghangJoin> list=new ArrayList<DonghangJoin>();
+		String sql=prop.getProperty("selectJoin");
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				
+				DonghangJoin dj=new DonghangJoin();
+				dj.setNo(rs.getInt("no"));
+				dj.setUserNo(rs.getInt("user_no"));
+				dj.setDonghangNo(rs.getInt("donghang_no"));
+				dj.setContent(rs.getString("content"));
+				dj.setConfirmed(rs.getString("confirmed"));
+				dj.setCancled(rs.getString("cancled"));
+				dj.setReported(rs.getString("reported"));
+				dj.setDeleted(rs.getString("deleted"));
+				list.add(dj);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -324,5 +378,89 @@ public class MypageDao {
 			close(pstmt);
 		}
 		return list;
+	}
+	
+	public List<MyDong> selectOriJoin(Connection conn, List<DonghangJoin> jd){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<MyDong> list=new ArrayList<MyDong>();
+		String sql=prop.getProperty("selectOriJoin");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			for(DonghangJoin j:jd) {
+				pstmt.setInt(1, j.getDonghangNo());
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					MyDong d=new MyDong();
+					d.setNo(rs.getInt("no"));
+					d.setUserNo(rs.getInt("user_no"));
+					d.setWriteDate(rs.getDate("write_date"));
+					d.setTitle(rs.getString("title"));
+					d.setTravleLocale(rs.getString("travle_locale"));
+					d.setTravleStartDate(rs.getDate("travle_start_date"));
+					d.setTravleEndDate(rs.getDate("travle_end_date"));
+					d.setPw(rs.getInt("pw"));
+					d.setPublicEnabled(rs.getString("public_enabled"));
+					d.setJoinPeopleNo(rs.getInt("join_people_no"));
+					d.setRecruitPeopleNo(rs.getInt("recruit_people_no"));
+					d.setImage(rs.getString("image"));
+					list.add(d);
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public List<UserProfile> selectUserNick(Connection conn, List<MyDong> ojd){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<UserProfile> userNick=new ArrayList<UserProfile>();
+		String sql=prop.getProperty("selectUserNick");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			for(MyDong j:ojd) {
+				pstmt.setInt(1, j.getUserNo());
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					UserProfile up=new UserProfile();
+					up.setNo(rs.getInt("no"));
+					up.setNickName(rs.getString("nick_Name"));
+					userNick.add(up);
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return userNick;
+	}
+	
+	public int selectMyJDCount(Connection conn,int userNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql=prop.getProperty("selectMyJDCount");
+		int result=0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			rs = pstmt.executeQuery();
+			rs.next();
+			result = rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
 	}
 }

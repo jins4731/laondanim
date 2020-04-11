@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,com.laon.donghang.model.vo.MyDong" %>
+<%@ page import="java.util.List,com.laon.donghang.model.vo.MyDong,com.laon.donghang.model.vo.DonghangJoin" %>
 <%
 	List<MyDong> myDong=(List)request.getAttribute("myDong");
 	int myDongCount=(int)request.getAttribute("myDongCount");
+	List<DonghangJoin> joinDong=(List)request.getAttribute("joinDong");
+	List<MyDong> oriJoinDong=(List)request.getAttribute("oriJoinDong");
+	List<UserProfile> userNick=(List)request.getAttribute("userNick");
+	int myJDCount=(int)request.getAttribute("myJDCount");
 %>
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -127,7 +131,7 @@
 						<!-- 정보 -->
 						<div id="joinDHInfo">
 							<div style="height:45px;">
-								<span>총 ?개의 동행</span>
+								<span>총 <%=myJDCount %>개의 동행</span>
 							</div>
 							<div id="jDhCk1">
 								<button class="btn">선택삭제</button>
@@ -141,14 +145,23 @@
 						<!-- 게시글위치 -->
 						<table id="dhTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
+							<%for(MyDong j:oriJoinDong){ %>
 								<td class="p-1">
 			                    	<div class="jDhCk3" style="margin:10px;">
 										<input type="checkbox" class="jDhCks">
 									</div>
-			                       	<div class="card" style="width: 155px; height: 255px;" >
+			                       	<div class="card" style="width: 155px; height: 290px;" >
 			                        	<div class="d-flex justify-content-between p-2" style="font-size:5px;">
-			                            	<span>동행상태</span>
-			                            	<span>2020-02-08</span>
+			                        		<%for(DonghangJoin dj:joinDong){ 
+			                        			if(j.getNo()==dj.getDonghangNo()){
+					                        		if(dj.getConfirmed().equals("N")){ %>
+						                        		<span>참여거절</span>
+						                        	<%}else if(dj.getConfirmed().equals("Y")){ %>
+						                        		<span>참여중</span>
+						                        	<%}else{ %>
+						                        		<span>대기중</span>
+				                        	<%} } }%>
+			                            	<span><%=j.getWriteDate() %></span>
 			                            </div>
 			                           	<div>
 			                           		<div style="position: absolute;">
@@ -156,26 +169,56 @@
 											    	<button type="button" class="btn" data-toggle="dropdown">
 											      		...
 											    	</button>
-											    	<div class="dropdown-menu">
-												    	<a class="dropdown-item" href="#">Link 1</a>
-												      	<a class="dropdown-item" href="#">Link 2</a>
-												     	<a class="dropdown-item" href="#">Link 3</a>
-											    	</div>
+					                        		<div class="dropdown-menu">
+					                        		<%for(DonghangJoin dj:joinDong){ 
+					                        			if(j.getNo()==dj.getDonghangNo()){
+													    	if(dj.getConfirmed().equals("N")){ %>
+														    	<a class="dropdown-item" href="#">삭제</a>
+								                        	<%}else if(dj.getConfirmed().equals("Y")){ %>
+								                        		<a class="dropdown-item" href="#">채팅</a>
+														      	<a class="dropdown-item" href="#">동행 나가기</a>
+								                        	<%}else{ %>
+								                        		<a class="dropdown-item" href="#">보낸 신청서 보기</a>
+														      	<a class="dropdown-item" href="#">참여 신청 취소</a>
+						                        	<%} } }%>
+						                        	</div>
 												</div>
 			                           		</div>
-			                           		<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+			                           		<%if(j.getImage()==null){ %>
+												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+											<%}else{ %>
+												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=j.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
+											<%} %>
 			                           </div>
 			                           <div class="d-flex flex-column justify-content-center card-body p-2" style="font-size:7px;">
-			                               <p class="mb-0">제목을 넣을 자리</p>
+			                               <p class="mb-0"><%=j.getTitle() %></p>
+			                               <%for(UserProfile un:userNick){ 
+			                            	   if(j.getUserNo()==un.getNo()){%>
+			                            	   		<p class="mb-0">
+			                               				<%=un.getNickName() %>
+			                               			</p>
+			                               <%} }%>
 			                               <ul class="p-0 m-0">
-			                                   <li>동행지역 : <span>경상북도 경주시</span></li>
-			                                   <li>기간 : <span>20-03-09 ~ 20-03-30</span></li>
-			                                   <li>인원 : <span>6 / 7</span></li>
+			                                   <li>동행지역 : <span><%=j.getTravleLocale() %></span></li>
+			                                   <li>기간 : <span><%=j.getTravleStartDate() %></span><br>
+				                            			<div style="text-align:right;">
+				                            			  <span> ~ <%=j.getTravleEndDate() %></span>
+				                            			</div>
+			                                   </li>
+			                                   <li>인원 : <span><%=j.getJoinPeopleNo() %> / <%=j.getRecruitPeopleNo() %></span></li>
 			                               </ul>
 			                           </div>
 			                       </div>
 			                   </td>
+			                <%} %>
 							</tr>
+							<%if(joinDong.size()==4){ %>
+							<tr>
+								<td colspan="4" style="text-align: center;">
+									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myDongMyDH.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>
+								</td>
+							</tr>
+							<%} %>
 						</table>
 					</div>
 				</div>

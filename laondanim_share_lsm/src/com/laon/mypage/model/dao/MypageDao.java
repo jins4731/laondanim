@@ -88,6 +88,28 @@ public class MypageDao {
 		return flag;
 	}
 	
+	public int updateUserProfile(Connection conn,UserProfile up) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("updateUserInfo");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, up.getPassword());
+			pstmt.setString(2, up.getNickName());
+			pstmt.setInt(3, up.getPhone());
+			pstmt.setString(4, up.getEmail());
+			pstmt.setString(5, up.getTag());
+			pstmt.setInt(6, up.getNo());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 	public List<TripMyCon> selectMyTrip(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;

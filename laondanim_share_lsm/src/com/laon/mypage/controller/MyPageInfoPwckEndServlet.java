@@ -16,7 +16,7 @@ import com.laon.user.model.vo.UserProfile;
 /**
  * Servlet implementation class MyPageInfoPwckEndServlet
  */
-@WebServlet("/myPage/myPwckEnd")
+@WebServlet("/myPage/myPwckEnd.do")
 public class MyPageInfoPwckEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

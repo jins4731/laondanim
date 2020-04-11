@@ -15,14 +15,14 @@ import com.laon.user.model.vo.UserProfile;
 /**
  * Servlet implementation class MyPageInfo
  */
-@WebServlet("/myPage/myInfo")
-public class MyPageInfo extends HttpServlet {
+@WebServlet("/myPage/myInfoUpdate.do")
+public class MyPageInfoUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageInfo() {
+    public MyPageInfoUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

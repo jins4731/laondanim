@@ -34,7 +34,7 @@
 							</div>
 							
 							<div class=" align-self-end mr-2">
-								<button type="button" style="border-radius:100px;width:80px;" class="btn btn-info text-align" onclick="location.replace('<%=request.getContextPath()%>/myPage/myInfo?userNo=<%=loginUser.getNo()%>')">확인</button>
+								<button type="button" style="border-radius:100px;width:80px;" class="btn btn-info text-align" onclick="location.replace('<%=request.getContextPath()%>/myPage/myInfoUpdate.do?userNo=<%=loginUser.getNo()%>')">확인</button>
 							</div>
 						</div>
 					</div>
@@ -75,7 +75,7 @@
 	$(function(){
 		$("#pw").keyup(()=>{
 			$.ajax({
-				url:"<%=request.getContextPath()%>/myPage/myPwckEnd?userNo=<%=loginUser.getNo()%>",
+				url:"<%=request.getContextPath()%>/myPage/myPwckEnd.do?userNo=<%=loginUser.getNo()%>",
 				dataType:"json",
 				data:{pw:$("#pw").val()},
 				success:data=>{

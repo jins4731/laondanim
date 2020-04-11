@@ -1,6 +1,8 @@
 package com.laon.mypage.model.service;
 
 import static com.laon.common.template.JDBCTemplate.close;
+import static com.laon.common.template.JDBCTemplate.commit;
+import static com.laon.common.template.JDBCTemplate.rollback;
 import static com.laon.common.template.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
@@ -30,6 +32,19 @@ public class MypageService {
 		close(conn);
 		
 		return flag;
+	}
+	
+	public int updateUserProfile(UserProfile up) {
+		Connection conn=getConnection();
+		int result=dao.updateUserProfile(conn,up);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
 	}
 	
 	public List<TripMyCon> selectMyTrip(int userNo){

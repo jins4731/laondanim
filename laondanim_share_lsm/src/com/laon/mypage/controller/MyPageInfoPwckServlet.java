@@ -13,7 +13,7 @@ import com.laon.user.model.vo.UserProfile;
 /**
  * Servlet implementation class MyPageInfoPwck
  */
-@WebServlet("/myPage/myInfoPwck")
+@WebServlet("/myPage/myInfoPwck.do")
 public class MyPageInfoPwckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

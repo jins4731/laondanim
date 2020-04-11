@@ -21,7 +21,7 @@ public class BoardService {
 	public BoardDao dao=new BoardDao();
 	
 	
-	public int insertBoard(Board b) {
+	public int insertBoard(BoardJoinUser b) {
 		Connection conn=getConnection();
 		int result=dao.insertBoard(conn,b);
 		if(result>0) {

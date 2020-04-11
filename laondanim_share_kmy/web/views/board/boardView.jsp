@@ -3,6 +3,7 @@
 	<%@page import="com.laon.board.model.vo.BoardJoinUser" %>
 <%
 	BoardJoinUser b=(BoardJoinUser)request.getAttribute("BoardJoinUser");
+	
 %>
 <%@ include file="/views/common/header.jsp"%>
 <style>
@@ -115,6 +116,7 @@ $(function(){
 	
 	
 });
+
 
 </script>
 

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.laon.board.model.service.BoardService;
 import com.laon.board.model.vo.Board;
+import com.laon.board.model.vo.BoardJoinUser;
 import com.laon.user.model.vo.User;
 
 /**
@@ -39,32 +40,29 @@ public class BoardWriteEndServlet extends HttpServlet {
 		String tag=request.getParameter("boardTag");
 		
 		
-		 if(category.equals("qna")) { 
-			 category="질문글"; 
-		 }else if(category.equals("others")) { 
-			 category="자유글"; }
-		
 		
 		//유저넘버는 회원 기본키
 		
-		int no=u.getNo();
-		System.out.println("유저넘버 :"+no);
+		
+		System.out.println("유저넘버 :"+u.getNo());
 		
 		//세션의 유저아이디를 가지고 유저 테이블에가서 유저넘버 가져오기
 		
-		Board b=new Board(0,no,category,null,0,tag,title,text,'N'); 
+		BoardJoinUser b=new BoardJoinUser(0,u.getNo(),category,null,0,tag,title,text,'N',u.getNickName()); 
 		System.out.println("보드테이블의 유저넘버:"+b.getUserNo());
+		System.out.println("등록한글"+b);
 		int result=new BoardService().insertBoard(b);
-		
+		System.out.println("결과값이 있니?"+result);
 		//msg창을 이용해 result 분기처리 해주기 
 		if(result>0) {
-			request.setAttribute("msg", "글이 성공적으로 등록되었습니다");
-			request.setAttribute("loc", "/views/board/boardView.jsp");
+			
+			request.setAttribute("BoardJoinUser", b);
+			request.getRequestDispatcher("/views/board/boardView.jsp").forward(request, response);;
 		}else {
 			request.setAttribute("msg", "게시글 등록에 실패하였습니다");
 			request.setAttribute("loc","/views/board/boardWrite.jsp");
+			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		}
-		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
 	}
 

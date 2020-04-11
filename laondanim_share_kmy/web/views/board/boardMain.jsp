@@ -4,7 +4,10 @@
 <%@ include file="/views/common/header.jsp"%>
 <%
 	List<BoardJoinUser> list=(List)request.getAttribute("list");
-	
+
+	String category=(String)request.getAttribute("category");
+	String searchDetail=(String)request.getAttribute("searchDetail");
+	String searchBox=(String)request.getAttribute("searchBox");
 
 %>
 <style>
@@ -129,25 +132,29 @@ table * {
 <section>
 	<div class="searchContainer">
 		<div class="searchBox">
-			<div class="searchBoxElement" data-toggle="dropdown">
+			<!-- <div class="searchBoxElement" data-toggle="dropdown"> -->
 				<img src="<%=request.getContextPath()%>/icon/search_icon.png"
 					alt="search_icon">
-				<form action="" type="post" id="form">
-					<select name="searchCategory" id="searchCategory" data-width="fit">
+				<form action="<%=request.getContextPath()%>/board/search.do" type="post" id="form">
+					<select name="category"  data-width="fit">
 						<option value="all">전체게시글</option>
 						<option value="qna">질문글</option>
 						<option value="others">자유글</option>
 					</select> 
-					<select name="searchDetail" id="searchDetail" data-width="fit">
+					<select name="searchDetail"  data-width="fit">
 						<option value="writer">작성자</option>
-						<option value="titleContent">제목+내용</option>
 						<option value="title">제목</option>
 						<option value="content">내용</option>
 						<option value="tags">키워드태그</option>
 					</select>
-			</div>
-				<input type="text" name="searchBox" id="searchBox" size="40px">
-				<input type="button" id="searchSubmit" value="검색">
+		<!-- 	</div> -->
+				<input type="text" name="searchBox" id="search" size="40px">
+				
+				<input type="submit" id="searchSubmit" value="검색">
+				<!-- 검색한후에 버튼 필터 사용시 -->
+				<input type="hidden" value="<%=searchBox %>" id="searchBox"/>
+				<input type="hidden" value="<%=category==null?"all":category %>" id="category"/>
+				<input type="hidden" value="<%=searchDetail %>" id="searchDetail"/>
 			</form>
 		</div>
 	</div>
@@ -157,7 +164,7 @@ table * {
 </div>
 <!--게시글 수 출력/필터링-->
 <div class="filter">
-    <div id="print-post">총 <%=request.getAttribute("totalData")%>건의 게시물이 있습니다</div>
+    <div id="print-post">총 <%=list.size()%>건의 게시물이 있습니다</div>
     <div id="filter-container">
     <ul class="comm-filter">
     <li><button class="btn btn-mg btn-outline-secondary border-0" id="recent">최근 순</button></li>
@@ -203,39 +210,43 @@ table * {
 <script>
 $(function(){
 		//최신 순 버튼 클릭시 최신순으로 정렬
+		//히든값에있는것으로 불러와
 	  $("#recent").click(function(){
       	var searchBox= $("#searchBox").val();
-        var category = $("#searchCategory").val();
-        var detail = $("#searchDetail").val();
+        var category = $("#category").val();
+        var searchDetail = $("#searchDetail").val();
       	var recent = 'recent';
       	var viewCount='null';
-      	location.href="<%=request.getContextPath()%>/board/search.do?searchBox="+searchBox+"&category="+category+"&detail="+detail+"&recent="+recent+"&viewCount="+viewCount;
+      	location.href="<%=request.getContextPath()%>/board/search.do?searchBox="+searchBox+"&category="+category+"&searchDetail="+searchDetail+"&recent="+recent+"&viewCount="+viewCount;
       });
       
       //좋아요 순 버튼 클릭시 정렬 많은 순으로 정렬
       $("#viewCount").click(function(){
     	  var searchBox= $("#searchBox").val();
-          var category = $("#searchCategory").val();
-          var detail = $("#searchDetail").val();
+          var category = $("#category").val();
+          var searchDetail = $("#searchDetail").val();
         var recent = 'null';
         var viewCount='viewCount';
-      	location.href="<%=request.getContextPath()%>/board/search.do?searchBox="+searchBox+"&category="+category+"&detail="+detail+"&recent="+recent+"&viewCount="+viewCount;
+      	location.href="<%=request.getContextPath()%>/board/search.do?searchBox="+searchBox+"&category="+category+"&searchDetail="+searchDetail+"&recent="+recent+"&viewCount="+viewCount;
       });	
-})
+});
 
 
 
 
 
 
-$("#searchSubmit").click(()=>
+<%-- $("#searchSubmit").click(()=>
 	//셀렉트 옵션값2가지, input text값 보내기
 	$.ajax({
 		url:"<%=request.getContextPath()%>/board/search.do",
 		type:"post",
-		data:{category:$("#searchCategory").val(),
+		data:{category:$("#category").val(),
 			detail:$("#searchDetail").val(),
-			 text:$("#searchBox").val()},
+			 text:$("#searchBox").val()
+			 recent:'null',
+			 viewCount:'null'},
+			 
 		success:data=>{
 			console.log(data);
 			
@@ -243,7 +254,7 @@ $("#searchSubmit").click(()=>
 	})
 	
 	
-);
+); --%>
 
 
 </script>

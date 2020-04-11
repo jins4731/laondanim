@@ -33,7 +33,7 @@ public class BoardDao {
 		}
 	}
 	
-	public int insertBoard(Connection conn,Board b) {
+	public int insertBoard(Connection conn,BoardJoinUser b) {
 		PreparedStatement pstmt=null;
 		int result=0;
 		String sql=prop.getProperty("insertBoard");
@@ -155,21 +155,31 @@ public class BoardDao {
 		ResultSet rs=null;
 		List<BoardJoinUser> list=new ArrayList();
 		String sql="";
-		
+	
 		//검색창부터
-		//작성자writer 제목+내용titleContent 제목title 내용content 키워드 태그tags
+		//작성자writer  제목title 내용content 키워드 태그tags
 		if(searchDetail.equals("writer")) {
-			sql="selectBoardSortWriter";
-		}else if(searchDetail.equals("titleContent")) {
-			sql="selectBoardSortTitleContent";
-		}else if(searchDetail.equals("title")) {
-			sql="selectBoardSortTitle";
-		}else if(searchDetail.equals("content")) {
-			sql="selectBoardSortContent";
-		}else if(searchDetail.equals("tags")) {
-			sql="selectBoardSortTag";
+			sql=prop.getProperty("selectBoardSortWriter");
+		}if(searchDetail.equals("title")) {
+			sql=prop.getProperty("selectBoardSortTitle");
+		}if(searchDetail.equals("content")) {
+			sql=prop.getProperty("selectBoardSortContent");
+		}if(searchDetail.equals("tags")) {
+			sql=prop.getProperty("selectBoardSortTags");
 		}
-		System.out.println("패턴적용전:"+sql);
+		System.out.println("패턴1적용전:"+sql);
+		if(!recent.equals("null") && viewCount.equals("null")) { 
+			//최신순 버튼 눌렀을때 ORDER BY WRITEDATE DESC 추가
+			sql=sql.replace("DELETED='N'", "DELETED='N' ORDER BY WRITEDATE DESC");
+
+			  } 
+		if(recent.equals("null") &&!viewCount.equals("null")) {
+			//조회수순 버튼 눌렀을때 ORDER BY VIEWCOUNT DESC 추가
+			sql=sql.replace("DELETED='N'", "DELETED='N' ORDER BY VIEWCOUNT DESC");
+			  }
+		
+		
+		System.out.println("패턴2적용전:"+sql);
 		if(category.equals("null")||category.equals("all")) {
 			//전체를 출력할경우 category= 이거를 category!= 이걸로 바꿔줘야함
 			Pattern pattern=Pattern.compile("=");
@@ -184,34 +194,59 @@ public class BoardDao {
 			while(matcher.find()) {
 				indexs[i]=matcher.start();
 				i++;
-			}
+		}
 		System.out.println("indexs.length:"+indexs.length);
 		int targetIndex=indexs[1];
 		sql=sql.substring(0,targetIndex)+"!="+sql.substring(targetIndex+1,sql.length());
 			
 		}
+		System.out.println("패턴2적용후:"+sql);
+		/*
+		 * if(!recent.equals("null") && viewCount.equals("null")) { //최신순 버튼 눌렀을때 ORDER
+		 * BY WRITEDATE DESC 추가 sql.replace("DELETED='N'",
+		 * "DELETED='N' ORDER BY WRITEDATE DESC");
+		 * 
+		 * } if(recent.equals("null") &&!viewCount.equals("null")) { //조회수순 버튼 눌렀을때
+		 * ORDER BY VIEWCOUNT DESC 추가 sql.replace("DELETED='N'",
+		 * "DELETED='N' ORDER BY VIEWCOUNT DESC"); }
+		 */
+		/*
+		 * if(recent.equals("null")&&viewCount.equals("null")) { //둘다 안눌렀을때
+		 * 
+		 * }
+		 */
+	
+	try{pstmt=conn.prepareStatement(sql);
+		if(category.equals("null")||category.equals("all")) pstmt.setString(1, "null");
+		else pstmt.setString(1, category);
 		
+		pstmt.setString(2, "%"+searchBox+"%");
+		pstmt.setInt(3, (cPage-1)*perPage+1);
+		pstmt.setInt(4,cPage*perPage);
+		rs=pstmt.executeQuery();
+		while(rs.next()) {
+			BoardJoinUser b=new BoardJoinUser();
+			b.setNo(rs.getInt("no"));
+			b.setUserNo(rs.getInt("user_no"));
+			b.setCategory(rs.getString("category"));
+			b.setWriteDate(rs.getDate("write_date"));
+			b.setViewCount(rs.getInt("viewcount"));
+			b.setTag(rs.getString("tag"));
+			b.setTitle(rs.getString("title"));
+			b.setContent(rs.getString("content"));
+			b.setDeleted(rs.getString("deleted").charAt(0));
+			b.setNickName(rs.getString("nick_name"));
+			list.add(b);
+				}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(rs);
+		close(pstmt);
+	}
+		return list;
+
 		
 		
 	}

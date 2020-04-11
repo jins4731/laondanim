@@ -26,7 +26,8 @@ public class UserDao {
 	private String gender = "gender";
 	private String phone = "phone";
 	private String email = "email";
-
+	private String tag = "tag";
+	
 	private String selectUser = "selectUser";
 	private String selectUserPage = "selectUserPage";
 	private String selectUserCount = "selectUserCount";
@@ -51,6 +52,7 @@ public class UserDao {
 			user.setGender(rs.getString(gender));
 			user.setPhone(rs.getString(phone));
 			user.setEmail(rs.getString(email));
+			user.setTag(rs.getString(tag));
 		}
 		return user;
 	}
@@ -68,6 +70,7 @@ public class UserDao {
 			user.setGender(rs.getString(gender));
 			user.setPhone(rs.getString(phone));
 			user.setEmail(rs.getString(email));
+			user.setTag(rs.getString(tag));
 			list.add(user);
 		}
 		return list;
@@ -75,7 +78,7 @@ public class UserDao {
 	
 	
 	public User login(Connection conn,String id,String pw) {
-		//로그인 했을때
+		//濡쒓렇�씤 �뻽�쓣�븣
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		User u=null;
@@ -90,8 +93,7 @@ public class UserDao {
 			u.setUserId(rs.getString("user_id"));
 			u.setName(rs.getString("name"));
 			u.setEmail(rs.getString("email"));
-			u.setTag(rs.getString("tag"));
-			
+			u.setTag(rs.getString("tag"));		
 		}
 		
 	}catch(SQLException e) {
@@ -105,7 +107,7 @@ public class UserDao {
 	}
 	
 	public User findId(Connection conn,String name,String email) {
-		//이름,이메일이 일치하는 회원이 있는지 확인 후. 메일보내줘
+		//�씠由�,�씠硫붿씪�씠 �씪移섑븯�뒗 �쉶�썝�씠 �엳�뒗吏� �솗�씤 �썑. 硫붿씪蹂대궡以�
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		User u=null;
@@ -132,7 +134,7 @@ public class UserDao {
 		
 	}
 	public User findPw(Connection conn,String id,String email) {
-		//이름,이메일이 일치하는 회원이 있는지 확인 후. 메일보내줘
+		//�씠由�,�씠硫붿씪�씠 �씪移섑븯�뒗 �쉶�썝�씠 �엳�뒗吏� �솗�씤 �썑. 硫붿씪蹂대궡以�
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		User u=null;
@@ -160,7 +162,7 @@ public class UserDao {
 
 
 	public int updateTemPw(Connection conn,String id, String authenticationKey) {
-		//임시비밀번호로 디비에 변경하는 로직
+		//�엫�떆鍮꾨�踰덊샇濡� �뵒鍮꾩뿉 蹂�寃쏀븯�뒗 濡쒖쭅
 		PreparedStatement pstmt=null;
 		int result=0;
 		String sql=prop.getProperty("updateTemPw");

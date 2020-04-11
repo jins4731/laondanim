@@ -155,6 +155,10 @@
 	            list-style: none;
 	        }
 	
+			.card{
+				cursor: pointer;
+			}
+			
 	        .card-body{
 	            position: relative;
 	        }
@@ -199,7 +203,8 @@
 					for(DonghangJoinUserPicture dh : topList){				
 				%>
                 <div class="col h-100 p-0 mr-2">
-                    <div class="card m-0" style="height: 100%;" >
+                    <div class="card m-0" style="height: 100%;" 
+                    onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?no=<%=dh.getNo()%>');">
 
                         <!--헤더-->
                         <div class="card-header h-20 p-1 d-flex justify-content-between bg-white align-items-center border-0" style="height: 9%;">
@@ -257,7 +262,8 @@
 					for(DonghangJoinUserPicture dh : bottomList){				
 				%>
                 <div class="col h-100 p-0 mr-2">
-                    <div class="card m-0" style="height: 100%;" >
+                    <div class="card m-0" style="height: 100%;" 
+                    onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?no=<%=dh.getNo()%>');">
 
                         <!--헤더-->
                         <div class="card-header h-20 p-1 d-flex justify-content-between bg-white align-items-center border-0" style="height: 9%;">
@@ -380,7 +386,7 @@
     		let viewcount = 'null';
     		let nearSchedule = 'null';
     		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
-    	})
+    	});
 	    //조회수 버튼
     	$("#inputViewCountBtn").click(()=>{
 			let keyword = $("#keyword").val();
@@ -391,7 +397,7 @@
     		let viewcount = 'viewcount';
     		let nearSchedule = 'null';
     		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
-    	})
+    	});
     	//가까운일정순 버튼
     	$("#inputNearScheduleBtn").click(()=>{
 			let keyword = $("#keyword").val();
@@ -402,7 +408,8 @@
     		let viewcount = 'null';
     		let nearSchedule = 'nearSchedule';
     		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
-    	})
+    	});
+    	
     </script>
 </section>
 <%@ include file="/views/common/footer.jsp"%> 

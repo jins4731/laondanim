@@ -1,13 +1,13 @@
 package com.laon.board.model.dao;
 
+import static com.laon.common.template.JDBCTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
-
-import static com.laon.common.JDBCTemplate.close;
 
 import com.laon.board.model.vo.Board;
 

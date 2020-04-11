@@ -1,6 +1,6 @@
 package com.laon.trip.model.dao;
 
-import static com.laon.common.JDBCTemplate.close;
+import static com.laon.common.template.JDBCTemplate.close;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -485,5 +485,33 @@ public class TripDao {
 		}
 		
 		return result;
+	}
+	
+	public ArrayList<Trip> selectTagList(Connection conn){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectTagList");
+		Trip t = null;
+		
+		ArrayList<Trip> tagList = new ArrayList<Trip>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				t = new Trip();
+				t.setNo(rs.getInt("NO"));
+				t.setTag(rs.getString("TAG"));
+				
+				tagList.add(t);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return tagList;
 	}
 }

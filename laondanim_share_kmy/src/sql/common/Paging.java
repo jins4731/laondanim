@@ -43,4 +43,3 @@ public class Paging {
 		return pageBar;
 	}
 }
-

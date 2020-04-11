@@ -8,13 +8,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.laon.common.CommonKey;
 import com.laon.common.Paging;
+import com.laon.common.TagFilter;
 import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
+import com.laon.trip.model.vo.TagCount;
 import com.laon.trip.model.vo.Trip;
 import com.laon.trip.service.TripService;
+import com.laon.user.model.vo.User;
 /**
  * Servlet implementation class TripListServlet
  */
@@ -65,16 +69,40 @@ public class TripListViewServlet extends HttpServlet {
 		
 		ArrayList<Trip> list = null;
 		ArrayList<Picture> pictureList = null;
+		ArrayList<Like> likeCountList = null;
+		ArrayList<User> userList = null;
 		ArrayList<Like> likeList = null;
+		ArrayList<TagCount> tripTagCountList = null;
+			
+		//로그인된 유저 no 가져오기
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("loginUser");
+		int userNo = user.getNo();
+		String userTag = user.getTag();
 		
+		//로그인된 유저 no로 일치하는 태그순이 많은 순의 여행기 게시물 가져오기
+		tripTagCountList = new TagFilter().tagCountList(userTag);
+		
+		//여행기 게시물의 전체 개수, 페이징 처리 후 여행기 게시물 가져오기
 		totalItemCount = new TripService().selectTripCount(lo, category, keyword);
 		list = new TripService().selectTripPage(cPage, perPage, lo, category, keyword, recent,like);
+		
 		//리스트에서 가져오고 해당 리스트로 매칭되는 picture 가져오기
 		pictureList = new TripService().selectPicture(list);
 		
 		//해당 리스트로 매칭되는 좋아요 수 가져오기
-		likeList = new TripService().selectLike(list);
+		likeCountList = new TripService().selectLikeCount(list);
 		
+		//해당 리스트로 매칭되는 작성자 가져오기
+		userList = new TripService().selectUser(list);
+		
+		//해당 리스트로 매칭되는 좋아요 정보 가져오기
+		likeList = new TripService().selectLike(userNo);		
+		for(Like l : likeList) {
+			System.out.println("좋아요 정보"+l);
+		}
+		
+		//페이징 처리
 		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/tripListView.do", totalItemCount, cPage, perPage, keyword, category, lo, recent, like); //페이지바 가져오기
 		
 		//쿼리스트링 저장
@@ -86,9 +114,11 @@ public class TripListViewServlet extends HttpServlet {
 		
 		request.setAttribute(CommonKey.LIST, list);	//여행기 리스트 저장
 		request.setAttribute("pictureList", pictureList); //사진 리스트 저장 
-		request.setAttribute("likeList", likeList);//좋아요 리스트 저장
+		request.setAttribute("likeCountList", likeCountList);//좋아요 수  리스트 저장
+		request.setAttribute("likeList", likeList);//좋아요 정보 리스트 저장
+		request.setAttribute("userList", userList);//회원 리스트 저장
 		request.setAttribute(CommonKey.PAGE_BAR, pageBar);	//pageBar 저장
-		request.setAttribute(CommonKey.totalItemCount, totalItemCount);
+		request.setAttribute(CommonKey.total_Item_Count, totalItemCount);
 		request.getRequestDispatcher("/views/trip/tripListPage.jsp").forward(request, response);
 	}
 

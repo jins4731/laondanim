@@ -39,7 +39,9 @@ public class TripListViewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		//처음 여행기 클릭했을 때
+		String first = request.getParameter("first");
+		first=first==null?"null":first;
 		//검색버튼 눌렀을 때, keyword 값 가져오기 , null 이면 검색 안한거 있으면 검색한거
 		String keyword = request.getParameter("keyword");
 		keyword=keyword==null?"null":keyword;
@@ -85,7 +87,8 @@ public class TripListViewServlet extends HttpServlet {
 		
 		//여행기 게시물의 전체 개수, 페이징 처리 후 여행기 게시물 가져오기
 		totalItemCount = new TripService().selectTripCount(lo, category, keyword);
-		list = new TripService().selectTripPage(cPage, perPage, lo, category, keyword, recent,like);
+		
+		list = new TripService().selectTripPage(cPage, perPage, lo, category, keyword, recent, like, tripTagCountList, first);
 		
 		//리스트에서 가져오고 해당 리스트로 매칭되는 picture 가져오기
 		pictureList = new TripService().selectPicture(list);
@@ -103,7 +106,7 @@ public class TripListViewServlet extends HttpServlet {
 		}
 		
 		//페이징 처리
-		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/tripListView.do", totalItemCount, cPage, perPage, keyword, category, lo, recent, like); //페이지바 가져오기
+		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/tripListView.do", totalItemCount, cPage, perPage, keyword, category, lo, recent, like, first); //페이지바 가져오기
 		
 		//쿼리스트링 저장
 		request.setAttribute("keyword", keyword);
@@ -111,6 +114,7 @@ public class TripListViewServlet extends HttpServlet {
 		request.setAttribute("lo", lo);
 		request.setAttribute("recent", recent);
 		request.setAttribute("like", like);
+		request.setAttribute("first", first);
 		
 		request.setAttribute(CommonKey.LIST, list);	//여행기 리스트 저장
 		request.setAttribute("pictureList", pictureList); //사진 리스트 저장 

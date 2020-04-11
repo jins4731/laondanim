@@ -9,12 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
+import com.laon.trip.model.vo.TagCount;
 import com.laon.trip.model.vo.Trip;
 import com.laon.user.model.vo.User;
 
@@ -32,130 +34,155 @@ public class TripDao {
 		}
 	}
 	
-	public ArrayList<Trip> selectTripPage(Connection conn, int cPage, int perPage, String lo, String category, String keyword, String recent, String like){
+	public ArrayList<Trip> selectTripPage(Connection conn, int cPage, int perPage, String lo, String category, String keyword, String recent, String like, ArrayList<TagCount> tripTagCountList, String first){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "";
 		int check = 0;			   
-		
-		if(!like.equals("null")&&!recent.equals("null")) {
-			sql = prop.getProperty("selectTripPageSortAll");
-		}
-		if(!like.equals("null") && recent.equals("null")) {
-			sql = prop.getProperty("selectTripPageSortLike");
-		}
-		if(!recent.equals("null") && like.equals("null")) {
-			sql = prop.getProperty("selectTripPageSortWrite");
-		}
-		if(like.equals("null")&&recent.equals("null")) {
-			sql = prop.getProperty("selectTripPage");
-			check=1;
-		}
-		
-		if(category.equals("null") || category.equals("전체 여행기")) {
-			Pattern pattern = Pattern.compile("=");
-			   Matcher matcher = pattern.matcher(sql);
-			   int count = 0;
-			   while (matcher.find()) {
-			      count++;
-			   }
-			   matcher.reset();
-			   int[] indexs = new int[count];
-			   int i = 0;
-			   while (matcher.find()) {
-			      indexs[i] =  matcher.start();
-			      i++;
-			   }
-			   int targetIndex = indexs[2];
-			   //SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT TR.*, (SELECT COUNT(*) FROM LIKE_TB WHERE TR.NO=TRIP_NO AND CANCLED='Y') AS CNT FROM TRIP_TB TR WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ? ORDER BY CNT DESC)A) WHERE RNUM BETWEEN ? AND ?
-
-			   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+1, sql.length());
-		}
-		if(lo.equals("null") || lo.equals("선택 지역별")) {
-			Pattern pattern = Pattern.compile("=");
-			   Matcher matcher = pattern.matcher(sql);
-			   int count = 0;
-			   while (matcher.find()) {
-			      count++;
-			   }
-			   matcher.reset();
-			   int[] indexs = new int[count];
-			   int i = 0;
-			   while (matcher.find()) {
-			      indexs[i] =  matcher.start();
-			      i++;
-			   }
-
-			   int targetIndex = indexs[3];
-			   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+1, sql.length());
-		}
-		
-		if(keyword.equals("null")) {
-			Pattern pattern = Pattern.compile("LIKE");
-			   Matcher matcher = pattern.matcher(sql);
-			   int count = 0;
-			   while (matcher.find()) {
-			      count++;
-			   }
-			   matcher.reset();
-			   int[] indexs = new int[count];
-			   int i = 0;
-			   while (matcher.find()) {
-			      indexs[i] =  matcher.start();
-			      i++;
-			   }
-
-			   int targetIndex = indexs[1];
-			   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+4, sql.length());
-
-		}
-		
 		ArrayList<Trip> list = new ArrayList<Trip>();
 		Trip t = null;
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			if(category.equals("null") || category.equals("전체 여행기")) pstmt.setString(1, "null");
-			else pstmt.setString(1, category);
-						
-			if(lo.equals("null") || lo.equals("선택 지역별")) pstmt.setString(2, "null");
-			else pstmt.setString(2, lo);
-			
-			if(keyword.equals("null")) pstmt.setString(3, "null");
-			else pstmt.setString(3, "%"+keyword+"%");
-			pstmt.setInt(4, (cPage-1)*perPage+1);
-			pstmt.setInt(5, cPage*perPage);
-			
-			rs=pstmt.executeQuery();
-			
-			while(rs.next()) {
-				t= new Trip();
+		
+		if(first.equals("first")) {
+			for(int i=(cPage-1)*perPage; i<cPage*perPage; i++) {
+				t = new Trip();
 				
-				t.setNo(rs.getInt("NO"));
-				t.setUserTbNo(rs.getInt("USER_NO"));
-				t.setCategory(rs.getString("CATEGORY"));
-				t.setWriteDate(rs.getDate("WRITE_DATE"));
-				t.setTag(rs.getString("TAG"));
-				t.setTitle(rs.getString("TITLE"));
-				t.setContent(rs.getString("CONTENT"));
-				t.setTripLocate(rs.getString("TRAVLE_LOCALE"));
-				t.setPeopleNum(rs.getInt("PEOPLE_NUM"));
-				t.setTripType(rs.getString("TRAVLE_TYPE"));
-				t.setStartDate(rs.getDate("TRAVLE_START_DATE"));
-				t.setEndDate(rs.getDate("TRAVLE_END_DATE"));
-				t.setPublicEnabled(rs.getString("PUBLIC_ENABLED").charAt(0));
-				t.setDeleted(rs.getString("DELETED").charAt(0));
+				t.setNo(tripTagCountList.get(i).getNo());
+				t.setUserTbNo(tripTagCountList.get(i).getUserTbNo());
+				t.setCategory(tripTagCountList.get(i).getCategory());
+				t.setWriteDate(tripTagCountList.get(i).getWriteDate());
+				t.setTag(String.join(",", tripTagCountList.get(i).getTag()));
+				t.setTitle(tripTagCountList.get(i).getTitle());
+				t.setContent(tripTagCountList.get(i).getContent());
+				t.setTripLocate(tripTagCountList.get(i).getTripLocate());
+				t.setPeopleNum(tripTagCountList.get(i).getPeopleNum());
+				t.setTripType(tripTagCountList.get(i).getTripType());
+				t.setStartDate(tripTagCountList.get(i).getStartDate());
+				t.setPublicEnabled(tripTagCountList.get(i).getPublicEnabled());
+				t.setDeleted(tripTagCountList.get(i).getDeleted());
 				
 				list.add(t);
 			}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rs);
-			close(pstmt);
+			
+			return list;
+		}else {
+			if(!like.equals("null")&&!recent.equals("null")) {
+				sql = prop.getProperty("selectTripPageSortAll");
+			}
+			if(!like.equals("null") && recent.equals("null")) {
+				sql = prop.getProperty("selectTripPageSortLike");
+			}
+			if(!recent.equals("null") && like.equals("null")) {
+				sql = prop.getProperty("selectTripPageSortWrite");
+			}
+			if(like.equals("null")&&recent.equals("null")) {
+				sql = prop.getProperty("selectTripPage");
+				check=1;
+			}
+
+			
+			if(category.equals("null") || category.equals("전체 여행기")) {
+				Pattern pattern = Pattern.compile("=");
+				   Matcher matcher = pattern.matcher(sql);
+				   int count = 0;
+				   while (matcher.find()) {
+				      count++;
+				   }
+				   matcher.reset();
+				   int[] indexs = new int[count];
+				   int i = 0;
+				   while (matcher.find()) {
+				      indexs[i] =  matcher.start();
+				      i++;
+				   }
+				   int targetIndex = indexs[2];
+				   //SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT TR.*, (SELECT COUNT(*) FROM LIKE_TB WHERE TR.NO=TRIP_NO AND CANCLED='Y') AS CNT FROM TRIP_TB TR WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ? ORDER BY CNT DESC)A) WHERE RNUM BETWEEN ? AND ?
+	
+				   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+1, sql.length());
+			}
+			if(lo.equals("null") || lo.equals("선택 지역별")) {
+				Pattern pattern = Pattern.compile("=");
+				   Matcher matcher = pattern.matcher(sql);
+				   int count = 0;
+				   while (matcher.find()) {
+				      count++;
+				   }
+				   matcher.reset();
+				   int[] indexs = new int[count];
+				   int i = 0;
+				   while (matcher.find()) {
+				      indexs[i] =  matcher.start();
+				      i++;
+				   }
+	
+				   int targetIndex = indexs[3];
+				   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+1, sql.length());
+			}
+			
+			if(keyword.equals("null")) {
+				Pattern pattern = Pattern.compile("LIKE");
+				   Matcher matcher = pattern.matcher(sql);
+				   int count = 0;
+				   while (matcher.find()) {
+				      count++;
+				   }
+				   matcher.reset();
+				   int[] indexs = new int[count];
+				   int i = 0;
+				   while (matcher.find()) {
+				      indexs[i] =  matcher.start();
+				      i++;
+				   }
+	
+				   int targetIndex = indexs[1];
+				   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+4, sql.length());
+	
+			}
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				if(category.equals("null") || category.equals("전체 여행기")) pstmt.setString(1, "null");
+				else pstmt.setString(1, category);
+							
+				if(lo.equals("null") || lo.equals("선택 지역별")) pstmt.setString(2, "null");
+				else pstmt.setString(2, lo);
+				
+				if(keyword.equals("null")) pstmt.setString(3, "null");
+				else pstmt.setString(3, "%"+keyword+"%");
+				pstmt.setInt(4, (cPage-1)*perPage+1);
+				pstmt.setInt(5, cPage*perPage);
+				
+				rs=pstmt.executeQuery();
+				
+				while(rs.next()) {
+					t= new Trip();
+					
+					t.setNo(rs.getInt("NO"));
+					t.setUserTbNo(rs.getInt("USER_NO"));
+					t.setCategory(rs.getString("CATEGORY"));
+					t.setWriteDate(rs.getDate("WRITE_DATE"));
+					t.setTag(rs.getString("TAG"));
+					t.setTitle(rs.getString("TITLE"));
+					t.setContent(rs.getString("CONTENT"));
+					t.setTripLocate(rs.getString("TRAVLE_LOCALE"));
+					t.setPeopleNum(rs.getInt("PEOPLE_NUM"));
+					t.setTripType(rs.getString("TRAVLE_TYPE"));
+					t.setStartDate(rs.getDate("TRAVLE_START_DATE"));
+					t.setEndDate(rs.getDate("TRAVLE_END_DATE"));
+					t.setPublicEnabled(rs.getString("PUBLIC_ENABLED").charAt(0));
+					t.setDeleted(rs.getString("DELETED").charAt(0));
+					
+					list.add(t);
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}
+			
+			return list;
 		}
-		
-		return list;
 	}
 	
 	public int selectTripCount(Connection conn, String lo, String category, String keyword) {
@@ -501,7 +528,19 @@ public class TripDao {
 			while(rs.next()) {
 				t = new Trip();
 				t.setNo(rs.getInt("NO"));
+				t.setUserTbNo(rs.getInt("USER_NO"));
+				t.setCategory(rs.getString("CATEGORY"));
+				t.setWriteDate(rs.getDate("WRITE_DATE"));
 				t.setTag(rs.getString("TAG"));
+				t.setTitle(rs.getString("TITLE"));
+				t.setContent(rs.getString("CONTENT"));
+				t.setTripLocate(rs.getString("TRAVLE_LOCALE"));
+				t.setPeopleNum(rs.getInt("PEOPLE_NUM"));
+				t.setTripType(rs.getString("TRAVLE_TYPE"));
+				t.setStartDate(rs.getDate("TRAVLE_START_DATE"));
+				t.setEndDate(rs.getDate("TRAVLE_END_DATE"));
+				t.setPublicEnabled(rs.getString("PUBLIC_ENABLED").charAt(0));
+				t.setDeleted(rs.getString("DELETED").charAt(0));
 				
 				tagList.add(t);
 			}

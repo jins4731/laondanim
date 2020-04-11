@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.dao.TripDao;
+import com.laon.trip.model.vo.TagCount;
 import com.laon.trip.model.vo.Trip;
 import com.laon.user.model.vo.User;
 
@@ -19,9 +20,9 @@ public class TripService {
 	private TripDao dao = new TripDao();
 	
 	//list 가져오기	
-	public ArrayList<Trip> selectTripPage(int cPage, int perPage, String lo, String category, String keyword, String recent, String like){ //키워드 검색 태그
+	public ArrayList<Trip> selectTripPage(int cPage, int perPage, String lo, String category, String keyword, String recent, String like, ArrayList<TagCount> tripTagCountList, String first){ //키워드 검색 태그
 		Connection conn = getConnection();
-		ArrayList<Trip> list = dao.selectTripPage(conn, cPage, perPage, lo, category, keyword, recent, like);
+		ArrayList<Trip> list = dao.selectTripPage(conn, cPage, perPage, lo, category, keyword, recent, like, tripTagCountList, first);
 		close(conn);
 		return list;
 	}

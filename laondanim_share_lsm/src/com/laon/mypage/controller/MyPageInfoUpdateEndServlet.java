@@ -33,25 +33,22 @@ public class MyPageInfoUpdateEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String path=getServletContext().getRealPath("/picture/profile/");
+		String path=getServletContext().getRealPath("/views/picture/profile/");
 		
 		int maxSize=1024*1024*10;
 		MultipartRequest mr=new MultipartRequest(request, path, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 		
 		int userNo=Integer.parseInt(mr.getParameter("userNo"));
-		String cDate=mr.getParameter("cDate");
-		String userId = mr.getParameter("userId");
 		String password = mr.getParameter("userPw");
-		String name = mr.getParameter("userName");
 		String nickName = mr.getParameter("userNickName");
-		String inputBirthday = mr.getParameter("userBirth");
-		String gender = mr.getParameter("gender");
 		int phone = Integer.parseInt(mr.getParameter("userPhone"));
 		String email = mr.getParameter("userEmail");
 		String likeArea = mr.getParameter("likeArea");
 		String[] likeTag = mr.getParameterValues("likeTag");
 		String oriPro=mr.getParameter("oriPro");
 		String nPro=mr.getFilesystemName("profile");
+		
+		System.out.println(likeArea);
 		
 		File f=mr.getFile("profile");
 		if(f!=null && f.length()>0) {
@@ -61,13 +58,10 @@ public class MyPageInfoUpdateEndServlet extends HttpServlet {
 			nPro=oriPro;
 		}
 		
-		java.sql.Date creDate=java.sql.Date.valueOf(cDate);
-		java.sql.Date birthday = java.sql.Date.valueOf(inputBirthday);
-		
 		String strLikeTag = String.join(",", likeTag);
 		String tag = likeArea + "," + strLikeTag;
 		
-		UserProfile up = new UserProfile(userNo, creDate, userId, password, name, nickName, birthday, gender, phone, email, tag, nPro);
+		UserProfile up = new UserProfile(userNo, null, null, password, null, nickName, null, null, phone, email, tag, nPro);
 		
 		int result=new MypageService().updateUserProfile(up);
 		
@@ -82,6 +76,7 @@ public class MyPageInfoUpdateEndServlet extends HttpServlet {
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc",loc);
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 	}
 
 	/**

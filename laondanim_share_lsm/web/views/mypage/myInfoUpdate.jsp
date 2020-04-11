@@ -22,8 +22,7 @@
 				
 				        <div class="">
 				
-				            <form id="myInfo" action="<%=request.getContextPath()%>/myPage/myInfoUpdateEnd.do" method="post" onsubmit="return fn_checkEnd();" enctype="multipart/form/data">
-				
+				            <form id="myInfo" action="<%=request.getContextPath()%>/myPage/myInfoUpdateEnd.do" method="post" onsubmit="return fn_checkEnd();" enctype="multipart/form-data">
 				                <table class="" style="width: 400px; height: 580px;">
 				                	<input type="hidden" id="userNo" name="userNo" value="<%=up.getNo() %>">
 				                	<input type="hidden" id="cDate" name="cDate" value="<%=up.getCreatedDate() %>">
@@ -107,7 +106,7 @@
 				                <div class="form-group d-flex flex-column justify-content-center mt-4" style="width: 400px;">
 				                    <p class="mb-2 ml-2 align-items-start">관심지역을 <strong>선택</strong>해주세요.</p>
 				                    <div class="form-group">
-				                        <select name="likeArea" class="form-control" id="likeAreaSelect" required>
+				                    	<select name="likeArea" class="form-control" id="likeAreaSelect" required>
 				                          <option value="" disabled selected>관심지역 선택</option>
 				                          <option>서울</option>
 				                          <option>부산</option>
@@ -130,6 +129,9 @@
 				                    </div>
 				                    <input type="hidden" id="likeArea" name="likeArea">
 				                </div>
+				                <script>
+				                console.log(document.getElementById("likeArea").value);
+				                </script>
 				
 				                <div class="form-group d-flex flex-column flex-wrap justify-content-center" style="width: 400px;">
 				                    <p class="mb-2 ml-2 align-items-start">관심태그를 <strong>클릭</strong>해주세요. (최대 5개)</p>
@@ -161,6 +163,7 @@
 	</div>
 </div>
 <%@ include file="/views/common/footer.jsp"%>
+
 
 <style>
 	#myMenuBtn{
@@ -310,9 +313,6 @@
         });
     });
     
-    
-
-    
 	
 	//비밀번호 일치 확인
     $(function(){
@@ -401,10 +401,8 @@
         if(nnMD==="(은)는 이미 사용중인 닉네임입니다."){
         	alert("중복된 닉네임은 가입할 수 없습니다.");
         	return false;
-        }else if($("#nickNameCheckEnd").length===0){
-        	alert("닉네임 중복확인을 해주세요.");
-        	return false;
-        }      
+        }
+        
         //관심사 태그 체크박스 하나 이상 확인
         if( $("input[type=checkbox][name=likeTag]:checked").length == 0 ){
 		    alert("관심 태그 항목을 하나 이상 체크해 주세요.");

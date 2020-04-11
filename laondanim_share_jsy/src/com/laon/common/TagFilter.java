@@ -14,6 +14,8 @@ import com.laon.user.model.vo.User;
 public class TagFilter {
 
 	public ArrayList<TagCount> tagCountList(String userTag){
+		
+		userTag = userTag.replaceAll(" ", "");
 		System.out.println("로그인한 유저의 tag : " + userTag);
 		
 		ArrayList<Trip> tagList = new TripService().selectTagList();	//모든 여행기 게시물에 대한 태그 정보를 태그 리스트에 저장
@@ -26,21 +28,32 @@ public class TagFilter {
 		
 		TagCount tagCount = null;
 		
-		
 		//여행기 게시물 번호, 태그(배열) 로 tagListArr 리스트에 저장
 		for(Trip t : tagList) {	
 			int tripNo = t.getNo();
+			
 			String stringTag = t.getTag();
 			
 			tagCount = new TagCount();
 			
-			tagCount.setTripNo(tripNo);
-			tagCount.setTag(stringTag.split(",")); //모든 여행기 게시물의 tag String 을 배열로 쪼개서 리스트에 저장
+			tagCount.setNo(t.getNo());
+			tagCount.setUserTbNo(t.getUserTbNo());
+			tagCount.setCategory(t.getCategory());
+			tagCount.setWriteDate(t.getWriteDate());
+			tagCount.setTag(t.getTag().split(",")); //모든 여행기 게시물의 tag String 을 배열로 쪼개서 리스트에 저장
+			tagCount.setTitle(t.getTitle());
+			tagCount.setContent(t.getContent());
+			tagCount.setTripLocate(t.getTripLocate());
+			tagCount.setPeopleNum(t.getPeopleNum());
+			tagCount.setTripType(t.getTripType());
+			tagCount.setStartDate(t.getStartDate());
+			tagCount.setPublicEnabled(t.getPublicEnabled());
+			tagCount.setDeleted(t.getDeleted());
 			
 			tripTagCountList.add(tagCount);
 		}
 		
-		for(TagCount t : tripTagCountList) {	//Tag 일치 카운트 
+		for(TagCount t : tripTagCountList) {	//Tag 일치시 카운트 증가
 			for(String u : userTagArr) {
 				if(Arrays.asList(t.getTag()).contains(u)) {	//배열에 값 포함 확인
 					t.setTagCount(t.getTagCount()+1);

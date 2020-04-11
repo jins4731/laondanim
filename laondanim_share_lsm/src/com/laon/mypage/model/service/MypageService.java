@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.laon.board.model.vo.Board;
+import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.donghang.model.vo.MyDong;
 import com.laon.mypage.model.dao.MypageDao;
 import com.laon.trip.model.vo.TripMyCon;
@@ -117,12 +118,36 @@ public class MypageService {
 		return result;
 	}
 	
-	public List<MyDong> selectJoinDong(int userNo){
+	public List<DonghangJoin> selectJoin(int userNo){
 		Connection conn=getConnection();
-		List<MyDong> list=dao.selectJoinDong(conn,userNo);
+		List<DonghangJoin> list=dao.selectJoin(conn,userNo);
 		close(conn);
 		
 		return list;
+	}
+	
+	public List<MyDong> selectOriJoin(List<DonghangJoin> jd){
+		Connection conn=getConnection();
+		List<MyDong> list=dao.selectOriJoin(conn,jd);
+		close(conn);
+		
+		return list;
+	}
+	
+	public List<UserProfile> selectUserNick(List<MyDong> ojd){
+		Connection conn=getConnection();
+		List<UserProfile> userNick=dao.selectUserNick(conn,ojd);
+		close(conn);
+
+		return userNick;
+	}
+	
+	public int selectMyJDCount(int userNo) {
+		Connection conn=getConnection();
+		int result=dao.selectMyJDCount(conn,userNo);
+		close(conn);
+		
+		return result;
 	}
 	
 }

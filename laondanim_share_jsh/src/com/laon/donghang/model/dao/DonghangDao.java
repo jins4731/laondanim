@@ -54,6 +54,7 @@ public class DonghangDao {
 	private String selectDonghangRecent = "selectDonghangRecent";
 	private String selectDonghangViewcount = "selectDonghangViewcount";
 	private String selectDonghangNearSchedule = "selectDonghangNearSchedule";
+	private String selectDonghangView = "selectDonghangView";
 
 	public DonghangDao() {
 		try {
@@ -88,7 +89,36 @@ public class DonghangDao {
 		return donghang;
 	}
 	
-	//join vo용 rs
+	//join vo용 rd
+	public DonghangJoinUserPicture rsProcess(ResultSet rs, DonghangJoinUserPicture donghang) throws SQLException {
+		while (rs.next()) {
+			donghang.setNo(rs.getInt(no));
+			donghang.setUserNo(rs.getInt(userNo));
+			donghang.setTripNo(rs.getInt(tripNo));
+			donghang.setWriteDate(rs.getDate(writeDate));
+			donghang.setViewcount(rs.getInt(viewcount));
+			donghang.setTag(rs.getString(tag));
+			donghang.setTitle(rs.getString(title));
+			donghang.setContent(rs.getString(content));
+			donghang.setTravleLocale(rs.getString(travleLocale));
+			donghang.setTravleStartDate(rs.getDate(travleStartDate));
+			donghang.setTravleEndDate(rs.getDate(travleEndDate));
+			donghang.setRecruitStartDate(rs.getDate(recruitStartDate));
+			donghang.setRecruitEndDate(rs.getDate(recruitEndDate));
+			donghang.setPw(rs.getInt(pw));
+			donghang.setPublicEnabled(rs.getString(publicEnabled));
+			donghang.setEnded(rs.getString(ended));
+			donghang.setDeleted(rs.getString(deleted));
+			donghang.setRecruitPeopleNo(rs.getInt(recruitPeopleNo));
+			donghang.setJoinPeopleNo(rs.getInt(joinPeopleNo));
+			donghang.setNickName(rs.getString(nickName));
+			donghang.setImage(rs.getString(image));
+		}
+		return donghang;
+	}
+	
+	
+	//join vo용 rs list
 	public List<DonghangJoinUserPicture> joinRsProcess(ResultSet rs, List<DonghangJoinUserPicture> list) throws SQLException {
 		while (rs.next()) {
 			DonghangJoinUserPicture donghang = new DonghangJoinUserPicture();
@@ -289,5 +319,42 @@ public class DonghangDao {
 			close(stmt);
 		}
 		return list;
+	}
+
+	public DonghangJoinUserPicture selectDonghangView(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty(selectDonghangView);
+		DonghangJoinUserPicture donghangItem = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			donghangItem = rsProcess(rs, new DonghangJoinUserPicture());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return donghangItem;
+	}
+
+	public int updateViewCount(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateViewCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			result = pstmt.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 }

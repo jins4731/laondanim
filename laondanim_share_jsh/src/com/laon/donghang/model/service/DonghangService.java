@@ -2,6 +2,8 @@ package com.laon.donghang.model.service;
 
 import static com.laon.common.template.JDBCTemplate.close;
 import static com.laon.common.template.JDBCTemplate.getConnection;
+import static com.laon.common.template.JDBCTemplate.commit;
+import static com.laon.common.template.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
@@ -46,5 +48,23 @@ public class DonghangService {
 		List<DonghangJoinUserPicture> list = dao.selectDonghangTag(conn, start ,end, userTag);
 		close(conn);
 		return list;
+	}
+
+	public DonghangJoinUserPicture selectDonghangView(int no, boolean hasRead) {
+		Connection conn = getConnection();
+		DonghangJoinUserPicture donghangItem = dao.selectDonghangView(conn, no);
+
+		if(!hasRead && donghangItem!=null) {
+			int result = dao.updateViewCount(conn, no);
+			if(result>0) {
+				commit(conn);
+				donghangItem.setViewcount(dao.selectDonghangView(conn, no).getViewcount());
+			}else {
+				rollback(conn);
+			}
+			
+		}
+		
+		return donghangItem;
 	}
 }

@@ -25,6 +25,7 @@ public class CommonKey {
 	public static final String TRIP_ITEM = "tripItem";
 	public static final String USER_ITEM = "userItem";
 	public static final String PICTURE_ITEM = "pictureItem";
+	public static final String DONGHANG_ITEM = "donghangItem";
 	
 	
 	

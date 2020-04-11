@@ -1,8 +1,13 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="com.laon.donghang.model.vo.DonghangJoinUserPicture"%>
+<%@ page import="com.laon.common.CommonKey"%>
 
 <%@ include file="/views/common/header.jsp"%>
 
+<%
+	DonghangJoinUserPicture dh = (DonghangJoinUserPicture)request.getAttribute(CommonKey.DONGHANG_ITEM);
+%>
 
     <section class="d-flex flex-column justify-content-center align-items-center">
         <div style="width: 1366px;" class="d-flex flex-column justify-content-center align-items-center">
@@ -11,17 +16,19 @@
             <div class="d-flex flex-row justify-content-between align-items-center" style="width: 828px; height: 100px;">
                 <div class="d-flex flex-row justify-content-center align-items-center" style="width: 480px;">
                     <!--글쓴이 프사 넣기-->
-                    <img src="<%=%>" alt="프로필사진" style="width: 50px; height: 50px;">
+                    <img src="<%-- <%=%> --%>" alt="프로필사진" style="width: 50px; height: 50px;">
 
                     <div class="d-flex flex-column pl-1" style="width: 380px;">
                         <div class="d-flex flex-row align-items-center">
-                            <% if(){%>
-                            <div class="recruitBox d-inline-block mr-1">모집중</div>
+                            <% if(dh.getEnded().equals("N")){%>
+                            	<div class="recruitBox d-inline-block mr-1">모집중</div>
+                            <%}else{%>
+                            	<div class="recruitEndBox d-inline-block mr-1">모집종료</div>
                             <%}%>
-                            <p class="m-0">제목이 들어가는 자리</p>
+                            <p class="m-0"><%=dh.getTitle()%></p>
 
                         </div>
-                        <p class="m-0"><%=닉넴 넣기%></p>
+                        <p class="m-0"><%=dh.getNickName()%></p>
                     </div>
 
                     <img src="icon/menu-vertical_icon.png" alt="메뉴" style="width: 20px; height: 20px;">
@@ -43,8 +50,12 @@
                         <tr>
                             <td class="p-0">
                                 <div class="d-flex flex-row justify-content-between align-items-center">
+	                            <% if(dh.getEnded().equals("N")){%>
                                     <div class="recruitBox">모집중</div>
-                                    <p class="m-0">~ 2020-04-02</p>
+	                            <%}else{%>
+	                            	<div class="recruitEndBox">모집종료</div>
+	                            <%}%>                           
+                                    <p class="m-0">~ <%=dh.getRecruitEndDate()%></p>
                                 </div>
                             </td>
                         </tr>
@@ -54,7 +65,7 @@
                         </tr>
                         <tr>
                             <td class="p-0 border-bottom">
-                                <span class="pl-3"></span>경상북도 경주시
+                                <span class="pl-3"></span><%=dh.getTravleLocale()%>
                             </td>
                         </tr>
 
@@ -62,7 +73,7 @@
                             <td class="p-0 pt-2">모집인원</td>
                         </tr>
                         <td class="p-0 border-bottom">
-                            <span class="pl-3"></span>2 / 7
+                            <span class="pl-3"></span><strong><%=dh.getJoinPeopleNo()%></strong> / <%=dh.getRecruitPeopleNo()%>
                         </td>
                         </tr>
                         <tr>
@@ -70,7 +81,7 @@
                         </tr>
                         <tr>
                             <td class="p-0 border-bottom">
-                                <span class="pl-3"></span> 2020-04-02 ~ 2020-04-16
+                                <span class="pl-3"></span> <%=dh.getTravleStartDate()%> ~ <%=dh.getTravleEndDate()%>
                             </td>
                         </tr>
                 </table>
@@ -107,12 +118,13 @@
                     <fieldset class="form-group">
                         <legend for="email-label" class="bg-white p-0 m-0 text-center" style="width: 20%;">상세내용</legend>
                         <div class="p-4" style="width: 828px; height: 240px; border-radius: 5px; border:2px solid #dadada;">
+                        	<%=dh.getContent()%>
                         </div>
                     </fieldset>
                 </div> 
             </div>            
         </div>
-    </section>
+
 
 
     <!------------------------------------------------------------------------------------------------------------------------------>
@@ -124,8 +136,8 @@
                     <div class="d-flex justify-content-between align-items-center" style="width: 650px;">                        
                         <div class="d-flex flex-row justify-content-start align-items-center">                            
                             <div class="recruitBox d-inline-block mr-1">모집중</div>
-                            <h5 class="m-0">제목</h5>
-                            <p class="m-0 ml-4">~ 2020-04-02</p>
+                            <h5 class="m-0"><%=dh.getTitle()%></h5>
+                            <p class="m-0 ml-4">~ <%=dh.getRecruitEndDate()%></p>
                         </div>
                         
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -142,8 +154,8 @@
                                 <div class="d-flex justify-content-center align-items-center">
                                     <img src="icon/profile_icon.png" alt="프로필사진" style="width: 70px; height: 70px;" class="m-0">
                                 </div>
-                                <p class="m-0">아이디user1</p>
-                                <p class="m-0">닉네임닉닉닉</p>
+                                <p class="m-0"><%=loginUser.getUserId()%></p>
+                                <p class="m-0"><%=loginUser.getNickName()%></p>
                             </div>
 
                             <table style="width: 420px;">
@@ -152,16 +164,16 @@
                                     <td class="p-0 pl-2">성별</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-0 pr-2">라온다님<hr class="m-0"></td>
-                                    <td class="p-0 pl-2">여성<hr class="m-0"></td>
+                                    <td class="p-0 pr-2"><%=loginUser.getName()%><hr class="m-0"></td>
+                                    <td class="p-0 pl-2"><%=loginUser.getGender()%><hr class="m-0"></td>
                                 </tr>
                                 <tr>
                                     <td class="p-0 pr-2 pt-4">생년월일</td>
                                     <td class="p-0 pl-2 pt-4">휴대전화 번호</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-0 pr-2">2000 - 04 - 03<hr class="m-0"></td>
-                                    <td class="p-0 pl-2">010 - 1324 -5678<hr class="m-0"></td>
+                                    <td class="p-0 pr-2"><%=loginUser.getBirthday()%><hr class="m-0"></td>
+                                    <td class="p-0 pl-2"><%=loginUser.getPhone()%><hr class="m-0"></td>
                                 </tr>
                             </table>
                         </div>
@@ -204,6 +216,17 @@
             font-weight: 600;
             padding: 2px 4px 2px 4px;
         }
+        .recruitEndBox{
+            width: 45px;
+            height: 17px;
+            border-radius: 15px;
+            text-align: center;
+            background-color: #dadada;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 4px 2px 4px;
+        }        
         fieldset legend{
             font-size: 16px;
         }
@@ -224,5 +247,8 @@
     <script>
 
     </script>
-
+    
+    
+    </section>
+</div><!-- 	<div class="body-wrapper">닫기 -->    
 <%@ include file="/views/common/footer.jsp"%> 

@@ -18,7 +18,7 @@ import com.laon.donghang.model.vo.DonghangJoinUserPicture;
 /**
  * Servlet implementation class DonghangViewServlet
  */
-@WebServlet("/donghang/donghangView.do")
+@WebServlet(name="DonghangViewServlet", urlPatterns = "/donghang/donghangView.do")
 public class DonghangViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -65,12 +65,12 @@ public class DonghangViewServlet extends HttpServlet {
 		
 		
 		
-		List<DonghangJoinUserPicture> list = new DonghangService().selectDonghangView(no, hasRead);
+		DonghangJoinUserPicture donghangItem = new DonghangService().selectDonghangView(no, hasRead);
 	
 		
-		request.setAttribute(CommonKey.DONGHANG_LIST, list);
+		request.setAttribute(CommonKey.DONGHANG_ITEM, donghangItem);
 		
-		request.getRequestDispatcher("/views/board/boardView.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/donghang/donghangView.jsp").forward(request, response);
 	}
 
 	/**

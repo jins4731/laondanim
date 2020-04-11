@@ -26,7 +26,7 @@ import com.laon.user.model.vo.User;
 /**
  * Servlet implementation class DonghangListViewServlet
  */
-@WebServlet("/donghang/donghangListView.do")
+@WebServlet(name = "DonghangListViewServlet", urlPatterns = "/donghang/donghangListView.do")
 public class DonghangListViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

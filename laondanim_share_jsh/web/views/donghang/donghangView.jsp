@@ -46,8 +46,24 @@
                     <img src="icon/menu-vertical_icon.png" alt="메뉴" style="width: 20px; height: 20px;">
                 </div>
                 <div>
-                    <button id="danimLinkBtn" type="button" class="ldBtn">다님일정 보기 <strong class="ml-1">&#9002;</strong></button>
-                    <button type="button" class="ldBtn ml-2" data-toggle="modal" data-target="#myModal">참여하기</button>
+            	    <%if(dh.getTripNo() < 0) {%>
+                    <button id="danimLinkBtn" type="button" class="ldBtn">
+                    	다님일정 보기 <strong class="ml-1">&#9002;</strong>
+                    </button>
+                    <%}else {%>
+                    <button id="danimLinkBtn" type="button" class="ldBtnInactive" onclick="alert('연결된 다님일정이 없습니다.');">
+                    	다님일정 보기 <strong class="ml-1">&#9002;</strong>
+                    </button>                    	
+                    <%}%>
+                    <%if(loginUser.getNo()!=dh.getUserNo()){ %>
+                    <button type="button" class="ldBtn ml-2" data-toggle="modal" data-target="#myModal">
+                    	참여하기
+                    </button>
+                    <%}else {%>
+					<button type="button" class="ldBtn ml-2">
+                    	수정하기
+                    </button>                    
+                    <%}%>
                 </div>
             </div>
 
@@ -102,7 +118,7 @@
             <div class="d-flex flex-column align-items-center" style="width: 828px;">
                 <div class="d-flex justify-content-between align-items-center" style="width: 95%;">
                     <p class="m-0">현재 참여 동행인</p>
-                    <img src="icon/expand-arrow.png" style="width:17px;"
+                    <img src="icon/expand-arrow.png" style="width:17px;" id="joinMemberBtn"
                     type="button" data-toggle="collapse" data-target="#detailText" aria-expanded="true" aria-controls="detailText">
                 </div>
                 <hr class="mt-2 mb-1" style="width: 828px; border-bottom: 2px solid #dadada;">
@@ -252,12 +268,34 @@
         .ldBtn:hover,.btn:active {
             color: white;
             background-color: #00abbf;
-        }               
+        }    
+        .ldBtnInactive{
+            border-radius: 20px;
+            background-color: white;
+            border: 2px solid #dadada;
+            color: #dadada;
+            padding: 6px 15px 6px 15px;
+        }   
+        .ldBtnInactive:hover,.btn:active {
+            color: white;
+            background-color: #dadada;
+        }                 
+        .rotateBtn{
+            transform: rotate(180deg);
+        }   
     </style> 
 
     <!-- 스크립트 -->
     <script>
-
+        var angle = 0; 
+        $("#joinMemberBtn").click(()=>{
+            let has = $("#joinMemberBtn").hasClass('rotateBtn');
+            if(!has){
+                $("#joinMemberBtn").addClass('rotateBtn');
+            }else{
+                $("#joinMemberBtn").removeClass('rotateBtn');
+            }
+        });
     </script>
     
     

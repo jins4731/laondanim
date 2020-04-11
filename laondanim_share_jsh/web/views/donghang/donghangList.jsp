@@ -114,7 +114,7 @@
         <div class="d-flex justify-content-center">
             <div class="d-flex justify-content-end align-items-end" style="width: 1140px;">
                 <button class="btn btn-lg btn-outline-secondary d-flex align-items-end justify-content-center mt-3 mb-3" 
-                        onclick="" id="dhWriteBtn">
+                        onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangWrite.do?userNo=<%=loginUser.getNo()%>')" id="dhWriteBtn">
                     <p class="m-0">다님길 작성</p>                    
                     <img src="<%=request.getContextPath()%>/image/write_icon.png" class="ml-2 w-25">
                 </button>            

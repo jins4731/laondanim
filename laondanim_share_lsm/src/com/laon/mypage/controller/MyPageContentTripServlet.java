@@ -14,24 +14,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.laon.board.model.vo.Board;
 import com.laon.mypage.model.service.MypageService;
-import com.laon.trip.model.vo.Trip;
 import com.laon.trip.model.vo.TripMyCon;
-import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
 /**
- * Servlet implementation class MyPageContentServlet
+ * Servlet implementation class MyPageContentDetailServlet
  */
-@WebServlet("/myPage/myPageContent.do")
-public class MyPageContentServlet extends HttpServlet {
+@WebServlet("/myPage/myConTrip.do")
+public class MyPageContentTripServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageContentServlet() {
+    public MyPageContentTripServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,26 +41,21 @@ public class MyPageContentServlet extends HttpServlet {
 		UserProfile up=new MypageService().selectUserNo(userNo);
 		
 		int currentPage = getCurrentPage(request);
-		int pagePerRow = 5;
+		int pagePerRow = 20;
 		
-		List<TripMyCon> trip=new MypageService().selectMyTrip(userNo);
+		List<TripMyCon> trip=new MypageService().selectMyTripAll(userNo,getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
 		int tripCount = new MypageService().selectMyTripCount(userNo);
+		String tripPasing = getPageBar(tripCount, currentPage, pagePerRow, request, "/myPage/myConTrip.do");
+		
 		List tripLike=new MypageService().selectTripLike(userNo);
 		
-		List<Board> board=new MypageService().selectMyBoard(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
-		int boardCount = new MypageService().selectMyBoardCount();
-		String boardPasing = getPageBar(boardCount, currentPage, pagePerRow, request, "/myPage/myPageContent.do");
-		
 		request.setAttribute("userProfile", up);
-		
-		request.setAttribute("trip", trip);
-		request.setAttribute("tripCount", tripCount);
 		request.setAttribute("tripLike", tripLike);
 		
-		request.setAttribute("board", board);
-		request.setAttribute("boardPasing", boardPasing);
-		request.setAttribute("boardCount", boardCount);
-		request.getRequestDispatcher("/views/mypage/myContent.jsp").forward(request, response);
+		request.setAttribute("trip", trip);
+		request.setAttribute("tripPasing", tripPasing);
+		request.setAttribute("tripCount", tripCount);
+		request.getRequestDispatcher("/views/mypage/myConTrip.jsp").forward(request, response);
 	}
 
 	/**

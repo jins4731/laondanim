@@ -9,13 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.laon.mind.model.vo.Mind;
+import com.laon.etc.model.vo.Mind;
 import com.laon.mypage.model.service.MypageService;
+import com.laon.user.model.vo.User;
+import com.laon.user.model.vo.UserProfile;
 
 /**
  * Servlet implementation class MyPageHeartServlet
  */
-@WebServlet("/myPage/myPageHeart")
+@WebServlet("/myPage/myPageHeart.do")
 public class MyPageHeartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,7 +33,12 @@ public class MyPageHeartServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int userNo=Integer.parseInt(request.getParameter("userNo"));
+		UserProfile up=new MypageService().selectUserNo(userNo);
+		
 //		List<Mind> mind=new MypageService().selectMindRes();
+		
+		request.setAttribute("userProfile", up);
 		
 		request.getRequestDispatcher("/views/mypage/myHeart.jsp").forward(request, response);
 	}

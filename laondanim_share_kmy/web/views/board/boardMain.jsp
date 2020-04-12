@@ -135,7 +135,7 @@ table * {
 <section>
 	<div class="searchContainer">
 		<div class="searchBox">
-			<!-- <div class="searchBoxElement" data-toggle="dropdown"> -->
+			
 				<img src="<%=request.getContextPath()%>/views/picture/board/search_icon.png"
 					alt="search_icon">
 				<form action="<%=request.getContextPath()%>/board/search.do" type="post" id="form">
@@ -150,7 +150,7 @@ table * {
 						<option value="content">내용</option>
 						<option value="tags">키워드태그</option>
 					</select>
-		<!-- 	</div> -->
+		
 				<input type="text"  name="searchBox" id="search" size="40px" style="border-radius:5px;">
 				
 				<input type="submit" class="btn btn-secondary btn-sm" id="searchSubmit" value="검색">

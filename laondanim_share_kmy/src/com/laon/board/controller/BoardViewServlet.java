@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.laon.board.model.service.BoardService;
 import com.laon.board.model.vo.BoardComment;
+import com.laon.board.model.vo.BoardCommentJoinUser;
 import com.laon.board.model.vo.BoardJoinUser;
 
 /**
@@ -36,7 +37,7 @@ public class BoardViewServlet extends HttpServlet {
 		//게시글 보는 서블릿
 		//게시글 번호 가져옴
 		int boardNo=Integer.parseInt(request.getParameter("no"));
-		
+		System.out.println("들어왔니?"+boardNo);
 		//쿠키로 조회수 설정. f5누르면 조회수가 계속올라가유
 		Cookie[] cookies=request.getCookies();
 		String cookieVal="";
@@ -63,7 +64,11 @@ public class BoardViewServlet extends HttpServlet {
 		}
 		
 		BoardJoinUser b=new BoardService().boardDetail(boardNo,hasRead);
-		
+		System.out.println("b는뭐야:"+b);
+		//댓글도 받아오자
+		//게시글의 번호를 댓글도 참조하고 있으니까!
+		List<BoardCommentJoinUser> comments=new BoardService().selectComment(boardNo);
+		System.out.println("댓글 있니:"+comments.size());
 		
 		if(b==null) { //게시글이 없을경우
 			String msg="선택한 게시물이 존재하지 않습니다"; 
@@ -75,12 +80,10 @@ public class BoardViewServlet extends HttpServlet {
 		}else {
 		 
 			request.setAttribute("BoardJoinUser", b);
-			//request.setAttribute("comments", comments);
+			request.setAttribute("comments", comments);
 			request.getRequestDispatcher("/views/board/boardView.jsp").forward(request, response);
 		}
-		//댓글도 받아오자
-		//게시글의 번호를 댓글도 참조하고 있으니까!
-		//List<BoardComment> comments=new BoardService().selectComment(boardNo);
+		
 	
 		
 	}

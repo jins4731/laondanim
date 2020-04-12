@@ -17,6 +17,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.laon.board.model.vo.Board;
+import com.laon.board.model.vo.BoardComment;
+import com.laon.board.model.vo.BoardCommentJoinUser;
 import com.laon.board.model.vo.BoardJoinUser;
 
 
@@ -310,6 +312,56 @@ public class BoardDao {
 	}
 		return result;
 		
+		
+	}
+
+	public int insertComment(Connection conn, BoardComment bc) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("insertComment");
+	try{pstmt=conn.prepareStatement(sql);
+		pstmt.setInt(1,bc.getUserNo());
+		pstmt.setInt(2,bc.getBoardNo());
+		pstmt.setString(3,bc.getContent());
+		pstmt.setInt(4, bc.getLevel());
+		pstmt.setInt(5,bc.getBoardCommentRef());
+		result=pstmt.executeUpdate();
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(pstmt);
+	}
+
+		return result;
+	}
+
+	public List<BoardCommentJoinUser> selectComment(Connection conn, int boardNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<BoardCommentJoinUser> list=new ArrayList();
+		String sql=prop.getProperty("selectComment");
+	try{pstmt=conn.prepareStatement(sql);
+		pstmt.setInt(1, boardNo);
+		rs=pstmt.executeQuery();
+		while(rs.next()) {
+			BoardCommentJoinUser bc=new BoardCommentJoinUser();
+			bc.setNo(rs.getInt("no"));
+			bc.setUserNo(rs.getInt("user_no"));
+			bc.setBoardNo(rs.getInt("board_no"));
+			bc.setWriteDate(rs.getDate("write_date"));
+			bc.setContent(rs.getString("content"));
+			bc.setLevel(rs.getInt("comment_level"));
+			bc.setBoardCommentRef(rs.getInt("board_comment_ref"));
+			bc.setCommentWriter(rs.getString("nick_name"));
+			list.add(bc);
+		}
+	
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(rs);
+		close(pstmt);
+	}return list;
 		
 	}
 	

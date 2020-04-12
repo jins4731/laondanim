@@ -11,6 +11,8 @@ import java.util.List;
 
 import com.laon.board.model.dao.BoardDao;
 import com.laon.board.model.vo.Board;
+import com.laon.board.model.vo.BoardComment;
+import com.laon.board.model.vo.BoardCommentJoinUser;
 import com.laon.board.model.vo.BoardJoinUser;
 
 public class BoardService {
@@ -77,6 +79,23 @@ public class BoardService {
 		int count=dao.searchCount(conn,category,searchDetail,searchBox);
 		close(conn);
 		return count;
+	}
+
+	public int insertComment(BoardComment bc) {
+		Connection conn=getConnection();
+		int result=dao.insertComment(conn,bc);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public List<BoardCommentJoinUser> selectComment(int boardNo) {
+		Connection conn=getConnection();
+		List<BoardCommentJoinUser> list=dao.selectComment(conn,boardNo);
+		close(conn);
+		return list;
+				
 	}
 	
 	

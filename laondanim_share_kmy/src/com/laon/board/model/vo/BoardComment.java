@@ -5,7 +5,12 @@ import java.sql.Date;
 //게시판 댓글 테이블
 public class BoardComment {
 
- // 넘버 게시판 댓글 기본키
+
+
+
+
+
+// 넘버 게시판 댓글 기본키
  private int no;
 
  // 유저 테이블 넘버 회원 외래키
@@ -37,7 +42,9 @@ public class BoardComment {
 
 
 
- public BoardComment(int no, int userNo, int boardNo, Date writeDate, String content, String deleted) {
+
+ public BoardComment(int no, int userNo, int boardNo, Date writeDate, String content, String deleted,
+		 int level,int boardCommentRef) {
 	super();
 	this.no = no;
 	this.userNo = userNo;
@@ -45,116 +52,148 @@ public class BoardComment {
 	this.writeDate = writeDate;
 	this.content = content;
 	this.deleted = deleted;
+	this.level = level;
+	this.boardCommentRef = boardCommentRef;
+	
 }
 
-
-
-
-
-@Override
-public String toString() {
-	return "BoardComment [no=" + no + ", userNo=" + userNo + ", boardNo=" + boardNo + ", writeDate=" + writeDate
-			+ ", content=" + content + ", deleted=" + deleted + "]";
-}
 
 
 
 
 
 public int getNo() {
-	return no;
-}
+		return no;
+	}
 
 
 
 
 
-public void setNo(int no) {
-	this.no = no;
-}
+	public void setNo(int no) {
+		this.no = no;
+	}
 
 
 
 
 
-public int getUserNo() {
-	return userNo;
-}
+	public int getUserNo() {
+		return userNo;
+	}
 
 
 
 
 
-public void setUserNo(int userNo) {
-	this.userNo = userNo;
-}
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
 
 
 
 
 
-public int getBoardNo() {
-	return boardNo;
-}
+	public int getBoardNo() {
+		return boardNo;
+	}
 
 
 
 
 
-public void setBoardNo(int boardNo) {
-	this.boardNo = boardNo;
-}
+	public void setBoardNo(int boardNo) {
+		this.boardNo = boardNo;
+	}
 
 
 
 
 
-public Date getWriteDate() {
-	return writeDate;
-}
+	public Date getWriteDate() {
+		return writeDate;
+	}
 
 
 
 
 
-public void setWriteDate(Date writeDate) {
-	this.writeDate = writeDate;
-}
+	public void setWriteDate(Date writeDate) {
+		this.writeDate = writeDate;
+	}
 
 
 
 
 
-public String getContent() {
-	return content;
-}
+	public String getContent() {
+		return content;
+	}
 
 
 
 
 
-public void setContent(String content) {
-	this.content = content;
-}
+	public void setContent(String content) {
+		this.content = content;
+	}
 
 
 
 
 
-public String getDeleted() {
-	return deleted;
-}
+	public String getDeleted() {
+		return deleted;
+	}
 
 
 
 
 
-public void setDeleted(String deleted) {
-	this.deleted = deleted;
-}
+	public void setDeleted(String deleted) {
+		this.deleted = deleted;
+	}
 
 
 
+
+
+	public int getBoardCommentRef() {
+		return boardCommentRef;
+	}
+
+
+
+
+
+	public void setBoardCommentRef(int boardCommentRef) {
+		this.boardCommentRef = boardCommentRef;
+	}
+
+
+
+
+
+	public int getLevel() {
+		return level;
+	}
+
+
+
+
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	
+	@Override
+	public String toString() {
+		return "BoardComment [no=" + no + ", userNo=" + userNo + ", boardNo=" + boardNo + ", writeDate=" + writeDate
+				+ ", content=" + content + ", deleted=" + deleted + ", boardCommentRef=" + boardCommentRef + ", level="
+				+ level + "]";
+	}
+
+	
 
 
 // BoardCommentTb 모델 복사
@@ -166,5 +205,7 @@ public void setDeleted(String deleted) {
      this.writeDate = param.getWriteDate();
      this.content = param.getContent();
      this.deleted = param.getDeleted();
+     this.boardCommentRef=param.getBoardCommentRef();
+     this.level=param.getLevel();
  }
 }

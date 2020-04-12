@@ -57,38 +57,24 @@ public class BoardDao {
 	}
 	
 	
-	
-	public List<BoardJoinUser> selectBoard(Connection conn,int cPage,int numPerPage){
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		List<BoardJoinUser> list=new ArrayList();
-		String sql=prop.getProperty("selectBoard");
-		try{pstmt=conn.prepareStatement(sql);
-		pstmt.setInt(1, (cPage-1)*numPerPage+1);
-		pstmt.setInt(2, cPage*numPerPage);
-		rs=pstmt.executeQuery();
-		while(rs.next()) {
-		BoardJoinUser b=new BoardJoinUser();
-		b.setNo(rs.getInt("no"));
-		b.setUserNo(rs.getInt("user_no"));
-		b.setCategory(rs.getString("category"));
-		b.setWriteDate(rs.getDate("write_date"));
-		b.setViewCount(rs.getInt("viewcount"));
-		b.setTag(rs.getString("tag"));
-		b.setTitle(rs.getString("title"));
-		b.setContent(rs.getString("content"));
-		b.setDeleted(rs.getString("deleted").charAt(0));
-		b.setNickName(rs.getString("nick_name"));
-		list.add(b);
-			}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rs);
-			close(pstmt);
-		}return list;
-		
-	}
+	/*
+	 * public List<BoardJoinUser> selectBoard(Connection conn,int cPage,int
+	 * numPerPage){ PreparedStatement pstmt=null; ResultSet rs=null;
+	 * List<BoardJoinUser> list=new ArrayList(); String
+	 * sql=prop.getProperty("selectBoard"); try{pstmt=conn.prepareStatement(sql);
+	 * pstmt.setInt(1, (cPage-1)*numPerPage+1); pstmt.setInt(2, cPage*numPerPage);
+	 * rs=pstmt.executeQuery(); while(rs.next()) { BoardJoinUser b=new
+	 * BoardJoinUser(); b.setNo(rs.getInt("no")); b.setUserNo(rs.getInt("user_no"));
+	 * b.setCategory(rs.getString("category"));
+	 * b.setWriteDate(rs.getDate("write_date"));
+	 * b.setViewCount(rs.getInt("viewcount")); b.setTag(rs.getString("tag"));
+	 * b.setTitle(rs.getString("title")); b.setContent(rs.getString("content"));
+	 * b.setDeleted(rs.getString("deleted").charAt(0));
+	 * b.setNickName(rs.getString("nick_name")); list.add(b); } }catch(SQLException
+	 * e) { e.printStackTrace(); }finally { close(rs); close(pstmt); }return list;
+	 * 
+	 * }
+	 */
 	
 	public int countBoard(Connection conn) {
 		PreparedStatement pstmt=null;
@@ -168,17 +154,22 @@ public class BoardDao {
 			sql=prop.getProperty("selectBoardSortContent");
 		}if(searchDetail.equals("tags")) {
 			sql=prop.getProperty("selectBoardSortTags");
+		}if(searchDetail.equals("null")) {
+			sql=prop.getProperty("selectBoard");
 		}
 		System.out.println("패턴1적용전:"+sql);
-		if(!recent.equals("null") && viewCount.equals("null")) { 
-			//최신순 버튼 눌렀을때 ORDER BY WRITEDATE DESC 추가
-			sql=sql.replace("DELETED='N'", "DELETED='N' ORDER BY WRITE_DATE DESC");
-
-			  } 
+		/*
+		 * if(!recent.equals("null") && viewCount.equals("null")) { //최신순 버튼 눌렀을때 ORDER
+		 * BY WRITEDATE DESC 추가 sql=sql.replace("DELETED='N'",
+		 * "DELETED='N' ORDER BY WRITE_DATE DESC");
+		 * 
+		 * }
+		 */ 
 		if(recent.equals("null") &&!viewCount.equals("null")) {
 			//조회수순 버튼 눌렀을때 ORDER BY VIEWCOUNT DESC 추가
-			sql=sql.replace("DELETED='N'", "DELETED='N' ORDER BY VIEWCOUNT DESC");
+			sql=sql.replace("DELETED='N' ORDER BY WRITE_DATE DESC", "DELETED='N' ORDER BY VIEWCOUNT DESC");
 			  }
+		
 		
 		
 		System.out.println("패턴2적용전:"+sql);
@@ -204,19 +195,23 @@ public class BoardDao {
 		}
 		System.out.println("패턴2적용후:"+sql);
 	
-		/*
-		 * if(recent.equals("null")&&viewCount.equals("null")) { //둘다 안눌렀을때
-		 * 
-		 * }
-		 */
 	
 	try{pstmt=conn.prepareStatement(sql);
-		if(category.equals("null")||category.equals("all")) pstmt.setString(1, "null");
-		else pstmt.setString(1, category);
-		
+		if(category.equals("null")){//처음화면일때
+			pstmt.setString(1, "null");
+			pstmt.setInt(2, (cPage-1)*perPage+1);
+			pstmt.setInt(3,cPage*perPage);
+		}else if(category.equals("all")&&(searchDetail.equals("null") ||searchBox.equals("null"))) {//최신이나 조회수순 눌렀을때
+			pstmt.setString(1, "null");
+			pstmt.setInt(2, (cPage-1)*perPage+1);
+			pstmt.setInt(3,cPage*perPage);
+		}
+		else {//검색했을때
+		pstmt.setString(1, category);
 		pstmt.setString(2, "%"+searchBox+"%");
 		pstmt.setInt(3, (cPage-1)*perPage+1);
 		pstmt.setInt(4,cPage*perPage);
+		}
 		rs=pstmt.executeQuery();
 		while(rs.next()) {
 			BoardJoinUser b=new BoardJoinUser();
@@ -259,6 +254,9 @@ public class BoardDao {
 			sql=prop.getProperty("selectBoardSortContent");
 		}if(searchDetail.equals("tags")) {
 			sql=prop.getProperty("selectBoardSortTags");
+		}if(searchDetail.equals("null")) {
+			sql=prop.getProperty("selectBoard");
+			sql=sql.replace("WHERE DELETED='N'", "WHERE CATEGORY=? AND DELETED='N'");
 		}
 		sql=sql.replace("WHERE RNUM BETWEEN ? AND ?", " ");
 		System.out.println("적용됨 sql?"+sql);
@@ -279,14 +277,18 @@ public class BoardDao {
 		}
 		System.out.println("indexs.length:"+indexs.length);
 		int targetIndex=indexs[1];
+		
 		sql=sql.substring(0,targetIndex)+"!="+sql.substring(targetIndex+1,sql.length());
-			
+		System.out.println("완성된 sql문:"+sql);	
+		System.out.println("카테고리뭐야:"+category);
 		}
 		try{pstmt=conn.prepareStatement(sql);
-		if(category.equals("null")||category.equals("all")) pstmt.setString(1, "null");
-		else pstmt.setString(1, category);
-		
-		pstmt.setString(2, "%"+searchBox+"%");
+		if(category.equals("null")||category.equals("all")&&searchBox.equals("null")) {
+			pstmt.setString(1, "null");
+		}
+		else { pstmt.setString(1, category);
+			pstmt.setString(2, "%"+searchBox+"%");
+		}
 		rs=pstmt.executeQuery();
 		while(rs.next()) {
 			BoardJoinUser b=new BoardJoinUser();

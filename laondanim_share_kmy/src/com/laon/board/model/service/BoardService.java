@@ -32,14 +32,14 @@ public class BoardService {
 		return result;
 	}
 	
-	public List<BoardJoinUser> selectBoard(int cPage,int numPerPage){
-		Connection conn=getConnection();
-		List<BoardJoinUser> list=dao.selectBoard(conn,cPage,numPerPage);
-		close(conn);
-		return list;
-		
-		
-	}
+	/*
+	 * public List<BoardJoinUser> selectBoard(int cPage,int numPerPage){ Connection
+	 * conn=getConnection(); List<BoardJoinUser>
+	 * list=dao.selectBoard(conn,cPage,numPerPage); close(conn); return list;
+	 * 
+	 * 
+	 * }
+	 */
 	
 	public int countBoard() {
 		Connection conn=getConnection();

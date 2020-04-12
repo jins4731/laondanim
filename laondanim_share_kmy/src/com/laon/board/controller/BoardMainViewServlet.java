@@ -48,7 +48,13 @@ public class BoardMainViewServlet extends HttpServlet {
 		
 		int numPerPage=5;
 		///전체 게시판글을 불러오는 로직
-		List<BoardJoinUser> list=new BoardService().selectBoard(cPage,numPerPage);
+		String category="null";
+		String searchDetail="null";
+		String searchBox="null";
+		String recent="null";
+		String viewCount="null";
+		
+		List<BoardJoinUser> list=new BoardService().searchBoard(cPage,numPerPage,category,searchDetail,searchBox,recent,viewCount);
 		///////////////////////////////////////////////////////////////////////////////////////////
 		int totalData=new BoardService().countBoard();
 		System.out.println("총데이터수:"+totalData);

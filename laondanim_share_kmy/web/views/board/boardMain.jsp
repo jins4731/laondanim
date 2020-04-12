@@ -239,25 +239,7 @@ $(function(){
 
 
 
-<%-- $("#searchSubmit").click(()=>
-	//셀렉트 옵션값2가지, input text값 보내기
-	$.ajax({
-		url:"<%=request.getContextPath()%>/board/search.do",
-		type:"post",
-		data:{category:$("#category").val(),
-			detail:$("#searchDetail").val(),
-			 text:$("#searchBox").val()
-			 recent:'null',
-			 viewCount:'null'},
-			 
-		success:data=>{
-			console.log(data);
-			
-			}
-	})
-	
-	
-); --%>
+
 
 
 </script>

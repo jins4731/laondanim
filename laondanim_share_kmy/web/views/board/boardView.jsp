@@ -18,6 +18,11 @@
   	section{
   		margin-top:100px;
   	}
+  	.backToAll{
+  		margin-left:25%;
+  		margin-right:auto;
+  	
+  	}
     .title{
         /* border:1px solid red; */
         margin-top: 2%;
@@ -70,24 +75,23 @@
     table#tbl-comment tr td{border-bottom:1px solid; border-top:1px solid; padding:5px; text-align:left; line-height:120%;}
     table#tbl-comment tr td:first-of-type{padding: 5px 5px 5px 5px;}
     table#tbl-comment tr td:last-of-type {text-align:left; width: 100px;}
-    table#tbl-comment button.btn-reply{border-radius:30%; margin-right:30px;}
-    table#tbl-comment tr:hover {background:lightgray;}
-    table#tbl-comment tr:hover button.btn-reply{display:inline;}
-    table#tbl-comment tr.level2 {color:gray; font-size: 14px;}
+    
+    /* table#tbl-comment tr:hover {background:lightgray;}
+    table#tbl-comment tr:hover button.btn-reply{display:inline;} */
+    table#tbl-comment tr.level2 {background-color:lightgrey; font-size: 14px;}
     table#tbl-comment sub.comment-writer {color:navy; font-size:14px}
     table#tbl-comment sub.comment-date {color:tomato; font-size:10px}
     table#tbl-comment tr.level2 td:first-of-type{padding-left:100px;}
     table#tbl-comment tr.level2 sub.comment-writer {color:#8e8eff; font-size:14px}
     table#tbl-comment tr.level2 sub.comment-date {color:#ff9c8a; font-size:10px}
-
+	.2ndComment{border-radius:30%; margin-right:100px; }
 
     </style>
 <section>
-    <div class="text-center">
-    <a href=""> &lt;전체 게시글</a>
-   <input type="button" class="btn btn-secondary disabled" value="<%=b.getCategory()%>">
-    
+    <div class="text-center">   
+   <input type="button" class="btn btn-secondary disabled" value="<%=b.getCategory()%>"> 
     </div>
+    <a href="" class="backToAll"> &lt;전체 게시글</a>
     <div class="title text-center"><h4><%=b.getTitle()%></h4></div>
     <hr width="720px"/>
     <div class="user-detail text-left">
@@ -170,7 +174,7 @@ $(function(){
 		if(<%=loginUser!=null%>){
 			const tr=$("<tr>");
 			const td=$("<td>").css({
-				"display":"none","text-align":"left"
+				"display":"inline","text-align":"left"
 			}).attr("colspan",2);
 			const form=$("<form>").attr({
 				"action":"<%=request.getContextPath()%>/board/commentInsert.do",

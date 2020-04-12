@@ -85,7 +85,42 @@
 						</table>
 					</div>
 					
-					
+					<!-- 맛집 -->
+					<div class="menu">
+						<div class="manuBar">
+							<div>
+								<span>맛집</span>
+							</div>
+							<div>
+								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
+							</div>
+						</div>
+						<hr>
+					</div>
+					<!-- 닫힘 내용 -->
+					<div>
+						<!-- 정보 -->
+						<div id="myDNInfo">
+							<div style="height:45px;">
+								<span>총 <%=likeTripCount %>개의 ♥ 맛집</span>
+							</div>
+						</div>
+						<div class="card">
+							<div class="sl">
+								<img class="card-img slImg" src="<%=request.getContextPath()%>/images/images.jpeg">
+								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/henri.jpeg">
+								<img class="card-img slImg" src="<%=request.getContextPath()%>/images/images.jpeg">
+							</div>
+						</div>
+					</div>
+					<script>
+						$(function(){
+							$(".sl").find(".slImg").css("width","155");
+							setInterval(() => {
+								$(".sl").append($(".slImg").first());
+							}, 3000);
+						});
+					</script>
 					
 					
 					

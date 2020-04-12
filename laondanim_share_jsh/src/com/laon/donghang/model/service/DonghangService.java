@@ -8,9 +8,13 @@ import static com.laon.common.template.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
+
+import com.laon.etc.model.vo.Like;
+import com.laon.etc.model.vo.Picture;
 import com.laon.donghang.model.dao.DonghangDao;
 import com.laon.donghang.model.vo.Donghang;
 import com.laon.donghang.model.vo.DonghangJoinUserPicture;
+import com.laon.trip.model.vo.TripMyCon;
 import com.laon.user.model.vo.UserProfile;
 
 public class DonghangService {
@@ -74,5 +78,45 @@ public class DonghangService {
 		List<UserProfile> joinList = dao.selectDonghangJoinMember(conn, no);
 		close(conn);
 		return joinList;
+	}
+
+	public List<TripMyCon> selectMyTripList(int no) {
+		Connection conn = getConnection();
+		List<TripMyCon> list = dao.selectMyTripList(conn, no);
+		close(conn);
+		return list;
+	}
+
+	public List<Like> selectLike(List<TripMyCon> list) {
+		Connection conn = getConnection();
+		List<Like> likeList = dao.selectLike(conn, list);
+		return likeList;
+	}
+
+	public int insertDonghaong(Donghang donghang) {
+		Connection conn = getConnection();
+		int result = dao.insertDonghaong(conn, donghang);
+		if(result>0) {
+			commit(conn);
+		} else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int selectDonghangSeqNextVal() {
+		Connection conn = getConnection();
+		int nextVal = dao.selectDonghangSeqNextVal(conn);
+		close(conn);
+		return nextVal;
+	}
+
+	public int insertPicture(Picture pic) {
+		Connection conn = getConnection();
+		int result = dao.insertPicture(conn, pic);
+		if(result>0) {
+			commit(conn);
+		} else rollback(conn);
+		close(conn);
+		return result;
 	}
 }

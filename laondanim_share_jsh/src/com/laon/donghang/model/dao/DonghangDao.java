@@ -16,6 +16,9 @@ import java.util.Properties;
 import com.laon.common.PropPath; //<-com.laon.common.template.PropPath;로 되어있어 변경함
 import com.laon.donghang.model.vo.Donghang;
 import com.laon.donghang.model.vo.DonghangJoinUserPicture;
+import com.laon.etc.model.vo.Like;
+import com.laon.etc.model.vo.Picture;
+import com.laon.trip.model.vo.TripMyCon;
 import com.laon.user.model.vo.UserProfile;
 
 public class DonghangDao {
@@ -387,5 +390,144 @@ public class DonghangDao {
 			close(pstmt);	
 		}
 		return list;
+	}
+
+	public List<TripMyCon> selectMyTripList(Connection conn, int no) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<TripMyCon> list=new ArrayList<TripMyCon>();
+		String sql=prop.getProperty("selectMyTripList");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				TripMyCon t=new TripMyCon();
+				t.setNo(rs.getInt("no"));
+				t.setCategory(rs.getString("category"));
+				t.setWriteDate(rs.getDate("write_date"));
+				t.setTitle(rs.getString("title"));
+				t.setImage(rs.getString("image"));
+				list.add(t);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public List<Like> selectLike(Connection conn, List<TripMyCon> list) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = prop.getProperty("selectLike");
+		
+		ArrayList<Like> likeList = new ArrayList<Like>();
+		Like l = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			for(int i=0; i<list.size(); i++) {
+				
+				pstmt.setInt(1, list.get(i).getNo());
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					l = new Like();
+					l.setTripNo(rs.getInt("NO"));
+					l.setLikeCount(rs.getInt("CNT"));
+					
+					likeList.add(l);
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return likeList;
+	}
+
+	public int insertDonghaong(Connection conn, Donghang dh) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertDonghaong");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dh.getUserNo());
+			pstmt.setInt(2, dh.getUserNo());
+			pstmt.setInt(3, dh.getTripNo());
+			pstmt.setString(4, dh.getTag());
+			pstmt.setString(5, dh.getTitle());
+			pstmt.setString(6, dh.getContent());
+			pstmt.setString(7, dh.getTravleLocale());
+			pstmt.setDate(8, dh.getTravleStartDate());
+			pstmt.setDate(9, dh.getTravleEndDate());
+			pstmt.setDate(10, dh.getRecruitStartDate());
+			pstmt.setDate(11, dh.getRecruitEndDate());
+			pstmt.setInt(12, dh.getPw());
+			pstmt.setString(13, dh.getPublicEnabled());
+			pstmt.setInt(14, dh.getRecruitPeopleNo());
+						
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);	
+		}
+		return result;
+	}
+
+	public int selectDonghangSeqNextVal(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectDonghangSeqNextVal");
+		int nextVal = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			nextVal = rs.getInt("NEXTVAL");
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		
+		return nextVal;
+	}
+
+	public int insertPicture(Connection conn, Picture pic) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertDhPicture");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pic.getDonghangNo());
+			pstmt.setInt(2, pic.getUserNo());
+			pstmt.setString(3, pic.getImage());
+						
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);	
+		}
+		return result;
 	}
 }

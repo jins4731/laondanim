@@ -138,7 +138,7 @@ public class MypageDao {
 			while(rs.next()) {				
 				l=new Like();
 				l.setNo(rs.getInt("no"));
-//				l.setLikeCount(rs.getInt("lk"));------------------------------------------------------>나중에 수정
+				l.setLikeCount(rs.getInt("lk"));
 				like.add(l);
 			}
 		} catch (Exception e) {

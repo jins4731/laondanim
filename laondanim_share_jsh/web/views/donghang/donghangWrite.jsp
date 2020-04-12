@@ -1,16 +1,28 @@
+<%@page import="com.laon.common.CommonKey"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@page import="java.util.List" %>
+<%@page import="com.laon.etc.model.vo.Like" %>
+<%@page import="com.laon.trip.model.vo.TripMyCon" %>
+
+<%
+	List<TripMyCon> tripList = (List<TripMyCon>)request.getAttribute(CommonKey.TRIP_LIST);
+	List<Like> likeList = (List<Like>)request.getAttribute(CommonKey.LIKE_LIST);
+
+%>
 
 <%@ include file="/views/common/header.jsp"%>
 
     <section class="d-flex flex-column justify-content-center align-items-center">
         <div style="width: 1366px;" class="d-flex flex-column justify-content-center align-items-center">
 
-
+    <form action="<%=request.getContextPath() %>/donghang/donghangWriteEnd.do?userNo=<%=loginUser.getNo()%>" method="post"
+    	enctype="multipart/form-data">
             <!-- 제목 -->
             <div class="d-flex flex-column justify-content-center align-items-center" style="height: 150px; border: 1px solid white;">
                 <!-- <h5 style="width: 380px;" class="d-flex justify-content-center border-bottom p-2">제목이 들어가는 자리</h5> -->
-                <input type="text" placeholder="제목을 입력하세요" style="width: 380px;" class="d-flex text-center border-0 p-2">
+                <input type="text" name="donghangTitle" placeholder="제목을 입력하세요" style="width: 380px;" class="d-flex text-center border-0 p-2">
                 <hr style="width: 380px;" class="m-0">
             </div>
 
@@ -74,9 +86,9 @@
                     <tr>
                         <td class="p-0 border-bottom">
                             <span class="pl-3 d-flex justify-content-around">
-                                <input type="date" name="travelStartDate" id="travelStartDate" class="border-0 text-center">
+                                <input type="date" name="travelStartDate" id="travelStartDate" class="border-0 text-center" required>
                                 <span class="ml-3 mr-3"> ~ </span> 
-                                <input type="date" name="travelEndtDate" id="travelEndDate" class="border-0 text-center">
+                                <input type="date" name="travelEndDate" id="travelEndDate" class="border-0 text-center" required>
                             </span>
                         </td>
                     </tr>
@@ -86,15 +98,15 @@
                     <tr>
                         <td class="p-0 border-bottom">
                         <span class="pl-3 d-flex justify-content-around">
-                            <input type="date" name="recruitStartDate" id="recruitStartDate" class="border-0 text-center">
+                            <input type="date" name="recruitStartDate" id="recruitStartDate" class="border-0 text-center" required>
                             <span class="ml-3 mr-3"> ~ </span> 
-                            <input type="date" name="recruitEndtDate" id="recruitEndtDate" class="border-0 text-center">
+                            <input type="date" name="recruitEndDate" id="recruitEndtDate" class="border-0 text-center" required>
                         </span>
                         </td>
                     </tr>
                     <tr>
                         <td class="p-0 pt-2">
-                            공개설정                     
+                            	공개설정                     
                         </td>
                     </tr>
                     <tr>
@@ -118,12 +130,16 @@
 
 
 
-                <!-- 다님길 연결 -->
+                <!-- trip 연결 -->
                 <div class="d-flex flex-column justify-content-center align-items-center" style="height: 150px; border: 1px solid white;">
                     <button type="button" id="danimLinkBtn" class="ldBtn mb-3" data-toggle="modal" data-target="#myModal">다님일정 연결하기</button>
-                    <div id="danimTitleBox"><strong class="mr-3">연결된 다님일정</strong><span id="danimTitle">여기에 띄우기</span></div>
+                    <div id="danimTitleBox"><strong class="mr-3">연결된 다님일정</strong>
+                    	<span id="danimTitle"></span>
+                    </div>
                 </div>
 
+				<!-- tripList에서 클릭된 값을 저장하는 input -->
+				<input type="hidden" name="selectTripNo" id="selectTripNo" value="null">
 
 
                 <!--상세내용-->
@@ -146,10 +162,11 @@
                     </div> 
                 </div>   
 
+
                 <!-- 취소/등록 -->
                 <div class="d-flex justify-content-center align-items-center" style="height: 120px; border: 1px solid white;">
                     <button type="button" id="cancel" class="ldBtnInactive mr-3 mb-3">취소하기</button>
-                    <button type="button" id="submit" class="ldBtn ml-3 mb-3">등록하기</button>
+                    <input type="submit" value="등록하기" id="submit" class="ldBtn ml-3 mb-3">
                 </div>
             
 
@@ -167,26 +184,42 @@
                         
                         <!-- 다님일정 -->
                         <div class="modal-body d-flex justify-content-center p-0">
-                            <div style="position: relative; width: 770px; height: 320px; overflow: hidden;" 
+                            <div style="position: relative; width: 770px; height: 330px; overflow: hidden;" 
                                 class="d-flex align-items-center justify-content-start">
                                 
                                     <ul style="zoom: 0.8; list-style: none; position: absolute; left: 0;" id="danimList" class="d-flex align-items-center p-0">
-
-                                            <li class="p-0" id="hey">
+											<%for(int i=0; i<tripList.size(); i++) {%>
+                                            <label>
+                                            <li class="pr-1">
+                                            	<input type="checkbox" name="selectTrip" id="<%=tripList.get(i).getNo()%>" value="<%=tripList.get(i).getNo()%>"
+                                            		onclick="doOpenCheck(this);">
                                                 <div class="card" style="width: 235px; height: 385px;" >
                                                     <div class="d-flex justify-content-between p-2">
-                                                        <span>다님1번</span>
-                                                        <span>2020-02-08</span>
+                                                        <span><%=tripList.get(i).getCategory()%></span>
+                                                        <span><%=tripList.get(i).getWriteDate() %></span>
                                                     </div>
-                                                    <img src="img/squareSizeImg.jpg" class="card-img" alt="..." width="235px" height="235px">
+                                                    <img src="<%=tripList.get(i).getImage()%>" class="card-img" alt="..." width="235px" height="235px">
                                                     <div class="d-flex flex-column justify-content-center card-body p-2" style="line-height: 22px;">
-                                                        <span>코코와 함께 서귀포 1박2일<span><br>
-                                                        <span>코코누나</span><br>
-                                                        <img src="" width="20px" height="20px"/> <span>2025</span>
+                                                        <span><%=tripList.get(i).getTitle()%><span><br>
+                                                        <span><%=loginUser.getNickName()%></span><br>
+                                                        <img src="" width="20px" height="20px"/>
+						                                <span>
+						                                	<%
+						                                	int likeCount = 0;
+						                                	for(int j=0; j<likeList.size(); j++){ 
+						                                		if(tripList.get(i).getNo()==likeList.get(j).getTripNo())
+						                                			likeCount = likeList.get(j).getLikeCount();
+						                                	}
+						                                	%>
+						                                	<%=likeCount %>
+						                                </span>   <!--좋아요 수 가져오기 !!-->
                                                     </div>
                                                 </div>
-                                            </li>                                                
+                                            </li>
+                                            </label>
+                                            <%} %>             
                                     </ul>
+                                
                                 
                                     <div style="width: 766px; position: absolute;" class="d-flex flex-row justify-content-md-between">
                                         <button style="border:none; background: none;" id="back">
@@ -211,7 +244,7 @@
 
             <!--사진&정보 스타일-->
             <style>
-                input[type=checkbox] {
+                td > input[type=checkbox] {
                     display:none;                 
                 }
                 input[type=checkbox] + label { 
@@ -263,7 +296,8 @@
                 input[name="imageFile"]{    
                     display:none;
                 }
-            </style>        
+            </style>     
+               
             <script>
                 /*동행 공개설정 스크립트*/
                 $("#donghangPw").hide();
@@ -325,7 +359,11 @@
             
                 $("#file").on('change', function(){
                     readInputFile(this);
-                });
+                });               
+                
+                
+                /* trip일정 선택해서 넣어주기 */
+                $("#")
 
             </script>    
 
@@ -384,7 +422,7 @@
 
 
             <!--다님일정 모달 스크립트-->
-            <script>        
+			<script>        
                 if($("#danimList").offset().left == 0){
                     $("#back").css("visibility","hidden");
                 }
@@ -398,14 +436,29 @@
                     $("#back").css("visibility","visible");
                 });
 
-                $("#danimList li").click(function(e){            
-                    var click_id = $(this).attr('id');
-                        alert(click_id);
-                    
+                /*리스트에 체크된 값을 히든인풋에 넣어주기*/                
+                $('button[data-dismiss="modal"]').click(()=>{
+                    alert($('input[name="selectTrip"]:checked').val());
+                    let no = $('input[name="selectTrip"]:checked').val();
+                    $("#selectTripNo").val(no);
+                    console.log( $("#selectTripNo").val());
                 });
+   
+                let liNo = $('input[name="selectTrip"]:checked').val();
+                let str = "#ck"+liNo;
+                /* 체크박스 개수 제한 */
+                function doOpenCheck(chk){
+                var obj = document.getElementsByName("selectTrip");
+                    for(var i=0; i<obj.length; i++){
+                        if(obj[i] != chk){
+                            obj[i].checked = false;
+                        }
+                    }
+                }
+
             </script>
 
-
+    	</form>
         </div>
     </section>
 

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.donghang.model.vo.MyDong;
 import com.laon.mypage.model.service.MypageService;
 import com.laon.user.model.vo.UserProfile;
@@ -38,12 +39,20 @@ public class MyPageDongServlet extends HttpServlet {
 		List<MyDong> myDong=new MypageService().selectMyDong(userNo);
 		int myDongCount=new MypageService().selectMyDongCount(userNo);
 		
-//		List joinDong=new MypageService().selectJoinDong();
+		List<DonghangJoin> joinDong=new MypageService().selectJoin(userNo);
+		List<MyDong> oriJoinDong=new MypageService().selectOriJoin(joinDong);
+		List<UserProfile> userNick=new MypageService().selectUserNick(oriJoinDong);
+		int myJDCount=new MypageService().selectMyJDCount(userNo);
 		
 		request.setAttribute("userProfile", up);
 		
 		request.setAttribute("myDong", myDong);
 		request.setAttribute("myDongCount", myDongCount);
+		
+		request.setAttribute("joinDong", joinDong);
+		request.setAttribute("oriJoinDong", oriJoinDong);
+		request.setAttribute("userNick", userNick);
+		request.setAttribute("myJDCount", myJDCount);
 		
 		request.getRequestDispatcher("/views/mypage/myDong.jsp").forward(request, response);
 	}

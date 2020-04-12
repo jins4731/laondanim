@@ -1,3 +1,4 @@
+<%@page import="com.laon.donghang.model.vo.DonghangJoinUserPicture"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -10,13 +11,13 @@
 <%@ include file="/views/common/header.jsp"%>
 
 <%
-	List<Donghang> list = (List)request.getAttribute(CommonKey.LIST);
+	List<DonghangJoinUserPicture> list = (List)request.getAttribute(CommonKey.DONGHANG_LIST);
 
 	int count = 0;
-	List<Donghang> topList = new ArrayList();
-	List<Donghang> bottomList = new ArrayList();
+	List<DonghangJoinUserPicture> topList = new ArrayList();
+	List<DonghangJoinUserPicture> bottomList = new ArrayList();
 	
-	for(Donghang dh : list){
+	for(DonghangJoinUserPicture dh : list){
 		count++;
 		if(count <= 5){
 			topList.add(dh);
@@ -26,6 +27,8 @@
 	}
 	
 	SimpleDateFormat newFm = new SimpleDateFormat("yy-MM-dd");
+	
+	String keyword = (String)request.getAttribute(CommonKey.KEYWORD);
 %>
 
     <section class="d-flex flex-row justify-content-center">
@@ -36,12 +39,18 @@
         <div class="d-flex justify-content-center align-items-center">
             <div id="searchDIV" class="d-flex justify-content-center align-items-center m-5">
                 <select class="form-control border-0 rounded-0" name="searchFilter" id="searchFilter">
-                    <option value="">전체 검색</option>
-                    <option value="">키워드 검색</option>
+                    <!-- <option value="">전체 검색</option> -->
                     <option value="">지역검색</option>
+                    <option value="">키워드 검색</option>                    
                 </select>
-
-                <input type="text" class="pl-2">
+                <input type="text" id="keyword" name="keyword" class="pl-2" 
+                <%if(!keyword.equals("null")){ %>value='<%=keyword%>'
+                <%}else{%>
+                	value=""
+                <%}%>/>
+                <button id="inputKeywordBtn">
+                	<img src="<%=request.getContextPath()%>/image/inactiveSearch_icon.png" alt="searchIcon" id="searchIcon"/>
+                </button>
             </div>
         </div>
         <!--검색창 스타일-->
@@ -61,28 +70,53 @@
                 color: white;
                 padding-left: 20px;
                 -webkit-appearance: none;
-                background-image: url('icon/down_icon.png');
+                background-image: url('<%=request.getContextPath()%>/image/down_icon.png');
                 background-repeat: no-repeat;
                 background-position: right center;
                 background: ;
             }
             #searchDIV input[type="text"]{
-                width: 67%;
+                width: 57%;
                 height: 100%;
                 border: none;
             }
             #searchDIV input[type="text"]:focus{
                 outline: none;
             }
+            #searchDIV button{
+            	width: 10%;
+            	height: 100%;
+            	padding: 0px;
+            	margin: 0px;
+            	border: none;
+            	background: white;
+            }
+            #searchDIV button:focus{
+                outline: none;
+            }            
         </style>
+       	<!-- 검색 아이콘 스크립트 -->
+        <script>
+				
+			$("#keyword").focus(()=>{
+				$("#searchIcon").fadeOut(200, ()=>{
+					$("#searchIcon").attr('src','<%=request.getContextPath()%>/image/search_icon.png').fadeIn(300);
+				})
+			});
+			$("#keyword").focusout(()=>{
+				$("#searchIcon").fadeOut(200, ()=>{
+					$("#searchIcon").attr('src','<%=request.getContextPath()%>/image/inactiveSearch_icon.png').fadeIn(300);
+				})
+			});
+        </script>
 
         <!-- 작성 -->
         <div class="d-flex justify-content-center">
             <div class="d-flex justify-content-end align-items-end" style="width: 1140px;">
                 <button class="btn btn-lg btn-outline-secondary d-flex align-items-end justify-content-center mt-3 mb-3" 
-                        onclick="" id="dhWriteBtn">
+                        onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangWrite.do?userNo=<%=loginUser.getNo()%>')" id="dhWriteBtn">
                     <p class="m-0">다님길 작성</p>                    
-                    <img src="icon/write_icon.png" class="ml-2 w-25">
+                    <img src="<%=request.getContextPath()%>/image/write_icon.png" class="ml-2 w-25">
                 </button>            
             </div>
         </div>
@@ -102,14 +136,13 @@
         <div class="container mt-4 ">
             <div class="row justify-content-between">
                 <div class="col d-flex align-items-center">
-                    <h6 class="display-6 mt-2">총 <%=request.getAttribute("totalContent")%>건의 동행이 있습니다.</h6>
+                    <h6 class="display-6 mt-2">총 <%=list.size()%>건의 동행이 있습니다.</h6>
                 </div>
 
                 <div class="col d-flex justify-content-end">
-                    <button class="btn btn-outline-secondary border-0">관심태그 순</button>   <!--ajax 정렬-->
-                    <button class="btn btn-outline-secondary border-0">최근 순</button>   <!--ajax 정렬-->
-                    <button class="btn btn-outline-secondary border-0">조회수 순</button> <!--ajax 정렬-->
-                    <button class="btn btn-outline-secondary border-0">가까운 일정 순</button> <!--ajax 정렬-->
+                    <button class="btn btn-outline-secondary border-0" id="inputRecentBtn">최근 순</button>   <!--ajax 정렬-->
+                    <button class="btn btn-outline-secondary border-0" id="inputViewCountBtn">조회수 순</button> <!--ajax 정렬-->
+                    <button class="btn btn-outline-secondary border-0" id="inputNearScheduleBtn">가까운 일정 순</button> <!--ajax 정렬-->
                 </div>
             </div>
         </div> 
@@ -122,6 +155,10 @@
 	            list-style: none;
 	        }
 	
+			.card{
+				cursor: pointer;
+			}
+			
 	        .card-body{
 	            position: relative;
 	        }
@@ -160,13 +197,14 @@
 	    </style>
         <!-- 동행 데이터 목록 / 카드-->        
         <div class="container mt-5 mb-5 bg-white justify-content-center" style="height:760px; width: 1140px;">
-            <div class="row h-50 mb- 2">
+            <div class="row h-50 mb-2">
 
 				<%
-					for(Donghang dh : topList){				
+					for(DonghangJoinUserPicture dh : topList){				
 				%>
                 <div class="col h-100 p-0 mr-2">
-                    <div class="card m-0" style="height: 100%;" >
+                    <div class="card m-0" style="height: 100%;" 
+                    onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo=<%=loginUser.getNo()%>&no=<%=dh.getNo()%>');">
 
                         <!--헤더-->
                         <div class="card-header h-20 p-1 d-flex justify-content-between bg-white align-items-center border-0" style="height: 9%;">
@@ -183,14 +221,15 @@
                                 	for(String tag : tagArr){%>
                                     <li><a>#<%=tag%></a></li>
                                 <%} } %>
+                                </ul>
                             </div>                        
-                            <img src="img/god.jpg" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
+                            <img src="<%=request.getContextPath()%>/image/<%=dh.getImage()%>" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
                         </div>
 
                         <!--푸터-->
                         <div class="card-footer h-30 d-flex flex-column bg-white border-0 justify-content-around" style="height: 31%;">
                             <span><%=dh.getTitle()%></span>
-                            <span>닉넴(sql다시..)</span>
+                            <span><%=dh.getNickName()%></span>
                             <div>
                                 <p class="m-0">
                                     <span>동행지역 : </span>
@@ -210,14 +249,21 @@
                     </div>
                 </div>
 				<%} %>
+				<%for(int i=0; i<5-topList.size(); i++){ %>
+                <div class="col h-100 p-0 mr-2">
+                    <div style="height: 100%;" >
+                    </div>
+                </div>
+                <%} %>
             </div>
             <div class="row h-50 mt-2">
 
 				<%
-					for(Donghang dh : topList){				
+					for(DonghangJoinUserPicture dh : bottomList){				
 				%>
                 <div class="col h-100 p-0 mr-2">
-                    <div class="card m-0" style="height: 100%;" >
+                    <div class="card m-0" style="height: 100%;" 
+                    onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo=<%=loginUser.getNo()%>&no=<%=dh.getNo()%>');">
 
                         <!--헤더-->
                         <div class="card-header h-20 p-1 d-flex justify-content-between bg-white align-items-center border-0" style="height: 9%;">
@@ -234,14 +280,15 @@
                                 	for(String tag : tagArr){%>
                                     <li><a>#<%=tag%></a></li>
                                 <%} } %>
+                                </ul>
                             </div>                        
-                            <img src="img/god.jpg" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
+                            <img src="<%=request.getContextPath()%>/image/<%=dh.getImage()%>" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
                         </div>
 
                         <!--푸터-->
                         <div class="card-footer h-30 d-flex flex-column bg-white border-0 justify-content-around" style="height: 31%;">
                             <span><%=dh.getTitle()%></span>
-                            <span>닉넴(sql다시..)</span>
+                            <span><%=dh.getNickName()%></span>
                             <div>
                                 <p class="m-0">
                                     <span>동행지역 : </span>
@@ -261,6 +308,12 @@
                     </div>
                 </div>
 				<%} %>
+				<%for(int i=0; i<5-bottomList.size(); i++){ %>
+                <div class="col h-100 p-0 mr-2">
+                    <div style="height: 100%;" >
+                    </div>
+                </div>
+                <%} %>
             </div>
         </div>
         <!--카드 스타일-->
@@ -307,5 +360,56 @@
 
         </div>
     </section>
+    
+    
+    
+    <!-- INPUT SCRIPT -->
+    <script>
+    	//1) 검색텍스트를 넣고 버튼을 늘릭 했을 때 (검색어만 있고 최근순default)
+		$("#inputKeywordBtn").click(()=>{
+			let keyword = $("#keyword").val();
+			
+			if(keyword==null||keyword.trim()==""){
+					alert("검색어를 입력해주세요!");
+			}else{
+				location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword);
+			}
+		});
+    	
+    	//최근등록 버튼
+    	$("#inputRecentBtn").click(()=>{
+			let keyword = $("#keyword").val();
+			if(keyword.trim()==""){
+				keyword = "null";
+			}
+    		let recent = 'recent';
+    		let viewcount = 'null';
+    		let nearSchedule = 'null';
+    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
+    	});
+	    //조회수 버튼
+    	$("#inputViewCountBtn").click(()=>{
+			let keyword = $("#keyword").val();
+			if(keyword.trim()==""){
+				keyword = "null";
+			}
+    		let recent = 'null';
+    		let viewcount = 'viewcount';
+    		let nearSchedule = 'null';
+    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
+    	});
+    	//가까운일정순 버튼
+    	$("#inputNearScheduleBtn").click(()=>{
+			let keyword = $("#keyword").val();
+			if(keyword.trim()==""){
+				keyword = "null";
+			}
+    		let recent = 'null';
+    		let viewcount = 'null';
+    		let nearSchedule = 'nearSchedule';
+    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
+    	});
+    	
+    </script>
 </section>
 <%@ include file="/views/common/footer.jsp"%> 

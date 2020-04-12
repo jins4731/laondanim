@@ -21,6 +21,7 @@ public class CommonKey {
 	public static final String DONGHANG_LIST = "donghangList";
 	public static final String BOARD_LIST = "boardList";
 	public static final String PICTURE_LIST = "pictureList";
+	public static final String LIKE_LIST = "likeList";
 	
 	
 	

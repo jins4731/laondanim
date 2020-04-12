@@ -29,6 +29,7 @@
 	SimpleDateFormat newFm = new SimpleDateFormat("yy-MM-dd");
 	
 	String keyword = (String)request.getAttribute(CommonKey.KEYWORD);
+	int totalRowNum = (int)request.getAttribute(CommonKey.TOTAL_ROWCOUNT);
 %>
 
     <section class="d-flex flex-row justify-content-center">
@@ -136,7 +137,7 @@
         <div class="container mt-4 ">
             <div class="row justify-content-between">
                 <div class="col d-flex align-items-center">
-                    <h6 class="display-6 mt-2">총 <%=list.size()%>건의 동행이 있습니다.</h6>
+                    <h6 class="display-6 mt-2">총 <%=totalRowNum%>건의 동행이 있습니다.</h6>
                 </div>
 
                 <div class="col d-flex justify-content-end">

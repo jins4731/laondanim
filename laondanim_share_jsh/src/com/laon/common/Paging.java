@@ -50,12 +50,12 @@ public class Paging {
 		
 		String pageBar = "<ul class=\"pagination justify-content-center\"> <li class='page-item'><a class='page-link' href='' area-label='Previous'>&laquo;</a></li>";
 		
-		int totalPage = (int) Math.ceil((double)totalData/perPage);
+		int totalPage = totalData/perPage+1;
 		
 		int pageBarSize = 5;
 	
-		int rowNum = (cPage-1)/pageBarSize*pageBarSize+1; // 페이지바 첫번째 숫자
-		int pageLast = rowNum + pageBarSize-1; // 페이지바 마지막 숫자
+		int rowNum = (cPage-1)/pageBarSize*pageBarSize+1;
+		int pageLast = rowNum+pageBarSize-1;
 		
 		if(rowNum == 1) {
 			pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&lt;</a></li>";
@@ -63,7 +63,7 @@ public class Paging {
 			pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?cPage=" + (rowNum-1) +"&keyword="+keyword+"&recent="+recent+"&viewcount="+viewcount+"&nearSchedule="+nearSchedule+"' area-label='Previous'>&lt;</a></li>";
 		}
 		
-		while(!(rowNum>pageLast || rowNum>totalPage)) {
+		while(!(rowNum>pageLast || (rowNum>totalPage))) {
 			if(cPage==rowNum) {
 				pageBar += "<li class='page-item'><a class='page-link' href=''>"+rowNum+"</a></li>";
 			}else {

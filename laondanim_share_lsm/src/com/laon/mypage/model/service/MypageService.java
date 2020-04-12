@@ -11,6 +11,7 @@ import java.util.List;
 import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.donghang.model.vo.MyDong;
+import com.laon.etc.model.vo.Like;
 import com.laon.mypage.model.dao.MypageDao;
 import com.laon.trip.model.vo.TripMyCon;
 import com.laon.user.model.vo.UserProfile;
@@ -63,9 +64,9 @@ public class MypageService {
 		return list;
 	}
 	
-	public List selectTripLike(int userNo) {
+	public List selectMyTripLike(int userNo) {
 		Connection conn=getConnection();
-		List like=dao.selectTripLike(conn,userNo);
+		List like=dao.selectMyTripLike(conn,userNo);
 		close(conn);
 		
 		return like;
@@ -156,6 +157,38 @@ public class MypageService {
 		close(conn);
 		
 		return result;
+	}
+	
+	public List<Like> selectTripLike(int userNo){
+		Connection conn=getConnection();
+		List<Like> likeT=dao.selectTripLike(conn, userNo);
+		close(conn);
+		
+		return likeT;
+	}
+	
+	public List<TripMyCon> selectTripList(List<Like> likeT){
+		Connection conn=getConnection();
+		List<TripMyCon> tripList=dao.selectTripList(conn,likeT);
+		close(conn);
+		
+		return tripList;
+	}
+	
+	public List<UserProfile> selectTripUserNick(List<TripMyCon> tl){
+		Connection conn=getConnection();
+		List<UserProfile> userNick=dao.selectTripUserNick(conn,tl);
+		close(conn);
+		
+		return userNick;
+	}
+	
+	public int selectLikeTripCount(int userNo) {
+		Connection conn=getConnection();
+		int count=dao.selectLikeTripCount(conn,userNo);
+		close(conn);
+		
+		return count;
 	}
 	
 }

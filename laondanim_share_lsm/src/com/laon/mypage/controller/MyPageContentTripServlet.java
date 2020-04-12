@@ -47,7 +47,7 @@ public class MyPageContentTripServlet extends HttpServlet {
 		int tripCount = new MypageService().selectMyTripCount(userNo);
 		String tripPasing = getPageBar(tripCount, currentPage, pagePerRow, request, "/myPage/myConTrip.do");
 		
-		List tripLike=new MypageService().selectTripLike(userNo);
+		List tripLike=new MypageService().selectMyTripLike(userNo);
 		
 		request.setAttribute("userProfile", up);
 		request.setAttribute("tripLike", tripLike);

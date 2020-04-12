@@ -168,12 +168,12 @@ public class MypageDao {
 		return list;
 	}
 	
-	public List selectTripLike(Connection conn,int userNo) {
+	public List selectMyTripLike(Connection conn,int userNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List like=new ArrayList();
 		Like l=null;
-		String sql = prop.getProperty("selectTripLike");
+		String sql = prop.getProperty("selectMyTripLike");
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, userNo);
@@ -502,4 +502,110 @@ public class MypageDao {
 		}
 		return result;
 	}
+	
+	public List<Like> selectTripLike(Connection conn,int userNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Like> likeT=new ArrayList<Like>();
+		String sql=prop.getProperty("selectTripLike");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Like l=new Like();
+				l.setNo(rs.getInt("no"));
+				l.setUserNo(rs.getInt("user_no"));
+				l.setTripNo(rs.getInt("trip_no"));
+				l.setCancled(rs.getString("cancled"));
+				likeT.add(l);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return likeT;
+	}
+	
+	public List<TripMyCon> selectTripList(Connection conn,List<Like> likeT){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<TripMyCon> tripList=new ArrayList<TripMyCon>();
+		String sql=prop.getProperty("selectTripList");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			for(Like l:likeT) {
+				pstmt.setInt(1, l.getTripNo());
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					TripMyCon t=new TripMyCon();
+					t.setNo(rs.getInt("no"));
+					t.setUserTbNo(rs.getInt("user_no"));
+					t.setCategory(rs.getString("category"));
+					t.setWriteDate(rs.getDate("write_date"));
+					t.setTitle(rs.getString("title"));
+					t.setImage(rs.getString("image"));
+					tripList.add(t);
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return tripList;
+	}
+	
+	public List<UserProfile> selectTripUserNick(Connection conn,List<TripMyCon> tl){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<UserProfile> userNick=new ArrayList<UserProfile>();
+		String sql=prop.getProperty("selectUserNick");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			for(TripMyCon t:tl) {
+				pstmt.setInt(1, t.getUserTbNo());
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					UserProfile up=new UserProfile();
+					up.setNo(rs.getInt("no"));
+					up.setNickName(rs.getString("nick_name"));
+					userNick.add(up);
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return userNick;
+	}
+	
+	public int selectLikeTripCount(Connection conn,int userNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql=prop.getProperty("selectLikeTripCount");
+		int result=0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			rs = pstmt.executeQuery();
+			rs.next();
+			result = rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
 }

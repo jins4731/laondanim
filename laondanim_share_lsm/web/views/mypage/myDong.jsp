@@ -194,12 +194,13 @@
 			                           </div>
 			                           <div class="d-flex flex-column justify-content-center card-body p-2" style="font-size:7px;">
 			                               <p class="mb-0"><%=j.getTitle() %></p>
-			                               <%for(UserProfile un:userNick){ 
-			                            	   if(j.getUserNo()==un.getNo()){%>
-			                            	   		<p class="mb-0">
-			                               				<%=un.getNickName() %>
-			                               			</p>
-			                               <%} }%>
+			                               <%String nick="";
+			                               for(UserProfile un:userNick){ 
+			                            	   if(j.getUserNo()==un.getNo()){
+			                            		   nick=un.getNickName();
+			                            	   }
+		                            	   }%>
+		                            	   <span><%=nick %></span>
 			                               <ul class="p-0 m-0">
 			                                   <li>동행지역 : <span><%=j.getTravleLocale() %></span></li>
 			                                   <li>기간 : <span><%=j.getTravleStartDate() %></span><br>

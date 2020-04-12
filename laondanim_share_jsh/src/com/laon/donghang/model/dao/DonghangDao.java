@@ -462,7 +462,7 @@ public class DonghangDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dh.getUserNo());
+			pstmt.setInt(1, dh.getNo());
 			pstmt.setInt(2, dh.getUserNo());
 			pstmt.setInt(3, dh.getTripNo());
 			pstmt.setString(4, dh.getTag());

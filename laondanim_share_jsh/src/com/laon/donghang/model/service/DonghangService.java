@@ -117,6 +117,7 @@ public class DonghangService {
 			commit(conn);
 		} else rollback(conn);
 		close(conn);
+		System.out.println("pic저장됨?:"+result);
 		return result;
 	}
 }

@@ -86,9 +86,9 @@
                     <tr>
                         <td class="p-0 border-bottom">
                             <span class="pl-3 d-flex justify-content-around">
-                                <input type="date" name="travelStartDate" id="travelStartDate" class="border-0 text-center" required>
+                            <input type="date" name="travelStartDate" id="travelStartDate" class="border-0 text-center" required>
                                 <span class="ml-3 mr-3"> ~ </span> 
-                                <input type="date" name="travelEndDate" id="travelEndDate" class="border-0 text-center" required>
+                            <input type="date" name="travelEndDate" id="travelEndDate" class="border-0 text-center" required>
                             </span>
                         </td>
                     </tr>
@@ -100,7 +100,7 @@
                         <span class="pl-3 d-flex justify-content-around">
                             <input type="date" name="recruitStartDate" id="recruitStartDate" class="border-0 text-center" required>
                             <span class="ml-3 mr-3"> ~ </span> 
-                            <input type="date" name="recruitEndDate" id="recruitEndtDate" class="border-0 text-center" required>
+                            <input type="date" name="recruitEndDate" id="recruitEndDate" class="border-0 text-center" required>
                         </span>
                         </td>
                     </tr>
@@ -139,7 +139,7 @@
                 </div>
 
 				<!-- tripList에서 클릭된 값을 저장하는 input -->
-				<input type="hidden" name="selectTripNo" id="selectTripNo" value="null">
+				<input type="hidden" name="selectTripNo" id="selectTripNo" value="0">
 
 
                 <!--상세내용-->

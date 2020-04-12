@@ -2,9 +2,10 @@ package com.laon.donghang.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,76 +41,80 @@ public class DonghangWriteEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int userNo = Integer.parseInt(request.getParameter("userNo"));
+		
 		if(!ServletFileUpload.isMultipartContent(request)) {
 			request.setAttribute("msg","multipart-form error");
-			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);;
+			request.setAttribute("loc", "/donghang/donghangListView.do");
+			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+			return;
 		}
 		
 		String path = getServletContext().getRealPath("/upload/donghang/");
 		int maxSize = 1024*1024*10;
 		
 		MultipartRequest mr=new MultipartRequest(request, path, maxSize, "UTF-8", new DefaultFileRenamePolicy());
-		
-		//str => date
-		SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd");
+
 
 		//저장 값 받기
-		int userNo = Integer.parseInt(request.getParameter("userNo"));
 		String title = mr.getParameter("donghangTitle");
-		String image = mr.getParameter("imageFile");
+		String image = mr.getFilesystemName("imageFile");
 		String travleLocale = mr.getParameter("travelLocalSelect");
-		String recruitPeopleNo = mr.getParameter("recruitPeopleNo");
-		System.out.println(userNo);
-		System.out.println(title);
-		System.out.println(image);
-		System.out.println(travleLocale);
-		System.out.println(recruitPeopleNo);
+		int recruitPeopleNo = Integer.parseInt(mr.getParameter("recruitPeopleNo"));
 		
-		//date처리
-		String travleStartDate = mr.getParameter("travleStartDate");
-		String travelEndtDate = mr.getParameter("travelEndtDate");
-		String recruitStartDate = mr.getParameter("recruitStartDate");
-		String recruitEndtDate = mr.getParameter("recruitEndtDate");
-		System.out.println(mr.getParameter("travleStartDate"));
-		System.out.println(mr.getParameter("travelEndtDate"));
-		System.out.println(mr.getParameter("recruitStartDate"));
-		System.out.println(mr.getParameter("recruitEndtDate"));
 		
-
+		//Date
+		Date travelStartDate=null;
+		Date travelEndDate=null;
+		Date recruitStartDate=null;
+		Date recruitEndDate=null;
+		try {
+			travelStartDate = new SimpleDateFormat("yyyy-MM-dd").parse(mr.getParameter("travelStartDate"));
+			travelEndDate = new SimpleDateFormat("yyyy-MM-dd").parse(mr.getParameter("travelEndDate"));
+			recruitStartDate = new SimpleDateFormat("yyyy-MM-dd").parse(mr.getParameter("recruitStartDate"));
+			recruitEndDate = new SimpleDateFormat("yyyy-MM-dd").parse(mr.getParameter("recruitEndDate"));
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		java.sql.Date sqlTravelStartDate = new java.sql.Date(travelStartDate.getTime());
+		java.sql.Date sqlTravelEndDate = new java.sql.Date(travelEndDate.getTime());
+		java.sql.Date sqlRecruitStartDate = new java.sql.Date(recruitStartDate.getTime());
+		java.sql.Date sqlRecruitEndDate = new java.sql.Date(recruitEndDate.getTime());
+		
+		
+		
 		String publicEnabled = mr.getParameter("publicEnabled");
+		if(publicEnabled==null) publicEnabled = "비공개";
 		System.out.println(publicEnabled);
-		if(publicEnabled.equals("공개")) {
+		if(publicEnabled.equals("공개")||publicEnabled.equals("on")) {
 			publicEnabled = "N";
 		}else {
 			publicEnabled = "Y";			
 		}
+		
 		int pw = Integer.parseInt(mr.getParameter("donghangPw"));
 		int tripNo = Integer.parseInt(mr.getParameter("selectTripNo"));
 		String content = mr.getParameter("content");
 		String tag = mr.getParameter("tag");
-		System.out.println(pw);
-		System.out.println(tripNo);
-		System.out.println(content);
-		System.out.println(tag);
 		
 		//동행&사진 테이블을 위한 시퀀스 번호를 가져와서 저장
 		int donghangNo = new DonghangService().selectDonghangSeqNextVal();
-		
+		System.out.println(donghangNo);
+		System.out.println("메소드 실행 전 :"+donghangNo);
 		//vo저장
-		Donghang donghang = new Donghang();
-//		Donghang donghang = new Donghang(donghangNo, userNo, tripNo, null, 0, tag, title, content,
-//				travleLocale, travleStartDate, travleEndDate, recruitStartDate, recruitEndDate,
-//				pw, publicEnabled, "N", "N", recruitPeopleNo, 0);
+		Donghang donghang = new Donghang(donghangNo, userNo, tripNo, null, 0, tag, title, content,
+				travleLocale, sqlTravelStartDate, sqlTravelEndDate, sqlRecruitStartDate, sqlRecruitEndDate,
+				pw, publicEnabled, "N", "N", recruitPeopleNo, 0);
 		//insert 결과
 		int dhResult = new DonghangService().insertDonghaong(donghang);
-			
-		System.out.println("씨뱅~ : "+donghang);
+		System.out.println("실행 후 :"+donghangNo);
 		//사진 저장
-		Picture pic = new Picture(0, 0, 0, donghangNo, userNo, image);
+		Picture pic = new Picture(0, 0, 0, donghangNo+1, userNo, image);
 		//insert 결과
 		int ptResult  = new DonghangService().insertPicture(pic);
 
-		System.out.println("씨뱅뱅~ : "+pic);
 		int result = dhResult*ptResult;
 		String msg = "";
 		String loc = "";
@@ -118,11 +123,11 @@ public class DonghangWriteEndServlet extends HttpServlet {
 			loc = "/donghang/donghangListView.do";
 		}else {
 			msg = "동행찾기 글 등록에 실패하였습니다. 다시 시도해주세요.";
-			loc = "/donghang/donghangWriteEnd.do";
+			loc = "/donghang/donghangWriteEnd.do?userNo="+userNo;
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
-		request.getRequestDispatcher("/donghaong/donghaongWrite.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
 		
 	}

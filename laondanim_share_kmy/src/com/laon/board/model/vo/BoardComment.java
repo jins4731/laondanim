@@ -23,6 +23,12 @@ public class BoardComment {
  // 삭제여부 삭제 여부
  private String deleted;
  
+ // 대댓글 구현용
+ //코멘트 참조번호
+ private int boardCommentRef;
+ //댓글 레벨(댓글,대댓글 나눌용)
+ private int level;
+ 
  public BoardComment() {
 	// TODO Auto-generated constructor stub
 }

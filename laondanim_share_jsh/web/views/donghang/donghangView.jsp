@@ -60,8 +60,12 @@
                     	참여하기
                     </button>
                     <%}else {%>
-					<button type="button" class="ldBtn ml-2">
-                    	수정하기
+                    <button type="button" class="ldBtn ml-2">
+                    	수정
+                    </button>  
+					<button type="button" class="ldBtnDelet ml-2" 
+						onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangDelete.do?no=<%=dh.getNo()%>&fileName=<%=dh.getImage()%>')">
+                    	삭제
                     </button>                    
                     <%}%>
                 </div>
@@ -265,7 +269,7 @@
             color: #00abbf;
             padding: 6px 15px 6px 15px;
         }  
-        .ldBtn:hover,.btn:active {
+        .ldBtn:hover,.ldBtn:active {
             color: white;
             background-color: #00abbf;
         }    
@@ -276,13 +280,24 @@
             color: #dadada;
             padding: 6px 15px 6px 15px;
         }   
-        .ldBtnInactive:hover,.btn:active {
+        .ldBtnInactive:hover,.ldBtnInactive:active {
             color: white;
             background-color: #dadada;
         }                 
         .rotateBtn{
             transform: rotate(180deg);
         }   
+		.ldBtnDelet{		
+            border-radius: 20px;
+            background-color: white;
+            border: 2px solid #d60047;
+            color: #d60047;
+            padding: 6px 15px 6px 15px;
+		}
+		.ldBtnDelet:hover,.ldBtnDelet:active{	
+            color: white;
+            background-color: #d60047;
+		}
     </style> 
 
     <!-- 스크립트 -->

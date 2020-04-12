@@ -120,4 +120,14 @@ public class DonghangService {
 		System.out.println("pic저장됨?:"+result);
 		return result;
 	}
+
+	public int deleteDonghang(int no) {
+		Connection conn = getConnection();
+		int result = dao.deleteDonghang(conn, no);
+		if(result>0) {
+			commit(conn);
+		} else rollback(conn);
+		close(conn);
+		return result;
+	}
 }

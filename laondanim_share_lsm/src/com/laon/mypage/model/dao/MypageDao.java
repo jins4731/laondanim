@@ -417,6 +417,45 @@ public class MypageDao {
 		return list;
 	}
 	
+	public List<MyDong> selectOriJoinAll(Connection conn, List<DonghangJoin> jd,int start,int end){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<MyDong> list=new ArrayList<MyDong>();
+		String sql=prop.getProperty("selectOriJoinAll");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			for(DonghangJoin j:jd) {
+				pstmt.setInt(1, j.getDonghangNo());
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					MyDong d=new MyDong();
+					d.setNo(rs.getInt("no"));
+					d.setUserNo(rs.getInt("user_no"));
+					d.setWriteDate(rs.getDate("write_date"));
+					d.setTitle(rs.getString("title"));
+					d.setTravleLocale(rs.getString("travle_locale"));
+					d.setTravleStartDate(rs.getDate("travle_start_date"));
+					d.setTravleEndDate(rs.getDate("travle_end_date"));
+					d.setPw(rs.getInt("pw"));
+					d.setPublicEnabled(rs.getString("public_enabled"));
+					d.setJoinPeopleNo(rs.getInt("join_people_no"));
+					d.setRecruitPeopleNo(rs.getInt("recruit_people_no"));
+					d.setImage(rs.getString("image"));
+					list.add(d);
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
 	public List<UserProfile> selectUserNick(Connection conn, List<MyDong> ojd){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;

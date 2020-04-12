@@ -134,6 +134,14 @@ public class MypageService {
 		return list;
 	}
 	
+	public List<MyDong> selectOriJoinAll(List<DonghangJoin> jd,int start,int end){
+		Connection conn=getConnection();
+		List<MyDong> list=dao.selectOriJoinAll(conn,jd,start,end);
+		close(conn);
+		
+		return list;
+	}
+	
 	public List<UserProfile> selectUserNick(List<MyDong> ojd){
 		Connection conn=getConnection();
 		List<UserProfile> userNick=dao.selectUserNick(conn,ojd);

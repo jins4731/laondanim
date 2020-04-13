@@ -270,20 +270,20 @@ public class Picture implements LaonRobot<Picture>{
 
 
 	@Override
-	public Picture mrProcess(Picture item, MultipartRequest mr, Picture pic) {
-		if(mr.getParameter(PictureKey.TRIP_NO)!=null) {
-			item.setTripNo(Integer.parseInt(mr.getParameter(PictureKey.TRIP_NO)));
-		} 
-		if(mr.getParameter(PictureKey.TRIPINFO_NO)!=null) {
-			item.setTripinfoNo(Integer.parseInt(mr.getParameter(PictureKey.TRIPINFO_NO)));
-		} 
-		if(mr.getParameter(PictureKey.DONGHANG_NO)!=null) {
-			item.setDonghangNo(Integer.parseInt(mr.getParameter(PictureKey.DONGHANG_NO)));
-		} 
-		if(mr.getParameter(PictureKey.USER_NO)!=null) {
-			item.setUserNo(Integer.parseInt(mr.getParameter(PictureKey.USER_NO)));
-		} 
-		item.setImage(mr.getOriginalFileName(PictureKey.IMAGE));
-		return item;
+	public Picture mrProcess(Picture item, MultipartRequest mr, List<Picture> picList) {
+//		if(mr.getParameter(PictureKey.TRIP_NO)!=null) {
+//			item.setTripNo(Integer.parseInt(mr.getParameter(PictureKey.TRIP_NO)));
+//		} 
+//		if(mr.getParameter(PictureKey.TRIPINFO_NO)!=null) {
+//			item.setTripinfoNo(Integer.parseInt(mr.getParameter(PictureKey.TRIPINFO_NO)));
+//		} 
+//		if(mr.getParameter(PictureKey.DONGHANG_NO)!=null) {
+//			item.setDonghangNo(Integer.parseInt(mr.getParameter(PictureKey.DONGHANG_NO)));
+//		} 
+//		if(mr.getParameter(PictureKey.USER_NO)!=null) {
+//			item.setUserNo(Integer.parseInt(mr.getParameter(PictureKey.USER_NO)));
+//		} 
+//		item.setImage(mr.getOriginalFileName(PictureKey.IMAGE));
+		return null;
 	}
 }

@@ -17,6 +17,7 @@ import com.laon.common.PropPath;
 import com.laon.common.robot.LaonRobot;
 import com.laon.trip.model.vo.Trip;
 import com.laon.trip.model.vo.TripSchedule;
+import com.laon.tripinfo.model.vo.Tripinfo;
 
 public class TripDao {
 	private Properties prop = new Properties();
@@ -118,16 +119,40 @@ public class TripDao {
 		return result;
 	}
 
-	public List<TripSchedule> selectTripScheduleList(Connection conn, int no2) {
+	public List<TripSchedule> selectTripScheduleList(Connection conn, int tripNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = prop.getProperty(selectTripScheduleList);
 		List<TripSchedule> list = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, no2);
+			pstmt.setInt(1, tripNo);
 			rs = pstmt.executeQuery();
 			list = rsProcess(rs, new ArrayList<TripSchedule>(), new TripSchedule());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public List<Tripinfo> selectTripinfoWhereNoIn(Connection conn, List<Integer> tripinfoNoList) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM TRIPINFO_TB WHERE NO IN (";
+		for (Integer integer : tripinfoNoList) {
+			sql += "'" + integer + "',";
+		}
+		sql = sql.substring(0, sql.length()-1);
+		sql += ")";
+		System.out.println(sql);
+		List<Tripinfo> list = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			list = rsProcess(rs, new ArrayList<Tripinfo>(),new Tripinfo());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

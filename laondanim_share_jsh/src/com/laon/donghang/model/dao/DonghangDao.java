@@ -60,6 +60,7 @@ public class DonghangDao {
 	private String selectDonghangNearSchedule = "selectDonghangNearSchedule";
 	private String selectDonghangView = "selectDonghangView";
 	private String selectDonghangJoinMember = "selectDonghangJoinMember";
+	private String selectDonghangJoinUserPicture = "selectDonghangJoinUserPicture";
 
 	public DonghangDao() {
 		try {
@@ -200,13 +201,31 @@ public class DonghangDao {
 		return donghang;
 	}
 
+	public DonghangJoinUserPicture selectDonghangJoinUserPicture(Connection conn, String no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty(selectDonghangJoinUserPicture);
+		DonghangJoinUserPicture donghang = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(no));
+			rs = pstmt.executeQuery();
+			donghang = rsProcess(rs, new DonghangJoinUserPicture());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return donghang;
+	}	
+	
 	public List<DonghangJoinUserPicture> selectDonghangPage(Connection conn, int start, int end, String keyword, String recent, String viewcount, String nearSchedule) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql="";
 		List<DonghangJoinUserPicture> list = null;
-		boolean haveLike = true;
-
+		System.out.println("strat num은?????: "+start+ "  end넘은?? : "+end);
 		//sql문 나누기
 		if( !keyword.equals("null") && !recent.equals("null") ) { //키워드 O, 최신순
 			sql = prop.getProperty(selectDonghangKeywordRecent);
@@ -306,17 +325,18 @@ public class DonghangDao {
 		for(String tag : userTagArr) {
 			likeSql += "WHEN DH.TAG LIKE '%" + tag + "%' THEN '1' ";
 		}
+
+		sql = "SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT DH.*, U.NICK_NAME, P.IMAGE, CASE "
+				+ likeSql 
+				+"ELSE '0' END AS TAG_COUNT FROM DONGHANG_TB DH "
+				+ "INNER JOIN USER_TB U ON DH.USER_NO = U.NO INNER JOIN PICTURE_TB P ON DH.NO = P.DONGHANG_NO"
+				+ " WHERE DH.DELETED!='Y' ORDER BY TAG_COUNT DESC) A) "
+				+ "WHERE RNUM BETWEEN "+ start +" AND "+end;
 		
 		try {
 			stmt = conn.createStatement();
-			sql = "SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT DH.*, U.NICK_NAME, P.IMAGE, CASE "
-					+ likeSql 
-					+"ELSE '0' END AS TAG_COUNT FROM DONGHANG_TB DH "
-					+ "INNER JOIN USER_TB U ON DH.USER_NO = U.NO INNER JOIN PICTURE_TB P ON DH.NO = P.DONGHANG_NO"
-					+ " WHERE DH.DELETED!='Y' ORDER BY TAG_COUNT DESC) A) "
-					+ "WHERE RNUM BETWEEN "+ start +" AND "+end;
-			
 			rs = stmt.executeQuery(sql);
+			
 			list = joinRsProcess(rs, new ArrayList<DonghangJoinUserPicture>());
 		} catch (Exception e) {
 			e.printStackTrace();

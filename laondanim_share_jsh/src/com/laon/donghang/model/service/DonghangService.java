@@ -130,4 +130,11 @@ public class DonghangService {
 		close(conn);
 		return result;
 	}
+
+	public DonghangJoinUserPicture selectDonghangJoinUserPicture(String no) {
+		Connection conn = getConnection();
+		DonghangJoinUserPicture donghang = dao.selectDonghangJoinUserPicture(conn, no);
+		close(conn);
+		return donghang;
+	}
 }

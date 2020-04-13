@@ -60,7 +60,8 @@
                     	참여하기
                     </button>
                     <%}else {%>
-                    <button type="button" class="ldBtn ml-2">
+                    <button type="button" class="ldBtn ml-2"
+						onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangUpdate.do?no=<%=dh.getNo()%>')">
                     	수정
                     </button>  
 					<button type="button" class="ldBtnDelet ml-2" 

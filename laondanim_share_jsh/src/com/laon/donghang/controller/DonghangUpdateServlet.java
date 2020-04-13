@@ -35,26 +35,27 @@ public class DonghangUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int userNo = Integer.parseInt(request.getParameter("userNo"));
 		String no = request.getParameter("no");
 		
+		//DonghangJoin
 		DonghangJoinUserPicture donghangItem = new DonghangService().selectDonghangJoinUserPicture(no);
+		
 		//TRIP LIST
-		int iNo = Integer.parseInt(no);
-		List<TripMyCon> list = new DonghangService().selectMyTripList(iNo);
+		List<TripMyCon> list = new DonghangService().selectMyTripList(userNo);
 		//LIKE LIST
 		List<Like> likeList = new DonghangService().selectLike(list);
-		
-		System.out.println("_____________________서블릿__________________________");
-		for(TripMyCon t : list){
-			System.out.println(t);	
-		}
-		for(Like l : likeList){
-			System.out.println(l);	
-		}
 		System.out.println(donghangItem);
+		for(TripMyCon t : list) {
+			System.out.println("trList ==== "+t);
+		}
+		for(Like l : likeList) {
+			System.out.println("LikeList ==== "+l);
+		}
 		
 		request.setAttribute(CommonKey.TRIP_LIST, list);
 		request.setAttribute(CommonKey.LIKE_LIST, likeList);
+		
 		request.setAttribute(CommonKey.DONGHANG_ITEM, donghangItem);
 		
 		request.getRequestDispatcher("/views/donghang/donghangUpdate.jsp").forward(request, response);

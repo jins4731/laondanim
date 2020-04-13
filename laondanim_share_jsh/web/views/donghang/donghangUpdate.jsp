@@ -13,9 +13,9 @@
 	List<TripMyCon> tripList = (List<TripMyCon>)request.getAttribute(CommonKey.TRIP_LIST);
 	List<Like> likeList = (List<Like>)request.getAttribute(CommonKey.LIKE_LIST);
 	
-	DonghangJoinUserPicture dh = (DonghangJoinUserPicture)request.getAttribute("CommonKey.DONGHANG_ITEM");
+	DonghangJoinUserPicture dh = (DonghangJoinUserPicture)request.getAttribute(CommonKey.DONGHANG_ITEM);
 	
-	System.out.println("_______________________________________________");
+	System.out.println("_______________________왜안될까..?________________________");
 	for(TripMyCon t : tripList){
 		System.out.println(t);	
 	}

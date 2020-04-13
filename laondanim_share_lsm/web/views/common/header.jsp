@@ -151,7 +151,6 @@ header li>a {
 						</li>
 						<%} %>
 					</ul>
-
 				</nav>
 			</div>
 		</div>

@@ -2,6 +2,7 @@ package com.laon.tripinfo.model.vo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.laon.common.PictureKey;
@@ -13,7 +14,7 @@ import com.oreilly.servlet.MultipartRequest;
 //여행정보 테이블
 public class Tripinfo implements LaonRobot<Tripinfo>{
 	
-private Picture picture;
+private List<Picture> pictureList;
 
  // 넘버 여행정보 기본키
  private int no;
@@ -71,6 +72,26 @@ public String toString() {
 			+ address + ", businessHours=" + businessHours + ", tel=" + tel + ", homepage=" + homepage + ", naver="
 			+ naver + ", sns=" + sns + "]";
 }
+
+
+
+
+
+
+
+
+public List<Picture> getPictureList() {
+	if(pictureList == null) {
+		pictureList = new ArrayList<Picture>();
+	}
+	return pictureList;
+}
+
+
+public void setPictureList(List<Picture> pictureList) {
+	this.pictureList = pictureList;
+}
+
 
 public int getNo() {
      return no;
@@ -220,10 +241,19 @@ public Tripinfo rsProcess(Tripinfo item, ResultSet rs) throws SQLException {
 
 
 @Override
-public Tripinfo mrProcess(Tripinfo item, MultipartRequest mr, Picture pic) {
+public Tripinfo mrProcess(Tripinfo item, MultipartRequest mr, List<Picture> picList) {
 	// TODO Auto-generated method stub
-	picture = pic;
-	picture.setImage(mr.getOriginalFileName(PictureKey.IMAGE));
+	// 사진 추가
+			pictureList = picList;
+			String fileNames = mr.getParameter("fileNames");
+			fileNames = fileNames.substring(0, fileNames.length()-1);
+			String[] fileName = fileNames.split(",");
+			for (int i = 0; i < fileName.length; i++) {
+				Picture pic = new Picture();
+				pic.setImage(fileName[i]);
+				pictureList.add(pic);
+			}
+			
 	item.setNo(Integer.parseInt(mr.getParameter(TripinfoKey.NO)));
 	item.setCategory(mr.getParameter(TripinfoKey.CATEGORY));
 	item.setTag(mr.getParameter(TripinfoKey.TAG));

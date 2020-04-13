@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.laon.user.model.vo.User" %>	
+<%
+	User loginUser=(User)session.getAttribute("loginUser");
+%>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +22,12 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+<!-- naver SmartEditor -->
+<script type="text/javascript" src="<%=request.getContextPath()%>/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+
+
+
+
 <title>라온다님 메인</title>
 <style>
 /* 헤더 푸터 값조절 */
@@ -95,10 +106,10 @@ header li>a {
 }
 
 	/* 메뉴에 마우스 커서만 올려도 드롭다운 메뉴가 자동으로 나오게 */
-.dropdown:hover .dropdown-menu {
+/* .dropdown:hover .dropdown-menu {
 	display: block;
 	margin-top: 0;
-}
+} */
 
 </style>
 </head>
@@ -118,21 +129,33 @@ header li>a {
 
 					<!-- Links -->
 					<ul class="navbar-nav main-nav">
-						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/trip/tripListView.do">여행기</a></li>
+						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/trip/tripListView.do?first=first">여행기</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">여행정보</a></li>
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">커뮤니티</a>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="#">동행찾기</a> 
-								<a class="dropdown-item" href="#">게시판</a>
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/board/list.do">게시판</a>
 							</div>
 						</li>
-						<!-- 세션의 멤버 값을 가져와서 null 이 아닐경우  마이페이지/로그아웃 출력, null 일경우 로그인 페이지로 이동-->
+						<%if(loginUser==null){ %>
+						<!-- 세션의 멤버 값을 가져와서 null 일경우 로그인 페이지로 이동-->
 						<li class="nav-item">
-						<a class="nav-link"href="<%=request.getContextPath()%>/login.do"> 
-							<img src="<%=request.getContextPath()%>/icon/profile_icon.png" width="50px" height="50px">
+						<a class="nav-link" href="<%=request.getContextPath()%>/user/loginPage.do">로그인
 						</a>
 						</li>
+						<%}else{ %>
+						<!-- null 이 아닐경우  마이페이지/로그아웃 출력, -->
+						<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> 
+							<img src="<%=request.getContextPath()%>/icon/profile_icon.png" width="50px" height="50px">
+						</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="#">마이페이지</a> 
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/user/logout.do">로그아웃</a>
+							</div>
+						</li>
+						<%} %>
 					</ul>
 
 				</nav>

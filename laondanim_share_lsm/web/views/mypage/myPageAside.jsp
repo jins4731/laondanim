@@ -20,7 +20,7 @@
 						<p class="card-text"><%=up.getNickName() %></p>
 					</div>
 					<div>
-						<button type="button" class="btn btn-info" style="border-radius: 100px;" onclick="location.replace('<%=request.getContextPath()%>/myPage/myInfoPwck?userNo=<%=up.getNo()%>')">정보수정</button>
+						<button type="button" class="btn btn-info" style="border-radius: 100px;" onclick="location.replace('<%=request.getContextPath()%>/myPage/myInfoPwck.do?userNo=<%=up.getNo()%>')">정보수정</button>
 					</div>
 				</div>
 			</div>

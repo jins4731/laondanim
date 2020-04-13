@@ -19,7 +19,6 @@ import com.laon.common.robot.LaonRobot;
 import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.vo.TagCount;
-import com.laon.trip.model.vo.Trip;
 import com.laon.trip.model.vo.Trip2;
 import com.laon.trip.model.vo.TripSchedule;
 import com.laon.tripinfo.model.vo.Tripinfo;
@@ -377,7 +376,7 @@ public class TripDao {
 		return arrTag;
 	}
 
-	public ArrayList<Picture> selectPicture(Connection conn, ArrayList<Trip> list){
+	public ArrayList<Picture> selectPicture(Connection conn, ArrayList<Trip2> list){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
@@ -420,7 +419,7 @@ public class TripDao {
 		return pictureList;
 	}
 	
-	public ArrayList<Like> selectLikeCount(Connection conn, ArrayList<Trip> list){
+	public ArrayList<Like> selectLikeCount(Connection conn, ArrayList<Trip2> list){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		

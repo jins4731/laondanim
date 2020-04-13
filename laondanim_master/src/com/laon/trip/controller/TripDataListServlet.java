@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.laon.trip.model.service.TripService;
+import com.laon.trip.model.service.TripService2;
 
 /**
  * Servlet implementation class TripDataListServlet
@@ -33,7 +33,7 @@ public class TripDataListServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String search = request.getParameter("search");
 		
-		String[] arrTag =new TripService().getTagList(search);
+		String[] arrTag =new TripService2().getTagList(search);
 		
 		response.setContentType("text/csv; charset=utf-8");
 		response.getWriter().write(String.join(",", arrTag));

@@ -19,7 +19,7 @@ public class TripService2 {
 
 	private TripDao dao = new TripDao();
 	
-	//list ��������	
+	//list 가져오기	
 	public ArrayList<Trip2> selectTripPage(int cPage, int perPage, String lo, String category, String keyword, String recent, String like, ArrayList<TagCount> tripTagCountList, String first){ //Ű���� �˻� �±�
 		Connection conn = getConnection();
 		ArrayList<Trip2> list = dao.selectTripPage(conn, cPage, perPage, lo, category, keyword, recent, like, tripTagCountList, first);
@@ -27,7 +27,7 @@ public class TripService2 {
 		return list;
 	}
 	
-	//�� ������ ���� ��������
+	//총 데이터 숫자 가져오기
 	public int selectTripCount(String lo, String category, String keyword) {
 		Connection conn = getConnection();
 		int count = dao.selectTripCount(conn, lo, category, keyword);
@@ -35,7 +35,7 @@ public class TripService2 {
 		return count;
 	}
 	
-	//������ ����Ʈ tag �̸� ��������
+	//데이터 리스트 tag 이름 가져오기
 	public String[] getTagList(String search){
 		Connection conn = getConnection();
 		String arrTag[] = dao.getTagList(conn, search);
@@ -43,35 +43,35 @@ public class TripService2 {
 		return arrTag;
 	}
 	
-	//���� ����Ʈ ��������
-	public ArrayList<Picture> selectPicture(ArrayList<Trip> list){
+	//사진 리스트 가져오기
+	public ArrayList<Picture> selectPicture(ArrayList<Trip2> list){
 		Connection conn = getConnection();
 		ArrayList<Picture> pictureList = dao.selectPicture(conn, list);
 		return pictureList;
 	}
 	
-	//���ƿ� ���� ����Ʈ ��������
-	public ArrayList<Like> selectLikeCount(ArrayList<Trip> list){
+	//좋아요 개수 리스트 가져오기
+	public ArrayList<Like> selectLikeCount(ArrayList<Trip2> list){
 		Connection conn = getConnection();
 		ArrayList<Like> likeCountList = dao.selectLikeCount(conn, list);
 		return likeCountList;
 	}
 	
-	//���ƿ� ������� ����Ʈ ��������
+	//좋아요 모든 정보 리스트 가져오기
 	public ArrayList<Like> selectLike(int loginNo){
 		Connection conn = getConnection();
 		ArrayList<Like> likeList = dao.selectLike(conn, loginNo);
 		return likeList;
 	}
 	
-	//ȸ�� ����Ʈ ��������
-	public ArrayList<User> selectUser(ArrayList<Trip> list){
+	//회원 리스트 가져오기
+	public ArrayList<User> selectUser(ArrayList<Trip2> list){
 		Connection conn = getConnection();
 		ArrayList<User> userList = dao.selectUser(conn, list);
 		return userList;
 	}
 	
-	//���ƿ� ��ư ��������
+	//좋아요 버튼 업데이터
 	public int updateLike(int tripNo, int userNo) {
 		Connection conn = getConnection();
 		String cancled="";
@@ -96,9 +96,9 @@ public class TripService2 {
 		return result;
 	}
 	
-	public ArrayList<Trip> selectTagList(){
+	public ArrayList<Trip2> selectTagList(){
 		Connection conn = getConnection();
-		ArrayList<Trip> tagList =dao.selectTagList(conn);
+		ArrayList<Trip2> tagList =dao.selectTagList(conn);
 		close(conn);
 		return tagList;
 	}

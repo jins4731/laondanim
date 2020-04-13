@@ -15,9 +15,9 @@ import com.laon.common.Paging;
 import com.laon.common.TagFilter;
 import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
-import com.laon.trip.model.service.TripService;
+import com.laon.trip.model.service.TripService2;
 import com.laon.trip.model.vo.TagCount;
-import com.laon.trip.model.vo.Trip;
+import com.laon.trip.model.vo.Trip2;
 import com.laon.user.model.vo.User;
 /**
  * Servlet implementation class TripListServlet
@@ -69,7 +69,7 @@ public class TripListViewServlet extends HttpServlet {
 		int perPage = 10;
 		int totalItemCount=0;
 		
-		ArrayList<Trip> list = null;
+		ArrayList<Trip2> list = null;
 		ArrayList<Picture> pictureList = null;
 		ArrayList<Like> likeCountList = null;
 		ArrayList<User> userList = null;
@@ -86,21 +86,21 @@ public class TripListViewServlet extends HttpServlet {
 		tripTagCountList = new TagFilter().tagCountList(userTag);
 		
 		//����� �Խù��� ��ü ����, ����¡ ó�� �� ����� �Խù� ��������
-		totalItemCount = new TripService().selectTripCount(lo, category, keyword);
+		totalItemCount = new TripService2().selectTripCount(lo, category, keyword);
 		
-		list = new TripService().selectTripPage(cPage, perPage, lo, category, keyword, recent, like, tripTagCountList, first);
+		list = new TripService2().selectTripPage(cPage, perPage, lo, category, keyword, recent, like, tripTagCountList, first);
 		
 		//����Ʈ���� �������� �ش� ����Ʈ�� ��Ī�Ǵ� picture ��������
-		pictureList = new TripService().selectPicture(list);
+		pictureList = new TripService2().selectPicture(list);
 		
 		//�ش� ����Ʈ�� ��Ī�Ǵ� ���ƿ� �� ��������
-		likeCountList = new TripService().selectLikeCount(list);
+		likeCountList = new TripService2().selectLikeCount(list);
 		
 		//�ش� ����Ʈ�� ��Ī�Ǵ� �ۼ��� ��������
-		userList = new TripService().selectUser(list);
+		userList = new TripService2().selectUser(list);
 		
 		//�ش� ����Ʈ�� ��Ī�Ǵ� ���ƿ� ���� ��������
-		likeList = new TripService().selectLike(userNo);		
+		likeList = new TripService2().selectLike(userNo);		
 		for(Like l : likeList) {
 			System.out.println("���ƿ� ����"+l);
 		}

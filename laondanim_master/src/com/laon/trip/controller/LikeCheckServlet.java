@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.laon.trip.model.service.TripService;
+import com.laon.trip.model.service.TripService2;
 import com.laon.user.model.vo.User;
 
 /**
@@ -37,7 +37,7 @@ public class LikeCheckServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User loginUser = (User)session.getAttribute("loginUser");
 		
-		int result = new TripService().updateLike(tripNo, loginUser.getNo());
+		int result = new TripService2().updateLike(tripNo, loginUser.getNo());
 	
 		response.setCharacterEncoding("utf-8");
 		response.getWriter().print(result);

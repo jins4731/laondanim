@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.laon.common.Paging;
-import com.laon.trip.model.service.TripService;
-import com.laon.trip.model.vo.Trip;
+import com.laon.trip.model.service.TripService2;
+import com.laon.trip.model.vo.Trip2;
 
 /**
  * Servlet implementation class TripListServlet
@@ -52,16 +52,16 @@ public class TripListServlet extends HttpServlet {
 		System.out.println(cPage);	
 		int perPage = 10;
 		int totalData=0;
-		ArrayList<Trip> list = null;
+		ArrayList<Trip2> list = null;
 		
 		if(keyword==null) {
-			totalData = new TripService().getTotalData();
-			list = new TripService().searchList(cPage, perPage);	//����� ����Ʈ ��������
+			totalData = new TripService2().getTotalData();
+			list = new TripService2().searchList(cPage, perPage);	//����� ����Ʈ ��������
 			//���� ����Ʈ �������� �߰�
 		}
 		else {
-			totalData = new TripService().getTotalData(keyword);
-			list = new TripService().searchList(cPage, perPage, keyword);
+			totalData = new TripService2().getTotalData(keyword);
+			list = new TripService2().searchList(cPage, perPage, keyword);
 		}
 		
 //		if(sort!=null) {
@@ -78,14 +78,14 @@ public class TripListServlet extends HttpServlet {
 			switch(category) {
 			case "plan":
 				type = "���� ����";
-				totalData = new TripService().getTotalDataPr(type);	//plan or review
-				list = new TripService().searchListPr(cPage, perPage, type);
+				totalData = new TripService2().getTotalDataPr(type);	//plan or review
+				list = new TripService2().searchListPr(cPage, perPage, type);
 				break;
 			
 			case "review":
 				type = "���� �ı�";
-				totalData = new TripService().getTotalDataPr(type);	//plan or review
-				list = new TripService().searchListPr(cPage, perPage, type);
+				totalData = new TripService2().getTotalDataPr(type);	//plan or review
+				list = new TripService2().searchListPr(cPage, perPage, type);
 				break;
 			}
 			

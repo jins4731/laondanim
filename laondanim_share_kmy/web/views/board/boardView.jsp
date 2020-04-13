@@ -210,10 +210,16 @@ $(function(){
 		var comment=$(this).val();
 		var confirmFlag=confirm("댓글을 삭제하시겠습니까?");
 		if(confirmFlag){
-			//확인버튼 눌렀을때 (true)
-			location.href="<%=request.getContextPath()%>/board/commentDelete.do?comment="+comment;
-		}else{
-			//취소버튼 눌렀을때(false)
+			$.ajax({
+				url:"<%=request.getContextPath()%>/board/commentDelete.do",
+				type:"post",
+				data:{comment:$(this).val(),
+						},
+				success:data=>{
+					alert(data);
+					location.reload();
+					}
+			});
 			
 		}
 		

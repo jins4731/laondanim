@@ -1,16 +1,17 @@
 package com.laon.board.model.service;
 
+//merge ìˆ˜ì •
+//import static com.laon.common.JDBCTemplate.close;
+//import static com.laon.common.JDBCTemplate.commit;
+//import static com.laon.common.JDBCTemplate.getConnection;
+//import static com.laon.common.JDBCTemplate.rollback;
+//merge ìˆ˜ì •
 
-import static com.laon.common.JDBCTemplate.close;
-import static com.laon.common.JDBCTemplate.commit;
-import static com.laon.common.JDBCTemplate.getConnection;
-import static com.laon.common.JDBCTemplate.rollback;
-
+import static com.laon.common.template.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.List;
 
 import com.laon.board.model.dao.BoardDao;
-import com.laon.board.model.vo.Board;
 import com.laon.board.model.vo.BoardComment;
 import com.laon.board.model.vo.BoardCommentJoinUser;
 import com.laon.board.model.vo.BoardJoinUser;
@@ -45,7 +46,7 @@ public class BoardService {
 		Connection conn=getConnection();
 		int count=dao.countBoard(conn);
 		close(conn);
-		System.out.println("¼­ºñ½º ¸î°³¾ß:"+count);
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½î°³ï¿½ï¿½:"+count);
 		return count;
 	}
 
@@ -53,7 +54,7 @@ public class BoardService {
 		Connection conn=getConnection();
 		BoardJoinUser b=dao.boardDetail(conn,boardNo);
 		if(!hasRead&&b!=null) {
-			//¾ÈÀÐ¾úÀ»¶§
+			//ï¿½ï¿½ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ï¿½
 			int result=dao.updateReadCount(conn,boardNo);
 			if(result>0) {
 				commit(conn);

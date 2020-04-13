@@ -1,6 +1,6 @@
 package com.laon.trip.model.dao;
 
-import static com.laon.common.template.JDBCTemplate.close;
+import static com.laon.common.template.JDBCTemplate.*;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,6 +19,7 @@ import com.laon.common.robot.LaonRobot;
 import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.vo.TagCount;
+import com.laon.trip.model.vo.Trip;
 import com.laon.trip.model.vo.Trip2;
 import com.laon.trip.model.vo.TripSchedule;
 import com.laon.tripinfo.model.vo.Tripinfo;
@@ -85,11 +86,44 @@ public class TripDao {
 		return trip;
 	}
 
+	public List<Trip> selectTripPage(Connection conn, int start, int end) {
+	      PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      String sql = prop.getProperty(selectTripPage);
+	      List<Trip> list = null;
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setInt(1, start);
+	         pstmt.setInt(2, end);
+	         rs = pstmt.executeQuery();
+	         list = rsProcess(rs, new ArrayList<Trip>(),new Trip());
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rs);
+	         close(pstmt);
+	      }
+	      return list;
+	   }
 	
-	
-	
-	
-	
+	public int selectTripCount(Connection conn) {
+	      PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      String sql = prop.getProperty(selectTripCount);
+	      int result = 0;
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         rs = pstmt.executeQuery();
+	         rs.next();
+	         result = rs.getInt(1);
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rs);
+	         close(pstmt);
+	      }
+	      return result;
+	   }
 	
 	public List<TripSchedule> selectTripScheduleList(Connection conn, int tripNo) {
 		PreparedStatement pstmt = null;
@@ -149,7 +183,7 @@ public class TripDao {
 	public ArrayList<Trip2> selectTripPage(Connection conn, int cPage, int perPage, String lo, String category, String keyword, String recent, String like, ArrayList<TagCount> tripTagCountList, String first){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "";
+		String sql = prop.getProperty("selectTripPage2");
 		int check = 0;			   
 		ArrayList<Trip2> list = new ArrayList<Trip2>();
 		Trip2 t = null;
@@ -305,7 +339,7 @@ public class TripDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = prop.getProperty("selectTripCount");
+		String sql = prop.getProperty("selectTripCount2");
 		//SELECT COUNT(*) FROM TRIP_TB WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ?
 
 		if(category.equals("null") || category.equals("��ü �����")) {

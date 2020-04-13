@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import com.laon.trip.model.service.TripService;
+import com.laon.trip.model.service.TripService2;
 import com.laon.trip.model.vo.TagCount;
 import com.laon.trip.model.vo.TagCountComparator;
-import com.laon.trip.model.vo.Trip;
+import com.laon.trip.model.vo.Trip2;
 import com.laon.user.model.service.UserService;
 import com.laon.user.model.vo.User;
 
@@ -18,7 +18,7 @@ public class TagFilter {
 		userTag = userTag.replaceAll(" ", "");
 		System.out.println("�α����� ������ tag : " + userTag);
 		
-		ArrayList<Trip> tagList = new TripService().selectTagList();	//��� ����� �Խù��� ���� �±� ������ �±� ����Ʈ�� ����
+		ArrayList<Trip2> tagList = new TripService2().selectTagList();	//��� ����� �Խù��� ���� �±� ������ �±� ����Ʈ�� ����
 				
 		String[] userTagArr = userTag.split(",");	//�α����� ������ tag String �� �迭�� �ɰ���
 		
@@ -29,7 +29,7 @@ public class TagFilter {
 		TagCount tagCount = null;
 		
 		//����� �Խù� ��ȣ, �±�(�迭) �� tagListArr ����Ʈ�� ����
-		for(Trip t : tagList) {	
+		for(Trip2 t : tagList) {	
 			int tripNo = t.getNo();
 			
 			String stringTag = t.getTag();

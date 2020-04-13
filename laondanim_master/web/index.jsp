@@ -5,7 +5,7 @@
 
 <section id='content' style="height: 560px">
 		<h2 align='center' style='margin-top:200px'>
-			¶σΏΒ΄Ω΄Τ ΈήΐΞΖδΐΜΑφ
+			λΌμ¨λ‹¤λ‹ λ©”μΈνμ΄μ§€
 		</h2>
 </section>
 <%@ include file="/views/common/footer.jsp"%> 

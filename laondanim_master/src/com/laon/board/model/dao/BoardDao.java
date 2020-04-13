@@ -1,7 +1,7 @@
 package com.laon.board.model.dao;
 
 
-import static com.laon.common.JDBCTemplate.close;
+import static com.laon.common.template.JDBCTemplate.*;
 
 
 import java.io.FileReader;
@@ -93,7 +93,7 @@ public class BoardDao {
 		}return count;
 		
 	}
-	/////////////¿©±â¼­ ºÎÅÍ ÀÛ¾÷ÇØ ~~Äõ¸®¹®µµ ½á¶ó~~~/////////////
+	/////////////ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ~~ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½~~~/////////////
 	public BoardJoinUser boardDetail(Connection conn, int boardNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -144,8 +144,8 @@ public class BoardDao {
 		List<BoardJoinUser> list=new ArrayList();
 		String sql="";
 	
-		//°Ë»öÃ¢ºÎÅÍ
-		//ÀÛ¼ºÀÚwriter  Á¦¸ñtitle ³»¿ëcontent Å°¿öµå ÅÂ±×tags
+		//ï¿½Ë»ï¿½Ã¢ï¿½ï¿½ï¿½ï¿½
+		//ï¿½Û¼ï¿½ï¿½ï¿½writer  ï¿½ï¿½ï¿½ï¿½title ï¿½ï¿½ï¿½ï¿½content Å°ï¿½ï¿½ï¿½ï¿½ ï¿½Â±ï¿½tags
 		if(searchDetail.equals("writer")) {
 			sql=prop.getProperty("selectBoardSortWriter");
 		}if(searchDetail.equals("title")) {
@@ -157,24 +157,24 @@ public class BoardDao {
 		}if(searchDetail.equals("null")) {
 			sql=prop.getProperty("selectBoard");
 		}
-		System.out.println("ÆÐÅÏ1Àû¿ëÀü:"+sql);
+		System.out.println("ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:"+sql);
 		/*
-		 * if(!recent.equals("null") && viewCount.equals("null")) { //ÃÖ½Å¼ø ¹öÆ° ´­·¶À»¶§ ORDER
-		 * BY WRITEDATE DESC Ãß°¡ sql=sql.replace("DELETED='N'",
+		 * if(!recent.equals("null") && viewCount.equals("null")) { //ï¿½Ö½Å¼ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ORDER
+		 * BY WRITEDATE DESC ï¿½ß°ï¿½ sql=sql.replace("DELETED='N'",
 		 * "DELETED='N' ORDER BY WRITE_DATE DESC");
 		 * 
 		 * }
 		 */ 
 		if(recent.equals("null") &&!viewCount.equals("null")) {
-			//Á¶È¸¼ö¼ø ¹öÆ° ´­·¶À»¶§ ORDER BY VIEWCOUNT DESC Ãß°¡
+			//ï¿½ï¿½È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ORDER BY VIEWCOUNT DESC ï¿½ß°ï¿½
 			sql=sql.replace("DELETED='N' ORDER BY WRITE_DATE DESC", "DELETED='N' ORDER BY VIEWCOUNT DESC");
 			  }
 		
 		
 		
-		System.out.println("ÆÐÅÏ2Àû¿ëÀü:"+sql);
+		System.out.println("ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:"+sql);
 		if(category.equals("null")||category.equals("all")) {
-			//ÀüÃ¼¸¦ Ãâ·ÂÇÒ°æ¿ì category= ÀÌ°Å¸¦ category!= ÀÌ°É·Î ¹Ù²ãÁà¾ßÇÔ
+			//ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ò°ï¿½ï¿½ category= ï¿½Ì°Å¸ï¿½ category!= ï¿½Ì°É·ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			Pattern pattern=Pattern.compile("=");
 			Matcher matcher=pattern.matcher(sql);
 			int count=0;
@@ -193,20 +193,20 @@ public class BoardDao {
 		sql=sql.substring(0,targetIndex)+"!="+sql.substring(targetIndex+1,sql.length());
 			
 		}
-		System.out.println("ÆÐÅÏ2Àû¿ëÈÄ:"+sql);
+		System.out.println("ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:"+sql);
 	
 	
 	try{pstmt=conn.prepareStatement(sql);
-		if(category.equals("null")){//Ã³À½È­¸éÀÏ¶§
+		if(category.equals("null")){//Ã³ï¿½ï¿½È­ï¿½ï¿½ï¿½Ï¶ï¿½
 			pstmt.setString(1, "null");
 			pstmt.setInt(2, (cPage-1)*perPage+1);
 			pstmt.setInt(3,cPage*perPage);
-		}else if(category.equals("all")&&(searchDetail.equals("null") ||searchBox.equals("null"))) {//ÃÖ½ÅÀÌ³ª Á¶È¸¼ö¼ø ´­·¶À»¶§
+		}else if(category.equals("all")&&(searchDetail.equals("null") ||searchBox.equals("null"))) {//ï¿½Ö½ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			pstmt.setString(1, "null");
 			pstmt.setInt(2, (cPage-1)*perPage+1);
 			pstmt.setInt(3,cPage*perPage);
 		}
-		else {//°Ë»öÇßÀ»¶§
+		else {//ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		pstmt.setString(1, category);
 		pstmt.setString(2, "%"+searchBox+"%");
 		pstmt.setInt(3, (cPage-1)*perPage+1);
@@ -259,9 +259,9 @@ public class BoardDao {
 			sql=sql.replace("WHERE DELETED='N'", "WHERE CATEGORY=? AND DELETED='N'");
 		}
 		sql=sql.replace("WHERE RNUM BETWEEN ? AND ?", " ");
-		System.out.println("Àû¿ëµÊ sql?"+sql);
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ sql?"+sql);
 		if(category.equals("null")||category.equals("all")) {
-			//ÀüÃ¼¸¦ Ãâ·ÂÇÒ°æ¿ì category= ÀÌ°Å¸¦ category!= ÀÌ°É·Î ¹Ù²ãÁà¾ßÇÔ
+			//ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ò°ï¿½ï¿½ category= ï¿½Ì°Å¸ï¿½ category!= ï¿½Ì°É·ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			Pattern pattern=Pattern.compile("=");
 			Matcher matcher=pattern.matcher(sql);
 			int count=0;
@@ -279,8 +279,8 @@ public class BoardDao {
 		int targetIndex=indexs[1];
 		
 		sql=sql.substring(0,targetIndex)+"!="+sql.substring(targetIndex+1,sql.length());
-		System.out.println("¿Ï¼ºµÈ sql¹®:"+sql);	
-		System.out.println("Ä«Å×°í¸®¹¹¾ß:"+category);
+		System.out.println("ï¿½Ï¼ï¿½ï¿½ï¿½ sqlï¿½ï¿½:"+sql);	
+		System.out.println("Ä«ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½:"+category);
 		}
 		try{pstmt=conn.prepareStatement(sql);
 		if(category.equals("null")||category.equals("all")&&searchBox.equals("null")) {

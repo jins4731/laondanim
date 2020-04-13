@@ -129,7 +129,7 @@ header li>a {
 
 					<!-- Links -->
 					<ul class="navbar-nav main-nav">
-						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/trip/list.do">여행기</a></li>
+						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/trip/tripListView.do">여행기</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">여행정보</a></li>
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">커뮤니티</a>

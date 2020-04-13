@@ -366,6 +366,21 @@ public class BoardDao {
 	}return list;
 		
 	}
+
+	public int deleteComment(Connection conn,int commentNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("deleteComment");
+	try{pstmt=conn.prepareStatement(sql);
+		pstmt.setInt(1, commentNo);
+		result=pstmt.executeUpdate();
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(pstmt);
+	}return result;
+	
+	}
 	
 	
 }

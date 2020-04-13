@@ -126,6 +126,9 @@
 				<br>
 				<%=bc.getContent() %>
 				<button class="2ndComment" value="<%=bc.getNo() %>" >답글 달기</button>
+				<%if(loginUser.getNo()==bc.getUserNo()){ %>
+				<button class="deleteComment" value="<%=bc.getNo()%>">삭제</button>
+				<%} %>
 			</td>
         </tr>
         <%}else if(bc.getLevel()==2){ %>
@@ -135,7 +138,9 @@
 				<sub ><%=bc.getWriteDate() %></sub>
 				<br>
 				<%=bc.getContent() %>
-			
+				<%if(loginUser.getNo()==bc.getUserNo()){ %>
+				<button class="deleteComment" value="<%=bc.getNo()%>">삭제</button>
+				<%} %>
 			</td>
 			<td>
 			</td>
@@ -200,6 +205,24 @@ $(function(){
 			$(this).off("click");
 		}
 	});
+	
+	$(".deleteComment").click(function(){
+		var comment=$(this).val();
+		var confirmFlag=confirm("댓글을 삭제하시겠습니까?");
+		if(confirmFlag){
+			//확인버튼 눌렀을때 (true)
+			location.href="<%=request.getContextPath()%>/board/commentDelete.do?comment="+comment;
+		}else{
+			//취소버튼 눌렀을때(false)
+			
+		}
+		
+		
+		
+	});
+	
+	
+	
 });
 
 </script>

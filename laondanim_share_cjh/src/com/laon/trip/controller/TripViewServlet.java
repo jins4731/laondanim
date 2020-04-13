@@ -15,6 +15,8 @@ import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.service.TripService;
 import com.laon.trip.model.vo.Trip;
 import com.laon.trip.model.vo.TripSchedule;
+import com.laon.tripinfo.model.service.TripinfoService;
+import com.laon.tripinfo.model.vo.Tripinfo;
 import com.laon.user.model.service.UserService;
 import com.laon.user.model.vo.User;
 
@@ -44,6 +46,11 @@ public class TripViewServlet extends HttpServlet {
 		
 		Trip trip = new TripService().selectTrip("1");
 		List<TripSchedule> scheduleList = new TripService().selectTripScheduleList(trip.getNo());
+		String[] scheduleNoList = new String[scheduleList.size()];
+		for (int i=0;i<scheduleList.size();i++) {
+			scheduleNoList[i] = ""+scheduleList.get(i).getTripinfoNo();
+		}
+		List<Tripinfo> tripinfoList = new TripinfoService().selectTripInfoWheresList(scheduleNoList);
 		User user = new UserService().selectUser(trip.getUserNo());
 		Picture pic = new EtcService().selectPictureUserNo(user.getNo());
 		
@@ -51,6 +58,7 @@ public class TripViewServlet extends HttpServlet {
 		System.out.println(scheduleList);
 		System.out.println(user);
 		System.out.println(pic);
+		System.out.println(tripinfoList);
 
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");

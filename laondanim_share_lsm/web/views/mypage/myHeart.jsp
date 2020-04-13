@@ -102,25 +102,36 @@
 						<!-- 정보 -->
 						<div id="myDNInfo">
 							<div style="height:45px;">
-								<span>총 <%=likeTripCount %>개의 ♥ 맛집</span>
+								<span>총 ?개의 ♥ 맛집</span>
 							</div>
 						</div>
-						<div class="card">
-							<div class="sl">
+						<div class="card d-flex">
+							<div class="sl d-flex" style="overflow: hidden;">
 								<img class="card-img slImg" src="<%=request.getContextPath()%>/images/images.jpeg">
 								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/henri.jpeg">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/images/images.jpeg">
+								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/peng.jpg">
+								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/peng2.jpg">
+								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/peng3.jpeg">
 							</div>
+							<div><img id="prev" src="<%=request.getContextPath()%>/images/prev.png"></div>
+							<%-- <div><img id="next" src="<%=request.getContextPath()%>/images/next.png"></div> --%>
 						</div>
+						<script>
+							$(function(){
+								$(".sl").find(".slImg").css("width","155");
+								$("#next").click(function(){
+									$(".sl").append($(".slImg").first());
+									$(".sl").append($(".slImg").first());
+									$(".sl").append($(".slImg").first());
+									$(".sl").append($(".slImg").first());
+								});
+								
+								/* setInterval(() => {
+									$(".sl").append($(".slImg").first());
+								}, 3000); */
+							});
+						</script>
 					</div>
-					<script>
-						$(function(){
-							$(".sl").find(".slImg").css("width","155");
-							setInterval(() => {
-								$(".sl").append($(".slImg").first());
-							}, 3000);
-						});
-					</script>
 					
 					
 					
@@ -188,29 +199,6 @@
 				$(".dnCks").prop("checked",true);
 			}else{
 				$(".dnCks").prop("checked",false);
-			}
-		});
-	});
-	
-	/* 게시글 */
-	$(function(){
-		$("#bdCk1>button").click(()=>{
-			$("#bdCk1").css("display","none");
-			$("#bdCk2").css("display","block");
-			$(".bdCk3").css("display","block");
-		});
-		
-		$("#bdEndBtn").click(()=>{
-			$("#bdCk1").css("display","block");
-			$("#bdCk2").css("display","none");
-			$(".bdCk3").css("display","none");
-		});
-		
-		$("#bdAll").click(()=>{
-			if($("#bdAll").is(":checked")){							
-				$(".bdCks").prop("checked",true);
-			}else{
-				$(".bdCks").prop("checked",false);
 			}
 		});
 	});

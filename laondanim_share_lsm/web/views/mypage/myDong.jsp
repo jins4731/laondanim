@@ -135,23 +135,12 @@
 							<div style="height:45px;">
 								<span>총 <%=myJDCount %>개의 동행</span>
 							</div>
-							<div id="jDhCk1">
-								<button class="btn">선택삭제</button>
-							</div>
-							<div id="jDhCk2">
-								<label><input type="checkbox" id="jDhAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn" id="jDhEndBtn">돌아가기</button>
-							</div>
 						</div>
 						<!-- 게시글위치 -->
 						<table id="dhTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
 							<%for(MyDong j:oriJoinDong){ %>
 								<td class="p-1">
-			                    	<div class="jDhCk3" style="margin:10px;">
-										<input type="checkbox" class="jDhCks">
-									</div>
 			                       	<div class="card" style="width: 155px; height: 290px;" >
 			                        	<div class="d-flex justify-content-between p-2" style="font-size:5px;">
 			                        		<%for(DonghangJoin dj:joinDong){ 
@@ -277,7 +266,7 @@
 
 <script>
 	/* 내동행 */
-	$(function(){
+	/* $(function(){
 		$("#dhCk1>button").click(()=>{
 			$("#dhCk1").css("display","none");
 			$("#dhCk2").css("display","block");
@@ -297,10 +286,10 @@
 				$(".dhCks").prop("checked",false);
 			}
 		});
-	});
+	}); */
 	
 	/* 참여동행 */
-	$(function(){
+	/* $(function(){
 		$("#jDhCk1>button").click(()=>{
 			$("#jDhCk1").css("display","none");
 			$("#jDhCk2").css("display","block");
@@ -320,7 +309,7 @@
 				$(".jDhCks").prop("checked",false);
 			}
 		});
-	});
+	}); */
 	
 	$(function(){
 		$(".imgDrop").stop().css({"transform":"rotate(90deg)"});

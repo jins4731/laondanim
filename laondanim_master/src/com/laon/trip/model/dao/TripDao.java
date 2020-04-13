@@ -187,6 +187,7 @@ public class TripDao {
 		int check = 0;			   
 		ArrayList<Trip2> list = new ArrayList<Trip2>();
 		Trip2 t = null;
+		System.out.println("변화전 : " + sql);
 		
 		if(first.equals("first")) {
 			for(int i=(cPage-1)*perPage; i<cPage*perPage; i++) {
@@ -221,12 +222,12 @@ public class TripDao {
 				sql = prop.getProperty("selectTripPageSortWrite");
 			}
 			if(like.equals("null")&&recent.equals("null")) {
-				sql = prop.getProperty("selectTripPage");
+				sql = prop.getProperty("selectTripPage2");
 				check=1;
 			}
 
 			
-			if(category.equals("null") || category.equals("��ü �����")) {
+			if(category.equals("null") || category.equals("전체 여행기")) {
 				Pattern pattern = Pattern.compile("=");
 				   Matcher matcher = pattern.matcher(sql);
 				   int count = 0;
@@ -245,7 +246,7 @@ public class TripDao {
 	
 				   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+1, sql.length());
 			}
-			if(lo.equals("null") || lo.equals("���� ������")) {
+			if(lo.equals("null") || lo.equals("선택 지역별")) {
 				Pattern pattern = Pattern.compile("=");
 				   Matcher matcher = pattern.matcher(sql);
 				   int count = 0;
@@ -278,19 +279,20 @@ public class TripDao {
 				      indexs[i] =  matcher.start();
 				      i++;
 				   }
-	
+				   System.out.println("변화후"+sql);
 				   int targetIndex = indexs[1];
 				   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+4, sql.length());
 	
 			}
-			
+			System.out.println("변화 후:" + sql);
 			try {
+				
 				pstmt = conn.prepareStatement(sql);
 				
-				if(category.equals("null") || category.equals("��ü �����")) pstmt.setString(1, "null");
+				if(category.equals("null") || category.equals("전체 여행기")) pstmt.setString(1, "null");
 				else pstmt.setString(1, category);
 							
-				if(lo.equals("null") || lo.equals("���� ������")) pstmt.setString(2, "null");
+				if(lo.equals("null") || lo.equals("선택 지역별")) pstmt.setString(2, "null");
 				else pstmt.setString(2, lo);
 				
 				if(keyword.equals("null")) pstmt.setString(3, "null");
@@ -342,10 +344,10 @@ public class TripDao {
 		String sql = prop.getProperty("selectTripCount2");
 		//SELECT COUNT(*) FROM TRIP_TB WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ?
 
-		if(category.equals("null") || category.equals("��ü �����")) {
+		if(category.equals("null") || category.equals("전체 여행기")) {
 			sql =sql.replaceFirst("=", "!=");
 		}
-		if(lo.equals("null") || lo.equals("���� ������")) {
+		if(lo.equals("null") || lo.equals("선택 지역별")) {
 			sql = replaceLast(sql, "=", "!=",0);
 		}
 		if(keyword.equals("null")) {			
@@ -355,10 +357,10 @@ public class TripDao {
 		int count = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			if(category.equals("null") || category.equals("��ü �����")) pstmt.setString(1, "null");
+			if(category.equals("null") || category.equals("전체 여행기")) pstmt.setString(1, "null");
 			else pstmt.setString(1, category);
 						
-			if(lo.equals("null") || lo.equals("���� ������")) pstmt.setString(2, "null");
+			if(lo.equals("null") || lo.equals("선택 지역별")) pstmt.setString(2, "null");
 			else pstmt.setString(2, lo);
 			
 			if(keyword.equals("null")) pstmt.setString(3, "null");

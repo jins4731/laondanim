@@ -168,7 +168,6 @@
 
     <!------------------------------------------------------------------------------------------------------------------------------>
     <!-- 참여신청 모달 -->
-	<form name="donghangJoinForm" id="donghangJoinForm" method="post">
 		
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-lg" role="document">
@@ -231,21 +230,20 @@
                         <div class="d-flex flex-column justify-content-end align-items-center" style="border: 1px solid white;">
                             <fieldset class="form-group m-0">
                                 <legend for="email-label" class="bg-white p-0 m-0 w-25 text-center">자기소개</legend>
-                                <textarea class="form-control p-2" cols="87" rows="4" name="donghangJoinContent"></textarea>
+                                <textarea class="form-control p-2" cols="87" rows="4" name="donghangJoinContent" id="donghangJoinContent"></textarea>
                             </fieldset>
                         </div> 
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center border-top-0">
-                    <button id="donghangJoinSubmitBtn" type="button" class="ldBtn mb-3" data-dismiss="modal" onclick="fn_donghangJoin();">
+                    <button id="donghangJoinSubmitBtn" type="button" class="ldBtn mb-3" data-dismiss="modal" onclick="fn_DonghangJoin();">
                     	참여신청
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    
-    </form>
+
 
 
 
@@ -366,35 +364,30 @@
         
         
         //Ajax 참여신청 모달
-        function fn_donghangJoin(){
-        	let formData = $("#donghangJoinForm");	
-        	  var formData = $("#form1").serialize();
+        function fn_DonghangJoin(){
+        	alert($("#donghangJoinContent").val());
 
-              $.ajax({
-                  cache : false,
-                  url : "<%=request.getContextPath()%>/donghang/donghangJoin.do?userNo=<%=loginUser.getNo()%>&no=<%=dh.getNo()%>",
-                  type : 'POST', 
-                  data : formData, 
-                  success : function(data) {
-                      var jsonObj = JSON.parse(data);
-                      alert("성공");
-                  }, // success 
-          
-                  error : function(xhr, status) {
-                      alert(xhr + " : " + status);
-                  }
-              }); // $.ajax */
+         	$.ajax({
+        		url : "<%=request.getContextPath()%>/donghang/donghangJoin.do",
+        		type : "get",
+        		dataType : "html",
+        		data : {userNo: <%=loginUser.getNo()%>,
+	        			donghangNo: <%=dh.getNo()%>,
+	        			content: $("#donghangJoinContent").val()},
+        		success : data=>{
+        			$("#donghangJoinResult").html(data);
+        		}
+        	})    	
         }
         
-        $("#donghangJoinSubmitBtn").click(()=>{
-        	
+
+         $("#donghangJoinSubmitBtn").click(()=>{
         	setTimeout(()=>{
                 $("#donghangJoinResultModal").modal("show");
         	}, 1000)
-
         });
-
-        
+			
+		
     </script>
     
     

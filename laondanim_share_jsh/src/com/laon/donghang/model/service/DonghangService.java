@@ -13,6 +13,7 @@ import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
 import com.laon.donghang.model.dao.DonghangDao;
 import com.laon.donghang.model.vo.Donghang;
+import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.donghang.model.vo.DonghangJoinUserPicture;
 import com.laon.trip.model.vo.TripMyCon;
 import com.laon.user.model.vo.UserProfile;
@@ -151,6 +152,18 @@ public class DonghangService {
 	public int updatePicture(Picture pic) {
 		Connection conn = getConnection();
 		int result = dao.updatePicture(conn, pic);
+		if(result>0) {
+			commit(conn);
+		} else rollback(conn);
+		close(conn);
+		
+		return result;
+	}
+
+	public int donghangJoin(DonghangJoin join) {
+		Connection conn = getConnection();
+
+		int result = dao.donghangJoin(conn, join);
 		if(result>0) {
 			commit(conn);
 		} else rollback(conn);

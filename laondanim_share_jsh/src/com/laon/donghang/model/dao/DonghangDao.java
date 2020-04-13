@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import com.laon.common.PropPath; //<-com.laon.common.template.PropPath;로 되어있어 변경함
 import com.laon.donghang.model.vo.Donghang;
+import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.donghang.model.vo.DonghangJoinUserPicture;
 import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
@@ -594,6 +595,8 @@ public class DonghangDao {
 			}else {
 				pstmt.setInt(1, dh.getTripNo());
 			}
+			System.out.println("트립넘 이거 머야?ㅡㅡ");
+			System.out.println(dh.getTripNo());
 			pstmt.setString(2, dh.getTag());
 			pstmt.setString(3, dh.getTitle());
 			pstmt.setString(4, dh.getContent());
@@ -627,6 +630,27 @@ public class DonghangDao {
 			pstmt.setString(1, pic.getImage());
 			pstmt.setInt(2, pic.getDonghangNo());
 			pstmt.setInt(3, pic.getUserNo());
+						
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);	
+		}
+		return result;
+	}
+
+	public int donghangJoin(Connection conn, DonghangJoin join) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("donghangJoin");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, join.getUserNo());
+			pstmt.setInt(2, join.getDonghangNo());
+			pstmt.setString(3, join.getContent());
 						
 			result = pstmt.executeUpdate();
 			

@@ -33,9 +33,13 @@
                     <div class="d-flex flex-column pl-1" style="width: 380px;">
                         <div class="d-flex flex-row align-items-center">
                             <% if(dh.getEnded().equals("N")){%>
-                            	<div class="recruitBox d-inline-block mr-1">모집중</div>
+                            	<div class="recruitBox d-inline-block mr-1" style="line-height:14px;">
+                            		모집중
+                            	</div>
                             <%}else{%>
-                            	<div class="recruitEndBox d-inline-block mr-1">모집종료</div>
+                            	<div class="recruitEndBox d-inline-block mr-1" style="line-height:14px;">
+                            		모집종료
+                           		</div>
                             <%}%>
                             <p class="m-0"><%=dh.getTitle()%></p>
 
@@ -84,9 +88,13 @@
                             <td class="p-0">
                                 <div class="d-flex flex-row justify-content-between align-items-center">
 	                            <% if(dh.getEnded().equals("N")){%>
-                                    <div class="recruitBox">모집중</div>
+                                    <div class="recruitBox" style="line-height:14px;">
+                                    	모집중
+                                    </div>
 	                            <%}else{%>
-	                            	<div class="recruitEndBox">모집종료</div>
+	                            	<div class="recruitEndBox" style="line-height:14px;">
+	                            		모집종료
+	                            	</div>
 	                            <%}%>                           
                                     <p class="m-0">~ <%=dh.getRecruitEndDate()%></p>
                                 </div>
@@ -160,13 +168,24 @@
 
     <!------------------------------------------------------------------------------------------------------------------------------>
     <!-- 참여신청 모달 -->
+	<form name="donghangJoinForm" id="donghangJoinForm" method="post">
+		
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header d-flex justify-content-center border-bottom-0 mt-3">
                     <div class="d-flex justify-content-between align-items-center" style="width: 650px;">                        
-                        <div class="d-flex flex-row justify-content-start align-items-center">                            
-                            <div class="recruitBox d-inline-block mr-1">모집중</div>
+                        <div class="d-flex flex-row justify-content-start align-items-center"> 
+                                                   
+                            <% if(dh.getEnded().equals("N")){%>
+                            	<div class="recruitBox d-inline-block mr-1" style="line-height:14px;">
+                            		모집중
+                            	</div>
+                            <%}else{%>
+                            	<div class="recruitEndBox d-inline-block mr-1" style="line-height:14px;">
+                            		모집종료
+                           		</div>
+                            <%}%>
                             <h5 class="m-0"><%=dh.getTitle()%></h5>
                             <p class="m-0 ml-4">~ <%=dh.getRecruitEndDate()%></p>
                         </div>
@@ -212,19 +231,49 @@
                         <div class="d-flex flex-column justify-content-end align-items-center" style="border: 1px solid white;">
                             <fieldset class="form-group m-0">
                                 <legend for="email-label" class="bg-white p-0 m-0 w-25 text-center">자기소개</legend>
-                                <textarea class="form-control p-2" cols="87" rows="4"></textarea>
+                                <textarea class="form-control p-2" cols="87" rows="4" name="donghangJoinContent"></textarea>
                             </fieldset>
                         </div> 
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center border-top-0">
-                    <button id="danimJoinBtn" type="button" class="ldBtn mb-3" data-dismiss="modal">
+                    <button id="donghangJoinSubmitBtn" type="button" class="ldBtn mb-3" data-dismiss="modal" onclick="fn_donghangJoin();">
                     	참여신청
                     </button>
                 </div>
             </div>
         </div>
     </div>
+    
+    </form>
+
+
+
+	<!--  참여확인 안내 모달  ------------------------------------------------------------------------->
+    <div class="modal" id="donghangJoinResultModal">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        
+            <!-- Modal Header -->
+            <div class="modal-header border-bottom-0">
+            <!-- <h4 class="modal-title">Modal Heading</h4> -->
+            <button type="button" class="close modal-close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body" id="donghangJoinResult">
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer border-top-0">
+            <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+
+
 
     <!--스타일-->
     <style>
@@ -239,7 +288,7 @@
           transition: all .4s linear;
         }
         .recruitBox{
-            width: 40px;
+            width: 45px;
             height: 17px;
             border-radius: 15px;
             text-align: center;
@@ -248,6 +297,8 @@
             font-size: 10px;
             font-weight: 600;
             padding: 2px 4px 2px 4px;
+            display: table-cell;
+            vertical-align: middle;
         }
         .recruitEndBox{
             width: 45px;
@@ -312,6 +363,38 @@
                 $("#joinMemberBtn").removeClass('rotateBtn');
             }
         });
+        
+        
+        //Ajax 참여신청 모달
+        function fn_donghangJoin(){
+        	let formData = $("#donghangJoinForm");	
+        	  var formData = $("#form1").serialize();
+
+              $.ajax({
+                  cache : false,
+                  url : "<%=request.getContextPath()%>/donghang/donghangJoin.do?userNo=<%=loginUser.getNo()%>&no=<%=dh.getNo()%>",
+                  type : 'POST', 
+                  data : formData, 
+                  success : function(data) {
+                      var jsonObj = JSON.parse(data);
+                      alert("성공");
+                  }, // success 
+          
+                  error : function(xhr, status) {
+                      alert(xhr + " : " + status);
+                  }
+              }); // $.ajax */
+        }
+        
+        $("#donghangJoinSubmitBtn").click(()=>{
+        	
+        	setTimeout(()=>{
+                $("#donghangJoinResultModal").modal("show");
+        	}, 1000)
+
+        });
+
+        
     </script>
     
     

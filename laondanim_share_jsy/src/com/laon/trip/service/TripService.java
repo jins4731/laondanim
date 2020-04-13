@@ -82,11 +82,11 @@ public class TripService {
 		System.out.println("service ¿¡¼­ cancled : " + cancled);
 		
 		if(cancled.equals("")) {
-			insertResult = dao.insertLike(conn, tripNo, userNo);
-			if(insertResult>0) commit(conn);
+			result = dao.insertLike(conn, tripNo, userNo);
+			if(result>0) commit(conn);
 			else rollback(conn);
 		}
-		if(insertResult>0 || !cancled.equals("")){
+		if(!cancled.equals("")){
 			result = dao.updateLike(conn, tripNo, userNo, cancled);
 		}
 		

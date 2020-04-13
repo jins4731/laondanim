@@ -1,20 +1,21 @@
+<%@page import="com.laon.trip.model.vo.TripMyCon"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,com.laon.trip.model.vo.Trip,com.laon.board.model.vo.Board" %>
+<%@ page import="java.util.List,com.laon.trip.model.vo.TripMyCon,com.laon.board.model.vo.Board,com.laon.etc.model.vo.Like" %>
 <%
-	List<Trip> trip=(List)request.getAttribute("trip");
-	String tripPasing=(String)request.getAttribute("tripPasing");
+	List<TripMyCon> trip=(List)request.getAttribute("trip");
 	int tripCount=(int)request.getAttribute("tripCount");
+	List<Like> tripLike=(List)request.getAttribute("tripLike");
 
 	List<Board> board=(List)request.getAttribute("board");
 	String boardPasing=(String)request.getAttribute("boardPasing");
 	int boardCount=(int)request.getAttribute("boardCount");
 %>
     
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
 
 
 
@@ -24,14 +25,13 @@
 	   	<div class="col-4">
 			<%@ include file="/views/mypage/myPageAside.jsp" %>
 		</div>
-	
-	<div class="col-8">
-		<section>
-			<div id="myMenuBtn">
-				<button type="button" id="myCon" class="btn btn-info">내 컨텐츠</button>
-				<button type="button" id="myH" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageHeart')">내 마음함</button>
-				<button type="button" id="myDh" class="btn btn-info">내 동행</button>
-			</div>
+		<div class="col-8">
+			<section>
+				<div id="myMenuBtn">
+					<button type="button" id="myCon" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageContent.do?userNo=<%=loginUser.getNo()%>')">내 컨텐츠</button>
+					<button type="button" id="myH" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageHeart.do?userNo=<%=loginUser.getNo()%>')">내 마음함</button>
+					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong.do?userNo=<%=loginUser.getNo()%>')">내 동행</button>
+				</div>
 				<div id="myPageView">
 					<!-- 내 다님길 -->
 					<div class="menu">
@@ -49,75 +49,61 @@
 					<div>
 						<!-- 정보 -->
 						<div id="myDNInfo">
-							<div>
+							<div style="height:45px;">
 								<span>총 <%=tripCount %>개의 다님길</span>
-							</div>
-							<div id="dnCk1">
-								<button class="btn">선택삭제</button>
-							</div>
-							<div id="dnCk2">
-								<label><input type="checkbox" id="dnAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn" id="dnEndBtn">돌아가기</button>
 							</div>
 						</div>
 						<!-- 게시글위치 -->
-						<div class="carousel slide" data-ride="carousel" data-interval="false">
-							<div class="carousel-inner">
-								<div class="carousel-item active" >
-									<table id="dnTbl">
-										<tr>
-										<%for(Trip t:trip){ %>
-											<td class="p-1">
-												<div class="dnCk3" style="margin:10px;">
-													<input type="checkbox" class="dnCks" value="<%=t.getNo()%>">
+						<table id="dnTbl">
+							<tr class="d-flex flex-wrap justify-content-center">
+							<%for(TripMyCon t:trip){ %>
+								<td class="p-1">
+									<div class="card" style="width: 155px; height: 250px;" >
+										<div class="d-flex justify-content-between p-2" style="font-size:5px;">
+						    				<span><%=t.getCategory() %></span>
+						    				<span><%=t.getWriteDate() %></span>
+										</div>
+										<div>
+		                            		<div style="position: absolute;">
+			                            		<div class="dropdown" style="position: relative;">
+											    	<button type="button" class="btn" data-toggle="dropdown">
+											    	  ...
+											    	</button>
+											   	 	<div class="dropdown-menu">
+											      		<a class="dropdown-item" href="#">수정</a>
+											     		<a class="dropdown-item" href="#">삭제</a>
+											    	</div>
 												</div>
-												<div class="card" style="width: 155px; height: 255px;" >
-													<div class="d-flex justify-content-between p-2" style="font-size:5px;">
-									    				<span><%=t.getCategory() %></span>
-									    				<span><%=t.getWriteDate() %></span>
-													</div>
-													<div>
-						                            	<div style="position: absolute;">
-							                            	<div class="dropdown" style="position: relative;">
-															    <button type="button" class="btn" data-toggle="dropdown">
-															      ...
-															    </button>
-															    <div class="dropdown-menu">
-															      <a class="dropdown-item" href="#">신청서 수신함</a>
-															      <a class="dropdown-item" href="#">모집 마감</a>
-															      <a class="dropdown-item" href="#">동행 수정</a>
-															      <a class="dropdown-item" href="#">동행 삭제</a>
-															    </div>
-															</div>
-						                            	</div>
-						                            	<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
-						                            </div>
-													<div class="d-flex card-body p-2">
-														<div style="width:150px;font-size:12px;">
-															<p class="mb-0"><%=t.getTitle() %></p>
-															<span>좋아요</span>
-														</div>
-													</div>
-												</div>
-												<a class="carousel-control-prev" href="#gallery" role="button" data-slide="prev" style="width:30px;">
-													<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-													<span class="sr-only">Previous</span>
-												</a>
-												<a class="carousel-control-next" href="#gallery" role="button" data-slide="next" style="width:30px;">
-													<span class="carousel-control-next-icon" aria-hidden="true"></span>
-													<span class="sr-only">Next</span>
-												</a>
-											</td>
-										<%} %>
-										</tr>
-									</table>
-									<%=tripPasing %>
-								</div>
-							</div>
-						</div>
+											</div>
+											<%if(t.getImage()==null){ %>
+												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+											<%}else{ %>
+												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
+											<%} %>
+			                           </div>
+			                           <div class="d-flex card-body p-2">
+			                           		<div style="width:150px;font-size:12px;">
+												<p class="mb-0"><%=t.getTitle() %></p>
+												<%for(Like l:tripLike){%>
+												<%if(t.getNo()==l.getNo()) {%>
+													<span><%=l.getLikeCount() %></span>
+												<%} }%>
+											</div>
+										</div>
+									</div>
+								</td>
+							<%} %>
+							</tr>
+							<%if(trip.size()==4){ %>
+							<tr>
+								<td colspan="4" style="text-align: center;">
+									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myConTrip.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>
+								</td>
+							</tr>
+							<%} %>
+						</table>
 					</div>
-				
+					
 					<!-- 내 게시글 -->
 					<div class="menu" style="padding-top:20px;">
 						<div class="manuBar">
@@ -142,7 +128,7 @@
 							</div>
 							<div id="bdCk2">
 								<label><input type="checkbox" id="bdAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
+								<button class="btn" onclick="fnBoardDel();">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
 								<button class="btn" id="bdEndBtn">돌아가기</button>
 							</div>
 						</div>
@@ -160,7 +146,7 @@
 								<tr>
 									<td style="width:50px;">
 										<div class="bdCk3">
-											<input type="checkbox" class="bdCks" style="width:10px;">
+											<input type="checkbox" class="bdCks" name="bdCks">
 										</div>
 									</td>
 									<td style="width:100px;">
@@ -172,7 +158,9 @@
 									<td style="width:150px;">
 										<%=b.getWriteDate() %>
 									</td>
-									<td style="width:50px;"></td>
+									<td style="width:80px;">
+										<button class="btn">수정</button>
+									</td>
 								</tr>
 							<%} %>
 							</table>
@@ -200,7 +188,7 @@
         text-decoration: none;
         color:black;
         list-style:none;
-        border:1px solid green;
+        /* border:1px solid green; */
     }
     
     #myDNInfo,#myBDInfo,.manuBar{
@@ -208,11 +196,6 @@
     	justify-content: space-between;
     	margin-left: 40px;
     	margin-right: 40px;
-    }
-    
-    #dnTbl{
-    	margin-left: 60px;
-    	margin-right: 60px;
     }
 
 	#dnCk2,.dnCk3,#bdCk2,.bdCk3{
@@ -228,10 +211,8 @@
 		margin: 20px;
     	border-radius: 100px;
 	}
-	
-	.carousel-control-prev-icon { background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E"); }
-	.carousel-control-next-icon { background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E"); }
 </style>
+
 <script>
 	/* 다님길 */
 	$(function(){
@@ -294,4 +275,13 @@
 			flag=true;
 		}
 	});
+	<%-- $(function(){
+		
+		function fnBoardDel(){
+			$("input[name=bdCks]:checked").each(function() {
+				var bdCks[] = $(this).val();
+				return location.href='<%=request.getContextPath()%>/mypage/myBoardDel';
+			}
+		}
+	}); --%>
 </script>

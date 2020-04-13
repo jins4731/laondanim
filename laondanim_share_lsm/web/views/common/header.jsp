@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.laon.user.model.vo.User" %>	
+<%
+	User loginUser=(User)session.getAttribute("loginUser");
+%>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -108,7 +113,7 @@ header li>a {
 	
 		<div class="title-container">
 			<h1>
-				<div class="mainTitle-container"><a href="" >라온다님</a></div>
+				<div class="mainTitle-container"><a href="<%=request.getContextPath() %>" >라온다님</a></div>
 			</h1>
 		</div>	
 		<div class="header-container">
@@ -127,14 +132,25 @@ header li>a {
 								<a class="dropdown-item" href="#">게시판</a>
 							</div>
 						</li>
-						<!-- 세션의 멤버 값을 가져와서 null 이 아닐경우  마이페이지/로그아웃 출력, null 일경우 로그인 페이지로 이동-->
+						<%if(loginUser==null){ %>
+						<!-- 세션의 멤버 값을 가져와서 null 일경우 로그인 페이지로 이동-->
 						<li class="nav-item">
-						<a class="nav-link"href="<%=request.getContextPath()%>/login.do"> 
-							<%-- <img src="<%=request.getContextPath()%>/icon/profile_icon.png" width="50px" height="50px"> --%>
+						<a class="nav-link" href="<%=request.getContextPath()%>/user/loginPage.do">로그인
 						</a>
 						</li>
+						<%}else{ %>
+						<!-- null 이 아닐경우  마이페이지/로그아웃 출력, -->
+						<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> 
+							<img src="<%=request.getContextPath()%>/images/images.jpeg" width="50px" height="50px">
+						</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myPageContent.do?userNo=<%=loginUser.getNo()%>">마이페이지</a> 
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/user/logout.do">로그아웃</a>
+							</div>
+						</li>
+						<%} %>
 					</ul>
-
 				</nav>
 			</div>
 		</div>

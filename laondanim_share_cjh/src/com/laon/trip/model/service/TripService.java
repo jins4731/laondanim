@@ -23,23 +23,23 @@ private EtcDao etcDao = new EtcDao();
 private UserDao userDao = new UserDao();
 	public Trip selectTripViewAllData(String no) {
 		Connection conn = getConnection();
-		Trip trip = tripDao.selectTrip(conn, no);  // trip °¡Á®¿À°í
+		Trip trip = tripDao.selectTrip(conn, no);  // trip ê°€ì ¸ì˜¤ê³ 
 		User user = userDao.selectUser(conn, trip.getUserNo());
-		List<Picture> userPicList = etcDao.selectPictureListUserNo(conn,user.getNo()); //»çÁø °¡Á®¿À°í
-		user.setPictureList(userPicList); // user¿¡ »çÁø ³Ö°í
-		trip.setUser(user); // trip¿¡ user ³Ö°í
-		List<Picture> tripPicList = etcDao.selectPictureListTripNo(conn,trip.getNo()); //»çÁø °¡Á®¿À°í
-		trip.setPictureList(tripPicList);  // trip¿¡´Ù°¡ »çÁø³Ö°í
+		List<Picture> userPicList = etcDao.selectPictureListUserNo(conn,user.getNo()); //ì‚¬ì§„ ê°€ì ¸ì˜¤ê³ 
+		user.setPictureList(userPicList); // userì— ì‚¬ì§„ ë„£ê³ 
+		trip.setUser(user); // tripì— user ë„£ê³ 
+		List<Picture> tripPicList = etcDao.selectPictureListTripNo(conn,trip.getNo()); //ì‚¬ì§„ ê°€ì ¸ì˜¤ê³ 
+		trip.setPictureList(tripPicList);  // tripì—ë‹¤ê°€ ì‚¬ì§„ë„£ê³ 
 
-		List<TripSchedule> scheduleList = tripDao.selectTripScheduleList(conn,trip.getNo()); // ½ºÄÉÁì ¸ñ·Ï °¡Á®¿À°í
+		List<TripSchedule> scheduleList = tripDao.selectTripScheduleList(conn,trip.getNo()); // ìŠ¤ì¼€ì¥´ ëª©ë¡ ê°€ì ¸ì˜¤ê³ 
 		List<Integer> tripinfoNoList = new ArrayList();
 		for (TripSchedule tripSchedule : scheduleList) {
 			tripinfoNoList.add(tripSchedule.getTripinfoNo());
 		}
 		
-		List<Tripinfo> tripinfoList = tripDao.selectTripinfoWhereNoIn(conn,tripinfoNoList); // ½ºÄÉÁì ¸ñ·Ï°ú ÀÏÄ¡µÇ´Â ¿©ÇàÁ¤º¸ ¸ñ·Ï °¡Á®¿À°í
-		List<Picture> pictureList = etcDao.selectPictureWhereNoIn(conn, tripinfoNoList,"TRIPINFO_NO" ); //¿©ÇàÁ¤º¸ ¸ñ·Ï°ú ÀÏÄ¡ÇÏ´Â »çÁø¸ñ·Ï °¡Á®¿À°í
-		for (Tripinfo tripinfo : tripinfoList) { // ¿©ÇàÁ¤º¸ ¸ñ·Ï¿¡ »çÁø ¸ñ·Ï ³Ö°í
+		List<Tripinfo> tripinfoList = tripDao.selectTripinfoWhereNoIn(conn,tripinfoNoList); // ìŠ¤ì¼€ì¥´ ëª©ë¡ê³¼ ì¼ì¹˜ë˜ëŠ” ì—¬í–‰ì •ë³´ ëª©ë¡ ê°€ì ¸ì˜¤ê³ 
+		List<Picture> pictureList = etcDao.selectPictureWhereNoIn(conn, tripinfoNoList,"TRIPINFO_NO" ); //ì—¬í–‰ì •ë³´ ëª©ë¡ê³¼ ì¼ì¹˜í•˜ëŠ” ì‚¬ì§„ëª©ë¡ ê°€ì ¸ì˜¤ê³ 
+		for (Tripinfo tripinfo : tripinfoList) { // ì—¬í–‰ì •ë³´ ëª©ë¡ì— ì‚¬ì§„ ëª©ë¡ ë„£ê³ 
 			for (Picture picture : pictureList) {
 				if (tripinfo.getNo() == picture.getTripinfoNo()) {
 					tripinfo.getPictureList().add(picture);
@@ -60,8 +60,8 @@ private UserDao userDao = new UserDao();
 	
 //	public Trip selectTrip(String no) {
 //		Connection conn = getConnection();
-//		Trip trip = tripDao.selectTrip(conn, no);  // trip °¡Á®¿À°í
-////		trip.setPicture(pic);  // trip¿¡´Ù°¡ »çÁø³Ö°í
+//		Trip trip = tripDao.selectTrip(conn, no);  // trip ê°€ì ¸ì˜¤ê³ 
+////		trip.setPicture(pic);  // tripì—ë‹¤ê°€ ì‚¬ì§„ë„£ê³ 
 //		close(conn);
 //		return trip;
 //	}

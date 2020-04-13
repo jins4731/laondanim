@@ -42,6 +42,7 @@ private Properties prop=new Properties();
 			u.setUserId(rs.getString("user_id"));
 			u.setName(rs.getString("name"));
 			u.setEmail(rs.getString("email"));
+			u.setNickName(rs.getString("nick_name"));
 			
 		}
 		

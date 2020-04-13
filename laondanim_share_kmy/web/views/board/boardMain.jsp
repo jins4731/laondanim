@@ -1,10 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.List,com.laon.board.model.vo.BoardJoinUser" %>
 <%@ include file="/views/common/header.jsp"%>
+<%
+	List<BoardJoinUser> list=(List)request.getAttribute("list");
 
+	String category=(String)request.getAttribute("category");
+	String searchDetail=(String)request.getAttribute("searchDetail");
+	String searchBox=(String)request.getAttribute("searchBox");
+	int totalData=Integer.parseInt(request.getAttribute("totalData").toString());
+%>
 <style>
 .searchContainer {
-	border: 1px solid coral;
+	/* border: 1px solid coral; */
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -13,13 +21,13 @@
 }
 
 .searchBox {
-	border: 1px solid coral;
+	/* border: 1px solid coral; */
 	display: flex;
 	flex-direction: row;
 	height: 35px;
-	border: 1.5px solid #00abbf;
-	border-radius: 20px;
-	overflow: hidden;
+/* 	border: 1.5px solid #00abbf;
+	border-radius: 20px; */
+	
 }
 
 .searchBoxElement {
@@ -30,7 +38,8 @@
 	padding-left: 10px;
 	padding-right: 10px;
 	border: none;
-	background-color: #00abbf;
+	/* background-color: #00abbf; */
+	border-radius: 20px;
 	color: white;
 }
 
@@ -42,7 +51,7 @@
 
 .searchContainer input {
 	height: 30px;
-	border: none;
+	/* border: none; */
 	margin-left: 5px;
 }
 
@@ -67,8 +76,8 @@
 	align-items: center;
 	/* border: 1px solid black; */
 	width: 180px;
-	margin-right: 270px;
 	margin-left: auto;
+	margin-right: 200px;
 	margin-bottom: 30px;
 }
 
@@ -76,14 +85,21 @@
 	border: none;
 	border-bottom: 2px solid rgb(224, 224, 224);
 	background-color: white;
+
 }
 
-table * {
+table{
+	margin-left:auto;
+	margin-right:auto;
 	text-align: center;
+}
+table * {
+
+	
 }
 
 .filter {
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	width: 1000px;
 	display: flex;
 	margin-right: auto;
@@ -101,9 +117,12 @@ table * {
 }
 
 #filter-container {
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	margin-left: auto;
-	margin-right: 0px;
+	margin-right: 100px;
+}
+.print-post{
+	margin-left:100px;
 }
 
 .board-container {
@@ -111,114 +130,118 @@ table * {
 	margin-left: auto;
 	margin-right: auto;
 }
+
 </style>
 <section>
-    <div class="searchContainer">
-        <div class="searchBox">
-            <div class="searchBoxElement" data-toggle="dropdown">
-                <img src="<%=request.getContextPath()%>/icon/search_icon.png" alt="search_icon">
-                <p>키워드 검색</p>
-                <select name="searchfilter">
-                    <option value="작성자">작성자</option>
-                    <option value="제목+내용">제목+내용</option>
-                    <option value="제목+내용">제목</option>
-                    <option value="제목+내용">내용</option>
-                    <option value="제목+내용">키워드태그</option>
-                </select>
-            </div>
-            <input type="text" name="searchBox" id="searchBox" size="40px">
-        </div>
-    </div>
-<!--드롭다운 필터버튼-->
-<div class="dropdown board-dropdown">
-    <button type="button" class="btn btn-default dropdown toggle" data-toggle="dropdown">전체게시글<span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu">
-        <li><a href="#">전체게시글</a></li>
-        <li class="divider"></li>
-        <li><a href="#">질문글</a></li>
-        <li><a href="#">자유글</a></li>  
-    </ul>
-</div>
-<!--게시글 작성버튼-->
+	<div class="searchContainer">
+		<div class="searchBox">
+			
+				<img src="<%=request.getContextPath()%>/views/picture/board/search_icon.png"
+					alt="search_icon">
+				<form action="<%=request.getContextPath()%>/board/search.do" type="post" id="form">
+					<select name="category"  data-width="fit">
+						<option value="all">전체게시글</option>
+						<option value="qna">질문글</option>
+						<option value="others">자유글</option>
+					</select> 
+					<select name="searchDetail"  data-width="fit">
+						<option value="writer">작성자</option>
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+						<option value="tags">키워드태그</option>
+					</select>
+		
+				<input type="text"  name="searchBox" id="search" size="40px" style="border-radius:5px;">
+				
+				<input type="submit" class="btn btn-secondary btn-sm" id="searchSubmit" value="검색">
+				<!-- 검색한후에 버튼 필터 사용시 -->
+				<input type="hidden" value="<%=searchBox %>" id="searchBox"/>
+				<input type="hidden" value="<%=category==null?"all":category %>" id="category"/>
+				<input type="hidden" value="<%=searchDetail %>" id="searchDetail"/>
+			</form>
+		</div>
+	</div>
+	<!--게시글 작성버튼-->
 <div class="write">
-    <a href="<%=request.getContextPath()%>/board/write.do">게시글 작성<img src="<%=request.getContextPath()%>/icon/pen_icon.png"></a>
+    <a href="<%=request.getContextPath()%>/board/write.do">게시글 작성<img src="<%=request.getContextPath()%>/views/picture/board/pen_icon.png"></a>
 </div>
 <!--게시글 수 출력/필터링-->
 <div class="filter">
-    <div id="print-post">총 100건의 게시물이 있습니다</div>
+    <div class="print-post" style="text-decoration:underline;">총 <%=totalData%>건의 게시물이 있습니다</div>
     <div id="filter-container">
     <ul class="comm-filter">
-    <li><a href="#">최근 순</a></li>
-    <li><a href="#">조회수 순</a></li>
-    <li><a href="#">댓글 순</a></li>
+    <li><button class="btn btn-mg btn-outline-secondary border-0" id="recent">최근 순</button></li>
+    <li><button class="btn btn-mg btn-outline-secondary border-0" id="viewCount">조회수 순</button></li>
     </ul>
     </div>
 </div>
 <!--게시글 내용출력-->
 <div class="board-container">
-<table class="table table-bordered">
+<table class="table table-bordered" style="width:800px">
     <thead>
     <tr>
-        <th>NO</th>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>작성일</th>
-        <th>조회수</th>
+        <th style="width:10%">NO</th>
+        <th style="width:45%">제목</th>
+        <th style="width:20%">작성자</th>
+        <th style="width:15%">작성일</th>
+        <th style="width:10%">조회수</th>
     </tr>
     </thead>
+    <%for(BoardJoinUser b:list){ 
+			%>	
     <tbody>
     <tr>
-        <td>공지</td>
-        <td>커뮤니티 이용 규칙을 준수해주세요</td>
-        <td>관리자</td>
-        <td>2020.03.20</td>
-        <td>100</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>경주 벚꽃개화시기 아시는분?</td>
-        <td>경주가고싶다</td>
-        <td>2020.03.20</td>
-        <td>10</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>강릉 맛집 추천해주세요</td>
-        <td>김강릉</td>
-        <td>2020.03.20</td>
-        <td>100</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>제주도 지금 날씨 어떤가요?</td>
-        <td>이제주</td>
-        <td>2020.03.20</td>
-        <td>100</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>군산 당일치기 가능할까요?</td>
-        <td>노군산</td>
-        <td>2020.03.20</td>
-        <td>100</td>
+        <td><%=b.getNo()%></td>
+        <td>
+        <a href='<%=request.getContextPath()%>/board/boardView?no=<%=b.getNo()%>'>
+        <%=b.getTitle()%>
+        </td>
+        <td><%=b.getNickName()%></td>
+        <td><%=b.getWriteDate() %></td>
+        <td><%=b.getViewCount() %></td>
     </tr>
     </tbody>
+    <%} %>
 </table>
 <hr/>
 <!--페이징 처리하기-->
 <div class="text-center">
-    <ul class="pagination">
-        <li><a href="#"><<</a></li>
-       <li><a href="#"><</a></li>
-       <li><a href="#">1</a></li>
-       <li><a href="#">2</a></li>
-       <li><a href="#">3</a></li>
-       <li><a href="#">4</a></li>
-       <li><a href="#">5</a></li>
-       <li><a href="#">></a></li>
-       <li><a href="#">>></a></li>
-    </ul>
+       <%=request.getAttribute("pageBar") %>
 </div>
 </div>
 </section>
+<script>
+$(function(){
+		//최신 순 버튼 클릭시 최신순으로 정렬
+		//히든값에있는것으로 불러와
+	  $("#recent").click(function(){
+      	var searchBox= $("#searchBox").val();
+        var category = $("#category").val();
+        var searchDetail = $("#searchDetail").val();
+      	var recent = 'recent';
+      	var viewCount='null';
+      	location.href="<%=request.getContextPath()%>/board/search.do?searchBox="+searchBox+"&category="+category+"&searchDetail="+searchDetail+"&recent="+recent+"&viewCount="+viewCount;
+      });
+      
+      //좋아요 순 버튼 클릭시 정렬 많은 순으로 정렬
+      $("#viewCount").click(function(){
+    	  var searchBox= $("#searchBox").val();
+          var category = $("#category").val();
+          var searchDetail = $("#searchDetail").val();
+        var recent = 'null';
+        var viewCount='viewCount';
+      	location.href="<%=request.getContextPath()%>/board/search.do?searchBox="+searchBox+"&category="+category+"&searchDetail="+searchDetail+"&recent="+recent+"&viewCount="+viewCount;
+      });	
+});
+
+
+
+
+
+
+
+
+
+</script>
 <%@ include file="/views/common/footer.jsp"%> 
+

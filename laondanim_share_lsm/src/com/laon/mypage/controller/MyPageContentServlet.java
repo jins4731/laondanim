@@ -1,5 +1,10 @@
 package com.laon.mypage.controller;
 
+import static com.laon.common.MyPaging.getCurrentPage;
+import static com.laon.common.MyPaging.getEndNum;
+import static com.laon.common.MyPaging.getPageBar;
+import static com.laon.common.MyPaging.getStartNum;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -12,13 +17,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.laon.board.model.vo.Board;
 import com.laon.mypage.model.service.MypageService;
 import com.laon.trip.model.vo.Trip;
-
-import static com.laon.common.MyPaging.*;
+import com.laon.trip.model.vo.TripMyCon;
+import com.laon.user.model.vo.User;
+import com.laon.user.model.vo.UserProfile;
 
 /**
  * Servlet implementation class MyPageContentServlet
  */
-@WebServlet("/myPage/myPageContent")
+@WebServlet("/myPage/myPageContent.do")
 public class MyPageContentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -34,20 +40,25 @@ public class MyPageContentServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int currentPage = getCurrentPage(request);
-		int pagePerRow = 4;
+		int userNo=Integer.parseInt(request.getParameter("userNo"));
+		UserProfile up=new MypageService().selectUserNo(userNo);
 		
-		List<Trip> trip=new MypageService().selectMyTrip(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
-		int tripCount = new MypageService().selectMyTripCount();
-		String tripPasing = getPageBar(tripCount, currentPage, pagePerRow, request, "/myPage/myPageContent");
+		int currentPage = getCurrentPage(request);
+		int pagePerRow = 5;
+		
+		List<TripMyCon> trip=new MypageService().selectMyTrip(userNo);
+		int tripCount = new MypageService().selectMyTripCount(userNo);
+		List tripLike=new MypageService().selectTripLike(userNo);
 		
 		List<Board> board=new MypageService().selectMyBoard(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
 		int boardCount = new MypageService().selectMyBoardCount();
-		String boardPasing = getPageBar(boardCount, currentPage, pagePerRow, request, "/myPage/myPageContent");
+		String boardPasing = getPageBar(boardCount, currentPage, pagePerRow, request, "/myPage/myPageContent.do");
+		
+		request.setAttribute("userProfile", up);
 		
 		request.setAttribute("trip", trip);
-		request.setAttribute("tripPasing", tripPasing);
 		request.setAttribute("tripCount", tripCount);
+		request.setAttribute("tripLike", tripLike);
 		
 		request.setAttribute("board", board);
 		request.setAttribute("boardPasing", boardPasing);

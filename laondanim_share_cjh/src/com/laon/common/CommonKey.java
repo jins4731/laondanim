@@ -1,20 +1,20 @@
 package com.laon.common;
 
 public class CommonKey {
-	// JDBC ÇÁ·ÎÆÛÆ¼ Å° ÀÌ¸§
+	// JDBC í”„ë¡œí¼í‹° í‚¤ ì´ë¦„
 	public static final String USER = "user";
 	public static final String PASSWORD = "password";
 	public static final String DRIVER = "driver";
 	public static final String URL = "url";
 	
 	
-	// ÆÄ¶ó¸ŞÅÍ ÀÏ¹İ Å° ÀÌ¸§
+	// íŒŒë¼ë©”í„° ì¼ë°˜ í‚¤ ì´ë¦„
 	public static final String LOGGIN_USER = "logginUser";
 	public static final String CURRENT_PAGE = "currentPage";
 	
 	
 	
-	// ÆÄ¶ó¸ŞÅÍ ¸®½ºÆ® Å° ÀÌ¸§
+	// íŒŒë¼ë©”í„° ë¦¬ìŠ¤íŠ¸ í‚¤ ì´ë¦„
 	public static final String SCHEDULE_LIST = "scheduleList";
 	public static final String TRIP_LIST = "tripList";
 	public static final String TRIPINFO_LIST = "tripList";
@@ -25,7 +25,7 @@ public class CommonKey {
 	
 	
 	
-	// ÆÄ¶ó¸ŞÅÍ ¾ÆÀÌÅÛ Å° ÀÌ¸§
+	// íŒŒë¼ë©”í„° ì•„ì´í…œ í‚¤ ì´ë¦„
 	public static final String TRIP_ITEM = "tripItem";
 	public static final String USER_ITEM = "userItem";
 	public static final String PICTURE_ITEM = "pictureItem";

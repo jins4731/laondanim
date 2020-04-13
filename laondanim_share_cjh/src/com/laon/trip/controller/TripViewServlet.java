@@ -47,13 +47,13 @@ public class TripViewServlet extends HttpServlet {
 		Trip trip = new TripService().selectTripViewAllData("1");
 		
 		
-		System.out.println("¿©Çà±â : " + trip); // trip
-		System.out.println("¿©Çà±â : " + trip.getPictureList().get(0).getImage()); // trip »çÁø
-		System.out.println("¿©Çà±â : " + trip.getUser()); // User
-		System.out.println("¿©Çà±â : " + trip.getUser().getPictureList().get(0)); // User »çÁø
-		System.out.println("¿©Çà±â : " + trip.getTripScheduleList().get(0)); // ½ºÄÉÁÙ
-		System.out.println("¿©Çà±â : " + trip.getTripScheduleList().get(0).getTripinfo()); // Æ®¸³ÀÎÆ÷  
-		System.out.println("¿©Çà±â : " + trip.getTripScheduleList().get(0).getTripinfo().getPictureList().get(0)); // Æ®¸³ÀÎÆ÷ »çÁø 
+		System.out.println("ì—¬í–‰ê¸° : " + trip); // trip
+		System.out.println("ì—¬í–‰ê¸° : " + trip.getPictureList().get(0).getImage()); // trip ì‚¬ì§„
+		System.out.println("ì—¬í–‰ê¸° : " + trip.getUser()); // User
+		System.out.println("ì—¬í–‰ê¸° : " + trip.getUser().getPictureList().get(0)); // User ì‚¬ì§„
+		System.out.println("ì—¬í–‰ê¸° : " + trip.getTripScheduleList().get(0)); // ìŠ¤ì¼€ì¤„
+		System.out.println("ì—¬í–‰ê¸° : " + trip.getTripScheduleList().get(0).getTripinfo()); // íŠ¸ë¦½ì¸í¬  
+		System.out.println("ì—¬í–‰ê¸° : " + trip.getTripScheduleList().get(0).getTripinfo().getPictureList().get(0)); // íŠ¸ë¦½ì¸í¬ ì‚¬ì§„ 
 		
 
 		response.setCharacterEncoding("UTF-8");

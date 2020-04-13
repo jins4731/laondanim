@@ -134,7 +134,11 @@ header li>a {
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">커뮤니티</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangListView.do">동행찾기</a> 
+						<%if(loginUser==null){ %>
+								<a class="dropdown-item" href="javascript:alert('[회원공개] 로그인 해주세요.');">동행찾기</a>	
+						<%}else{ %>												
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangListView.do?userTag=<%=loginUser.getTag()%>">동행찾기</a> 
+						<%} %>								
 								<a class="dropdown-item" href="<%=request.getContextPath()%>/board/list.do">게시판</a>
 							</div>
 						</li>

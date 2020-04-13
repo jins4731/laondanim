@@ -13,7 +13,9 @@ public class Board {
 	private String content;
 	private char deleted;
 	
-	public Board() {}
+	public Board() {
+		
+	}
 
 	public Board(int no, int userNo, String category, Date writeDate, int viewCount, String tag, String title,
 			String content, char deleted) {

@@ -266,7 +266,7 @@ public Board rsProcess(Board item, ResultSet rs) throws SQLException {
 
 
 @Override
-public Board mrProcess(Board item, MultipartRequest mr, Picture pic) {
+public Board mrProcess(Board item, MultipartRequest mr, List<Picture> picList) {
 	// TODO Auto-generated method stub
 	return null;
 }

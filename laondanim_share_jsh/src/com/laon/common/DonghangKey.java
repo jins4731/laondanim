@@ -23,6 +23,8 @@ public class DonghangKey {
 	public static final String DELETED = "deleted";
 	public static final String RECRUIT_PEOPLE_NO = "recruitPeopleNo";
 	public static final String JOIN_PEOPLE_NO = "joinPeopleNo";
+
+	public static final String JOIN_PEOPLE = "joinPeople"; //참여멤버
 	
 
 }

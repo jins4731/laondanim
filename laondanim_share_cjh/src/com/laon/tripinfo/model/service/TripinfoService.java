@@ -32,4 +32,11 @@ public class TripinfoService {
 		close(conn);
 		return result;
 	}
+
+	public List<Tripinfo> selectTripInfoWheresList(String[] scheduleNoList) {
+		Connection conn = getConnection();
+		List<Tripinfo> list = dao.selectTripInfoWheresList(conn,scheduleNoList);
+		close(conn);
+		return list;
+	}
 }

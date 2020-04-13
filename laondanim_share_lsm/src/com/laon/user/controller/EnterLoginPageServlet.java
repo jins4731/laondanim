@@ -26,6 +26,8 @@ public class EnterLoginPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//로그인 페이지에 접속하는 서블릿
+		//로그인클릭-> 로그인 페이지로 이동
 		request.getRequestDispatcher("/views/user/login.jsp").forward(request, response);
 	}
 

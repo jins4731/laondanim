@@ -119,7 +119,7 @@ header li>a {
 	
 		<div class="title-container">
 			<h1>
-				<div class="mainTitle-container"><a href="" >라온다님</a></div>
+				<div class="mainTitle-container"><a href="<%=request.getContextPath()%>/" >라온다님</a></div>
 			</h1>
 		</div>	
 		<div class="header-container">

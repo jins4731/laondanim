@@ -62,11 +62,10 @@ public class Donghang {
  // 참여 인원 넘버 동행 참여 인원
  private int joinPeopleNo;
  
- public Donghang() {
+ 
+public Donghang() {
 	// TODO Auto-generated constructor stub
 }
- 
-
  
 
  public Donghang(int no, int userNo, int tripNo, Date writeDate, int viewcount, String tag, String title, String content,

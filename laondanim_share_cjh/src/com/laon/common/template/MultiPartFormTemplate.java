@@ -3,6 +3,8 @@ package com.laon.common.template;
 import static com.laon.common.template.MsgTemplate.sendMSG;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +15,6 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import com.laon.common.PictureKey;
 import com.laon.common.etc.MyFileRenamePolicy;
 import com.laon.common.robot.LaonRobot;
-import com.laon.etc.model.service.EtcService;
 import com.laon.etc.model.vo.Picture;
 import com.oreilly.servlet.MultipartRequest;
 
@@ -46,14 +47,17 @@ public class MultiPartFormTemplate {
 		
 		
 		MultipartRequest mr;
-		Picture picture = new Picture();
+		List<Picture> pictureList = new ArrayList();
 		try {
 			mr = new MultipartRequest(request, saveDir, maxSize,encoding, new MyFileRenamePolicy());
-			picture = picture.mrProcess(picture, mr, null);
-			item = robot.mrProcess(item, mr,picture);
+//			picture = picture.mrProcess(picture, mr, null);
+			item = robot.mrProcess(item, mr,pictureList);
 			
-			System.out.println("원본파일 이름 : " + picture.getImage());
-			System.out.println("수정된 파일이름 : " + mr.getFilesystemName(PictureKey.IMAGE));
+			for (Picture picture : pictureList) {
+				System.out.println("업로드된 파일 이름 : " + picture.getImage());
+				
+			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

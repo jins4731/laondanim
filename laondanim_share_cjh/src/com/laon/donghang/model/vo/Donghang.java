@@ -3,6 +3,7 @@ package com.laon.donghang.model.vo;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.laon.common.DonghangKey;
@@ -15,7 +16,7 @@ import com.oreilly.servlet.MultipartRequest;
 public class Donghang implements LaonRobot<Donghang>{
 		
 	
-private Picture picture;
+private List<Picture> pictureList;
 
  // 넘버 동행 기본키
  private int no;
@@ -117,6 +118,29 @@ public String toString() {
 			+ travleEndDate + ", recruitStartDate=" + recruitStartDate + ", recruitEndDate=" + recruitEndDate + ", pw="
 			+ pw + ", publicEnabled=" + publicEnabled + ", ended=" + ended + ", deleted=" + deleted
 			+ ", recruitPeopleNo=" + recruitPeopleNo + ", joinPeopleNo=" + joinPeopleNo + "]";
+}
+
+
+
+
+
+
+
+
+
+
+public List<Picture> getPictureList() {
+	if(pictureList == null) {
+		pictureList = new ArrayList<Picture>();
+	}
+	return pictureList;
+}
+
+
+
+
+public void setPictureList(List<Picture> pictureList) {
+	this.pictureList = pictureList;
 }
 
 
@@ -499,9 +523,19 @@ public Donghang rsProcess(Donghang item, ResultSet rs) throws SQLException {
 
 
 @Override
-public Donghang mrProcess(Donghang item, MultipartRequest mr, Picture pic) {
-	picture = pic;
-	picture.setImage(mr.getOriginalFileName(PictureKey.IMAGE));
+public Donghang mrProcess(Donghang item, MultipartRequest mr, List<Picture> picList) {
+	// 사진 추가
+		pictureList = picList;
+		String fileNames = mr.getParameter("fileNames");
+		fileNames = fileNames.substring(0, fileNames.length()-1);
+		String[] fileName = fileNames.split(",");
+		for (int i = 0; i < fileName.length; i++) {
+			Picture pic = new Picture();
+			pic.setImage(fileName[i]);
+			pictureList.add(pic);
+		}
+		
+		
 	item.setNo(Integer.parseInt(mr.getParameter(DonghangKey.NO)));
 	item.setUserNo(Integer.parseInt(mr.getParameter(DonghangKey.USER_NO)));
 	item.setTripNo(Integer.parseInt(mr.getParameter(DonghangKey.TRIP_NO)));

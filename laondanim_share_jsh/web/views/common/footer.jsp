@@ -1,5 +1,3 @@
-<%@page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <footer>
         <p>&lt;CopyRight 2020. <Strong>Laondanim</Strong>
         .All right reserved.&gt;</p>
@@ -8,6 +6,7 @@
 	        $('select').selectpicker();
 	</script>
 </footer>
+
 </body>
 </html>
 

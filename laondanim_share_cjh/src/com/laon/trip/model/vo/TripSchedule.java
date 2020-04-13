@@ -4,14 +4,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.laon.common.TripScheduleKey;
 import com.laon.common.robot.LaonRobot;
 import com.laon.etc.model.vo.Picture;
+import com.laon.tripinfo.model.vo.Tripinfo;
 import com.oreilly.servlet.MultipartRequest;
 
 //여행 일정 테이블
 public class TripSchedule implements LaonRobot<TripSchedule> {
-
+	
+	private Tripinfo tripinfo;
+	
+	
 	// 넘버 여행기 일정 기본키
 	private int no;
 
@@ -53,6 +56,16 @@ public class TripSchedule implements LaonRobot<TripSchedule> {
 	public String toString() {
 		return "TripSchedule [no=" + no + ", tripNo=" + tripNo + ", tripinfoNo=" + tripinfoNo + ", day=" + day
 				+ ", orders=" + orders + ", requiredHours=" + requiredHours + ", transport=" + transport + "]";
+	}
+
+	
+	
+	public Tripinfo getTripinfo() {
+		return tripinfo;
+	}
+
+	public void setTripinfo(Tripinfo tripinfo) {
+		this.tripinfo = tripinfo;
 	}
 
 	public int getNo() {
@@ -167,7 +180,7 @@ public class TripSchedule implements LaonRobot<TripSchedule> {
 	}
 
 	@Override
-	public TripSchedule mrProcess(TripSchedule item, MultipartRequest mr, Picture pic) {
+	public TripSchedule mrProcess(TripSchedule item, MultipartRequest mr, List<Picture> picList) {
 		// TODO Auto-generated method stub
 	
 		return null;

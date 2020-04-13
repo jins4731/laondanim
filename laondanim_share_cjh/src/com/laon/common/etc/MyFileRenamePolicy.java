@@ -3,11 +3,13 @@ package com.laon.common.etc;
 import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
 public class MyFileRenamePolicy implements FileRenamePolicy {
-
+	private static Map<String,String> map = new HashMap();
 	@Override
 	public File rename(File oldFile) {
 		File newFile = null;
@@ -25,10 +27,23 @@ public class MyFileRenamePolicy implements FileRenamePolicy {
 			newFile = new File(folderPath, fileName);
 
 		} while (!overlapCheck(newFile));
-
+		
+		System.out.println("oldFile : " +oldFile.getName() + " newFile : " +  newFile.getName());
+		map.put(oldFile.getName(), newFile.getName());
 		return newFile;
 	}
 	
+	
+	public static Map<String, String> getMap() {
+		return map;
+	}
+
+
+	public static void setMap(Map<String, String> map) {
+		map = map;
+	}
+
+
 	private boolean overlapCheck(File file) {
 		try {
 			return file.createNewFile();

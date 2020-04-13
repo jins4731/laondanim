@@ -24,11 +24,11 @@ public class EtcService {
 
 
 
-	public Picture selectPictureUserNo(int no) {
+	public List<Picture> selectPictureUserNo(int no) {
 		Connection conn = getConnection();
-		Picture pic = dao.selectPictureUserNo(conn,no);
+		List<Picture> picList = dao.selectPictureListUserNo(conn,no);
 		close(conn);
-		return pic;
+		return picList;
 	}
 
 

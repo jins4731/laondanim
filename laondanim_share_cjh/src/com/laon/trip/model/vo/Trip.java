@@ -4,18 +4,24 @@ package com.laon.trip.model.vo;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.laon.common.PictureKey;
 import com.laon.common.TripKey;
 import com.laon.common.robot.LaonRobot;
 import com.laon.etc.model.vo.Picture;
+import com.laon.user.model.vo.User;
 import com.oreilly.servlet.MultipartRequest;
 
 //여행기 테이블
 public class Trip implements LaonRobot<Trip>{
 	
-private Picture picture;
+private List<Picture> pictureList;
+
+private User user;
+
+private List<TripSchedule> tripScheduleList;
 
  // 넘버 여행기 기본키
  private int no;
@@ -98,6 +104,72 @@ public String toString() {
 			+ tag + ", title=" + title + ", content=" + content + ", travleLocale=" + travleLocale + ", peopleNum="
 			+ peopleNum + ", travleType=" + travleType + ", travleStartDate=" + travleStartDate + ", travleEndDate="
 			+ travleEndDate + ", publicEnabled=" + publicEnabled + ", deleted=" + deleted + "]";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public User getUser() {
+	return user;
+}
+
+
+
+
+
+public void setUser(User user) {
+	this.user = user;
+}
+
+
+
+
+
+public List<TripSchedule> getTripScheduleList() {
+	return tripScheduleList;
+}
+
+
+
+
+
+public void setTripScheduleList(List<TripSchedule> tripScheduleList) {
+	this.tripScheduleList = tripScheduleList;
+}
+
+
+
+
+
+
+
+
+
+
+public List<Picture> getPictureList() {
+	if(pictureList == null) {
+		pictureList = new ArrayList<Picture>();
+	}
+	return pictureList;
+}
+
+
+
+
+
+public void setPictureList(List<Picture> pictureList) {
+	this.pictureList = pictureList;
 }
 
 
@@ -423,9 +495,7 @@ public Trip rsProcess(Trip item, ResultSet rs) throws SQLException {
 
 
 @Override
-public Trip mrProcess(Trip item, MultipartRequest mr, Picture pic) {
-	picture = pic;
-	picture.setImage(mr.getOriginalFileName(PictureKey.IMAGE));
+public Trip mrProcess(Trip item, MultipartRequest mr, List<Picture> picList) {
 	item.setUserNo(Integer.parseInt(mr.getParameter(TripKey.USER_NO)));
 	item.setCategory(mr.getParameter(TripKey.CATEGORY));
 	item.setWriteDate(Date.valueOf(mr.getParameter(TripKey.WRITE_DATE)));
@@ -439,6 +509,33 @@ public Trip mrProcess(Trip item, MultipartRequest mr, Picture pic) {
 	item.setTravleEndDate(Date.valueOf(mr.getParameter(TripKey.TRAVLE_END_DATE)));
 	item.setPublicEnabled(mr.getParameter(TripKey.PUBLIC_ENABLED));
 	item.setDeleted(mr.getParameter(TripKey.DELETED));
+	
+	
+	// 스케줄 추가
+	int scheduleNum = 0;
+	tripScheduleList = new ArrayList<TripSchedule>(); 
+	for (int i = 0; i < scheduleNum; i++) {
+		TripSchedule schedule = new TripSchedule();
+		schedule.setTripinfoNo(Integer.parseInt(mr.getParameter("")));
+		schedule.setDay(Integer.parseInt(mr.getParameter("")));
+		schedule.setOrders(Integer.parseInt(mr.getParameter("")));
+		schedule.setRequiredHours(mr.getParameter(""));
+		schedule.setTransport(mr.getParameter(""));
+	}
+	
+	
+	// 사진 추가
+	pictureList = picList;
+	String fileNames = mr.getParameter("fileNames");
+	fileNames = fileNames.substring(0, fileNames.length()-1);
+	String[] fileName = fileNames.split(",");
+	for (int i = 0; i < fileName.length; i++) {
+		Picture pic = new Picture();
+		pic.setImage(fileName[i]);
+		pictureList.add(pic);
+	}
+	
+	
 	return item;
 }
 }

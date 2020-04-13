@@ -25,14 +25,14 @@ import com.oreilly.servlet.multipart.FileRenamePolicy;
 /**
  * Servlet implementation class DonghangWriteEndServlet
  */
-@WebServlet(name="DonghangWriteEndServlet", urlPatterns = "/donghang/donghangWriteEnd.do")
-public class DonghangWriteEndServlet extends HttpServlet {
+@WebServlet(name="DonghangUpdateEndServlet", urlPatterns = "/donghang/donghangUpdateEnd.do")
+public class DonghangUpdateEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DonghangWriteEndServlet() {
+    public DonghangUpdateEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,7 +41,6 @@ public class DonghangWriteEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		
 		if(!ServletFileUpload.isMultipartContent(request)) {
 			request.setAttribute("msg","multipart-form error");
@@ -56,6 +55,7 @@ public class DonghangWriteEndServlet extends HttpServlet {
 		MultipartRequest mr=new MultipartRequest(request, path, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 
 		int userNo = Integer.parseInt(mr.getParameter("userNo"));
+		int no = Integer.parseInt(mr.getParameter("no"));
 		//저장 값 받기
 		String title = mr.getParameter("donghangTitle");
 		String image = mr.getFilesystemName("imageFile");
@@ -86,8 +86,7 @@ public class DonghangWriteEndServlet extends HttpServlet {
 		
 		
 		String publicEnabled = mr.getParameter("publicEnabled");
-		if(publicEnabled==null) publicEnabled = "비공개";
-		System.out.println(publicEnabled);
+
 		if(publicEnabled.equals("공개")||publicEnabled.equals("on")) {
 			publicEnabled = "N";
 		}else {
@@ -105,31 +104,27 @@ public class DonghangWriteEndServlet extends HttpServlet {
 		String content = mr.getParameter("content");
 		String tag = mr.getParameter("tag");
 		
-		//동행&사진 테이블을 위한 시퀀스 번호를 가져와서 저장
-		int donghangNo = new DonghangService().selectDonghangSeqNextVal();
-		System.out.println(donghangNo);
-		System.out.println("메소드 실행 전 :"+donghangNo);
+
 		//vo저장
-		Donghang donghang = new Donghang(donghangNo, userNo, tripNo, null, 0, tag, title, content,
+		Donghang donghang = new Donghang(no, userNo, tripNo, null, 0, tag, title, content,
 				travleLocale, sqlTravelStartDate, sqlTravelEndDate, sqlRecruitStartDate, sqlRecruitEndDate,
 				pw, publicEnabled, "N", "N", recruitPeopleNo, 0);
 		//insert 결과
-		int dhResult = new DonghangService().insertDonghaong(donghang);
-		System.out.println("실행 후 :"+donghangNo);
+		int dhResult = new DonghangService().updateDonghaong(donghang);
 		//사진 저장
-		Picture pic = new Picture(0, 0, 0, donghangNo+1, userNo, image);
+		Picture pic = new Picture(0, 0, 0, no, userNo, image);
 		//insert 결과
-		int ptResult  = new DonghangService().insertPicture(pic);
+		int ptResult  = new DonghangService().updatePicture(pic);
 
 		int result = dhResult*ptResult;
 		String msg = "";
 		String loc = "";
 		if(result > 0) {
-			msg = "동행찾기 글이 등록되었습니다.";
-			loc = "/donghang/donghangListView.do";
+			msg = "동행찾기 글이 수정되었습니다.";
+			loc = "/donghang/donghangView.do?no="+no;
 		}else {
-			msg = "동행찾기 글 등록에 실패하였습니다. 다시 시도해주세요.";
-			loc = "/donghang/donghangWriteEnd.do?userNo="+userNo;
+			msg = "동행찾기 글 수정에 실패하였습니다. 다시 시도해주세요.";
+			loc = "/donghang/donghangUpdateEnd.do?userNo="+userNo+"&no="+no;
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);

@@ -45,18 +45,11 @@ public class DonghangUpdateServlet extends HttpServlet {
 		List<TripMyCon> list = new DonghangService().selectMyTripList(userNo);
 		//LIKE LIST
 		List<Like> likeList = new DonghangService().selectLike(list);
-		System.out.println(donghangItem);
-		for(TripMyCon t : list) {
-			System.out.println("trList ==== "+t);
-		}
-		for(Like l : likeList) {
-			System.out.println("LikeList ==== "+l);
-		}
-		
-		request.setAttribute(CommonKey.TRIP_LIST, list);
-		request.setAttribute(CommonKey.LIKE_LIST, likeList);
 		
 		request.setAttribute(CommonKey.DONGHANG_ITEM, donghangItem);
+		request.setAttribute(CommonKey.TRIP_LIST, list);
+		request.setAttribute(CommonKey.LIKE_LIST, likeList);	
+
 		
 		request.getRequestDispatcher("/views/donghang/donghangUpdate.jsp").forward(request, response);
 	}

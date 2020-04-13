@@ -117,7 +117,7 @@ public class DonghangService {
 			commit(conn);
 		} else rollback(conn);
 		close(conn);
-		System.out.println("pic저장됨?:"+result);
+		
 		return result;
 	}
 
@@ -136,5 +136,26 @@ public class DonghangService {
 		DonghangJoinUserPicture donghang = dao.selectDonghangJoinUserPicture(conn, no);
 		close(conn);
 		return donghang;
+	}
+
+	public int updateDonghaong(Donghang donghang) {
+		Connection conn = getConnection();
+		int result = dao.updateDonghaong(conn, donghang);
+		if(result>0) {
+			commit(conn);
+		} else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int updatePicture(Picture pic) {
+		Connection conn = getConnection();
+		int result = dao.updatePicture(conn, pic);
+		if(result>0) {
+			commit(conn);
+		} else rollback(conn);
+		close(conn);
+		
+		return result;
 	}
 }

@@ -61,6 +61,7 @@ public class DonghangDao {
 	private String selectDonghangView = "selectDonghangView";
 	private String selectDonghangJoinMember = "selectDonghangJoinMember";
 	private String selectDonghangJoinUserPicture = "selectDonghangJoinUserPicture";
+	private String updateDonghaong = "updateDonghaong";
 
 	public DonghangDao() {
 		try {
@@ -100,7 +101,11 @@ public class DonghangDao {
 		while (rs.next()) {
 			donghang.setNo(rs.getInt(no));
 			donghang.setUserNo(rs.getInt(userNo));
-			donghang.setTripNo(rs.getInt(tripNo));
+			if(rs.getObject(tripNo)==null) {
+				donghang.setTripNo((Integer) null);
+			}else {
+				donghang.setTripNo(rs.getInt(tripNo));				
+			}
 			donghang.setWriteDate(rs.getDate(writeDate));
 			donghang.setViewcount(rs.getInt(viewcount));
 			donghang.setTag(rs.getString(tag));
@@ -130,7 +135,11 @@ public class DonghangDao {
 			DonghangJoinUserPicture donghang = new DonghangJoinUserPicture();
 			donghang.setNo(rs.getInt(no));
 			donghang.setUserNo(rs.getInt(userNo));
-			donghang.setTripNo(rs.getInt(tripNo));
+			if(rs.getObject(tripNo)==null) {
+				donghang.setTripNo((Integer) null);
+			}else {
+				donghang.setTripNo(rs.getInt(tripNo));				
+			}
 			donghang.setWriteDate(rs.getDate(writeDate));
 			donghang.setViewcount(rs.getInt(viewcount));
 			donghang.setTag(rs.getString(tag));
@@ -560,6 +569,64 @@ public class DonghangDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, no);
+						
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);	
+		}
+		return result;
+	}
+
+	public int updateDonghaong(Connection conn, Donghang dh) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty(updateDonghaong);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+//			TAG, TITLE, CONTENT, TRAVLE_LOCALE, TRAVLE_START_DATE, TRAVLE_END_DATE, RECRUIT_START_DATE, RECRUIT_END_DATE, PW, PUBLIC_ENABLED, RECRUIT_PEOPLE_NO			
+
+			if((Integer)dh.getTripNo()==null) {
+				pstmt.setInt(1, (Integer) null);
+			}else {
+				pstmt.setInt(1, dh.getTripNo());
+			}
+			pstmt.setString(2, dh.getTag());
+			pstmt.setString(3, dh.getTitle());
+			pstmt.setString(4, dh.getContent());
+			pstmt.setString(5, dh.getTravleLocale());
+			pstmt.setDate(6, dh.getTravleStartDate());
+			pstmt.setDate(7, dh.getTravleEndDate());
+			pstmt.setDate(8, dh.getRecruitStartDate());
+			pstmt.setDate(9, dh.getRecruitEndDate());
+			pstmt.setInt(10, dh.getPw());
+			pstmt.setString(11, dh.getPublicEnabled());
+			pstmt.setInt(12, dh.getRecruitPeopleNo());
+			pstmt.setInt(13, dh.getNo());
+						
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);	
+		}
+		return result;
+	}
+
+	public int updatePicture(Connection conn, Picture pic) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updatePicture");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pic.getImage());
+			pstmt.setInt(2, pic.getDonghangNo());
+			pstmt.setInt(3, pic.getUserNo());
 						
 			result = pstmt.executeUpdate();
 			

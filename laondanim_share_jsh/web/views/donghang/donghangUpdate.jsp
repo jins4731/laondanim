@@ -10,20 +10,12 @@
 <%@page import="com.laon.common.CommonKey" %>
 
 <%
+
 	List<TripMyCon> tripList = (List<TripMyCon>)request.getAttribute(CommonKey.TRIP_LIST);
 	List<Like> likeList = (List<Like>)request.getAttribute(CommonKey.LIKE_LIST);
 	
 	DonghangJoinUserPicture dh = (DonghangJoinUserPicture)request.getAttribute(CommonKey.DONGHANG_ITEM);
-	
-	System.out.println("_______________________왜안될까..?________________________");
-	for(TripMyCon t : tripList){
-		System.out.println(t);	
-	}
-	for(Like l : likeList){
-		System.out.println(l);	
-	}
-	System.out.println(dh);	
-	
+		
 %>
 
 <%@ include file="/views/common/header.jsp"%>
@@ -31,7 +23,7 @@
     <section class="d-flex flex-column justify-content-center align-items-center">
         <div style="width: 1366px;" class="d-flex flex-column justify-content-center align-items-center">
 
-    <form action="<%=request.getContextPath() %>/donghang/donghangWriteEnd.do?userNo=<%=loginUser.getNo()%>" method="post"
+    <form action="<%=request.getContextPath() %>/donghang/donghangUpdateEnd.do?userNo=<%=loginUser.getNo()%>&no=<%=dh.getNo()%>" method="post"
     	enctype="multipart/form-data">
             <!-- 제목 -->
             <div class="d-flex flex-column justify-content-center align-items-center" style="height: 150px; border: 1px solid white;">
@@ -52,6 +44,9 @@
                     <img id="preview" style="width: 100%; height: 100%;" src="/uload/image/<%=dh.getImage()%>">
                 </div>
 
+				<script>
+					console.log("<%=dh.getTravleLocale()%>");
+				</script>
 
                 <table class="p-0" style="width: 300px; height: 250px;">
                     <tr>
@@ -61,24 +56,24 @@
                         <td class="p-0 border-bottom">
                             <div class="form-group m-0">
                                 <select name="travelLocalSelect" class="form-control border-0" id="travelLocalSelect" required>
-                                  <option value="" disabled selected>관심지역 선택</option>
-                                  <option>서울</option>
-                                  <option>부산</option>
-                                  <option>대구</option>
-                                  <option>인천</option>
-                                  <option>광주</option>
-                                  <option>대전</option>
-                                  <option>울산</option>
-                                  <option>세종</option>
-                                  <option>경기</option>
-                                  <option>강원</option>
-                                  <option>충청북도</option>
-                                  <option>충청남도</option>
-                                  <option>전라북도</option>
-                                  <option>전라남도</option>
-                                  <option>경상북도</option>
-                                  <option>경상남도</option>
-                                  <option>제주도</option>
+                                  <option value="" disabled>관심지역 선택</option>
+                                  <option <%=dh.getTravleLocale().equals("서울")?"selected":""%>>서울</option>
+                                  <option <%=dh.getTravleLocale().equals("부산")?"selected":""%>>부산</option>
+                                  <option <%=dh.getTravleLocale().equals("대구")?"selected":""%>>대구</option>
+                                  <option <%=dh.getTravleLocale().equals("인천")?"selected":""%>>인천</option>
+                                  <option <%=dh.getTravleLocale().equals("광주")?"selected":""%>>광주</option>
+                                  <option <%=dh.getTravleLocale().equals("대전")?"selected":""%>>대전</option>
+                                  <option <%=dh.getTravleLocale().equals("울산")?"selected":""%>>울산</option>
+                                  <option <%=dh.getTravleLocale().equals("세종")?"selected":""%>>세종</option>
+                                  <option <%=dh.getTravleLocale().equals("경기")?"selected":""%>>경기</option>
+                                  <option <%=dh.getTravleLocale().equals("강원")?"selected":""%>>강원</option>
+                                  <option <%=dh.getTravleLocale().equals("충청북도")?"selected":""%>>충청북도</option>
+                                  <option <%=dh.getTravleLocale().equals("충청남도")?"selected":""%>>충청남도</option>
+                                  <option <%=dh.getTravleLocale().equals("전라북도")?"selected":""%>>전라북도</option>
+                                  <option <%=dh.getTravleLocale().equals("전라남도")?"selected":""%>>전라남도</option>
+                                  <option <%=dh.getTravleLocale().equals("경상북도")?"selected":""%>>경상북도</option>
+                                  <option <%=dh.getTravleLocale().equals("경상남도")?"selected":""%>>경상남도</option>
+                                  <option <%=dh.getTravleLocale().equals("제주도")?"selected":""%>>제주도</option>
                                 </select>                                    
                             </div>
                             <input type="hidden" id="travelLocal" name="travelLocal">
@@ -89,10 +84,10 @@
                         <td class="p-0 pt-2">동행인원수</td>
                     </tr>
                     <td class="p-0 border-bottom d-flex align-items-center">
-                        <button id="minus" class="ml-3"></button>
+                        <div id="minus" class="ml-3"></div>
                         <input type="number" class="form-control w-50 text-center border-0" value="1" placeholder="동행(모집) 인원" name="recruitPeopleNo" id="recruitPeopleNo" 
                         	value="<%=dh.getRecruitPeopleNo()%>" required>
-                        <button id="plus"></button>
+                        <div id="plus"></div>
                     </td>
                     </tr>
                     <tr>
@@ -158,7 +153,7 @@
                 <div class="d-flex flex-column justify-content-center align-items-center" style="height: 150px; border: 1px solid white;">
                     <button type="button" id="danimLinkBtn" class="ldBtn mb-3" data-toggle="modal" data-target="#myModal">다님일정 연결하기</button>
                     <div id="danimTitleBox"><strong class="mr-3">연결된 다님일정</strong>
-                    	<span id="danimTitle"><%if(dh.getTripNo()!=0)tripList.get(dh.getTripNo()).getTitle();%></span>
+                    	<span id="danimTitle"><%=((Integer)dh.getTripNo()!=null)?tripList.get(dh.getTripNo()).getTitle():""%></span>
                     </div>
                 </div>
 
@@ -190,7 +185,7 @@
                 <!-- 취소/등록 -->
                 <div class="d-flex justify-content-center align-items-center" style="height: 120px; border: 1px solid white;">
                     <button type="button" id="cancel" class="ldBtnInactive mr-3 mb-3">취소하기</button>
-                    <input type="submit" value="등록하기" id="submit" class="ldBtn ml-3 mb-3">
+                    <input type="submit" value="수정완료" id="submit" class="ldBtn ml-3 mb-3">
                 </div>
             
 
@@ -216,7 +211,7 @@
                                             <label>
                                             <li class="pr-1">
                                             	<input type="checkbox" name="selectTrip" id="<%=tripList.get(i).getNo()%>" value="<%=tripList.get(i).getNo()%>"
-                                            		onclick="doOpenCheck(this);">
+                                            		onclick="doOpenCheck(this);" <%=dh.getTripNo()==tripList.get(i).getNo()?"checked":""%>>
                                                 <div class="card" style="width: 235px; height: 385px;" >
                                                     <div class="d-flex justify-content-between p-2">
                                                         <span><%=tripList.get(i).getCategory()%></span>
@@ -316,6 +311,7 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    cursor: pointer;
                 }  
                 input[name="imageFile"]{    
                     display:none;
@@ -352,9 +348,9 @@
                     console.log($("#recruitPeopleNo").val());
                 });
                 $("#plus").click(()=>{
-                        peopleNum++;
-                        $("#recruitPeopleNo").val(peopleNum);
-                        console.log($("#recruitPeopleNo").val());
+                    peopleNum++;
+                    $("#recruitPeopleNo").val(peopleNum);
+                    console.log($("#recruitPeopleNo").val());
                 });
 
                 /*파일로 올린 사진을 미리보기*/

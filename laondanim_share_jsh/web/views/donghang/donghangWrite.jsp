@@ -75,9 +75,9 @@
                         <td class="p-0 pt-2">동행인원수</td>
                     </tr>
                     <td class="p-0 border-bottom d-flex align-items-center">
-                        <button id="minus" class="ml-3"></button>
+                        <div id="minus" class="ml-3"></div>
                         <input type="number" class="form-control w-50 text-center border-0" value="1" placeholder="동행(모집) 인원" name="recruitPeopleNo" id="recruitPeopleNo" required>
-                        <button id="plus"></button>
+                        <div id="plus"></div>
                     </td>
                     </tr>
                     <tr>
@@ -292,6 +292,7 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    cursor: pointer;
                 }  
                 input[name="imageFile"]{    
                     display:none;

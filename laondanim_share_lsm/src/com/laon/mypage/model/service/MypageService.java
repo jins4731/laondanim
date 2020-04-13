@@ -12,8 +12,10 @@ import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.donghang.model.vo.MyDong;
 import com.laon.etc.model.vo.Like;
+import com.laon.etc.model.vo.Picture;
 import com.laon.mypage.model.dao.MypageDao;
 import com.laon.trip.model.vo.TripMyCon;
+import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
 public class MypageService {
@@ -35,13 +37,16 @@ public class MypageService {
 		return flag;
 	}
 	
-	public int updateUserProfile(UserProfile up) {
+	public int updateUserProfile(User u,Picture p) {
 		Connection conn=getConnection();
-		int result=dao.updateUserProfile(conn,up);
+		int result=dao.updateUserInfo(conn,u);
 		if(result>0) {
-			commit(conn);
-		}else {
-			rollback(conn);
+			result=dao.updateUserProfile(conn, p);
+			if(result>0) {				
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
 		}
 		close(conn);
 		

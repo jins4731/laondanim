@@ -16,7 +16,9 @@ import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.donghang.model.vo.MyDong;
 import com.laon.etc.model.vo.Like;
+import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.vo.TripMyCon;
+import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
 public class MypageDao {
@@ -88,19 +90,37 @@ public class MypageDao {
 		return flag;
 	}
 	
-	public int updateUserProfile(Connection conn,UserProfile up) {
+	public int updateUserInfo(Connection conn,User u) {
 		PreparedStatement pstmt=null;
 		int result=0;
 		String sql=prop.getProperty("updateUserInfo");
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, up.getPassword());
-			pstmt.setString(2, up.getNickName());
-			pstmt.setInt(3, up.getPhone());
-			pstmt.setString(4, up.getEmail());
-			pstmt.setString(5, up.getTag());
-			pstmt.setInt(6, up.getNo());
+			pstmt.setString(1, u.getPassword());
+			pstmt.setString(2, u.getNickName());
+			pstmt.setString(3, u.getPhone());
+			pstmt.setString(4, u.getEmail());
+			pstmt.setString(5, u.getTag());
+			pstmt.setInt(6, u.getNo());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int updateUserProfile(Connection conn,Picture p) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("updateUserProfile");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, p.getImage());
+			pstmt.setInt(2, p.getUserNo());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

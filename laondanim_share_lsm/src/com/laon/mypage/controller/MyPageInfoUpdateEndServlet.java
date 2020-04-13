@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.laon.etc.model.vo.Picture;
 import com.laon.mypage.model.service.MypageService;
-import com.laon.user.model.vo.UserProfile;
+import com.laon.user.model.vo.User;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -41,7 +42,7 @@ public class MyPageInfoUpdateEndServlet extends HttpServlet {
 		int userNo=Integer.parseInt(mr.getParameter("userNo"));
 		String password = mr.getParameter("userPw");
 		String nickName = mr.getParameter("userNickName");
-		int phone = Integer.parseInt(mr.getParameter("userPhone"));
+		String phone = mr.getParameter("userPhone");
 		String email = mr.getParameter("userEmail");
 		String likeArea = mr.getParameter("likeArea");
 		String[] likeTag = mr.getParameterValues("likeTag");
@@ -61,9 +62,10 @@ public class MyPageInfoUpdateEndServlet extends HttpServlet {
 		String strLikeTag = String.join(",", likeTag);
 		String tag = likeArea + "," + strLikeTag;
 		
-		UserProfile up = new UserProfile(userNo, null, null, password, null, nickName, null, null, phone, email, tag, nPro);
+		User u = new User(userNo, null, null, password, null, nickName, null, null, phone, email, tag);
+		Picture p = new Picture(0,0,0,0,userNo,nPro);
 		
-		int result=new MypageService().updateUserProfile(up);
+		int result=new MypageService().updateUserProfile(u,p);
 		
 		String msg="";
 		String loc="";

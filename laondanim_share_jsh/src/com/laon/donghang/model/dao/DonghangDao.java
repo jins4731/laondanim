@@ -64,6 +64,10 @@ public class DonghangDao {
 	private String selectDonghangJoinUserPicture = "selectDonghangJoinUserPicture";
 	private String updateDonghaong = "updateDonghaong";
 	private String selectUserDonghangJoin = "selectUserDonghangJoin";
+	private String selectDonghangLocalRecent = "selectDonghangLocalRecent";
+	private String selectDonghangLocalViewcount = "selectDonghangLocalViewcount";
+	private String selectDonghangLocalNearSchedule = "selectDonghangLocalNearSchedule";
+	private String selectDonghangLocalCount = "selectDonghangLocalCount";
 
 	public DonghangDao() {
 		try {
@@ -231,18 +235,24 @@ public class DonghangDao {
 		return donghang;
 	}	
 	
-	public List<DonghangJoinUserPicture> selectDonghangPage(Connection conn, int start, int end, String keyword, String recent, String viewcount, String nearSchedule) {
+	public List<DonghangJoinUserPicture> selectDonghangPage(Connection conn, int start, int end, String keyword, String recent, String viewcount, String nearSchedule, String searchFilter) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql="";
 		List<DonghangJoinUserPicture> list = null;
 
 		//sql문 나누기
-		if( !keyword.equals("null") && !recent.equals("null") ) { //키워드 O, 최신순
+		if(searchFilter.equals("searchLocal") && !keyword.equals("null") && !recent.equals("null")) { //키워드(지역) O, 최신순
+			sql = prop.getProperty(selectDonghangLocalRecent);
+		}else if( searchFilter.equals("searchLocal") && !keyword.equals("null") && !viewcount.equals("null") ) { //키워드(지역) O, 조회수순
+			sql = prop.getProperty(selectDonghangLocalViewcount);
+		}else if( searchFilter.equals("searchLocal") && !keyword.equals("null") && !nearSchedule.equals("null") ) { //키워드(지역) O, 가까운 일정순
+			sql = prop.getProperty(selectDonghangLocalNearSchedule);
+		}else if( searchFilter.equals("searchKeyword") && !keyword.equals("null") && !recent.equals("null") ) { //키워드(태그) O, 최신순
 			sql = prop.getProperty(selectDonghangKeywordRecent);
-		}else if( !keyword.equals("null") && !viewcount.equals("null") ) { //키워드 O, 조회수순
+		}else if( searchFilter.equals("searchKeyword") && !keyword.equals("null") && !viewcount.equals("null") ) { //키워드(태그) O, 조회수순
 			sql = prop.getProperty(selectDonghangKeywordViewcount);
-		}else if( !keyword.equals("null") && !nearSchedule.equals("null") ) { //키워드 O, 가까운 일정순
+		}else if( searchFilter.equals("searchKeyword") && !keyword.equals("null") && !nearSchedule.equals("null") ) { //키워드(태그) O, 가까운 일정순
 			sql = prop.getProperty(selectDonghangKeywordNearSchedule);
 		}else if( keyword.equals("null") && !recent.equals("null") ) { //키워드 X, 최근순
 			sql = prop.getProperty(selectDonghangRecent);
@@ -250,8 +260,10 @@ public class DonghangDao {
 			sql = prop.getProperty(selectDonghangViewcount);
 		}else if( keyword.equals("null") && !nearSchedule.equals("null") ) { //키워드 X, 가까운 일정순
 			sql = prop.getProperty(selectDonghangNearSchedule);
-		}else if( !keyword.equals("null") && recent.equals("null") && viewcount.equals("null") && nearSchedule.equals("null")) {
-			sql = prop.getProperty(selectDonghangKeywordRecent); //검색만 했을 때! (기본 최신순 정렬)
+		}else if( searchFilter.equals("searchLocal")  && !keyword.equals("null") && recent.equals("null") && viewcount.equals("null") && nearSchedule.equals("null")) {
+			sql = prop.getProperty(selectDonghangLocalRecent); // 지역검색만 했을 때! (기본 최신순 정렬)
+		}else if( searchFilter.equals("searchKeyword")  && !keyword.equals("null") && recent.equals("null") && viewcount.equals("null") && nearSchedule.equals("null")) {
+			sql = prop.getProperty(selectDonghangKeywordRecent); // 키워드검색만 했을 때! (기본 최신순 정렬)
 		}else {
 			sql = prop.getProperty(selectDonghangPage);
 		}
@@ -297,13 +309,15 @@ public class DonghangDao {
 		return result;
 	}
 	
-	public int selectDonghangCount(Connection conn, String keyword) {
+	public int selectDonghangCount(Connection conn, String keyword, String searchFilter) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "";
 		
 		if(keyword.equals("null")) {			
 			sql = prop.getProperty(selectDonghangCount);
+		} else if(searchFilter.equals("searchLocal")) {
+			sql = prop.getProperty(selectDonghangLocalCount);
 		} else {
 			sql = prop.getProperty(selectDonghangKeywordCount);
 		}

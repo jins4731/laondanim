@@ -48,6 +48,9 @@ public class DonghangListViewServlet extends HttpServlet {
 		//검색 키워드 값 가져오기 
 		String keyword = request.getParameter("keyword");
 		keyword=(keyword==null?"null":keyword);
+		// +) 키워드 카테고리 값 가져오기
+		String searchFilter = request.getParameter("searchFilter");
+		searchFilter=(searchFilter==null?"null":searchFilter);
 		//최근순 클릭 recent값
 		String recent = request.getParameter("recent");
 		recent=(recent==null?"null":recent);
@@ -66,12 +69,12 @@ public class DonghangListViewServlet extends HttpServlet {
 //		if(userTag!=null) {
 //			list = new DonghangService().selectDonghangTag(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), userTag);
 //		}else {
-			list = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), keyword, recent, viewcount, nearSchedule);
+			list = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), keyword, recent, viewcount, nearSchedule, searchFilter);
 //		}
 		
-		int totalRowCount = new DonghangService().selectDonghangCount(keyword);
+		int totalRowCount = new DonghangService().selectDonghangCount(keyword, searchFilter);
 		
-		String pageBar = new Paging().pageBar2(request.getContextPath()+"/donghang/donghangListView.do", totalRowCount, currentPage, pagePerRow, userTag, keyword, recent, viewcount, nearSchedule );
+		String pageBar = new Paging().pageBar2(request.getContextPath()+"/donghang/donghangListView.do", totalRowCount, currentPage, pagePerRow, userTag, keyword, recent, viewcount, nearSchedule, searchFilter );
 		
 		//쿼리스트링 저장
 		request.setAttribute(CommonKey.KEYWORD, keyword);

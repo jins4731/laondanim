@@ -1,12 +1,11 @@
-<%@page import="com.laon.trip.model.vo.TripMyCon"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,com.laon.etc.model.vo.Like" %>
+<%@ page import="java.util.List,com.laon.trip.model.vo.TripMyCon,com.laon.board.model.vo.Board,com.laon.etc.model.vo.Like" %>
 <%
-	List<Like> likeT=(List)request.getAttribute("likeT");
-	List<TripMyCon> tripList=(List)request.getAttribute("tripList");
-	List<UserProfile> userNick=(List)request.getAttribute("userNick");
-	int likeTripCount=(int)request.getAttribute("likeTripCount");
+	List<TripMyCon> trip=(List)request.getAttribute("trip");
+	int tripCount=(int)request.getAttribute("tripCount");
+	List<Like> tripLike=(List)request.getAttribute("tripLike");
+	String tripPasing=(String)request.getAttribute("tripPasing");
 %>
 <%@ include file="/views/common/header.jsp"%>
 <div class="container">
@@ -22,11 +21,10 @@
 					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong.do?userNo=<%=loginUser.getNo()%>')">내 동행</button>
 				</div>
 				<div id="myPageView">
-					<!-- 다님길 -->
 					<div class="menu">
 						<div class="manuBar">
 							<div>
-								<span>다님길</span>
+								<span>내 다님길</span>
 							</div>
 							<div>
 								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
@@ -38,21 +36,45 @@
 					<div>
 						<!-- 정보 -->
 						<div id="myDNInfo">
-							<div style="height:45px;">
-								<span>총 <%=likeTripCount %>개의 ♥ 다님길</span>
+							<div>
+								<span>총 <%=tripCount %>개의 다님길</span>
+							</div>
+							<div id="dnCk1">
+								<button class="btn">선택삭제</button>
+							</div>
+							<div id="dnCk2">
+								<label><input type="checkbox" id="dnAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
+								<button class="btn">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
+								<button class="btn" id="dnEndBtn">돌아가기</button>
 							</div>
 						</div>
 						<!-- 게시글위치 -->
-						<table id="dnTbl">
-							<tr class="d-flex flex-wrap justify-content-center">
-							<%for(TripMyCon t:tripList){ %>
+						<table id="dnTbl" class="d-flex justify-content-center">
+							<tr class="d-flex flex-wrap">
+							<%for(TripMyCon t:trip){ %>
 								<td class="p-1">
+									<div class="dnCk3" style="margin:10px;">
+										<label style="width:130px;">
+											<input type="checkbox" class="dnCks">
+										</label>
+									</div>
 									<div class="card" style="width: 155px; height: 250px;" >
 										<div class="d-flex justify-content-between p-2" style="font-size:5px;">
 						    				<span><%=t.getCategory() %></span>
 						    				<span><%=t.getWriteDate() %></span>
 										</div>
 										<div>
+		                            		<div style="position: absolute;">
+			                            		<div class="dropdown" style="position: relative;">
+											    	<button type="button" class="btn" data-toggle="dropdown">
+											    	  ...
+											    	</button>
+											   	 	<div class="dropdown-menu">
+											      		<a class="dropdown-item" href="#">수정</a>
+											     		<a class="dropdown-item" href="#">삭제</a>
+											    	</div>
+												</div>
+											</div>
 											<%if(t.getImage()==null){ %>
 												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
 											<%}else{ %>
@@ -62,85 +84,28 @@
 			                           <div class="d-flex card-body p-2">
 			                           		<div style="width:150px;font-size:12px;">
 												<p class="mb-0"><%=t.getTitle() %></p>
-												<%String nick="";
-												for(UserProfile u:userNick){ 
-													if(t.getUserTbNo()==u.getNo()){
-														nick=u.getNickName();
-													}
-												}%>
-												<span><%=nick %></span>
+												<%for(Like l:tripLike){%>
+												<%if(t.getNo()==l.getNo()) {%>
+													<span><%=l.getLikeCount() %></span>
+												<%} }%>
 											</div>
 										</div>
 									</div>
 								</td>
 							<%} %>
 							</tr>
-							<%if(tripList.size()==4){ %>
-							<tr>
-								<td colspan="4" style="text-align: center;">
-									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myConTrip.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>
-								</td>
-							</tr>
-							<%} %>
 						</table>
-					</div>
-					
-					<!-- 맛집 -->
-					<div class="menu">
-						<div class="manuBar">
-							<div>
-								<span>맛집</span>
-							</div>
-							<div>
-								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
-							</div>
+						<div>
+							<%=tripPasing %>
 						</div>
-						<hr>
 					</div>
-					<!-- 닫힘 내용 -->
-					<div>
-						<!-- 정보 -->
-						<div id="myDNInfo">
-							<div style="height:45px;">
-								<span>총 ?개의 ♥ 맛집</span>
-							</div>
-						</div>
-						<div class="card d-flex">
-							<div class="sl d-flex" style="overflow: hidden;">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/images/images.jpeg">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/henri.jpeg">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/peng.jpg">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/peng2.jpg">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/peng3.jpeg">
-							</div>
-							<div><img id="prev" src="<%=request.getContextPath()%>/images/prev.png"></div>
-							<%-- <div><img id="next" src="<%=request.getContextPath()%>/images/next.png"></div> --%>
-						</div>
-						<script>
-							$(function(){
-								$(".sl").find(".slImg").css("width","155");
-								$("#next").click(function(){
-									$(".sl").append($(".slImg").first());
-									$(".sl").append($(".slImg").first());
-									$(".sl").append($(".slImg").first());
-									$(".sl").append($(".slImg").first());
-								});
-								
-								/* setInterval(() => {
-									$(".sl").append($(".slImg").first());
-								}, 3000); */
-							});
-						</script>
-					</div>
-					
-					
-					
 				</div>
 			</section>
 		</div>
 	</div>
 </div>
 <%@ include file="/views/common/footer.jsp"%>
+
 <style>
 	div.menu{
 		width:auto;
@@ -157,14 +122,14 @@
         border:1px solid green;
     }
     
-    #myDNInfo,#myBDInfo,.manuBar{
+    #myDNInfo,.manuBar{
     	display:flex;
     	justify-content: space-between;
     	margin-left: 40px;
     	margin-right: 40px;
     }
 
-	#dnCk2,.dnCk3,#bdCk2,.bdCk3{
+	#dnCk2,.dnCk3{
 		display:none;
 	}
 	

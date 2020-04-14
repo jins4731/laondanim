@@ -6,7 +6,7 @@
             /*border: 1px solid black;*/
             width: 150px;
             height: 50px;
-           margin-top: 100px;
+           margin-top: 50px;
            margin-bottom:auto;
             margin-left: auto;
             margin-right: auto;
@@ -38,7 +38,12 @@
 <tr>
 	
 	<td>
-	<input type="text" placeholder="게시글 제목을 입력하세요" name="boardWrite-title" id="boardWrite-title" style="width:250px;height:35px" size="100">
+	<div class="input-group mb-3">
+	<div class="input-group-prepend">
+	<span class="input-group-text">제목</span>
+	</div>
+	<input type="text" class="form-control" placeholder="게시글 제목을 입력하세요" name="boardWrite-title" id="boardWrite-title" >
+	</div>
 	</td>
 </tr>
 <tr>
@@ -54,8 +59,8 @@
 </tr>
 <tr>
 	<td>
-	<input type="button" class="btn btn-default" value="취소하기">
-	<input type="button" class="btn btn-default" id="savebutton" value="글작성" />
+	<input type="button" class="btn btn-danger" id="cancelWrite" value="작성취소">
+	<input type="button" class="btn btn-success" id="savebutton" value="글작성" />
 	</td>
 </tr>
 
@@ -85,6 +90,11 @@ $(function(){
      
     //전송버튼 클릭이벤트
     $("#savebutton").click(function(){
+    	var selector=$("#board-selector").val();
+    	if(selector=="all"){
+    		alert("글 유형을 선택하세요");
+    		return false;
+    	}
         //id가 smarteditor인 textarea에 에디터에서 대입
         editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
         $("#smarteditor").val().replace(/[<][^>]*[>]/g, "");
@@ -93,6 +103,11 @@ $(function(){
         //폼 submit
         $("#frm").submit();
     })
+    //작성취소버튼 클릭
+    $("#cancelWrite").click(function(){
+    	location.href="<%=request.getContextPath()%>/board/list.do";
+    })
+    
 })
 </script>
 

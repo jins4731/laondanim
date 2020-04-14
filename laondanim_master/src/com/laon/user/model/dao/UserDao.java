@@ -100,7 +100,7 @@ public class UserDao {
 	}
 	
 	public User findId(Connection conn,String name,String email) {
-		
+		//이름,이메일이 일치하는 회원이 있는지 확인 후. 메일보내줘
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		User u=null;
@@ -127,7 +127,7 @@ public class UserDao {
 		
 	}
 	public User findPw(Connection conn,String id,String email) {
-		
+		//이름,이메일이 일치하는 회원이 있는지 확인 후. 메일보내줘
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		User u=null;
@@ -155,7 +155,7 @@ public class UserDao {
 
 
 	public int updateTemPw(Connection conn,String id, String authenticationKey) {
-	
+		//임시비밀번호로 디비에 변경하는 로직
 		PreparedStatement pstmt=null;
 		int result=0;
 		String sql=prop.getProperty("updateTemPw");

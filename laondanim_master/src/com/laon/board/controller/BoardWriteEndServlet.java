@@ -39,6 +39,28 @@ public class BoardWriteEndServlet extends HttpServlet {
 		String text=request.getParameter("smarteditor");
 		String tag=request.getParameter("boardTag");
 		
+		
+		//카테고리 저장설정
+		if(category.equals("qna")) {
+			category="질문글";
+		}else {
+			category="자유글";
+		}
+	
+		//날짜 만들기
+		
+		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy/MM/dd");
+		Date time = new Date();
+		
+		String date = format1.format(time);
+		Date today = null;
+		try {
+			today = format1.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("날짜:"+today);
 		//태그저장하기(앞뒤-사이공백없이,태그사이에 #으로 구분)
 		tag=tag.replaceAll(" ", "");
 		tag=tag.trim();
@@ -50,7 +72,9 @@ public class BoardWriteEndServlet extends HttpServlet {
 		
 		//세션의 유저아이디를 가지고 유저 테이블에가서 유저넘버 가져오기
 		
-		BoardJoinUser b=new BoardJoinUser(0,u.getNo(),category,null,0,tag,title,text,'N',u.getNickName()); 
+		BoardJoinUser b=new BoardJoinUser(0,u.getNo(),category,today,0,tag,title,text,'N',u.getNickName()); 
+		int result=new BoardService().insertBoard(b);
+		
 		System.out.println("보드테이블의 유저넘버:"+b.getUserNo());
 		System.out.println("등록한글"+b);
 		int result=new BoardService().insertBoard(b);

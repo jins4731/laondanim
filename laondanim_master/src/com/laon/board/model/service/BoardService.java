@@ -46,7 +46,7 @@ public class BoardService {
 		Connection conn=getConnection();
 		int count=dao.countBoard(conn);
 		close(conn);
-		System.out.println("���� ���:"+count);
+		System.out.println("서비스 몇개야:"+count);
 		return count;
 	}
 
@@ -54,7 +54,7 @@ public class BoardService {
 		Connection conn=getConnection();
 		BoardJoinUser b=dao.boardDetail(conn,boardNo);
 		if(!hasRead&&b!=null) {
-			//���о�����
+			//안읽었을때
 			int result=dao.updateReadCount(conn,boardNo);
 			if(result>0) {
 				commit(conn);
@@ -107,6 +107,15 @@ public class BoardService {
 		close(conn);
 		return result;
 	}
+
+
+	public int alterComment(String alterContent, int commentNo) {
+		Connection conn=getConnection();
+		int result=dao.alterComment(conn,alterContent,commentNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
 	
 	
 	

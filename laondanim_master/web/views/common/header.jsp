@@ -26,9 +26,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 <!-- naver SmartEditor -->
 <script type="text/javascript" src="<%=request.getContextPath()%>/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-
-
-
+<!-- 폰트 적용 -->
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <title>라온다님 메인</title>
 <style>
@@ -43,7 +42,7 @@ html,body {
 header {
 
 	height:150px;
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	display: flex;
 
 
@@ -89,7 +88,7 @@ header a {
 }
 
 .header-container{
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	padding-top: 70px;
 	margin-left: auto;
 	margin-right: 90px;

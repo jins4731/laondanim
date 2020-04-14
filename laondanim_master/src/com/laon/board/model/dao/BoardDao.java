@@ -93,7 +93,7 @@ public class BoardDao {
 		}return count;
 		
 	}
-	/////////////���⼭ ���� �۾��� ~~�������� ���~~~/////////////
+	/////////////여기서 부터 작업해 ~~쿼리문도 써라~~~/////////////
 	public BoardJoinUser boardDetail(Connection conn, int boardNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -144,8 +144,8 @@ public class BoardDao {
 		List<BoardJoinUser> list=new ArrayList();
 		String sql="";
 	
-		//�˻�â����
-		//�ۼ���writer  ����title ����content Ű���� �±�tags
+		//검색창부터
+		//작성자writer  제목title 내용content 키워드 태그tags
 		if(searchDetail.equals("writer")) {
 			sql=prop.getProperty("selectBoardSortWriter");
 		}if(searchDetail.equals("title")) {
@@ -157,24 +157,24 @@ public class BoardDao {
 		}if(searchDetail.equals("null")) {
 			sql=prop.getProperty("selectBoard");
 		}
-		System.out.println("����1������:"+sql);
+		System.out.println("패턴1적용전:"+sql);
 		/*
-		 * if(!recent.equals("null") && viewCount.equals("null")) { //�ֽż� ��ư �������� ORDER
-		 * BY WRITEDATE DESC �߰� sql=sql.replace("DELETED='N'",
+		 * if(!recent.equals("null") && viewCount.equals("null")) { //최신순 버튼 눌렀을때 ORDER
+		 * BY WRITEDATE DESC 추가 sql=sql.replace("DELETED='N'",
 		 * "DELETED='N' ORDER BY WRITE_DATE DESC");
 		 * 
 		 * }
 		 */ 
 		if(recent.equals("null") &&!viewCount.equals("null")) {
-			//��ȸ���� ��ư �������� ORDER BY VIEWCOUNT DESC �߰�
+			//조회수순 버튼 눌렀을때 ORDER BY VIEWCOUNT DESC 추가
 			sql=sql.replace("DELETED='N' ORDER BY WRITE_DATE DESC", "DELETED='N' ORDER BY VIEWCOUNT DESC");
 			  }
 		
 		
 		
-		System.out.println("����2������:"+sql);
+		System.out.println("패턴2적용전:"+sql);
 		if(category.equals("null")||category.equals("all")) {
-			//��ü�� ����Ұ�� category= �̰Ÿ� category!= �̰ɷ� �ٲ������
+			//전체를 출력할경우 category= 이거를 category!= 이걸로 바꿔줘야함
 			Pattern pattern=Pattern.compile("=");
 			Matcher matcher=pattern.matcher(sql);
 			int count=0;
@@ -193,20 +193,20 @@ public class BoardDao {
 		sql=sql.substring(0,targetIndex)+"!="+sql.substring(targetIndex+1,sql.length());
 			
 		}
-		System.out.println("����2������:"+sql);
+		System.out.println("패턴2적용후:"+sql);
 	
 	
 	try{pstmt=conn.prepareStatement(sql);
-		if(category.equals("null")){//ó��ȭ���϶�
+		if(category.equals("null")){//처음화면일때
 			pstmt.setString(1, "null");
 			pstmt.setInt(2, (cPage-1)*perPage+1);
 			pstmt.setInt(3,cPage*perPage);
-		}else if(category.equals("all")&&(searchDetail.equals("null") ||searchBox.equals("null"))) {//�ֽ��̳� ��ȸ���� ��������
+		}else if(category.equals("all")&&(searchDetail.equals("null") ||searchBox.equals("null"))) {//최신이나 조회수순 눌렀을때
 			pstmt.setString(1, "null");
 			pstmt.setInt(2, (cPage-1)*perPage+1);
 			pstmt.setInt(3,cPage*perPage);
 		}
-		else {//�˻�������
+		else {//검색했을때
 		pstmt.setString(1, category);
 		pstmt.setString(2, "%"+searchBox+"%");
 		pstmt.setInt(3, (cPage-1)*perPage+1);
@@ -259,9 +259,9 @@ public class BoardDao {
 			sql=sql.replace("WHERE DELETED='N'", "WHERE CATEGORY=? AND DELETED='N'");
 		}
 		sql=sql.replace("WHERE RNUM BETWEEN ? AND ?", " ");
-		System.out.println("����� sql?"+sql);
+		System.out.println("적용됨 sql?"+sql);
 		if(category.equals("null")||category.equals("all")) {
-			//��ü�� ����Ұ�� category= �̰Ÿ� category!= �̰ɷ� �ٲ������
+			//전체를 출력할경우 category= 이거를 category!= 이걸로 바꿔줘야함
 			Pattern pattern=Pattern.compile("=");
 			Matcher matcher=pattern.matcher(sql);
 			int count=0;
@@ -279,8 +279,8 @@ public class BoardDao {
 		int targetIndex=indexs[1];
 		
 		sql=sql.substring(0,targetIndex)+"!="+sql.substring(targetIndex+1,sql.length());
-		System.out.println("�ϼ��� sql��:"+sql);	
-		System.out.println("ī�װ�����:"+category);
+		System.out.println("완성된 sql문:"+sql);	
+		System.out.println("카테고리뭐야:"+category);
 		}
 		try{pstmt=conn.prepareStatement(sql);
 		if(category.equals("null")||category.equals("all")&&searchBox.equals("null")) {
@@ -380,6 +380,23 @@ public class BoardDao {
 		close(pstmt);
 	}return result;
 	
+	}
+
+	public int alterComment(Connection conn, String alterContent, int commentNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("alterComment");
+		System.out.println("댓글수정sql:"+sql);
+	try{pstmt=conn.prepareStatement(sql);
+		pstmt.setString(1, alterContent);
+		pstmt.setInt(2, commentNo);
+		result=pstmt.executeUpdate();
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(pstmt);
+	}return result;
+		
 	}
 	
 	

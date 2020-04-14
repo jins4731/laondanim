@@ -229,6 +229,7 @@ $(function(){
 			tr.children("td").slideDown(500);
 			$(this).off("click");
 			
+			
 		}
 	});
 	
@@ -268,7 +269,7 @@ $(function(){
 			"name":"commentRef","value":$(this).val()});
 		form.append(textarea).append(button).append(boardRef).append(commentRef);
 		td.append(form);
-
+		$(this).off("click");
 		
 	});
 	

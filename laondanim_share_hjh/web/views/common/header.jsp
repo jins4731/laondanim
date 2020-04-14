@@ -1,13 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.laon.user.model.vo.User" %>	
+<%
+	User loginUser=(User)session.getAttribute("loginUser");
+
+%>
+	
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b"></script>
+<!-- 카카오 맵 api 추가 정호-->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
@@ -123,7 +127,8 @@ header li>a {
 					<!-- Links -->
 					<ul class="navbar-nav main-nav">
 						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/trip/list.do">여행기</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">여행정보</a></li>
+						<!-- 여행정보 링크 추가 정호 -->
+						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?1:loginUser.getNo()%>">여행정보</a></li>
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">커뮤니티</a>
 							<div class="dropdown-menu">
@@ -131,12 +136,24 @@ header li>a {
 								<a class="dropdown-item" href="#">게시판</a>
 							</div>
 						</li>
-						<!-- 세션의 멤버 값을 가져와서 null 이 아닐경우  마이페이지/로그아웃 출력, null 일경우 로그인 페이지로 이동-->
+						<%if(loginUser==null){ %>
+						<!-- 세션의 멤버 값을 가져와서 null 일경우 로그인 페이지로 이동-->
 						<li class="nav-item">
-						<a class="nav-link"href="<%=request.getContextPath()%>/login.do"> 
-							<img src="<%=request.getContextPath()%>/icon/profile_icon.png" width="50px" height="50px">
+						<a class="nav-link" href="<%=request.getContextPath()%>/user/loginPage.do">로그인
 						</a>
 						</li>
+						<%}else{ %>
+						<!-- null 이 아닐경우  마이페이지/로그아웃 출력, -->
+						<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> 
+							<img src="<%=request.getContextPath()%>/views/picture/icon/heart1.jpg" width="50px" height="50px">
+						</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="#">마이페이지</a> 
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/user/logout.do">로그아웃</a>
+							</div>
+						</li>
+						<%} %>
 					</ul>
 
 				</nav>

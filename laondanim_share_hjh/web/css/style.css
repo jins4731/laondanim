@@ -1,0 +1,101 @@
+@charset "UTF-8";
+.my-heat-icon {
+	display: none;
+}
+
+.my-heart-cafe:hover .my-heat-icon {
+	display: inline;
+}
+
+.darkness {
+	position: absolute;
+	top: 23px;
+	width: 220px;
+	height: 250px;
+	background: #000000;
+	/* 추가된 부분 */
+	opacity: 0;
+	transition: all .6s linear;
+}
+
+.tag-plus {
+	font-size: 7px;
+	position: absolute;
+	top: 40px;
+	left: 60px;
+	width: 100px;
+	height: 55px;
+	border-radius: 50%;
+	text-align: center;
+	/* 추가된 부분 */
+	opacity: 0;
+	transform: scale(2);
+	transition: all .3s linear;
+}
+
+.tag-plus span {
+	font-size: 2.3em;
+	color: #ffffff;
+	user-select: none;
+}
+
+/* 추가된 부분 */
+.img-wrapper:hover .darkness {
+	opacity: 0.4;
+}
+
+/* 추가된 부분 */
+.img-wrapper:hover .tag-plus {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.modal-footer {
+	display: flex;
+}
+
+.carousel, .slide {
+	width: 450px;
+	height: 250px;
+	
+	
+}
+
+.tripinfo-header {
+	justify-content: space-between;
+}
+
+.search-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.category {
+	margin-bottom: 30px;
+}
+
+.box001 {
+	margin-bottom: 30px;
+}
+
+.tripinfo-page {
+	margin-top: 30px;
+	display: flex;
+	justify-content: center;
+}
+
+.tripinfo-title {
+	width: 200px;
+	height: 50px;
+	justify-content: space-between;
+}
+
+#myHeart {
+	position: fixed;
+	right: 50%;
+	margin-right: -700px;
+	margin-top: 300px;
+	text-align: center;
+}

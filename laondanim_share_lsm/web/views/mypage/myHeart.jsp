@@ -8,6 +8,8 @@
 	List<UserProfile> userNick=(List)request.getAttribute("userNick");
 	int likeTripCount=(int)request.getAttribute("likeTripCount");
 %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
 <%@ include file="/views/common/header.jsp"%>
 <div class="container">
 	<div class="row">
@@ -105,32 +107,32 @@
 								<span>총 ?개의 ♥ 맛집</span>
 							</div>
 						</div>
-						<div class="card d-flex">
-							<div class="sl d-flex" style="overflow: hidden;">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/images/images.jpeg">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/henri.jpeg">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/peng.jpg">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/peng2.jpg">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/peng3.jpeg">
+						<div class="swiper-container">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide"><img src="https://biketago.com/img/p/0190.jpg"></div>
+								<div class="swiper-slide"><img src="http://ktsmemo.cdn3.cafe24.com/p/0041.jpg"></div>
+								<div class="swiper-slide"><img src="https://biketago.com/img/p/0002.jpg"></div>
+								<div class="swiper-slide"><img src="http://superkts.dothome.co.kr/img/p2/0085.jpg"></div>
+								<div class="swiper-slide"><img src="https://biketago.com/img/p/0750.jpg"></div>
+								<div class="swiper-slide"><img src="http://ktsmemo.cdn3.cafe24.com/p/0701.jpg"></div>
+								<div class="swiper-slide"><img src="https://biketago.com/img/p/0227.jpg"></div>
+								<div class="swiper-slide"><img src="https://biketago.com/img/p/0143.jpg"></div>
+								<div class="swiper-slide"><img src="http://ktsmemo.cdn3.cafe24.com/p/0614.jpg"></div>
+								<div class="swiper-slide"><img src="http://ktsmemo.cdn3.cafe24.com/p/0022.jpg"></div>
+								<div class="swiper-slide"><img src="http://ktsmemo.cdn3.cafe24.com/p/0619.jpg"></div>
+								<div class="swiper-slide"><img src="http://superkts.dothome.co.kr/img/p2/0515.jpg"></div>
+								<div class="swiper-slide"><img src="http://oldmidi.cdn3.cafe24.com/p/0230.jpg"></div>
+								<div class="swiper-slide"><img src="https://biketago.com/img/p/0169.jpg"></div>
+								<div class="swiper-slide"><img src="http://ktsmemo.cdn3.cafe24.com/p/0193.jpg"></div>
+								<div class="swiper-slide" style="font-size:50pt;">- 끝 -</div>
 							</div>
-							<div><img id="prev" src="<%=request.getContextPath()%>/images/prev.png"></div>
-							<%-- <div><img id="next" src="<%=request.getContextPath()%>/images/next.png"></div> --%>
+						
+							<!-- 네비게이션 -->
+							<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+							<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
+						
 						</div>
-						<script>
-							$(function(){
-								$(".sl").find(".slImg").css("width","155");
-								$("#next").click(function(){
-									$(".sl").append($(".slImg").first());
-									$(".sl").append($(".slImg").first());
-									$(".sl").append($(".slImg").first());
-									$(".sl").append($(".slImg").first());
-								});
-								
-								/* setInterval(() => {
-									$(".sl").append($(".slImg").first());
-								}, 3000); */
-							});
-						</script>
+						
 					</div>
 					
 					
@@ -177,9 +179,38 @@
 		margin: 20px;
     	border-radius: 100px;
 	}
+	
+	.swiper-slide {
+		text-align:center;
+		display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
+		align-items:center; /* 위아래 기준 중앙정렬 */
+		justify-content:center; /* 좌우 기준 중앙정렬 */
+	}
+	.swiper-slide img {
+		width:150px; /* 이미지 사이즈 */
+		max-width:100%; /* 지우면 안됨 이미지 여러장일때 꼭 필요함 */
+	}
 </style>
 
 <script>
+	new Swiper('.swiper-container', {
+	
+		slidesPerView : 4, // 동시에 보여줄 슬라이드 갯수
+		spaceBetween : 20, // 슬라이드간 간격
+		slidesPerGroup : 4, // 그룹으로 묶을 수, slidesPerView 와 같은 값을 지정하는게 좋음
+	
+		// 그룹수가 맞지 않을 경우 빈칸으로 메우기
+		// 3개가 나와야 되는데 1개만 있다면 2개는 빈칸으로 채워서 3개를 만듬
+		loopFillGroupWithBlank : true,
+	
+		loop : false, // 무한 반복
+		
+		navigation : { // 네비게이션
+			nextEl : '.swiper-button-next', // 다음 버튼 클래스명
+			prevEl : '.swiper-button-prev', // 이번 버튼 클래스명
+		},
+	});
+
 	/* 다님길 */
 	$(function(){
 		$("#dnCk1>button").click(()=>{

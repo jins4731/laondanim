@@ -12,6 +12,7 @@ import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.donghang.model.vo.MyDong;
 import com.laon.etc.model.vo.Like;
+import com.laon.etc.model.vo.Mind;
 import com.laon.etc.model.vo.Picture;
 import com.laon.mypage.model.dao.MypageDao;
 import com.laon.trip.model.vo.TripMyCon;
@@ -194,6 +195,14 @@ public class MypageService {
 		close(conn);
 		
 		return count;
+	}
+	
+	public List<Mind> selectMind(int userNo){
+		Connection conn=getConnection();
+		List<Mind> mind=dao.selectMind(conn,userNo);
+		close(conn);
+		
+		return mind;
 	}
 	
 }

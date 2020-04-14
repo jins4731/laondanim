@@ -16,6 +16,7 @@ import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.donghang.model.vo.MyDong;
 import com.laon.etc.model.vo.Like;
+import com.laon.etc.model.vo.Mind;
 import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.vo.TripMyCon;
 import com.laon.user.model.vo.User;
@@ -626,6 +627,32 @@ public class MypageDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	public List<Mind> selectMind(Connection conn,int userNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Mind> mind=new ArrayList<Mind>();
+		String sql=prop.getProperty("selectMind");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Mind m=new Mind();
+				m.setNo(rs.getInt("no"));
+				m.setUserTbNo(rs.getInt("user_no"));
+				m.setTripinfoTbNo(rs.getInt("tripinfo_no"));
+				m.setCancled(rs.getString("cancled"));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return mind;
 	}
 	
 }

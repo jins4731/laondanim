@@ -65,6 +65,7 @@ public class BoardViewServlet extends HttpServlet {
 		
 		BoardJoinUser b=new BoardService().boardDetail(boardNo,hasRead);
 		System.out.println("b는뭐야:"+b);
+	
 		//댓글도 받아오자
 		//게시글의 번호를 댓글도 참조하고 있으니까!
 		List<BoardCommentJoinUser> comments=new BoardService().selectComment(boardNo);

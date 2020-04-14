@@ -32,14 +32,6 @@ public class BoardService {
 		return result;
 	}
 	
-	/*
-	 * public List<BoardJoinUser> selectBoard(int cPage,int numPerPage){ Connection
-	 * conn=getConnection(); List<BoardJoinUser>
-	 * list=dao.selectBoard(conn,cPage,numPerPage); close(conn); return list;
-	 * 
-	 * 
-	 * }
-	 */
 	
 	public int countBoard() {
 		Connection conn=getConnection();
@@ -105,6 +97,17 @@ public class BoardService {
 		else rollback(conn);		
 		close(conn);
 		return result;
+	}
+
+
+	public int alterComment(String alterContent, int commentNo) {
+		Connection conn=getConnection();
+		int result=dao.alterComment(conn,alterContent,commentNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	
 	}
 	
 	

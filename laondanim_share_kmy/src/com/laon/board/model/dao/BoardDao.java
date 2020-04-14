@@ -57,25 +57,6 @@ public class BoardDao {
 	}
 	
 	
-	/*
-	 * public List<BoardJoinUser> selectBoard(Connection conn,int cPage,int
-	 * numPerPage){ PreparedStatement pstmt=null; ResultSet rs=null;
-	 * List<BoardJoinUser> list=new ArrayList(); String
-	 * sql=prop.getProperty("selectBoard"); try{pstmt=conn.prepareStatement(sql);
-	 * pstmt.setInt(1, (cPage-1)*numPerPage+1); pstmt.setInt(2, cPage*numPerPage);
-	 * rs=pstmt.executeQuery(); while(rs.next()) { BoardJoinUser b=new
-	 * BoardJoinUser(); b.setNo(rs.getInt("no")); b.setUserNo(rs.getInt("user_no"));
-	 * b.setCategory(rs.getString("category"));
-	 * b.setWriteDate(rs.getDate("write_date"));
-	 * b.setViewCount(rs.getInt("viewcount")); b.setTag(rs.getString("tag"));
-	 * b.setTitle(rs.getString("title")); b.setContent(rs.getString("content"));
-	 * b.setDeleted(rs.getString("deleted").charAt(0));
-	 * b.setNickName(rs.getString("nick_name")); list.add(b); } }catch(SQLException
-	 * e) { e.printStackTrace(); }finally { close(rs); close(pstmt); }return list;
-	 * 
-	 * }
-	 */
-	
 	public int countBoard(Connection conn) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -380,6 +361,23 @@ public class BoardDao {
 		close(pstmt);
 	}return result;
 	
+	}
+
+	public int alterComment(Connection conn, String alterContent, int commentNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("alterComment");
+		System.out.println("댓글수정sql:"+sql);
+	try{pstmt=conn.prepareStatement(sql);
+		pstmt.setString(1, alterContent);
+		pstmt.setInt(2, commentNo);
+		result=pstmt.executeUpdate();
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(pstmt);
+	}return result;
+		
 	}
 	
 	

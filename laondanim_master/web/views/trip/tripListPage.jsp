@@ -19,6 +19,9 @@
     	String category = (String)request.getAttribute("category");	//전체 여행기 select 값 가져오기
     	//지역 에 따른 분기  처리
     	String lo = (String)request.getAttribute("lo");
+    	
+    	System.out.println("jsp에서 category : " + category);
+    	System.out.println("jsp에서 lo : " + lo);
      %>
     <section>
     	<!--필터 버튼 눌렀을 때 데이터 처리-->

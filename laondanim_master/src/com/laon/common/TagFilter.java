@@ -15,8 +15,8 @@ public class TagFilter {
 
 	public ArrayList<TagCount> tagCountList(String userTag){
 		
-		userTag = userTag.replaceAll(" ", "");
-		System.out.println("�α����� ������ tag : " + userTag);
+		//userTag = userTag.replaceAll(" ", "");
+		System.out.println("로그인한 유저 tag : " + userTag);
 		
 		ArrayList<Trip2> tagList = new TripService2().selectTagList();	//��� ����� �Խù��� ���� �±� ������ �±� ����Ʈ�� ����
 				
@@ -64,7 +64,7 @@ public class TagFilter {
 		//���� �������̽� Ŭ���� ��ü ����
 		TagCountComparator tcc = new TagCountComparator();
 		
-		System.out.println("====���� �� Ȯ��====");
+		System.out.println("====정렬 전====");
 		
 		for(TagCount t : tripTagCountList) {
 			System.out.println(t);
@@ -73,7 +73,7 @@ public class TagFilter {
 		//����
 		Collections.sort(tripTagCountList, tcc);
 		
-		System.out.println("====���� Ȯ��====");
+		System.out.println("====정렬 후====");
 		
 		for(TagCount t : tripTagCountList) {
 			System.out.println(t);

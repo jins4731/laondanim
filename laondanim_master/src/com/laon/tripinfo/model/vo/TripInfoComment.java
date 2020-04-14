@@ -3,7 +3,7 @@ package com.laon.tripinfo.model.vo;
 import java.sql.Date;
 
 //여행정보 댓글 테이블
-public class TripinfoComment {
+public class TripInfoComment {
 
  	private int tripinfoCommentNo;
 	private int tripinfoTbNo;
@@ -86,13 +86,13 @@ public class TripinfoComment {
 
 
 // TripinfoCommentTb 모델 복사
- public void CopyData(TripinfoComment param)
- {
-     this.no = param.getNo();
-     this.tripinfoNo = param.getTripinfoNo();
-     this.userNo = param.getUserNo();
-     this.writeDate = param.getWriteDate();
-     this.content = param.getContent();
-     this.deleted = param.getDeleted();
- }
+// public void CopyData(TripInfoComment param)
+// {
+//     this.no = param.getNo();
+//     this.tripInfoNo = param.getTrIpinfoNo();
+//     this.userNo = param.getUserNo();
+//     this.writeDate = param.getWriteDate();
+//     this.content = param.getContent();
+//     this.deleted = param.getDeleted();
+// }
 }

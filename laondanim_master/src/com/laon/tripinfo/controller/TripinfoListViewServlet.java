@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.laon.common.CommonKey;
-import com.laon.tripinfo.model.service.TripinfoService;
+import com.laon.tripinfo.model.service.TripInfoService;
 import com.laon.tripinfo.model.vo.Tripinfo;
 
 /**
@@ -38,8 +38,8 @@ public class TripinfoListViewServlet extends HttpServlet {
 		
 		int currentPage = getCurrentPage(request);
 		int pagePerRow = 8;
-		List<Tripinfo> list = new TripinfoService().selectTripinfoPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
-		int totalRowCount = new TripinfoService().selectTripinfoCount();
+		List<Tripinfo> list = new TripInfoService().selectTripinfoPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
+		int totalRowCount = new TripInfoService().selectTripinfoCount();
 		String pageBar = getPageBar(totalRowCount, currentPage, pagePerRow, request, "");
 		
 		request.setAttribute(CommonKey.TRIPINFO_LIST, list);

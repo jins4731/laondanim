@@ -1,7 +1,7 @@
 package com.laon.tripinfo.model.service;
 
-import static com.laon.common.JDBCTemplate.close;
-import static com.laon.common.JDBCTemplate.getConnection;
+import static com.laon.common.template.JDBCTemplate.*;
+
 
 import java.sql.Connection;
 import java.util.List;
@@ -9,7 +9,8 @@ import java.util.List;
 import com.laon.tripinfo.model.dao.TripInfoDao;
 import com.laon.tripinfo.model.vo.Mind;
 import com.laon.tripinfo.model.vo.Picture;
-import com.laon.tripinfo.model.vo.TripInfo;
+import com.laon.tripinfo.model.vo.TripInfo2;
+import com.laon.tripinfo.model.vo.Tripinfo;
 import com.laon.tripinfo.model.vo.TripInfoComment;
 import com.laon.tripinfo.model.vo.TripInfoPicture;
 
@@ -17,7 +18,33 @@ public class TripInfoService {
 	
 	private  TripInfoDao dao=new TripInfoDao();
 	
-	/* ¿©ÇàÁ¤º¸ ¸®½ºÆ® °¡Á®¿À±â */
+	public List<Tripinfo> selectTripinfoPage(int start, int end) {
+	      Connection conn = getConnection();
+	      List<Tripinfo> list = dao.selectTripinfoPage(conn, start, end);
+	      close(conn);
+	      return list;
+	   }
+
+	   public int selectTripinfoCount() {
+	      Connection conn = getConnection();
+	      int result = dao.selectTripinfoCount(conn);
+	      close(conn);
+	      return result;
+	   }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	///========================================================================================================
+	
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 	public List<TripInfoPicture> selectTripinfoList(int cPage,int numPerPage ,String category, String type, String keyword, String mind ){
 		
 		Connection conn=getConnection();
@@ -30,7 +57,7 @@ public class TripInfoService {
 	
 	
 	
-	/* ¿©ÇàÁ¤º¸ ¸®½ºÆ® Ä«¿îÆÃ  */
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® Ä«ï¿½ï¿½ï¿½ï¿½  */
 	public int selectCountTripInfo(String category, String type, String keyword) {
 		
 		Connection conn=getConnection();
@@ -40,8 +67,7 @@ public class TripInfoService {
 	}
 	
 	
-	
-	/* ·Î±×ÀÎÇÑ À¯Àú°¡ ÇØ´ç ¿©ÇàÁ¤º¸¸¦ Å¬¸¯Çß´ÂÁö Ã¼Å© */
+	/* ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ß´ï¿½ï¿½ï¿½ Ã¼Å© */
 	public String checkMind(int userNo,int tripinfoNo) {
 		Connection conn=getConnection();
 		String cancled=dao.checkMind(conn,userNo,tripinfoNo);
@@ -49,7 +75,7 @@ public class TripInfoService {
 		return cancled;
 	}
 	
-	/* ·Î±×ÀÎÇÑ À¯Àú°¡ ÇØ´ç ¿©ÇàÁ¤º¸¸¦ Ã³À½ Å¬¸¯ÇßÀ» ¶§ */
+	/* ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ */
 	public int insertMind(int userNo , int tripinfoNo) {
 		
 		Connection conn=getConnection();
@@ -59,7 +85,7 @@ public class TripInfoService {
 		
 	}
 	
-	/* ·Î±×ÀÎÇÑ À¯Àú°¡ ÇØ´ç ¿©ÇàÁ¤º¸¸¦ 1¹ø ÀÌ»ó Å¬¸¯ÇßÀ» ¶§  */
+	/* ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ï¿½Ì»ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½  */
 	public int updateMind(int userNo , int tripinfoNo,String cancled ) {
 		
 		Connection conn=getConnection();
@@ -82,7 +108,7 @@ public class TripInfoService {
 		return heartCount;
 	}
 	
-	//·Î±×ÀÎÇÑ À¯Àú°¡ ÂòÇÑ ¸ñ·Ï ¸®½ºÆ® °¡Á®¿À±â
+	//ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public List<Mind> selectUserMind(int userNo){
 		Connection conn = getConnection();
 		List<Mind> userMindList = dao.selectUserMind(conn, userNo);
@@ -97,10 +123,10 @@ public class TripInfoService {
 		return pictureList;
 	}
 	
-	public List<TripInfo> selectTripinfo(List<Mind> userMindList) {
+	public List<TripInfo2> selectTripinfo(List<Mind> userMindList) {
 		
 		Connection conn = getConnection();
-		List<TripInfo> tripInfoList = dao.selectTripinfo(conn, userMindList);
+		List<TripInfo2> tripInfoList = dao.selectTripinfo(conn, userMindList);
 		close(conn);
 		return tripInfoList;
 	}

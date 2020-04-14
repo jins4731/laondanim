@@ -39,7 +39,7 @@ public class TripInfoMainServlet extends HttpServlet {
 		String category=request.getParameter("category");
 		
 		String type=request.getParameter("type");
-		type = type==null?"»óÈ£¸í":type;
+		type = type==null?"ìƒí˜¸ëª…":type;
 		
 		String keyword = request.getParameter("keyword");
 		keyword = keyword==null?"null":keyword;
@@ -51,7 +51,7 @@ public class TripInfoMainServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User loginUser = (User)session.getAttribute("loginUser");
 		int userNo = loginUser.getNo();
-		System.out.println("¼­ºí¸´¿¡¼­ userNo :"+userNo);
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ userNo :"+userNo);
 		
 		List<TripInfoComment> commentList = new TripInfoService().selectComment();
 		
@@ -69,15 +69,15 @@ public class TripInfoMainServlet extends HttpServlet {
 		
 		int numPerPage=10;
 		
-		/* ¿©ÇàÁ¤º¸ ¸®½ºÆ® °¡Á®¿À±â (Ä«Å×°í¸®)*/
+		/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Ä«ï¿½×°ï¿½)*/
 //		List<TripInfoPicture> list=new TripInfoService().selectTripinfoList(cPage,numPerPage,category);
 		List<TripInfoPicture> list=new TripInfoService().selectTripinfoList(cPage,numPerPage,category,type,keyword,mind);
-		//¸ğµç Âò ¸ñ·Ï ¸®½ºÆ®
+		//ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 			
 			List<Mind> mindList = new TripInfoService().selectMind();
 			
 			for(Mind mmm : mindList) {
-				System.out.println("¼­ºí¸´¿¡¼­´Â?" + mmm);
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?" + mmm);
 			}
 			
 			
@@ -85,16 +85,16 @@ public class TripInfoMainServlet extends HttpServlet {
 		
 		
 		
-		//Mind vo ¿¡ count ¸â¹öº¯¼ö¸¦ ·Î ¸¸µé°í
-		//dao ¿¡¼­ ³ª¿Â count(*) °ªÀ» count ¸â¹ö º¯¼ö¿¡ setÇÏ°í mind Å×ÀÌºíÀÇ Á¤º¸¸¦ ¸¶Âù°¡Áö·Î Mind vo ¿¡ ´ëÀÔ
+		//Mind vo ï¿½ï¿½ count ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+		//dao ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ count(*) ï¿½ï¿½ï¿½ï¿½ count ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ setï¿½Ï°ï¿½ mind ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Mind vo ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		
-		//list µéÀ» ¹Ø¿¡ heartCount¿¡ ³Ö°í 
-		//set ÇÑ´ÙÀ½ jsp·Î Àü¼Û
-		//jsp ¿¡¼­ ÇØ´ç mind ¸®½ºÆ®ÀÇ ¿©ÇàÁ¤º¸ no °ª°ú Ãâ·ÂµÈ ¿©ÇàÁ¤º¸ °Ô½Ã±ÛÀÇ no °ªÀ» ºñ±³ÇØ¼­ ÀÏÄ¡ÇÏ´Â mind vo °´Ã¼ÀÇ count °ªÀ» Âò °³¼ö¿¡ ³ÖÀ½ 
+		//list ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¿ï¿½ heartCountï¿½ï¿½ ï¿½Ö°ï¿½ 
+		//set ï¿½Ñ´ï¿½ï¿½ï¿½ jspï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		//jsp ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ mind ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ no ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Âµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ï¿½ï¿½ no ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ mind vo ï¿½ï¿½Ã¼ï¿½ï¿½ count ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 		List<Mind> heartCount = new TripInfoService().heartCount(list);
-		//LISTÀÇ NO ¸¦ ¸Å°³ º¯¼ö·Î MIND_TB ¿¡¼­ no¿Í ÀÏÄ¡ÇÏ´Â row ¼ö¸¦ ¼¼´Â ¸Ş¼Òµå ±¸Çö
+		//LISTï¿½ï¿½ NO ï¿½ï¿½ ï¿½Å°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MIND_TB ï¿½ï¿½ï¿½ï¿½ noï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ row ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½
 		//SELECT * FROM MIND_TB WHERE TRIP_INFO_NO=?
-		//¿©±â¼­ row°¡ ¿©·¯°³ ³ª¿Ã ¼ö µµ ÀÖ°í ±×·¸Áö ¾ÊÀ» ¼ö µµ ÀÖÀ½
+		//ï¿½ï¿½ï¿½â¼­ rowï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	
 		
 		
@@ -110,12 +110,12 @@ public class TripInfoMainServlet extends HttpServlet {
 		int pageEnd=pageNo+pageBarSize-1;
 		
 		if(pageNo==1) {
-			pageBar+="<span>[ÀÌÀü]</span>";
+			pageBar+="<span>ì´ì „</span>";
 		}else {
 			pageBar+="<a href='"+request.getContextPath()
 			+"/tripinfo/tripinfoMain?cPage="+(pageNo-1)
 			+"&category="+category+"&type="+type+"&keyword="+keyword+"&mind="+mind
-			+"'>[ÀÌÀü]</a>";
+			+"'>ì´ì „</a>";
 		}
 		
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
@@ -131,12 +131,12 @@ public class TripInfoMainServlet extends HttpServlet {
 		}
 		
 		if(pageNo>totalPage) {
-			pageBar+="<span>[´ÙÀ½]</span>";
+			pageBar+="<span>ë‹¤ìŒ</span>";
 		}else {
 			pageBar+="<a href='"+request.getContextPath()
 			+"/tripinfo/tripinfoMain?cPage="+pageNo
 			+"&category="+category+"&type="+type+"&keyword="+keyword+"&mind="+mind
-			+"'>[´ÙÀ½]</a>";
+			+"'>ë‹¤ìŒ</a>";
 		}
 		
 		request.setAttribute("pageBar", pageBar);

@@ -5,7 +5,7 @@
 <%
 	List<Mind> userMindList = (List)request.getAttribute("userMindList");
 	List<Picture> pictureList = (List)request.getAttribute("pictureList");
-	List<TripInfo> tripInfoList = (List)request.getAttribute("tripInfoList");
+	List<TripInfo2> tripInfoList = (List)request.getAttribute("tripInfoList");
 	List<Mind> mindList = (List)request.getAttribute("mindList");
 	
 	User loginUser = (User)session.getAttribute("loginUser");
@@ -36,9 +36,9 @@
 							<div id="accordion">
 							
 							<%
-							List<TripInfo> foodList = new ArrayList<TripInfo>();
-							List<TripInfo> hotelList = new ArrayList<TripInfo>();
-							List<TripInfo> hotspotList = new ArrayList<TripInfo>();
+							List<TripInfo2> foodList = new ArrayList<TripInfo2>();
+							List<TripInfo2> hotelList = new ArrayList<TripInfo2>();
+							List<TripInfo2> hotspotList = new ArrayList<TripInfo2>();
 							List<Picture> foodPictureList = new ArrayList<Picture>();
 							List<Picture> hotelPictureList = new ArrayList<Picture>();
 							List<Picture> hotspotPictureList = new ArrayList<Picture>();
@@ -47,7 +47,7 @@
 								for(Picture p : pictureList){
 									if(m.getTripinfoNo()==p.getTripinfoNo()){
 										int tripNo = m.getTripinfoNo();
-										for(TripInfo ti : tripInfoList){
+										for(TripInfo2 ti : tripInfoList){
 											if(tripNo == ti.getTripinfoNo()){
 												String category = ti.getTripinfoCategory();
 												

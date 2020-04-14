@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.laon.tripinfo.model.service.TripInfoService;
 import com.laon.tripinfo.model.vo.Mind;
 import com.laon.tripinfo.model.vo.Picture;
-import com.laon.tripinfo.model.vo.TripInfo;
+import com.laon.tripinfo.model.vo.TripInfo2;
 
 /**
  * Servlet implementation class TripInfoUserMindServlet
@@ -38,24 +38,24 @@ public class TripInfoUserMindServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//·Î±×ÀÎÇÑ À¯ÀúÀÇ Âò ¸ñ·Ï ¸®½ºÆ®
+		//ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 		int userNo = Integer.parseInt(request.getParameter("userNo"));
 		
 		List<Mind> userMindList=new TripInfoService().selectUserMind(userNo);
 		for(Mind mind : userMindList) {
-			System.out.println("¼­ºí¸´" + mind);
+			System.out.println("ï¿½ï¿½ï¿½ï¿½" + mind);
 		}
 		
-//Âò¸ñ·Ï ¸®½ºÆ®ÀÇ tripinfo_no ¿Í ÀÏÄ¡ÇÏ´Â picture ¸®½ºÆ® 				
+//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ tripinfo_no ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ picture ï¿½ï¿½ï¿½ï¿½Æ® 				
 		List<Picture> pictureList = new TripInfoService().selectPicture(userMindList);
 		for(Picture p : pictureList) {
-			System.out.println("¼­ºí¸´" + p);
+			System.out.println("ï¿½ï¿½ï¿½ï¿½" + p);
 		}
 		
-//À§¿¡¼­ ºÒ·¯¿Â Âò¸ñ·Ï ¸®½ºÆ®¸¦ ¸Å°³º¯¼ö·Î ¸®½ºÆ®ÀÇ TRIPINFO_NO°ª°ú ÀÏÄ¡ÇÏ´Â ¿©ÇàÁ¤º¸ ¸®½ºÆ® °¡Á®¿À±â
-		List<TripInfo> tripInfoList = new TripInfoService().selectTripinfo(userMindList);
-		for(TripInfo ti : tripInfoList) {
-			System.out.println("¼­ºí¸´" + ti);
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ TRIPINFO_NOï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		List<TripInfo2> tripInfoList = new TripInfoService().selectTripinfo(userMindList);
+		for(TripInfo2 ti : tripInfoList) {
+			System.out.println("ï¿½ï¿½ï¿½ï¿½" + ti);
 		}
 		
 		

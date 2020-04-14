@@ -1,6 +1,6 @@
 package com.laon.tripinfo.model.vo;
 
-public class TripInfo {
+public class TripInfo2 {
 	
 	private int tripinfoNo;
 	private String tripinfoCategory;
@@ -13,11 +13,11 @@ public class TripInfo {
 	private String tripinfoNaver;
 	private String tripinfoSns;
 	
-	public TripInfo() {
+	public TripInfo2() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TripInfo(int tripinfoNo, String tripinfoCategory, String tripinfoTag, String tripinfoName,
+	public TripInfo2(int tripinfoNo, String tripinfoCategory, String tripinfoTag, String tripinfoName,
 			String tripinfoAddress, String tripinfotime, String tripinfoNumber, String tripinfoHomePage,
 			String tripinfoNaver, String tripinfoSns) {
 		super();
@@ -115,7 +115,7 @@ public class TripInfo {
 
 	@Override
 	public String toString() {
-		return "TripInfo [tripinfoNo=" + tripinfoNo + ", tripinfoCategory=" + tripinfoCategory + ", tripinfoTag="
+		return "TripInfo2 [tripinfoNo=" + tripinfoNo + ", tripinfoCategory=" + tripinfoCategory + ", tripinfoTag="
 				+ tripinfoTag + ", tripinfoName=" + tripinfoName + ", tripinfoAddress=" + tripinfoAddress
 				+ ", tripinfotime=" + tripinfotime + ", tripinfoNumber=" + tripinfoNumber + ", tripinfoHomePage="
 				+ tripinfoHomePage + ", tripinfoNaver=" + tripinfoNaver + ", tripinfoSns=" + tripinfoSns + "]";

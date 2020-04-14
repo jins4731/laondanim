@@ -1,6 +1,6 @@
 package com.laon.tripinfo.model.dao;
 
-import static com.laon.common.JDBCTemplate.close;
+import static com.laon.common.template.JDBCTemplate.*;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,11 +14,13 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.laon.common.robot.LaonRobot;
 import com.laon.tripinfo.model.vo.Mind;
 import com.laon.tripinfo.model.vo.Picture;
-import com.laon.tripinfo.model.vo.TripInfo;
+import com.laon.tripinfo.model.vo.TripInfo2;
 import com.laon.tripinfo.model.vo.TripInfoComment;
 import com.laon.tripinfo.model.vo.TripInfoPicture;
+import com.laon.tripinfo.model.vo.Tripinfo;
 
 public class TripInfoDao {
 
@@ -32,8 +34,73 @@ public class TripInfoDao {
 			e.printStackTrace();
 		}
 	}
+	
+	public <E> E rsProcess(ResultSet rs, E item) throws SQLException {
+	      if(item instanceof LaonRobot) {
+	         LaonRobot<E> robot = (LaonRobot<E>)item;
+	         item = robot.rsProcess(item,rs);
+	      }
+	      return item;
+	   }
 
-	/* ø©«‡¡§∫∏ ∏ÆΩ∫∆Æ ∞°¡Æø¿±‚  */
+	   public <E> List<E> rsProcess(ResultSet rs, List<E> list,E item) throws SQLException {
+	      List<E> newlist = null;
+	      if(item instanceof LaonRobot) {
+	         LaonRobot<E> robot = (LaonRobot<E>)item;
+	         newlist = robot.rsProcess(list,rs);
+	      }
+	      return newlist;
+	   }
+	
+	//=============================================
+	public List<Tripinfo> selectTripinfoPage(Connection conn, int start, int end) {
+	      PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      String sql = prop.getProperty("selectTripinfoPage");
+	      List<Tripinfo> list = null;
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setInt(1, start);
+	         pstmt.setInt(2, end);
+	         rs = pstmt.executeQuery();
+	         list = rsProcess(rs, new ArrayList<Tripinfo>(), new Tripinfo());
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rs);
+	         close(pstmt);
+	      }
+	      return list;
+	   }
+
+	   public int selectTripinfoCount(Connection conn) {
+	      PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      String sql = prop.getProperty("selectTripinfoCount");
+	      int result = 0;
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         rs = pstmt.executeQuery();
+	         rs.next();
+	         result = rs.getInt(1);
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rs);
+	         close(pstmt);
+	      }
+	      return result;
+	   }
+	
+	
+	
+	
+	
+	
+	
+	
+	//============================
+	/* ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ∆Æ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ  */
 	public List<TripInfoPicture> selectTripinfoList(Connection conn, int cPage,int numPerPage ,String category, String type, String keyword, String mind) {
 		System.out.println(category);
 		System.out.println(type);
@@ -44,16 +111,16 @@ public class TripInfoDao {
 		List<TripInfoPicture> list = new ArrayList();
 		
 		String sql = "";
-		sql = mind.equals("null")?prop.getProperty("selectTripInfoPage"):prop.getProperty("sortMind");
+		sql = mind.equals("null")?prop.getProperty("selectTripInfoPage2"):prop.getProperty("sortMind");
 		
-		System.out.println("∫Ø»≠¿¸ " + sql);
+		System.out.println("ÔøΩÔøΩ»≠ÔøΩÔøΩ " + sql);
 		//SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT TR.*, (SELECT COUNT(*) 
 		//FROM MIND_TB WHERE TR.NO=TRIPINFO_NO AND CANCLED='Y') AS CNT FROM TRIPINFO_TB TR 
 		//WHERE CATEGORY=? AND ADDRESS LIKE ? AND NAME LIKE ? AND TAG LIKE ?)A) 
 		//WHERE RNUM BETWEEN ? AND ?
-		//¡ˆø™∏Ì, ªÛ»£∏Ì, ≈¬±◊∏Ì
+		//ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ, ÔøΩÔøΩ»£ÔøΩÔøΩ, ÔøΩ¬±◊∏ÔøΩ
 		
-		if(type.equals("null") && keyword.equals("null") || type.equals("ªÛ»£∏Ì")&&keyword.equals("null")) {
+		if(type.equals("null") && keyword.equals("null") || type.equals("ÏÉÅÌò∏Î™Ö")&&keyword.equals("null")) {
 			for(int j=0; j<3; j++) {
 			Pattern pattern = Pattern.compile("LIKE");
 			   Matcher matcher = pattern.matcher(sql);
@@ -76,7 +143,7 @@ public class TripInfoDao {
 			}
 		}
 		
-		if(type.equals("ªÛ»£∏Ì") && !keyword.equals("null")) {
+		if(type.equals("ÏÉÅÌò∏Î™Ö") && !keyword.equals("null")) {
 			for(int j=0; j<2; j++) {
 			Pattern pattern = Pattern.compile("LIKE");
 			   Matcher matcher = pattern.matcher(sql);
@@ -98,7 +165,7 @@ public class TripInfoDao {
 			}
 		}
 		
-		if(type.equals("¡ˆø™∏Ì") && !keyword.equals("null")) {
+		if(type.equals("ÏßÄÏó≠Î™Ö") && !keyword.equals("null")) {
 			for(int j=0; j<2; j++) {
 			Pattern pattern = Pattern.compile("LIKE");
 			   Matcher matcher = pattern.matcher(sql);
@@ -121,7 +188,7 @@ public class TripInfoDao {
 		
 			}
 		}
-		if(type.equals("≈¬±◊∏Ì") && !keyword.equals("null")) {
+		if(type.equals("ÌÉúÍ∑∏Î™Ö") && !keyword.equals("null")) {
 			for(int j=0; j<2; j++) {
 			Pattern pattern = Pattern.compile("LIKE");
 			   Matcher matcher = pattern.matcher(sql);
@@ -143,7 +210,7 @@ public class TripInfoDao {
 			
 			}
 		}
-		System.out.println("∫Ø»≠ »ƒ : " + sql);
+		System.out.println("Î≥ÄÌôî ÌõÑ : " + sql);
 			try {
 							
 				pstmt = conn.prepareStatement(sql);
@@ -155,7 +222,7 @@ public class TripInfoDao {
 					pstmt.setString(4, "null");
 				}
 				
-				if(type.equals("ªÛ»£∏Ì")) {
+				if(type.equals("ÏÉÅÌò∏Î™Ö")) {
 					pstmt.setString(1, category);
 					pstmt.setString(2, "null");
 					if(keyword.equals("null"))
@@ -166,7 +233,7 @@ public class TripInfoDao {
 				}
 				
 							
-				if(type.equals("¡ˆø™∏Ì")) {
+				if(type.equals("ÏßÄÏó≠Î™Ö")) {
 					pstmt.setString(1, category);
 					pstmt.setString(2, "%"+keyword+"%");
 					if(keyword.equals("null"))
@@ -176,7 +243,7 @@ public class TripInfoDao {
 					pstmt.setString(4, "null");
 				}
 				
-				if(type.equals("≈¬±◊∏Ì")) {
+				if(type.equals("ÌÉúÍ∑∏Î™Ö")) {
 					pstmt.setString(1, category);
 					pstmt.setString(2, "null");
 					if(keyword.equals("null"))
@@ -214,61 +281,61 @@ public class TripInfoDao {
 			}return list;
 	}
 
-	/* ø©«‡¡§∫∏ ∏ÆΩ∫∆Æ ƒ´øÓ∆√  */
+	/* ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ∆Æ ƒ´ÔøΩÔøΩÔøΩÔøΩ  */
 	public int selectCountTripInfo(Connection conn, String category, String type, String keyword) {
-		System.out.println("type¿Ã ∏¥œ? "+ type);
+		System.out.println("typeÔøΩÔøΩ ÔøΩÔøΩÔøΩ? "+ type);
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int count = 0;
 		//SELECT COUNT(*) FROM TRIPINFO_TB WHERE CATEGORY=? AND ADDRESS LIKE ? AND NAME LIKE ? AND TAG LIKE ?
 		String sql = prop.getProperty("selectCountTripInfo");
-		System.out.println("∫Ø»≠¿¸ : " + sql);
-		//¡ˆø™∏Ì, ªÛ»£∏Ì, ≈¬±◊∏Ì
+		System.out.println("Î≥ÄÌôîÏ†Ñ : " + sql);
+		//ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ, ÔøΩÔøΩ»£ÔøΩÔøΩ, ÔøΩ¬±◊∏ÔøΩ
 		
-		if(type.equals("ªÛ»£∏Ì") && keyword.equals("null")) {
+		if(type.equals("ÏÉÅÌò∏Î™Ö") && keyword.equals("null")) {
 			sql = sql.replaceFirst("LIKE", "!=");
 			sql = sql.replaceFirst("LIKE", "!=");
 			sql = sql.replaceFirst("LIKE", "!=");
 		}
 		
-		if(type.equals("¡ˆø™∏Ì")) {
+		if(type.equals("ÏßÄÏó≠Î™Ö")) {
 			sql = replaceLast(sql, "LIKE", "!=",0);
 			sql = replaceLast(sql, "LIKE", "!=",0);
 		}
 		
-		if(type.equals("ªÛ»£∏Ì")) {
+		if(type.equals("ÏÉÅÌò∏Î™Ö")) {
 			sql = sql.replaceFirst("LIKE", "!=");
 			sql = replaceLast(sql, "LIKE", "!=",0);
 		}
 		
-		if(type.equals("≈¬±◊∏Ì")) {
+		if(type.equals("ÌÉúÍ∑∏Î™Ö")) {
 			sql = sql.replaceFirst("LIKE", "!=");
 			sql = sql.replaceFirst("LIKE", "!=");
 		}
-		System.out.println("∫Ø»≠»ƒ : " + sql);
+		System.out.println("Î≥ÄÌôîÌõÑ : " + sql);
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, category);
 				
-				if(type.equals("ªÛ»£∏Ì") && keyword.equals("null")) {
+				if(type.equals("ÏÉÅÌò∏Î™Ö") && keyword.equals("null")) {
 					pstmt.setString(2, "null");
 					pstmt.setString(3, "null");
 					pstmt.setString(4, "null");
 				}
 				
-				if(type.equals("¡ˆø™∏Ì")) {
+				if(type.equals("ÏßÄÏó≠Î™Ö")) {
 					pstmt.setString(2,"%"+keyword+"%");
 					pstmt.setString(3, "null");
 					pstmt.setString(4, "null");
 				}
 				
-				if(type.equals("ªÛ»£∏Ì")) {
+				if(type.equals("ÏÉÅÌò∏Î™Ö")) {
 					pstmt.setString(2,"null");
 					pstmt.setString(3, "%"+keyword+"%");
 					pstmt.setString(4, "null");
 				}
 				
-				if(type.equals("≈¬±◊∏Ì")) {
+				if(type.equals("ÌÉúÍ∑∏Î™Ö")) {
 					pstmt.setString(2,"null");
 					pstmt.setString(3, "null");
 					pstmt.setString(4, "%"+keyword+"%");
@@ -285,7 +352,7 @@ public class TripInfoDao {
 			return count;
 	}
 	
-	/* ¡¢º”«— ¿Ø¿˙∞° ¿Ã ø©«‡¡§∫∏∏¶ ¬Ú«ﬂ¥¬¡ˆ √º≈©«œ¥¬ dao */
+	/* ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩﬂ¥ÔøΩÔøΩÔøΩ √º≈©ÔøΩœ¥ÔøΩ dao */
 	public String checkMind(Connection conn, int userNo, int tripinfoNo) {
 
 		PreparedStatement pstmt = null;
@@ -309,7 +376,7 @@ public class TripInfoDao {
 		return cancled;
 	}
 
-	/* ∑Œ±◊¿Œ«— ¿Ø¿˙∞° «ÿ¥Á ø©«‡¡§∫∏∏¶ √≥¿Ω ≈¨∏Ø «ﬂ¿ª ∂ß */
+	/* ÔøΩŒ±ÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÿ¥ÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ √≥ÔøΩÔøΩ ≈¨ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ */
 	public int insertMind(Connection conn, int userNo, int tripinfoNo) {
 
 		PreparedStatement pstmt = null;
@@ -331,7 +398,7 @@ public class TripInfoDao {
 		return result;
 	}
 	
-	/* ∑Œ±◊¿Œ«— ¿Ø¿˙∞° «ÿ¥Á ø©«‡¡§∫∏∏¶ «—π¯ ¿ÃªÛ ≈¨∏Ø «ﬂ¿ª ∂ß */
+	/* ÔøΩŒ±ÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÿ¥ÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩ—πÔøΩ ÔøΩÃªÔøΩ ≈¨ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ */
 	public int updateMind(Connection conn, int userNo, int tripinfoNo, String cancled) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -339,7 +406,7 @@ public class TripInfoDao {
 		String sql = prop.getProperty("updateMind");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			// CANCLED Y ¿œ∂ß¥¬ N, æ∆¥“ ∂ß¥¬ , Y
+			// CANCLED Y ÔøΩœ∂ÔøΩÔøΩÔøΩ N, ÔøΩ∆¥ÔøΩ ÔøΩÔøΩÔøΩÔøΩ , Y
 			pstmt.setString(1, cancled.equals("Y") ? "N" : "Y");
 			pstmt.setInt(2, userNo);
 			pstmt.setInt(3, tripinfoNo);
@@ -355,7 +422,7 @@ public class TripInfoDao {
 	}
 
 	
-	/* ∑Œ±◊¿Œ«— ¿Ø¿˙∞° ¬Ú«— ø©«‡¡§∫∏ ¿ÃπÃ¡ˆ ∏ÆΩ∫∆Æ */
+	/* ÔøΩŒ±ÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÃπÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ∆Æ */
 	public List<Mind> selectUserMind(Connection conn, int userNo) {
 
 		PreparedStatement pstmt = null;
@@ -383,7 +450,7 @@ public class TripInfoDao {
 			close(pstmt);
 		}
 		
-		System.out.println("daoø°º≠ ");
+		System.out.println("daoÔøΩÔøΩÔøΩÔøΩ ");
 		for(Mind m : userMindList) {
 			System.out.println(m);
 		}
@@ -491,11 +558,11 @@ public class TripInfoDao {
 		return pictureList;
 	}
 	
-	public List<TripInfo> selectTripinfo(Connection conn, List<Mind> userMindList){
+	public List<TripInfo2> selectTripinfo(Connection conn, List<Mind> userMindList){
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<TripInfo> tripInfoList = new ArrayList();
+		List<TripInfo2> tripInfoList = new ArrayList();
 		String sql = prop.getProperty("selectTripinfo");
 		for(Mind mind : userMindList ) {
 			
@@ -504,7 +571,7 @@ public class TripInfoDao {
 				pstmt.setInt(1, mind.getTripinfoNo());
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
-					TripInfo t = new TripInfo();
+					TripInfo2 t = new TripInfo2();
 					t.setTripinfoNo(rs.getInt("NO"));
 					t.setTripinfoCategory(rs.getString("CATEGORY"));
 					t.setTripinfoTag(rs.getString("TAG"));
@@ -572,7 +639,7 @@ public class TripInfoDao {
 		}
 	
 	
-	/* ¥Ò±€ ¿Œº≠∆Æ«œ±‚ */
+	/* ÔøΩÔøΩÔøΩ ÔøΩŒºÔøΩ∆ÆÔøΩœ±ÔøΩ */
 	public int insertComment(Connection conn,TripInfoComment tc) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -599,7 +666,7 @@ public class TripInfoDao {
 	
 	
 	
-	/* ¥Ò±€ ∫“∑Øø¿±‚ */
+	/* ÔøΩÔøΩÔøΩ ÔøΩ“∑ÔøΩÔøΩÔøΩÔøΩÔøΩ */
 	public List<TripInfoComment> selectComment(Connection conn){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -613,7 +680,7 @@ public class TripInfoDao {
 				tc.setTripinfoCommentNo(rs.getInt("no"));
 				tc.setTripinfoTbNo(rs.getInt("tripinfo_no"));
 				tc.setUserTbNo(rs.getInt("user_no"));
-				tc.setWriteDate(rs.getDate("writer_date"));
+				tc.setWriteDate(rs.getDate("write_date"));
 				tc.setContent(rs.getString("content"));
 				tc.setDeleted(rs.getString("deleted").charAt(0));
 				commentList.add(tc);
@@ -625,4 +692,4 @@ public class TripInfoDao {
 			close(pstmt);
 		}return commentList;
 	}
-}// ≈¨∑°Ω∫
+}// ≈¨ÔøΩÔøΩÔøΩÔøΩ

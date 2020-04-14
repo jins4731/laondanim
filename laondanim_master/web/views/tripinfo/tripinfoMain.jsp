@@ -7,7 +7,7 @@
 	List<Mind> heartCount = (List)request.getAttribute("heartCount");
 	List<Mind> userMindList = (List)request.getAttribute("userMindList");
 	List<Picture> pictureList = (List)request.getAttribute("pictureList");
-	List<TripInfo> tripInfoList = (List)request.getAttribute("tripInfoList");
+	List<TripInfo2> tripInfoList = (List)request.getAttribute("tripInfoList");
 	List<Mind> mindList = (List)request.getAttribute("mindList");
 	List<TripInfoComment> commentList = (List)request.getAttribute("commentList");
 	

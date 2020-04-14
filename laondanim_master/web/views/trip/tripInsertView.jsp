@@ -4,7 +4,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
 <%
 
 	String userNo = "1";
@@ -119,6 +119,7 @@
     <script src="../../js/mdb.min.js"></script>
     <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40b8b885a553f3222dde4e5effec0d3e"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <style>
         @media screen and (min-width: 576px) {
             .container-fluid {
@@ -186,11 +187,12 @@
         }
 
         #carouselInner img {
-                    width: 100%;
-                    height: 500px;
-                    object-fit: contain;
+            width: 100%;
+            height: 500px;
+            object-fit: contain;
         }
-        img[name='pepe']{
+
+        img[name='pepe'] {
             width: 100%;
             height: 100%;
         }
@@ -205,8 +207,9 @@
         <div id="titleContainer" class="row justify-content-center">
             <div class="col-3">
                 <div class="row dropdown justify-content-center">
-                    <button type="button"  id="category"  name="category" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
-                    글종류 선택
+                    <button type="button" id="category" name="category"
+                        class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
+                        글종류 선택
                     </button>
                     <div class="dropdown-menu">
                         <a id="courseDropBt" href="#" class="dropdown-item">일정</a>
@@ -245,92 +248,164 @@
                         <div class="row form-group mb-0 ">
                             <span class="col-3 pt-1 font-weight-bold">여행지역</span>
                             <input class="col-6" type="text" id="user"
-                                class="form-control border-top-0 border-left-0 border-right-0 " 
-                                name="title" id="title"
+                                class="form-control border-top-0 border-left-0 border-right-0 " name="title" id="title"
                                 placeholder="여행기 제목을 입력해주세요.">
                         </div>
                         <div class="row form-group mb-0">
                             <span class="col-3 pt-1 font-weight-bold">인원 수</span>
                             <input class="col-6" type="number" id="user"
-                                class="form-control border-top-0 border-left-0 border-right-0 "
-                                 name="peopleNum" id="peopleNum"
-                                placeholder="인원수를 입력해주세요." autocomplete="off" min=0>
+                                class="form-control border-top-0 border-left-0 border-right-0 " name="peopleNum"
+                                id="peopleNum" placeholder="인원수를 입력해주세요." autocomplete="off" min=0>
                         </div>
                     </div>
                     <div class="col">
                         <div class="row form-group mb-0">
                             <span class="col-3 pt-1 font-weight-bold">여행유형</span>
                             <input class="col-6" type="text" id="user"
-                                class="form-control border-top-0 border-left-0 border-right-0 " 
-                                name="travleType" id="travleType"
-                                placeholder="여행유형을 입력해주세요.">
+                                class="form-control border-top-0 border-left-0 border-right-0 " name="travleType"
+                                id="travleType" placeholder="여행유형을 입력해주세요.">
                         </div>
                         <div class="row form-group mb-0">
                             <span class="col-3 pt-1 font-weight-bold">여행일</span>
                             <input class="col-3 p-0" type="text" id="travleStartDate"
-                                class="form-control border-top-0 border-left-0 border-right-0 "
-                                 data-date="datePicker" name="travleStartDate" id="travleStartDate"
-                                placeholder="여행시작일 입력">
+                                class="form-control border-top-0 border-left-0 border-right-0 " data-date="datePicker"
+                                name="travleStartDate" id="travleStartDate" placeholder="여행시작일 입력">
                             <input class="col-3 p-0" type="text" id="travleEndDate"
-                                class="form-control border-top-0 border-left-0 border-right-0 " 
-                                data-date="datePicker" name="travleEndDate" id="travleEndDate"
-                                placeholder="여행종료일 입력">
+                                class="form-control border-top-0 border-left-0 border-right-0 " data-date="datePicker"
+                                name="travleEndDate" id="travleEndDate" placeholder="여행종료일 입력">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        
+
 
 
         <div id="courseContainer">
             <div class="row mx-1">
-                <button id="matzipBt" class="btn btn-grey">맛집</button>
-                <button id="myoungsoBt" class="btn btn-grey">명소</button>
-                <button id="sooksoBt" class="btn btn-grey">숙소</button>
-                <button id="myBt" class="btn btn-grey">마이</button>
+                <button id="matzipBt" onclick="matzipBt()" class="btn btn-grey">맛집</button>
+                <button id="myoungsoBt" onclick="myoungsoBt()" class="btn btn-grey">명소</button>
+                <button id="sooksoBt" onclick="sooksoBt()" class="btn btn-grey">숙소</button>
+                <button id="myBt" onclick="myBt()" class="btn btn-grey">마이</button>
             </div>
             <div class="row mx-1" style="height: 200px;">
-                <div class="d-flex bg-info my-2 align-items-center" style="height: auto; width: 50px;">
+
+
+                <div class="col d-flex bg-info my-2 align-items-center" style="height: auto; width: 50px;">
                     <a href="javascript:void(0)" id="tripinfoPrevBt">
                         <span class="carousel-control-prev-icon" style="width: 50px;height: 50px;"></span>
                     </a>
-                    
                 </div>
 
 
-                <div id="tripinfoItem1" ondrop="drop(event)" ondragover="dragover(event)" class="col bg-success my-2" style="height: auto; width: 100px;">
-                    <img name="pepe" id="pepe1" src="https://lh3.googleusercontent.com/proxy/iP-wJQECs20Z1AwioQRxH8DJuINRQ5zu-X0iu_odoi-7ZsJl-Qlrg8oXNpst0T3DTsQeq4fVn8znWsB7Jim6vp8x8RdyS0DFnc0fQ5KsGFpDig" draggable="true" ondragstart="dragstart(event)" alt="">
-                    
-                </div>
-                <div id="tripinfoItem2" ondrop="drop(event)" ondragover="dragover(event)" class="col bg-success my-2" style="height: auto; width: 100px;">
-                    <img name="pepe" id="pepe2" src="https://lh3.googleusercontent.com/proxy/B5BIOganAOsOWualo7Z6e5P9M1zeHvICPISMFxoXg8mE5PQOj--HuqZAYlnRgxn6xofYr_g9Hx2DnSPaL2uxBrUbd5iaOc7YdiFkgMyCVyTT2oL096BiNiZWNx8iCRYN_Fu0tU7pHFXg3JW_jJL8uYgWx41dJwfa" draggable="true" ondragstart="dragstart(event)" alt="">
-                </div>
-                <div id="tripinfoItem3" ondrop="drop(event)" ondragover="dragover(event)" class="col bg-success my-2" style="height: auto; width: 100px;">
-                    <img name="pepe" id="pepe3" name="pepe" src="https://lh3.googleusercontent.com/proxy/T29MDAaZBKV_EWHn0NfxcnRPKRoYI_5doZMF9OOoZmijkw6OxFWfPM3V33lheAKzhXzxlpDD5Vl8Wov6eDqGzXPQa6RNmJI7taRlDgX7PCRQMcaxgWG1QKTFbqGjgLWk7aSNcLNfwje1BwfDBnNEMG6-DJ2_ZhXJCE_6fu7i1lsNg9l4m9VVmgJp_W9Hm2O6mUHZzNKU" draggable="true" ondragstart="dragstart(event)" alt="">
+                <div class="col-11 text-nowrap overflow-hidden" style="height: 200px;">
+
+                    <div id="mindSlider" class=" " style="transition: all 1.15s ease-in-out;height: 200px;">
+
+                        <div id="tripinfoItem1" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
+                            style="height: 170px; width: 170px;">
+                            <img name="pepe"  id="pepe1"
+                                src="https://image.chosun.com/sitedata/image/201705/08/2017050801699_0.jpg"
+                                draggable="true" ondragstart="dragstart(event)" alt="">
+
+                        </div>
+                        <div id="tripinfoItem2" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
+                             style="height: 170px; width: 170px;">
+                            <img name="pepe"  id="pepe2"
+                                src="https://pbs.twimg.com/profile_images/814761853372895232/IXujsP7W_400x400.jpg"
+                                draggable="true" ondragstart="dragstart(event)" alt="">
+                        </div>
+                        <div id="tripinfoItem3" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
+                             style="height: 170px; width: 170px;">
+                            <img name="pepe"  id="pepe3" name="pepe"
+                                src="https://i.pinimg.com/236x/11/b4/45/11b4457b49ac98ab10f7cd66afe4423e.jpg"
+                                draggable="true" ondragstart="dragstart(event)" alt="">
+
+                        </div>
+                        <div id="tripinfoItem4" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
+                            style="height: 170px; width: 170px;">
+                            <img name="pepe"  id="pepe4"
+                                src="https://t1.daumcdn.net/cfile/tistory/213D9D48587060432F" draggable="true"
+                                ondragstart="dragstart(event)" alt="">
+
+                        </div>
+                        <div id="tripinfoItem5" class="d-inline-block" ondrop="drop(event)" ondragover="dragover(event)"
+                             style="height: 170px; width: 170px;">
+                            <img name="pepe"  id="pepe5"
+                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKM3FyepNFfAxawu2e7pT313mRDvi88oA0O0FK1ukWqA-diMTY&usqp=CAU"
+                                draggable="true" ondragstart="dragstart(event)" alt="">
+
+                        </div>
+                        <div id="tripinfoItem6" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
+                             style="height: 170px; width: 170px;">
+                            <img name="pepe"  id="pepe6"
+                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR0wSpI9Eo22g8lDmchzByOjco2SOLT4F31C9clAYL_k8Bp6ytB&usqp=CAU"
+                                draggable="true" ondragstart="dragstart(event)" alt="">
+
+                        </div>
+                        <div id="tripinfoItem1" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
+                            style="height: 170px; width: 170px;">
+                            <img name="pepe"  id="pepe1"
+                                src="https://image.chosun.com/sitedata/image/201705/08/2017050801699_0.jpg"
+                                draggable="true" ondragstart="dragstart(event)" alt="">
+
+                        </div>
+                        <div id="tripinfoItem2" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
+                             style="height: 170px; width: 170px;">
+                            <img name="pepe"  id="pepe2"
+                                src="https://pbs.twimg.com/profile_images/814761853372895232/IXujsP7W_400x400.jpg"
+                                draggable="true" ondragstart="dragstart(event)" alt="">
+                        </div>
+                        <div id="tripinfoItem3" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
+                             style="height: 170px; width: 170px;">
+                            <img name="pepe"  id="pepe3" name="pepe"
+                                src="https://i.pinimg.com/236x/11/b4/45/11b4457b49ac98ab10f7cd66afe4423e.jpg"
+                                draggable="true" ondragstart="dragstart(event)" alt="">
+
+                        </div>
+                        <div id="tripinfoItem4" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
+                            style="height: 170px; width: 170px;">
+                            <img name="pepe"  id="pepe4"
+                                src="https://t1.daumcdn.net/cfile/tistory/213D9D48587060432F" draggable="true"
+                                ondragstart="dragstart(event)" alt="">
+
+                        </div>
+                        <div id="tripinfoItem5" class="d-inline-block" ondrop="drop(event)" ondragover="dragover(event)"
+                             style="height: 170px; width: 170px;">
+                            <img name="pepe"  id="pepe5"
+                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKM3FyepNFfAxawu2e7pT313mRDvi88oA0O0FK1ukWqA-diMTY&usqp=CAU"
+                                draggable="true" ondragstart="dragstart(event)" alt="">
+
+                        </div>
+                        <div id="tripinfoItem6" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
+                             style="height: 170px; width: 170px;">
+                            <img name="pepe"  id="pepe6"
+                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR0wSpI9Eo22g8lDmchzByOjco2SOLT4F31C9clAYL_k8Bp6ytB&usqp=CAU"
+                                draggable="true" ondragstart="dragstart(event)" alt="">
+
+                        </div>
+                        
+                        
+
+                        
+
+
+
+
+                    </div>
 
                 </div>
-                <div id="tripinfoItem4" ondrop="drop(event)" ondragover="dragover(event)" class="col bg-success my-2" style="height: auto; width: 100px;">
-                    <img name="pepe" id="pepe4" src="https://t1.daumcdn.net/cfile/tistory/213D9D48587060432F" draggable="true" ondragstart="dragstart(event)" alt="">
-                    
-                </div>
-                <div id="tripinfoItem5" ondrop="drop(event)" ondragover="dragover(event)" class="col bg-success my-2" style="height: auto; width: 100px;">
-                    <img name="pepe" id="pepe5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKM3FyepNFfAxawu2e7pT313mRDvi88oA0O0FK1ukWqA-diMTY&usqp=CAU" draggable="true" ondragstart="dragstart(event)" alt="">
-                    
-                </div>
-                <div id="tripinfoItem6" ondrop="drop(event)" ondragover="dragover(event)" class="col bg-success my-2" style="height: auto; width: 100\px;">
-                    <img name="pepe" id="pepe6" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR0wSpI9Eo22g8lDmchzByOjco2SOLT4F31C9clAYL_k8Bp6ytB&usqp=CAU" draggable="true" ondragstart="dragstart(event)" alt="">
-                    
-                </div>
 
 
 
 
-                <div class="d-flex bg-info my-2 align-items-center" style="height: auto; width: 50px;">
-                        <a href="javascript:void(0)" id="tripinfoNextBt">
-                            <span class="carousel-control-next-icon" style="width: 50px;height: 50px;"></span>
-                        </a>
+
+
+                <div class="col d-flex bg-info my-2 align-items-center" style="height: auto; width: 50px;">
+                    <a href="javascript:void(0)" id="tripinfoNextBt">
+                        <span class="carousel-control-next-icon" style="width: 50px;height: 50px;"></span>
+                    </a>
                 </div>
             </div>
 
@@ -339,10 +414,12 @@
             </div>
 
             <div class="row mx-1" style="height: 50px;">
-                <div class="d-flex bg-primary rounded-pill justify-content-center align-items-center" style="height: 100%;width: 60px;">
+                <div class="d-flex bg-primary rounded-pill justify-content-center align-items-center"
+                    style="height: 100%;width: 60px;">
                     <span class="" style="width: auto;height: auto;">1일차</span>
                 </div>
-                <div class=" d-flex ml-2 bg-success rounded-pill justify-content-center align-items-center" style="height: auto;width: 60px;">
+                <div class=" d-flex ml-2 bg-success rounded-pill justify-content-center align-items-center"
+                    style="height: auto;width: 60px;">
                     <a href="javascript:void(0)" class="font-weight-bold" id="dayPlusBt">+</a>
                 </div>
             </div>
@@ -353,26 +430,37 @@
                 </div>
                 <div class="col-11">
                     <div class="row">
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)" onclick="scheduleItemBt()" data-save="1" class="col bg-danger"
-                            style="height: 100px;"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)" onclick="scheduleItemBt()" data-save="2" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)" onclick="scheduleItemBt()" data-save="3" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)" onclick="scheduleItemBt()" data-save="4" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)" onclick="scheduleItemBt()" data-save="5" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)" onclick="scheduleItemBt()" data-save="6" data-save="1"
-                            class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)" onclick="scheduleItemBt()" data-save="7" class="col bg-info">
+                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
+                            onclick="scheduleItemBt()" data-save="1" class="col bg-danger" style="height: 100px;"></div>
+                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
+                            onclick="scheduleItemBt()" data-save="2" class="col"></div>
+                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
+                            onclick="scheduleItemBt()" data-save="3" class="col"></div>
+                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
+                            onclick="scheduleItemBt()" data-save="4" class="col"></div>
+                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
+                            onclick="scheduleItemBt()" data-save="5" class="col"></div>
+                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
+                            onclick="scheduleItemBt()" data-save="6" data-save="1" class="col"></div>
+                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
+                            onclick="scheduleItemBt()" data-save="7" class="col bg-info">
                         </div>
                     </div>
                     <div class="row">
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)" onclick="scheduleItemBt()" data-save="8" class="col bg-danger"
-                            style="height: 100px;"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)" onclick="scheduleItemBt()" data-save="9" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)" onclick="scheduleItemBt()" data-save="10" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)" onclick="scheduleItemBt()" data-save="11" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)" onclick="scheduleItemBt()" data-save="12" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)" onclick="scheduleItemBt()" data-save="13" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)" onclick="scheduleItemBt()" data-save="14" class="col bg-info">
+                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
+                            onclick="scheduleItemBt()" data-save="8" class="col bg-danger" style="height: 100px;"></div>
+                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
+                            onclick="scheduleItemBt()" data-save="9" class="col"></div>
+                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
+                            onclick="scheduleItemBt()" data-save="10" class="col"></div>
+                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
+                            onclick="scheduleItemBt()" data-save="11" class="col"></div>
+                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
+                            onclick="scheduleItemBt()" data-save="12" class="col"></div>
+                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
+                            onclick="scheduleItemBt()" data-save="13" class="col"></div>
+                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
+                            onclick="scheduleItemBt()" data-save="14" class="col bg-info">
                         </div>
                     </div>
                 </div>
@@ -391,38 +479,39 @@
         <div id="writeContainer">
 
 
-          
+
             <div class="row p-5">
                 <!-- 컨테이너 -->
-        
+
                 <div id="imagesContainer" class="col p-0 carousel slide rounded-sm bg-dark" data-ride="carousel">
-        
+
                     <!-- 인디케이터 -->
                     <ul id="carouselIndicators" class="carousel-indicators">
-        
+
                     </ul>
-        
+
                     <!-- 이너 -->
                     <div id="carouselInner" class="carousel-inner  d-inline-flex align-items-center"
                         style="width:100%;height:500px;position: relative;">
-        
+
                         <div style="position:absolute;left: 50%;top: 50%;width: 50px;height: 50px;
                 transform: translate(-50%,-50%);z-index: 1;"
                             class="d-inline-flex  view overlay zoom p-1 img-fluid align-items-center justify-content-center">
-        
-                            <img src="../../picture/trip/plus.png" alt="" style="object-fit: contain;width: 100%;height: 100%;">
+
+                            <img src="../../picture/trip/plus.png" alt=""
+                                style="object-fit: contain;width: 100%;height: 100%;">
                             <input type="file" id="image" name="image" multiple="true" accept="image/jpg, image/png"
                                 style="width: 100%;height: 100%;position: absolute;" form="formId">
                         </div>
-        
-                        
-        
+
+
+
                         <!-- 사진 공간 -->
-        
-        
-        
+
+
+
                     </div>
-        
+
                     <a href="#imagesContainer" data-slide="prev" class="carousel-control-prev">
                         <span class="carousel-control-prev-icon" style="width: 50px;height: 50px;"></span>
                     </a>
@@ -441,27 +530,33 @@
                 <div class="d-flex flex-wrap" style="height: 30px;">
                     <div>
                         <input id="tag" name="tag" type="text" class="border-0" style="width: auto;">
-                        
+
                     </div>
+                </div>
+
             </div>
 
-        </div>
 
+            <div id="formContainer">
+                <form class="d-flex col justify-content-center" id="tripForm"
+                    action="<%=request.getContextPath()%>/trip/tripInsertEnd.do" method="POST"
+                    enctype="multipart/form-data">
+                    <input class="btn btn-grey" type="reset" id="resetBt" value="취소">
+                    <input class="btn btn-grey ml-4" type="button" id="submitBt" value="전송">
 
-        <div id="formContainer">
-            <form class="d-flex col justify-content-center" id="tripForm"
-                action="<%=request.getContextPath()%>/trip/tripInsertEnd.do" method="POST"
-                enctype="multipart/form-data">
-                <input class="btn btn-grey" type="reset" id="resetBt" value="취소">
-                <input class="btn btn-grey ml-4" type="button" id="submitBt" value="전송">
-
-            </form>
-        </div>
+                </form>
+            </div>
 
     </section>
 
 
     <footer class="container-fluid"></footer>
+
+    <style>
+        #dd {
+            transform: translateX(-200px);
+        }
+    </style>
     <script>
         $(function () {
             $("[data-date='datePicker']").datepicker({
@@ -470,16 +565,16 @@
             });
 
 
-           
+
             $('.carousel-item').remove();
             $('#carouselIndicators').empty();
         });
-        
-                    
-               
-       
+
+
+
+
         var dayCount = 1;
-        $("#dayPlusBt").on("click",function(event){
+        $("#dayPlusBt").on("click", function (event) {
             console.log("dayPlusBt");
             var span = $('<span class="" style="width: auto;height: auto;"></span>')
             var a = $('<a href="javascript:void(0)" class="text-light" name="dayDelBt" onclick="dayDelBt(event)">x</a>');
@@ -488,64 +583,74 @@
             var div = $('<div class="d-flex ml-2 bg-primary rounded-pill justify-content-center align-items-center" style="height: 100%;width: 60px;"></div>');
             div.append(span).append(a);
             $(event.target).parent().before(div);
-            
+
         });
 
-        function dayDelBt(e){
+        function dayDelBt(e) {
             console.log("dayDelBt");
             $(e.target).parent().remove();
             dayCount--;
         }
 
 
-        $("#courseDropBt").on("click",function(e){
+
+
+        $("#courseDropBt").on("click", function (e) {
             console.log("courseDropBt");
             $("#category").html("일정");
             $("#category").val("일정")
         });
-        $("#reviewDropBt").on("click",function(e){
+        $("#reviewDropBt").on("click", function (e) {
             console.log("reviewDropBt");
             $("#category").html("후기");
             $("#category").val("후기")
 
         });
-        $("#tripinfoPrevBt").on("click",function(e){
+
+
+        var sliderSize = 1182.5;
+        var prevNextClickCount = 0;
+        $("#tripinfoPrevBt").on("click", function (e) {
             console.log("tripinfoPrevBt");
+            prevNextClickCount++;
+            $("#mindSlider").css("transform", "translateX(" + (sliderSize * prevNextClickCount) + "px)");
 
         });
-        $("#tripinfoNextBt").on("click",function(e){
+        $("#tripinfoNextBt").on("click", function (e) {
             console.log("tripinfoNextBt");
+            prevNextClickCount--;
+            $("#mindSlider").css("transform", "translateX(" + (sliderSize * prevNextClickCount) + "px)");
 
         });
-        $("#tripinfoItem1").on("click",function(e){
+        $("#tripinfoItem1").on("click", function (e) {
             console.log("tripinfoItem1");
 
         });
-        $("#tripinfoItem2").on("click",function(e){
+        $("#tripinfoItem2").on("click", function (e) {
             console.log("tripinfoItem2");
 
         });
-        $("#tripinfoItem3").on("click",function(e){
+        $("#tripinfoItem3").on("click", function (e) {
             console.log("tripinfoItem3");
 
         });
-        $("#tripinfoItem4").on("click",function(e){
+        $("#tripinfoItem4").on("click", function (e) {
             console.log("tripinfoItem4");
 
         });
-        $("#tripinfoItem5").on("click",function(e){
+        $("#tripinfoItem5").on("click", function (e) {
             console.log("tripinfoItem5");
 
         });
-        $("#tripinfoItem6").on("click",function(e){
+        $("#tripinfoItem6").on("click", function (e) {
             console.log("tripinfoItem6");
 
         });
 
-        $("#tag").on("keyup",function(e){
+        $("#tag").on("keyup", function (e) {
             console.log("tag : " + e.keyCode);
             var str = $(e.target).val();
-            if($(e.target).val().length > 0 && e.keyCode == 13){
+            if ($(e.target).val().length > 0 && e.keyCode == 13) {
                 var input = $('<input name="tag" type="text" class="border-0" style="width: auto;">');
                 input.val(str);
                 var a = $('<a href="javascript:void(0)" name="tagDelBt" onclick="tagDelBt(event)">x</a>');
@@ -553,40 +658,55 @@
                 div.addClass("mr-2");
                 div.append(input).append(a);
                 $(e.target).parent().before(div);
-               
+
                 $(e.target).val("");
             }
         });
 
 
-        function drop(event){
+        function drop(event) {
             console.log("ondrop");
             event.preventDefault();
             var data = event.dataTransfer.getData("text");
             event.target.appendChild(document.getElementById(data));
         }
 
-        function dragover(event){
+        function dragover(event) {
             console.log("ondragover");
             event.preventDefault();
 
-            
+
         }
-        function dragstart(event){
+        function dragstart(event) {
             console.log("ondragstart");
             event.dataTransfer.setData("text", event.target.id);
-            
+
         }
 
 
-        function tagDelBt(event){
+        function tagDelBt(event) {
             console.log("tagDelBt");
             $(event.target).parent().remove();
         }
 
 
+        function matzipBt() {
+            console.log("matzipBt");
 
-        $("#submitBt").on("click",function(){
+        }
+        function myoungsoBt() {
+            console.log("myoungsoBt");
+        }
+        function sooksoBt() {
+            console.log("sooksoBt");
+        }
+        function myBt() {
+            console.log("myBt");
+        }
+
+
+
+        $("#submitBt").on("click", function () {
             console.log("submitBt");
             var _userNo = "";
             var _category = $("#category");
@@ -607,8 +727,8 @@
             var _orders = $("#category");
             var _requiredHours = $("#category");
             var _transport = $("#category");
-       
-            var form  = $("#tripForm")[0];
+
+            var form = $("#tripForm")[0];
             var data = new Form(form);
 
             var trip = {
@@ -625,7 +745,7 @@
                 travleEndDate: _travleEndDate,
                 publicEnabled: _publicEnabled,
                 deleted: 'n',
-                scheduleList : []
+                scheduleList: []
             }
 
             var schedule = {
@@ -663,48 +783,48 @@
             }
         }
 
-       
+
         function updateImageDisplay() {
             const currentFiles = input.files;
             if (currentFiles.length === 0) { //추가된 파일이 하나도 없을대
                 // 파일이 없음을 표시
             } else { // 추가된 파일이 있을때
 
-            	var count = 0;
-            	 var isActive = false;
-            	  $('.carousel-item').remove();
-                  $('#carouselIndicators').empty();
+                var count = 0;
+                var isActive = false;
+                $('.carousel-item').remove();
+                $('#carouselIndicators').empty();
                 for (const file of currentFiles) {
-                	console.log("count :" + count);
-                	console.log("isActive :" + isActive);
-      
+                    console.log("count :" + count);
+                    console.log("isActive :" + isActive);
+
                     if (validFileType(file)) {
                         const img = $("<img>").attr("src", URL.createObjectURL(file));
                         const item = $('<div class="carousel-item">').append(img);
-                        if(isActive == false){
+                        if (isActive == false) {
                             item.addClass('active');
-                        }    
+                        }
                         const inner = $('#carouselInner').append(item);
 
 
                         const indicatorItem = $('<li>');
                         indicatorItem.attr("data-target", '#carouselContainer');
                         indicatorItem.attr("data-slide-to", count);
-                        if(isActive == false){
+                        if (isActive == false) {
                             indicatorItem.addClass("active");
                             isActive = true;
-                           // console.log("count : " + count);
+                            // console.log("count : " + count);
                         }
-                        
+
                         const indicator = $('#carouselIndicators');
                         indicator.append(indicatorItem);
 
-                        if(count == 0){
-                            $("#fileNames").val(file.name+",")
-                        }else{
-                            $("#fileNames").val($("#fileNames").val() + file.name+",")
+                        if (count == 0) {
+                            $("#fileNames").val(file.name + ",")
+                        } else {
+                            $("#fileNames").val($("#fileNames").val() + file.name + ",")
                         }
-                        
+
                     } else {
                         console.log("잘못된 파일 접근입니다.");
                     }

@@ -30,7 +30,14 @@
 				                	
 				                	<tr>
 				                		<th>프로필</th>
-				                		<td><input type="file" id="pofile" name="profile"></td>
+				                		<td style="position:relative;">
+				                		<%if(up.getImage()!=null){ %>
+				                			<input type="file" id="pofile" name="profile">
+				                			<span id="proImg"><%=up.getImage() %></span>
+				                		<%}else{ %>
+				                			<input type="file" id="pofile" name="profile">
+				                		<%} %>
+				                		</td>
 				                	</tr>
 				                    <tr>
 				                        <th>아이디</th>
@@ -175,8 +182,27 @@
 		margin: 20px;
     	border-radius: 100px;
 	}
+	
+	span#proImg{
+		position:absolute;
+		left:79px;
+		top:7px;
+		width:258px;
+		background-color: white;
+	}
 </style>
 
+<script>
+	$(function(){
+		$("[name=profile]").change(function(){
+			if($(this).val()==""){
+				$("#proImg").show();
+			}else{
+				$("#proImg").hide();
+			}
+		});
+	});
+</script>
 
 
 

@@ -71,11 +71,13 @@
 												    <div class="dropdown-menu">
 												    <%if(d.getEnded().equals("N")){ %>
 						                        		<a class="dropdown-item" href="#">신청서 수신함</a>
+						                        		<a class="dropdown-item" href="#">채팅</a>
 												      	<a class="dropdown-item" href="#">모집 마감</a>
 												     	<a class="dropdown-item" href="#">동행 수정</a>
 												     	<a class="dropdown-item" href="#">동행 삭제</a>
 						                        	<%}else{ %>
 												    	<a class="dropdown-item" href="#">신청서 수신함</a>
+												    	<a class="dropdown-item" href="#">채팅</a>
 												     	<a class="dropdown-item" href="#">동행 수정</a>
 												     	<a class="dropdown-item" href="#">동행 삭제</a>
 						                        	<%} %>
@@ -133,23 +135,12 @@
 							<div style="height:45px;">
 								<span>총 <%=myJDCount %>개의 동행</span>
 							</div>
-							<div id="jDhCk1">
-								<button class="btn">선택삭제</button>
-							</div>
-							<div id="jDhCk2">
-								<label><input type="checkbox" id="jDhAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn" id="jDhEndBtn">돌아가기</button>
-							</div>
 						</div>
 						<!-- 게시글위치 -->
 						<table id="dhTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
 							<%for(MyDong j:oriJoinDong){ %>
 								<td class="p-1">
-			                    	<div class="jDhCk3" style="margin:10px;">
-										<input type="checkbox" class="jDhCks">
-									</div>
 			                       	<div class="card" style="width: 155px; height: 290px;" >
 			                        	<div class="d-flex justify-content-between p-2" style="font-size:5px;">
 			                        		<%for(DonghangJoin dj:joinDong){ 
@@ -192,12 +183,13 @@
 			                           </div>
 			                           <div class="d-flex flex-column justify-content-center card-body p-2" style="font-size:7px;">
 			                               <p class="mb-0"><%=j.getTitle() %></p>
-			                               <%for(UserProfile un:userNick){ 
-			                            	   if(j.getUserNo()==un.getNo()){%>
-			                            	   		<p class="mb-0">
-			                               				<%=un.getNickName() %>
-			                               			</p>
-			                               <%} }%>
+			                               <%String nick="";
+			                               for(UserProfile un:userNick){ 
+			                            	   if(j.getUserNo()==un.getNo()){
+			                            		   nick=un.getNickName();
+			                            	   }
+		                            	   }%>
+		                            	   <span><%=nick %></span>
 			                               <ul class="p-0 m-0">
 			                                   <li>동행지역 : <span><%=j.getTravleLocale() %></span></li>
 			                                   <li>기간 : <span><%=j.getTravleStartDate() %></span><br>
@@ -215,7 +207,7 @@
 							<%if(joinDong.size()==4){ %>
 							<tr>
 								<td colspan="4" style="text-align: center;">
-									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myDongMyDH.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>
+									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myDongMyJD.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>
 								</td>
 							</tr>
 							<%} %>
@@ -274,7 +266,7 @@
 
 <script>
 	/* 내동행 */
-	$(function(){
+	/* $(function(){
 		$("#dhCk1>button").click(()=>{
 			$("#dhCk1").css("display","none");
 			$("#dhCk2").css("display","block");
@@ -294,10 +286,10 @@
 				$(".dhCks").prop("checked",false);
 			}
 		});
-	});
+	}); */
 	
 	/* 참여동행 */
-	$(function(){
+	/* $(function(){
 		$("#jDhCk1>button").click(()=>{
 			$("#jDhCk1").css("display","none");
 			$("#jDhCk2").css("display","block");
@@ -317,7 +309,7 @@
 				$(".jDhCks").prop("checked",false);
 			}
 		});
-	});
+	}); */
 	
 	$(function(){
 		$(".imgDrop").stop().css({"transform":"rotate(90deg)"});

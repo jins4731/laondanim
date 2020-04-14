@@ -45,7 +45,7 @@ public class MyPageDongMyDHServlet extends HttpServlet {
 		
 		List<MyDong> myDong=new MypageService().selectMyDHAll(userNo, getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
 		int myDHCount = new MypageService().selectMyDongCount(userNo);
-		String myDHPasing = getPageBar(myDHCount, currentPage, pagePerRow, request, "/myPage/myConTrip.do");
+		String myDHPasing = getPageBar(myDHCount, currentPage, pagePerRow, request, "/myPage/myDongMyDH.do");
 		
 		request.setAttribute("userProfile", up);
 		

@@ -125,7 +125,7 @@ public class FindUserPwServlet extends HttpServlet {
 			 saveKey.setAttribute("AuthId",u.getUserId());
 		
 			 response.setContentType("text/csv;charset=UTF-8");
-			 response.getWriter().write("<strong>이메일로 임시 비밀번호가 전송되었습니다<strong>");
+			 response.getWriter().write("<strong>이메일로 임시 비밀번호가 전송되었습니다<strong><br><strong>로그인후 비밀번호를  변경해주세요</strong>");
 				
 		}else {
 				//아이디와 이메일 일치하는 값이 없을때

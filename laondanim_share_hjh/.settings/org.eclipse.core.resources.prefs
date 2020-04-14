@@ -1,2 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/com/laon/common/JDBCTemplate.java=UTF-8
+encoding//src/com/laon/user/controller/LoginServlet.java=UTF-8
+encoding//src/com/laon/user/model/dao/UserDao.java=UTF-8
+encoding//src/com/laon/user/model/service/UserService.java=UTF-8
+encoding//src/com/laon/user/model/vo/User.java=UTF-8

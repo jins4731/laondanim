@@ -35,13 +35,14 @@ public class IdCheckAuthKeyServlet extends HttpServlet {
 		
 		//여기서 아이디를 *로 가려주기 !!
 		
+		String AuthId1=AuthId.substring(0,AuthId.length()-3)+"***";
 		
 		
 		
 		if(!AuthenticationKey.equals(AuthenticationUser)) {
 			response.getWriter().write("<h4>인증번호가 일치하지 않습니다<h4><br><br>");
 		}else {
-			response.getWriter().write("<h4>찾으시는 아이디는 "+AuthId+"입니다<h4><br><br>");
+			response.getWriter().write("<h4>찾으시는 아이디는 "+AuthId1+"입니다<h4><br><br>");
 		}
 		
 		

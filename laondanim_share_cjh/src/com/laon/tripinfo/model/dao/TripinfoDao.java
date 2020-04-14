@@ -4,6 +4,7 @@ import static com.laon.common.template.JDBCTemplate.close;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,9 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.laon.common.CommonKey;
 import com.laon.common.PropPath;
 import com.laon.common.robot.LaonRobot;
 import com.laon.tripinfo.model.vo.Tripinfo;
+
+import oracle.sql.ARRAY;
+import oracle.sql.ArrayDescriptor;
+import oracle.sql.SQLName;
 
 public class TripinfoDao {
 	private Properties prop = new Properties();
@@ -33,6 +39,7 @@ public class TripinfoDao {
 
 	private String selectTripinfo = "selectTripinfo";
 	private String selectTripinfoPage = "selectTripinfoPage";
+	private String selectTripInfoWheresList = "selectTripInfoWheresList";
 	private String selectTripinfoCount = "selectTripinfoCount";
 
 	public TripinfoDao() {
@@ -117,5 +124,26 @@ public class TripinfoDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public List<Tripinfo> selectTripInfoWheresList(Connection conn, String[] scheduleNoList) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty(selectTripInfoWheresList);
+		List<Tripinfo> list = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			ArrayDescriptor desc = ArrayDescriptor.createDescriptor("VARCHAR2", conn);
+			Array array = new ARRAY(desc, conn, scheduleNoList);
+			pstmt.setArray(1, array);
+			rs = pstmt.executeQuery();
+			list = rsProcess(rs, new ArrayList<Tripinfo>(), new Tripinfo());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
 	}
 }

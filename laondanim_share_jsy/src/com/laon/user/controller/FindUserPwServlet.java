@@ -43,29 +43,29 @@ public class FindUserPwServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//비밀번호 찾는 로직
-		//아이디와 이메일이 일치하는 디비값이 있는지 확인후 메일 발송.
+		//鍮꾨�踰덊샇 李얜뒗 濡쒖쭅
+		//�븘�씠�뵒�� �씠硫붿씪�씠 �씪移섑븯�뒗 �뵒鍮꾧컪�씠 �엳�뒗吏� �솗�씤�썑 硫붿씪 諛쒖넚.
 		String id=request.getParameter("id");
 		String email=request.getParameter("email");
 		System.out.println(id+":"+email);
 		User u=new UserService().findPw(id,email);
-		System.out.println("유저가있니?"+u);
+		System.out.println("�쑀��媛��엳�땲?"+u);
 		
 		if(u!=null&&u.getEmail().equals(email)) {
-			//일치하는 유저가 있고, 입력한 이메일값과 같을경우
+			//�씪移섑븯�뒗 �쑀��媛� �엳怨�, �엯�젰�븳 �씠硫붿씪媛믨낵 媛숈쓣寃쎌슦
 			String host="smtp.google.com";
-			String user="laondanim@gmail.com";//보낼계정
-			String password="rclasspm!";//비번
+			String user="laondanim@gmail.com";//蹂대궪怨꾩젙
+			String password="rclasspm!";//鍮꾨쾲
 			
 			String mailTo=u.getEmail();
 			
 			Properties prop=new Properties();
-			prop.put("mail.smtp.starttls.enable", "true");//로그인시 tls쓸껀지
-			prop.put("mail.smtp.host", "smtp.gmail.com");//이메일발송 처리해줄 서버->구글
-			prop.put("mail.smtp.auth", "true");//smtp서버의 인증을 사용
-			prop.put("mail.smtp.port", "587");//tls 포트번호 587, ssl은 465
+			prop.put("mail.smtp.starttls.enable", "true");//濡쒓렇�씤�떆 tls�벝猿�吏�
+			prop.put("mail.smtp.host", "smtp.gmail.com");//�씠硫붿씪諛쒖넚 泥섎━�빐以� �꽌踰�->援ш�
+			prop.put("mail.smtp.auth", "true");//smtp�꽌踰꾩쓽 �씤利앹쓣 �궗�슜
+			prop.put("mail.smtp.port", "587");//tls �룷�듃踰덊샇 587, ssl�� 465
 			
-			//인증번호 생성(요게 좀 이해가 안감..)
+			//�씤利앸쾲�샇 �깮�꽦(�슂寃� 醫� �씠�빐媛� �븞媛�..)
 			StringBuffer temp=new StringBuffer();
 			Random rnd=new Random();
 			for(int i=0;i<10;i++) {
@@ -86,51 +86,51 @@ public class FindUserPwServlet extends HttpServlet {
 				}
 			 	 
 			}
-			//생성된 값 조합
+			//�깮�꽦�맂 媛� 議고빀
 			 String AuthenticationKey=temp.toString();
 			 System.out.println(AuthenticationKey);
-			//세션 생성
+			//�꽭�뀡 �깮�꽦
 			Session session=Session.getDefaultInstance(prop,new MailAuth());
-			//이메일 전송
+			//�씠硫붿씪 �쟾�넚
 			try{
 				MimeMessage msg=new MimeMessage(session);
-				//보내는 날짜 지정 setSentDate
+				//蹂대궡�뒗 �궇吏� 吏��젙 setSentDate
 				msg.setSentDate(new Date());
-				//발송자 지정 메소드 setFrom(발송자의메일,발송자명)
+				//諛쒖넚�옄 吏��젙 硫붿냼�뱶 setFrom(諛쒖넚�옄�쓽硫붿씪,諛쒖넚�옄紐�)
 				msg.setFrom(new InternetAddress("laondanim@gmail.com","danimHOST"));
-				//수신자의 메일생성 setRecipient
+				//�닔�떊�옄�쓽 硫붿씪�깮�꽦 setRecipient
 				msg.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
-				//메일 제목설정
-				msg.setSubject("라온다님 인증메일(비밀번호 찾기)","UTF-8");
-				//메일 내용 
-				msg.setText("라온다님 인증번호:"+AuthenticationKey,"UTF-8");
-				//메일을 보냄!
+				//硫붿씪 �젣紐⑹꽕�젙
+				msg.setSubject("�씪�삩�떎�떂 �씤利앸찓�씪(鍮꾨�踰덊샇 李얘린)","UTF-8");
+				//硫붿씪 �궡�슜 
+				msg.setText("�씪�삩�떎�떂 �씤利앸쾲�샇:"+AuthenticationKey,"UTF-8");
+				//硫붿씪�쓣 蹂대깂!
 				Transport.send(msg);
-				System.out.println("이메일 전송!");
+				System.out.println("�씠硫붿씪 �쟾�넚!");
 			}catch(AddressException ae) {
 				System.out.println("AddressException:"+ae.getMessage());
-			}catch(MessagingException me) { //메일계정인증 예외처리
+			}catch(MessagingException me) { //硫붿씪怨꾩젙�씤利� �삁�쇅泥섎━
 				System.out.println("MessagingException:"+me.getMessage());
-			}catch(UnsupportedEncodingException e) {//지원되지않는 인코딩을 사용할때
+			}catch(UnsupportedEncodingException e) {//吏��썝�릺吏��븡�뒗 �씤肄붾뵫�쓣 �궗�슜�븷�븣
 				System.out.println("UnsupportedEncodingException:"+e.getMessage());
 			}
 			//
-			System.out.println("디비에넣을값"+id+":"+AuthenticationKey);
+			System.out.println("�뵒鍮꾩뿉�꽔�쓣媛�"+id+":"+AuthenticationKey);
 			int result=new UserService().updateTemPw(id,AuthenticationKey);
-			System.out.println("수정되었니"+result);
+			System.out.println("�닔�젙�릺�뿀�땲"+result);
 			
-			 //인증번호 값 생성한것을 session에 넣어보관.값을 비교하기 위함임! HttpSession
+			 //�씤利앸쾲�샇 媛� �깮�꽦�븳寃껋쓣 session�뿉 �꽔�뼱蹂닿�.媛믪쓣 鍮꾧탳�븯湲� �쐞�븿�엫! HttpSession
 			 HttpSession saveKey=request.getSession(); 
 			 saveKey.setAttribute("AuthenticationKey",AuthenticationKey); 
 			 saveKey.setAttribute("AuthId",u.getUserId());
 		
 			 response.setContentType("text/csv;charset=UTF-8");
-			 response.getWriter().write("<strong>이메일로 임시 비밀번호가 전송되었습니다<strong>");
+			 response.getWriter().write("<strong>�씠硫붿씪濡� �엫�떆 鍮꾨�踰덊샇媛� �쟾�넚�릺�뿀�뒿�땲�떎<strong>");
 				
 		}else {
-				//아이디와 이메일 일치하는 값이 없을때
+				//�븘�씠�뵒�� �씠硫붿씪 �씪移섑븯�뒗 媛믪씠 �뾾�쓣�븣
 				response.setContentType("text/csv;charset=UTF-8");
-				response.getWriter().write("<strong>일치하는 회원정보가 없습니다.!!<strong>");
+				response.getWriter().write("<strong>�씪移섑븯�뒗 �쉶�썝�젙蹂닿� �뾾�뒿�땲�떎.!!<strong>");
 				
 			}
 		

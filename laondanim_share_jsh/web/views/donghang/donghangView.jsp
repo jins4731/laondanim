@@ -1,6 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.laon.donghang.model.vo.DonghangJoinUserPicture"%>
+<%@ page import="com.laon.donghang.model.vo.DonghangJoin"%>
 <%@ page import="com.laon.user.model.vo.UserProfile"%>
 
 <%@ page import="com.laon.common.CommonKey"%>
@@ -19,8 +20,12 @@
 	
 	//페이지이용하고 있는 로그인 유저의 프로필 사진
 	String loginUserImg = (String)request.getAttribute(UserKey.IMAGE);
+	
+	//페이지이용하고 있는 로그인 유저의 동행 참여여부(테이블로 가져와서 안에서 처리)
+	DonghangJoin dji = (DonghangJoin)request.getAttribute(CommonKey.DONGHANG_JOIN_ITEM);
+	
 %>
-
+   	<div style="height: 170px;"></div>
     <section class="d-flex flex-column justify-content-center align-items-center">
         <div style="width: 1366px;" class="d-flex flex-column justify-content-center align-items-center">
 

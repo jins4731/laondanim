@@ -60,14 +60,14 @@ public class Paging {
 		if(rowNum == 1) {
 			pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&lt;</a></li>";
 		}else {
-			pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?cPage=" + (rowNum-1) +"&userTag="+ userTag +"&keyword="+keyword+"&recent="+recent+"&viewcount="+viewcount+"&nearSchedule="+nearSchedule+"' area-label='Previous'>&lt;</a></li>";
+			pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?currentPage=" + (rowNum-1) +"&userTag="+ userTag +"&keyword="+keyword+"&recent="+recent+"&viewcount="+viewcount+"&nearSchedule="+nearSchedule+"' area-label='Previous'>&lt;</a></li>";
 		}
 		
 		while(!(rowNum>pageLast || (rowNum>totalPage))) {
 			if(cPage==rowNum) {
 				pageBar += "<li class='page-item'><a class='page-link' href=''>"+rowNum+"</a></li>";
 			}else {
-				pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?cPage="+rowNum+"&userTag="+ userTag + "&keyword="+keyword+"&recent="+recent+"&viewcount="+viewcount+"&nearSchedule="+nearSchedule+"'>"+rowNum+"</a></li>";
+				pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?currentPage="+rowNum+"&userTag="+ userTag + "&keyword="+keyword+"&recent="+recent+"&viewcount="+viewcount+"&nearSchedule="+nearSchedule+"'>"+rowNum+"</a></li>";
 			}
 			rowNum++;
 		}
@@ -75,7 +75,7 @@ public class Paging {
 		if(rowNum>totalPage) {
 			pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&gt;</a></li>";
 		}else {
-			pageBar +="<li class='page-item'><a class='page-link' href='"+url+"?cPage="+rowNum+"&userTag="+ userTag+"&keyword="+keyword+"&recent="+recent+"&viewcount="+viewcount+"&nearSchedule="+nearSchedule+"' area-label='Previous'>&gt;</a></li>";
+			pageBar +="<li class='page-item'><a class='page-link' href='"+url+"?currentPage="+rowNum+"&userTag="+ userTag+"&keyword="+keyword+"&recent="+recent+"&viewcount="+viewcount+"&nearSchedule="+nearSchedule+"' area-label='Previous'>&gt;</a></li>";
 		}
 		
 		pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&raquo;</a></li> </ul>";

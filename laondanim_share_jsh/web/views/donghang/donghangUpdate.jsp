@@ -19,7 +19,7 @@
 %>
 
 <%@ include file="/views/common/header.jsp"%>
-
+   	<div style="height: 170px;"></div>
     <section class="d-flex flex-column justify-content-center align-items-center">
         <div style="width: 1366px;" class="d-flex flex-column justify-content-center align-items-center">
 

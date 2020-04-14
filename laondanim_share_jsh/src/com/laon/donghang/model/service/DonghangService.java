@@ -171,4 +171,11 @@ public class DonghangService {
 		
 		return result;
 	}
+
+	public DonghangJoin selectUserDonghangJoin(int no, int loginUserNo) {
+		Connection conn = getConnection();
+		DonghangJoin userJoinTb = dao.selectUserDonghangJoin(conn, no, loginUserNo);
+		close(conn);
+		return userJoinTb;
+	}
 }

@@ -63,6 +63,7 @@ public class DonghangDao {
 	private String selectDonghangJoinMember = "selectDonghangJoinMember";
 	private String selectDonghangJoinUserPicture = "selectDonghangJoinUserPicture";
 	private String updateDonghaong = "updateDonghaong";
+	private String selectUserDonghangJoin = "selectUserDonghangJoin";
 
 	public DonghangDao() {
 		try {
@@ -651,6 +652,10 @@ public class DonghangDao {
 			pstmt.setInt(1, join.getUserNo());
 			pstmt.setInt(2, join.getDonghangNo());
 			pstmt.setString(3, join.getContent());
+			pstmt.setString(4, "J");
+			pstmt.setString(5, "N");
+			pstmt.setString(6, "N");
+			pstmt.setString(7, "N");
 						
 			result = pstmt.executeUpdate();
 			
@@ -660,5 +665,38 @@ public class DonghangDao {
 			close(pstmt);	
 		}
 		return result;
+	}
+
+	public DonghangJoin selectUserDonghangJoin(Connection conn, int no, int loginUserNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty(selectUserDonghangJoin);
+		DonghangJoin userJoinTb = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			pstmt.setInt(2, loginUserNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				userJoinTb = new DonghangJoin();
+				userJoinTb.setNo(rs.getInt("NO"));
+				userJoinTb.setUserNo(rs.getInt("USER_NO"));
+				userJoinTb.setDonghangNo(rs.getInt("DONGHANG_NO"));
+				userJoinTb.setContent(rs.getString("CONTENT"));
+				userJoinTb.setConfirmed(rs.getString("CONFIRMED"));
+				userJoinTb.setCancled(rs.getString("CANCLED"));
+				userJoinTb.setReported(rs.getString("REPORTED"));
+				userJoinTb.setDeleted(rs.getString("DELETED"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return userJoinTb;
 	}
 }

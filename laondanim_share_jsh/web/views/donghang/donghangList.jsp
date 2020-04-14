@@ -32,8 +32,9 @@
 	int totalRowNum = (int)request.getAttribute(CommonKey.TOTAL_ROWCOUNT);
 %>
 
+   	<div style="height: 170px;"></div>
     <section class="d-flex flex-row justify-content-center">
-        <div style="width: 1366px;" class="border pt-5 pb-5">
+        <div style="width: 1366px;" class="pt-5 pb-5">
 
 
         <!--검색창-->

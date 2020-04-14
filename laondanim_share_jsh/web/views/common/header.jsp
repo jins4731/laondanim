@@ -53,7 +53,7 @@ header {
 	width: 1366px;
 	height: 100%;
 }
-#logoNav a img{
+#logoNav a #laonLogo{
 	width: 230px;
 	margin-top: 50px;
 }
@@ -117,12 +117,12 @@ header li>a {
 		<div id="headerDiv" class="d-flex justify-content-center">
 			<div id="logoNav" class="d-flex flex-column justify-content-center w-100">
 				<a class="m-0 mt-2 align-items-start" href="<%=request.getContextPath()%>">
-					<img src="<%=request.getContextPath()%>/main/laonLogo.png" class="m-0 p-0">
+					<img src="<%=request.getContextPath()%>/main/laonLogo.png" class="m-0 p-0" id="laonLogo">
 				</a>
 		
 				<nav class="navbar navbar-expand-sm d-flex justify-content-end">
 					<!-- Links -->
-					<ul class="main-nav d-flex p-0 m-0 justify-content-center" style="width:450px;">
+					<ul class="main-nav d-flex p-0 m-0 justify-content-center align-items-center" style="width:450px;">
 						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/trip/list.do">여행기</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">여행정보</a></li>
 						<li class="nav-item dropdown">
@@ -146,7 +146,7 @@ header li>a {
 						<!-- null 이 아닐경우  마이페이지/로그아웃 출력, -->
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> 
-							<img src="<%=request.getContextPath()%>/icon/profile_icon.png" width="50px" height="50px">
+							<img src="<%=request.getContextPath()%>/image/profile_icon.png" width="50px" height="50px" class="p-0 m-0">
 						</a>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="#">마이페이지</a> 

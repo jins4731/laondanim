@@ -64,11 +64,10 @@
                     	다님일정 보기 <strong class="ml-1">&#9002;</strong>
                     </button>                    	
                     <%}%>
-                    <%if(loginUser.getNo()!=dh.getUserNo()){ %>
-                    <button type="button" class="ldBtn ml-2" data-toggle="modal" data-target="#myModal">
-                    	참여하기
-                    </button>
-                    <%}else {%>
+
+
+					<!-- 로그인 유저가 동행작성자일 때 -->
+                    <%if( loginUser.getNo()==dh.getUserNo() ) {%>
                     <button type="button" class="ldBtn ml-2"
 						onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangUpdate.do?userNo=<%=loginUser.getNo()%>&no=<%=dh.getNo()%>')">
                     	수정
@@ -77,7 +76,32 @@
 						onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangDelete.do?no=<%=dh.getNo()%>&fileName=<%=dh.getImage()%>')">
                     	삭제
                     </button>                    
-                    <%}%>
+                    <%} else if( dji==null || (loginUser.getNo()!=dji.getUserNo())  ){ %>                    
+	                    <button type="button" class="ldBtn ml-2" data-toggle="modal" data-target="#myModal">
+	                    	참여하기
+	                    </button>
+                 	<%} else if( dji!=null && (loginUser.getNo() == dji.getUserNo()) ) {%>
+                 	
+                    	<!-- 수락대기중과 거절됨 분기 -->
+		                    <%	if(dji.getConfirmed().equals("J")) {%>
+		                 	    <button type="button" class="ldBtnInactive ml-2" disabled>
+			                    	수락대기중
+			                    </button>
+			                <%} else if(dji.getConfirmed().equals("N")) {%>
+			                	<button type="button" class="ldBtnInactive ml-2" disabled>
+			                    	참여거절됨
+			                    </button>
+			                <%} else if(dji.getConfirmed().equals("Y")) {%>
+			                	<button type="button" class="ldBtnInactive ml-2" disabled>
+			                    	참여중인 동행
+			                    </button>
+			                <%}%>
+			                
+                    <%} else if(dh.getEnded().equals("Y")) {%>
+                   		<button type="button" class="ldBtnInactive ml-2" disabled>
+	                    	동행마감
+	                    </button>
+					<%} %>
                 </div>
             </div>
 
@@ -269,7 +293,7 @@
             
             <!-- Modal footer -->
             <div class="modal-footer border-top-0">
-            <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+            <button id="pageReload" type="button" class="ldBtn modal-close" data-dismiss="modal">Close</button>
             </div>
             
         </div>
@@ -370,8 +394,6 @@
         
         //Ajax 참여신청 모달
         function fn_DonghangJoin(){
-        	alert($("#donghangJoinContent").val());
-
          	$.ajax({
         		url : "<%=request.getContextPath()%>/donghang/donghangJoin.do",
         		type : "get",
@@ -385,13 +407,15 @@
         	})    	
         }
         
-
          $("#donghangJoinSubmitBtn").click(()=>{
         	setTimeout(()=>{
                 $("#donghangJoinResultModal").modal("show");
-        	}, 1000)
+        	}, 600)
         });
-			
+
+         $('#pageReload').click(function() {
+        	    location.reload();
+        	});         
 		
     </script>
     

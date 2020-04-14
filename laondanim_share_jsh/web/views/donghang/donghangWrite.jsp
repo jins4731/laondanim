@@ -31,7 +31,7 @@
                 <div style="width: 480px; height: 270px; position: relative;" class="border d-flex justify-content-center align-items-center mr-5">
                     <!--사진 넣는 버튼-->
                     <input type="file" id="file" name="imageFile" accept="image/*" onchange="changeValue(this)"/>
-                    <button id="btnFileUplaod" style="width: 50px; height: 50px; border-radius: 25px; position: absolute; background-color: rgba(0, 0, 0, 0.746); color: white; display: flex;
+                    <button type="button" id="btnFileUplaod" style="width: 50px; height: 50px; border-radius: 25px; position: absolute; background-color: rgba(0, 0, 0, 0.746); color: white; display: flex;
                     justify-content: center; align-items: center; font-size: 25px;" class="border-0">
                         <p style="height: 50px;" class="m-0 pt-1">+</p>
                     </button>
@@ -222,10 +222,10 @@
                                 
                                 
                                     <div style="width: 766px; position: absolute;" class="d-flex flex-row justify-content-md-between">
-                                        <button style="border:none; background: none;" id="back">
+                                        <button type="button" style="border:none; background: none;" id="back">
                                             <img src="icon/img-left_icon.png" style="width: 50px;">
                                         </button>
-                                        <button style="border:none; background: none;" id="next">
+                                        <button type="button" style="border:none; background: none;" id="next">
                                             <img src="icon/img-right_icon.png"style="width: 50px;">
                                         </button>
                                     </div>
@@ -235,7 +235,7 @@
                     
                         <!-- Modal footer -->
                         <div class="modal-footer border-top-0">
-                            <button type="button" class="ldBtn" data-dismiss="modal">Close</button>
+                            <button type="button" class="ldBtn" data-dismiss="modal">선택완료</button>
                         </div>
                     </div>
                 </div>

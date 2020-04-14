@@ -45,7 +45,7 @@ header {
 	z-index:10;
 	top:0px;
 	background-color: white;
-	box-shadow: 0 0 15px #000000a1;
+	box-shadow: 0 0 15px #00acbfb3;
 	justify-content: center;
 }
 

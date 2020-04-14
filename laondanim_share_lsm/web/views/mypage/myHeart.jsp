@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.laon.trip.model.vo.TripMyCon"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -89,6 +90,26 @@
 						</table>
 					</div>
 					
+					<%List restaurant=new ArrayList();
+					List lodging=new ArrayList();
+					List attraction=new ArrayList();
+					int resCount=0;
+					int lodCount=0;
+					int attCount=0;
+					for(TripinfoMyMind tm:mindList){
+						int count=1;
+						if(tm.getCategory().equals("맛집")){
+							restaurant.add(tm);
+							resCount+=count;
+						}else if(tm.getCategory().equals("숙소")){
+							lodging.add(tm);
+							lodCount+=count;
+						}else if(tm.getCategory().equals("명소")){
+							attraction.add(tm);
+							attCount+=count;
+						}
+					} %>
+					
 					<!-- 맛집 -->
 					<div class="menu">
 						<div class="manuBar">
@@ -106,14 +127,47 @@
 						<!-- 정보 -->
 						<div id="myDNInfo">
 							<div style="height:45px;">
-								<span>총 ?개의 ♥ 맛집</span>
+								<span>총 <%=resCount %>개의 ♥ 맛집</span>
+							</div>
+						</div>
+						<div class="swiper-container">
+							<div class="swiper-wrapper">
+							<%-- <%for(){ %>
+								<div class="swiper-slide"><img class="card-img" src="<%=request.getContextPath()%>/views/picture/profile/<%=%>"></div>
+							<%} %> --%>
+							</div>
+						
+							<!-- 네비게이션 -->
+							<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+							<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
+						</div>
+					</div>
+					
+					<!-- 숙소 -->
+					<div class="menu">
+						<div class="manuBar">
+							<div>
+								<span>숙소</span>
+							</div>
+							<div>
+								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
+							</div>
+						</div>
+						<hr>
+					</div>
+					<!-- 닫힘 내용 -->
+					<div>
+						<!-- 정보 -->
+						<div id="myDNInfo">
+							<div style="height:45px;">
+								<span>총 <%=lodCount %>개의 ♥ 숙소</span>
 							</div>
 						</div>
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
 							<%for(TripinfoMyMind tm:mindList){
-								 if(tm.getCategory().equals("맛집")){ %>
-								<div class="swiper-slide"><img class="card-img" src="<%=request.getContextPath()%>/views/picture/profile/<%=tm.getImage()%>"></div>
+								 if(tm.getCategory().equals("숙소")){ %>
+								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/profile/<%=tm.getImage()%>"></div>
 							<%} }%>
 							</div>
 						
@@ -140,7 +194,7 @@
 						<!-- 정보 -->
 						<div id="myDNInfo">
 							<div style="height:45px;">
-								<span>총 ?개의 ♥ 명소</span>
+								<span>총 <%=attCount %>개의 ♥ 명소</span>
 							</div>
 						</div>
 						<div class="swiper-container">
@@ -156,43 +210,6 @@
 							<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
 						</div>
 					</div>
-					
-					<!-- 맛집 -->
-					<div class="menu">
-						<div class="manuBar">
-							<div>
-								<span>숙소</span>
-							</div>
-							<div>
-								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
-							</div>
-						</div>
-						<hr>
-					</div>
-					<!-- 닫힘 내용 -->
-					<div>
-						<!-- 정보 -->
-						<div id="myDNInfo">
-							<div style="height:45px;">
-								<span>총 ?개의 ♥ 숙소</span>
-							</div>
-						</div>
-						<div class="swiper-container">
-							<div class="swiper-wrapper">
-							<%for(TripinfoMyMind tm:mindList){
-								 if(tm.getCategory().equals("숙소")){ %>
-								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/profile/<%=tm.getImage()%>"></div>
-							<%} }%>
-							</div>
-						
-							<!-- 네비게이션 -->
-							<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
-							<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
-						</div>
-					</div>
-					
-					
-					
 				</div>
 			</section>
 		</div>

@@ -1,6 +1,9 @@
 package com.laon.board.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -77,7 +80,7 @@ public class BoardWriteEndServlet extends HttpServlet {
 		
 		System.out.println("보드테이블의 유저넘버:"+b.getUserNo());
 		System.out.println("등록한글"+b);
-		int result=new BoardService().insertBoard(b);
+
 		System.out.println("결과값이 있니?"+result);
 		//msg창을 이용해 result 분기처리 해주기 
 		if(result>0) {

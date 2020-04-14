@@ -5,133 +5,82 @@ import java.sql.Date;
 //여행정보 댓글 테이블
 public class TripinfoComment {
 
- // 넘버 여행정보댓글 기본키
- private int no;
+ 	private int tripinfoCommentNo;
+	private int tripinfoTbNo;
+	private int userTbNo;
+	private Date writeDate;
+	private String content;
+	private char deleted;
+	
+	public TripInfoComment() {
+		// TODO Auto-generated constructor stub
+	}
 
- // 여행정보 테이블 넘버 여행정보 참조키
- private int tripinfoNo;
+	public TripInfoComment(int tripinfoCommentNo, int tripinfoTbNo, int userTbNo, Date writeDate, String content,
+			char deleted) {
+		super();
+		this.tripinfoCommentNo = tripinfoCommentNo;
+		this.tripinfoTbNo = tripinfoTbNo;
+		this.userTbNo = userTbNo;
+		this.writeDate = writeDate;
+		this.content = content;
+		this.deleted = deleted;
+	}
 
- // 유저 테이블 넘버 회원 참조키
- private int userNo;
+	public int getTripinfoCommentNo() {
+		return tripinfoCommentNo;
+	}
 
- // 작성 날짜 작성 날짜
- private Date writeDate;
+	public void setTripinfoCommentNo(int tripinfoCommentNo) {
+		this.tripinfoCommentNo = tripinfoCommentNo;
+	}
 
- // 내용 댓글 내용
- private String content;
+	public int getTripinfoTbNo() {
+		return tripinfoTbNo;
+	}
 
- // 삭제여부 삭제했을 때 표시
- private String deleted;
- 
- public TripinfoComment() {
-	// TODO Auto-generated constructor stub
-}
- 
+	public void setTripinfoTbNo(int tripinfoTbNo) {
+		this.tripinfoTbNo = tripinfoTbNo;
+	}
 
+	public int getUserTbNo() {
+		return userTbNo;
+	}
 
+	public void setUserTbNo(int userTbNo) {
+		this.userTbNo = userTbNo;
+	}
 
- public TripinfoComment(int no, int tripinfoNo, int userNo, Date writeDate, String content, String deleted) {
-	super();
-	this.no = no;
-	this.tripinfoNo = tripinfoNo;
-	this.userNo = userNo;
-	this.writeDate = writeDate;
-	this.content = content;
-	this.deleted = deleted;
-}
+	public Date getWriteDate() {
+		return writeDate;
+	}
 
+	public void setWriteDate(Date writeDate) {
+		this.writeDate = writeDate;
+	}
 
+	public String getContent() {
+		return content;
+	}
 
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-@Override
-public String toString() {
-	return "TripinfoComment [no=" + no + ", tripinfoNo=" + tripinfoNo + ", userNo=" + userNo + ", writeDate="
-			+ writeDate + ", content=" + content + ", deleted=" + deleted + "]";
-}
+	public char getDeleted() {
+		return deleted;
+	}
 
+	public void setDeleted(char deleted) {
+		this.deleted = deleted;
+	}
 
-
-
-public int getNo() {
-	return no;
-}
-
-
-
-
-public void setNo(int no) {
-	this.no = no;
-}
-
-
-
-
-public int getTripinfoNo() {
-	return tripinfoNo;
-}
-
-
-
-
-public void setTripinfoNo(int tripinfoNo) {
-	this.tripinfoNo = tripinfoNo;
-}
-
-
-
-
-public int getUserNo() {
-	return userNo;
-}
-
-
-
-
-public void setUserNo(int userNo) {
-	this.userNo = userNo;
-}
-
-
-
-
-public Date getWriteDate() {
-	return writeDate;
-}
-
-
-
-
-public void setWriteDate(Date writeDate) {
-	this.writeDate = writeDate;
-}
-
-
-
-
-public String getContent() {
-	return content;
-}
-
-
-
-
-public void setContent(String content) {
-	this.content = content;
-}
-
-
-
-
-public String getDeleted() {
-	return deleted;
-}
-
-
-
-
-public void setDeleted(String deleted) {
-	this.deleted = deleted;
-}
+	@Override
+	public String toString() {
+		return "TripInfoComment [tripinfoCommentNo=" + tripinfoCommentNo + ", tripinfoTbNo=" + tripinfoTbNo
+				+ ", userTbNo=" + userTbNo + ", writeDate=" + writeDate + ", content=" + content + ", deleted="
+				+ deleted + "]";
+	}
 
 
 

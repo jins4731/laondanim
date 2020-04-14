@@ -1,10 +1,9 @@
 package com.laon.tripinfo.model.dao;
 
-import static com.laon.common.template.JDBCTemplate.close;
+import static com.laon.common.JDBCTemplate.close;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,111 +11,340 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import com.laon.common.CommonKey;
-import com.laon.common.PropPath;
-import com.laon.common.robot.LaonRobot;
-import com.laon.tripinfo.model.vo.Tripinfo;
+import com.laon.tripinfo.model.vo.Mind;
+import com.laon.tripinfo.model.vo.Picture;
+import com.laon.tripinfo.model.vo.TripInfo;
+import com.laon.tripinfo.model.vo.TripInfoComment;
+import com.laon.tripinfo.model.vo.TripInfoPicture;
 
-import oracle.sql.ARRAY;
-import oracle.sql.ArrayDescriptor;
-import oracle.sql.SQLName;
+public class TripInfoDao {
 
-public class TripinfoDao {
 	private Properties prop = new Properties();
 
-	private String no = "no";
-	private String category = "category";
-	private String tag = "tag";
-	private String name = "name";
-	private String address = "address";
-	private String businessHours = "business_hours";
-	private String tel = "tel";
-	private String homepage = "homepage";
-	private String naver = "naver";
-	private String sns = "sns";
-	
-
-	private String selectTripinfo = "selectTripinfo";
-	private String selectTripinfoPage = "selectTripinfoPage";
-	private String selectTripInfoWheresList = "selectTripInfoWheresList";
-	private String selectTripinfoCount = "selectTripinfoCount";
-
-	public TripinfoDao() {
+	public TripInfoDao() {
 		try {
-			prop.load(new FileReader(Tripinfo.class.getResource(PropPath.TRIPINFO).getPath()));
+			String path = TripInfoDao.class.getResource("/sql/tripinfo/tripinfo-query.properties").getPath();
+			prop.load(new FileReader(path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public <E> E rsProcess(ResultSet rs, E item) throws SQLException {
-		if(item instanceof LaonRobot) {
-			LaonRobot<E> robot = (LaonRobot<E>)item;
-			item = robot.rsProcess(item,rs);
-		}
-		return item;
-	}
 
-	public <E> List<E> rsProcess(ResultSet rs, List<E> list,E item) throws SQLException {
-		List<E> newlist = null;
-		if(item instanceof LaonRobot) {
-			LaonRobot<E> robot = (LaonRobot<E>)item;
-			newlist = robot.rsProcess(list,rs);
-		}
-		return newlist;
-	}
-	
-
-	public Tripinfo selectTripinfo(Connection conn, String no) {
+	/* 여행정보 리스트 가져오기  */
+	public List<TripInfoPicture> selectTripinfoList(Connection conn, int cPage,int numPerPage ,String category, String type, String keyword, String mind) {
+		System.out.println(category);
+		System.out.println(type);
+		System.out.println(keyword);
+		System.out.println(mind);
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = prop.getProperty(selectTripinfo);
-		Tripinfo tripinfo = null;
+		List<TripInfoPicture> list = new ArrayList();
+		
+		String sql = "";
+		sql = mind.equals("null")?prop.getProperty("selectTripInfoPage"):prop.getProperty("sortMind");
+		
+		System.out.println("변화전 " + sql);
+		//SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT TR.*, (SELECT COUNT(*) 
+		//FROM MIND_TB WHERE TR.NO=TRIPINFO_NO AND CANCLED='Y') AS CNT FROM TRIPINFO_TB TR 
+		//WHERE CATEGORY=? AND ADDRESS LIKE ? AND NAME LIKE ? AND TAG LIKE ?)A) 
+		//WHERE RNUM BETWEEN ? AND ?
+		//지역명, 상호명, 태그명
+		
+		if(type.equals("null") && keyword.equals("null") || type.equals("상호명")&&keyword.equals("null")) {
+			for(int j=0; j<3; j++) {
+			Pattern pattern = Pattern.compile("LIKE");
+			   Matcher matcher = pattern.matcher(sql);
+			   int count = 0;
+			   while (matcher.find()) {
+			      count++;
+			   }
+			   matcher.reset();
+			   int[] indexs = new int[count];
+			   int i = 0;
+			   while (matcher.find()) {
+			      indexs[i] =  matcher.start();
+			      i++;
+			   }
+			   int targetIndex = indexs[0];
+			   
+			   //SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT TR.*, (SELECT COUNT(*) FROM LIKE_TB WHERE TR.NO=TRIP_NO AND CANCLED='Y') AS CNT FROM TRIP_TB TR WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ? ORDER BY CNT DESC)A) WHERE RNUM BETWEEN ? AND ?
+
+			   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+4, sql.length());
+			}
+		}
+		
+		if(type.equals("상호명") && !keyword.equals("null")) {
+			for(int j=0; j<2; j++) {
+			Pattern pattern = Pattern.compile("LIKE");
+			   Matcher matcher = pattern.matcher(sql);
+			   int count = 0;
+			   while (matcher.find()) {
+			      count++;
+			   }
+			   matcher.reset();
+			   int[] indexs = new int[count];
+			   int i = 0;
+			   while (matcher.find()) {
+			      indexs[i] =  matcher.start();
+			      i++;
+			   }
+			   int targetIndex = indexs[j];
+			   //SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT TR.*, (SELECT COUNT(*) FROM LIKE_TB WHERE TR.NO=TRIP_NO AND CANCLED='Y') AS CNT FROM TRIP_TB TR WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ? ORDER BY CNT DESC)A) WHERE RNUM BETWEEN ? AND ?
+
+			   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+4, sql.length());
+			}
+		}
+		
+		if(type.equals("지역명") && !keyword.equals("null")) {
+			for(int j=0; j<2; j++) {
+			Pattern pattern = Pattern.compile("LIKE");
+			   Matcher matcher = pattern.matcher(sql);
+			   int count = 0;
+			   while (matcher.find()) {
+			      count++;
+			   }
+			   matcher.reset();
+			   int[] indexs = new int[count];
+			   int i = 0;
+			   while (matcher.find()) {
+			      indexs[i] =  matcher.start();
+			      i++;
+			   }
+
+			   int targetIndex = indexs[1];
+			  
+			   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+4, sql.length());
+			   
+		
+			}
+		}
+		if(type.equals("태그명") && !keyword.equals("null")) {
+			for(int j=0; j<2; j++) {
+			Pattern pattern = Pattern.compile("LIKE");
+			   Matcher matcher = pattern.matcher(sql);
+			   int count = 0;
+			   while (matcher.find()) {
+			      count++;
+			   }
+			   matcher.reset();
+			   int[] indexs = new int[count];
+			   int i = 0;
+			   while (matcher.find()) {
+			      indexs[i] =  matcher.start();
+			      i++;
+			   }
+
+			   int targetIndex = indexs[0];
+			   
+			   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+4, sql.length());
+			
+			}
+		}
+		System.out.println("변화 후 : " + sql);
+			try {
+							
+				pstmt = conn.prepareStatement(sql);
+				
+				if(type.equals("null") && keyword.equals("null")) {
+					pstmt.setString(1, category);
+					pstmt.setString(2, "null");
+					pstmt.setString(3, "null");
+					pstmt.setString(4, "null");
+				}
+				
+				if(type.equals("상호명")) {
+					pstmt.setString(1, category);
+					pstmt.setString(2, "null");
+					if(keyword.equals("null"))
+						pstmt.setString(3, "null");
+					else
+						pstmt.setString(3, "%"+keyword+"%");
+					pstmt.setString(4, "null");
+				}
+				
+							
+				if(type.equals("지역명")) {
+					pstmt.setString(1, category);
+					pstmt.setString(2, "%"+keyword+"%");
+					if(keyword.equals("null"))
+						pstmt.setString(3, "null");
+					else
+						pstmt.setString(3, "%"+keyword+"%");
+					pstmt.setString(4, "null");
+				}
+				
+				if(type.equals("태그명")) {
+					pstmt.setString(1, category);
+					pstmt.setString(2, "null");
+					if(keyword.equals("null"))
+						pstmt.setString(3, "null");
+					else
+						pstmt.setString(3, "%"+keyword+"%");
+					pstmt.setString(4, "%"+keyword+"%");
+				}
+								
+				pstmt.setInt(5, (cPage-1)*numPerPage+1);
+				pstmt.setInt(6, cPage*numPerPage);
+				
+				
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					TripInfoPicture tp = new TripInfoPicture();
+					tp.setTripinfoNo(rs.getInt("no"));
+					tp.setTripinfoCategory(rs.getString("category"));
+					tp.setTripinfoTag(rs.getString("tag"));
+					tp.setTripinfoName(rs.getString("name"));
+					tp.setTripinfoAddress(rs.getString("address"));
+					tp.setTripinfotime(rs.getString("BUSINESS_HOURS"));
+					tp.setTripinfoNumber(rs.getString("tel"));
+					tp.setTripinfoHomePage(rs.getString("HOMEPAGE"));
+					tp.setTripinfoNaver(rs.getString("naver"));
+					tp.setTripinfoSns(rs.getString("sns"));
+					
+					list.add(tp);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}return list;
+	}
+
+	/* 여행정보 리스트 카운팅  */
+	public int selectCountTripInfo(Connection conn, String category, String type, String keyword) {
+		System.out.println("type이 모니? "+ type);
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		//SELECT COUNT(*) FROM TRIPINFO_TB WHERE CATEGORY=? AND ADDRESS LIKE ? AND NAME LIKE ? AND TAG LIKE ?
+		String sql = prop.getProperty("selectCountTripInfo");
+		System.out.println("변화전 : " + sql);
+		//지역명, 상호명, 태그명
+		
+		if(type.equals("상호명") && keyword.equals("null")) {
+			sql = sql.replaceFirst("LIKE", "!=");
+			sql = sql.replaceFirst("LIKE", "!=");
+			sql = sql.replaceFirst("LIKE", "!=");
+		}
+		
+		if(type.equals("지역명")) {
+			sql = replaceLast(sql, "LIKE", "!=",0);
+			sql = replaceLast(sql, "LIKE", "!=",0);
+		}
+		
+		if(type.equals("상호명")) {
+			sql = sql.replaceFirst("LIKE", "!=");
+			sql = replaceLast(sql, "LIKE", "!=",0);
+		}
+		
+		if(type.equals("태그명")) {
+			sql = sql.replaceFirst("LIKE", "!=");
+			sql = sql.replaceFirst("LIKE", "!=");
+		}
+		System.out.println("변화후 : " + sql);
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, category);
+				
+				if(type.equals("상호명") && keyword.equals("null")) {
+					pstmt.setString(2, "null");
+					pstmt.setString(3, "null");
+					pstmt.setString(4, "null");
+				}
+				
+				if(type.equals("지역명")) {
+					pstmt.setString(2,"%"+keyword+"%");
+					pstmt.setString(3, "null");
+					pstmt.setString(4, "null");
+				}
+				
+				if(type.equals("상호명")) {
+					pstmt.setString(2,"null");
+					pstmt.setString(3, "%"+keyword+"%");
+					pstmt.setString(4, "null");
+				}
+				
+				if(type.equals("태그명")) {
+					pstmt.setString(2,"null");
+					pstmt.setString(3, "null");
+					pstmt.setString(4, "%"+keyword+"%");
+				}
+				rs = pstmt.executeQuery();
+				rs.next();
+				count = rs.getInt(1);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+			return count;
+	}
+	
+	/* 접속한 유저가 이 여행정보를 찜했는지 체크하는 dao */
+	public String checkMind(Connection conn, int userNo, int tripinfoNo) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String cancled = null;
+		String sql = prop.getProperty("checkMind");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, Integer.parseInt(no));
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, tripinfoNo);
 			rs = pstmt.executeQuery();
-			tripinfo = rsProcess(rs, new Tripinfo());
+			if (rs.next()) {
+				cancled = rs.getString("cancled");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
 			close(pstmt);
 		}
-		return tripinfo;
+		return cancled;
 	}
 
-	public List<Tripinfo> selectTripinfoPage(Connection conn, int start, int end) {
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = prop.getProperty(selectTripinfoPage);
-		List<Tripinfo> list = null;
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
-			rs = pstmt.executeQuery();
-			list = rsProcess(rs, new ArrayList<Tripinfo>(), new Tripinfo());
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(rs);
-			close(pstmt);
-		}
-		return list;
-	}
+	/* 로그인한 유저가 해당 여행정보를 처음 클릭 했을 때 */
+	public int insertMind(Connection conn, int userNo, int tripinfoNo) {
 
-	public int selectTripinfoCount(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = prop.getProperty(selectTripinfoCount);
 		int result = 0;
+		// insert into MIND_TB values(?,?,?,?)
+		String sql = prop.getProperty("insertMind");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			rs.next();
-			result = rs.getInt(1);
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, tripinfoNo);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	/* 로그인한 유저가 해당 여행정보를 한번 이상 클릭 했을 때 */
+	public int updateMind(Connection conn, int userNo, int tripinfoNo, String cancled) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		String sql = prop.getProperty("updateMind");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			// CANCLED Y 일때는 N, 아닐 때는 , Y
+			pstmt.setString(1, cancled.equals("Y") ? "N" : "Y");
+			pstmt.setInt(2, userNo);
+			pstmt.setInt(3, tripinfoNo);
+
+			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -126,24 +354,275 @@ public class TripinfoDao {
 		return result;
 	}
 
-	public List<Tripinfo> selectTripInfoWheresList(Connection conn, String[] scheduleNoList) {
+	
+	/* 로그인한 유저가 찜한 여행정보 이미지 리스트 */
+	public List<Mind> selectUserMind(Connection conn, int userNo) {
+
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = prop.getProperty(selectTripInfoWheresList);
-		List<Tripinfo> list = null;
+		List<Mind> userMindList = new ArrayList<Mind>();
+		String sql = prop.getProperty("selectUserMind");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			ArrayDescriptor desc = ArrayDescriptor.createDescriptor("VARCHAR2", conn);
-			Array array = new ARRAY(desc, conn, scheduleNoList);
-			pstmt.setArray(1, array);
+			pstmt.setInt(1, userNo);
 			rs = pstmt.executeQuery();
-			list = rsProcess(rs, new ArrayList<Tripinfo>(), new Tripinfo());
+			
+			while(rs.next()) {
+				Mind mind = new Mind();
+				mind.setNo(rs.getInt("no"));
+				mind.setUserNo(rs.getInt("user_no"));
+				mind.setTripinfoNo(rs.getInt("tripinfo_no"));
+				mind.setCancled(rs.getString("cancled"));
+		
+				userMindList.add(mind);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
 			close(pstmt);
 		}
-		return list;
+		
+		System.out.println("dao에서 ");
+		for(Mind m : userMindList) {
+			System.out.println(m);
+		}
+		return userMindList;
 	}
-}
+
+	
+	public Picture selectUserPicture(Connection conn, int userNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Picture p = null;
+		String sql = prop.getProperty("selectUserPicture");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				p = new Picture();
+				p.setImage(rs.getString("image"));
+				p.setPictureNo(rs.getInt("no"));
+				p.setUserNo(rs.getInt("user_no"));
+				p.setTripNo(rs.getInt("trip_no"));
+				p.setDonghangNo(rs.getInt("donghang_no"));
+				p.setTripinfoNo(rs.getInt("tripinfo_no"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return p;
+	}
+	
+	public List<Mind> heartCount(Connection conn , List<TripInfoPicture> list){
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Mind> heartCount = new ArrayList();
+		String sql = prop.getProperty("heartCount");
+		for(TripInfoPicture tp : list) {
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, tp.getTripinfoNo());
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					Mind m = new Mind();
+	
+					m.setTripinfoNo(rs.getInt("no"));					
+					m.setCount(rs.getInt("CNT"));
+					
+					heartCount.add(m);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+		}return heartCount;
+	}
+
+	public List<Picture> selectPicture(Connection conn, List<Mind> userMindList){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = prop.getProperty("selectPicture");
+		
+		List<Picture> pictureList = new ArrayList<Picture>();
+		
+		Picture p = null;
+		
+		for(Mind m : userMindList) {
+		try {
+			pstmt = conn.prepareStatement(sql);
+						
+			pstmt.setInt(1, m.getTripinfoNo());
+								
+			rs = pstmt.executeQuery();
+				
+			while(rs.next()) {
+				p = new Picture();
+				
+				p.setPictureNo(rs.getInt("NO"));
+				p.setTripNo(rs.getInt("TRIP_NO"));
+				p.setTripinfoNo(rs.getInt("TRIPINFO_NO"));
+				p.setDonghangNo(rs.getInt("DONGHANG_NO"));
+				p.setUserNo(rs.getInt("USER_NO"));
+				p.setImage(rs.getString("IMAGE"));
+				
+				pictureList.add(p);
+				
+			}
+			
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		}
+		return pictureList;
+	}
+	
+	public List<TripInfo> selectTripinfo(Connection conn, List<Mind> userMindList){
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<TripInfo> tripInfoList = new ArrayList();
+		String sql = prop.getProperty("selectTripinfo");
+		for(Mind mind : userMindList ) {
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, mind.getTripinfoNo());
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					TripInfo t = new TripInfo();
+					t.setTripinfoNo(rs.getInt("NO"));
+					t.setTripinfoCategory(rs.getString("CATEGORY"));
+					t.setTripinfoTag(rs.getString("TAG"));
+					t.setTripinfoName(rs.getString("NAME"));
+					t.setTripinfoAddress(rs.getString("ADDRESS"));
+					t.setTripinfotime(rs.getString("BUSINESS_HOURS"));
+					t.setTripinfoNumber(rs.getString("TEL"));
+					t.setTripinfoHomePage(rs.getString("HOMEPAGE"));
+					t.setTripinfoNaver(rs.getString("NAVER"));
+					t.setTripinfoSns(rs.getString("SNS"));
+					tripInfoList.add(t);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+		}return tripInfoList;
+	
+	}
+	
+	public List<Mind> selectMind(Connection conn){
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Mind> selectMind = new ArrayList();
+		String sql = prop.getProperty("selectMind");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Mind m = new Mind();
+				m.setNo(rs.getInt("no"));
+				m.setTripinfoNo(rs.getInt("tripinfo_no"));
+				m.setUserNo(rs.getInt("user_no"));
+				m.setCancled(rs.getString("cancled"));
+				selectMind .add(m);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return selectMind;
+	}
+
+	private static String replaceLast(String string, String toReplace, String replacement, int check) {    
+
+		   int pos = 0;
+		   if(check==0) pos = string.lastIndexOf(toReplace);     
+		   else pos = string.lastIndexOf(toReplace,3);
+		   
+		   if (pos > -1) {        
+
+		   return string.substring(0, pos)+ replacement + string.substring(pos +   toReplace.length(), string.length());     
+
+		   } else { 
+
+			return string;     
+
+		   } 
+
+		}
+	
+	
+	/* 댓글 인서트하기 */
+	public int insertComment(Connection conn,TripInfoComment tc) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		String sql = prop.getProperty("insertComment");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, tc.getTripinfoTbNo());
+			pstmt.setInt(2, tc.getUserTbNo());
+			pstmt.setString(3, tc.getContent());
+		
+
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	
+	
+	
+	/* 댓글 불러오기 */
+	public List<TripInfoComment> selectComment(Connection conn){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<TripInfoComment> commentList = new ArrayList();
+		String sql = prop.getProperty("selectComment");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				TripInfoComment tc = new TripInfoComment();
+				tc.setTripinfoCommentNo(rs.getInt("no"));
+				tc.setTripinfoTbNo(rs.getInt("tripinfo_no"));
+				tc.setUserTbNo(rs.getInt("user_no"));
+				tc.setWriteDate(rs.getDate("writer_date"));
+				tc.setContent(rs.getString("content"));
+				tc.setDeleted(rs.getString("deleted").charAt(0));
+				commentList.add(tc);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return commentList;
+	}
+}// 클래스

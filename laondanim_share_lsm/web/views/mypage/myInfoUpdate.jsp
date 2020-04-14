@@ -136,9 +136,6 @@
 				                    </div>
 				                    <input type="hidden" id="likeArea" name="likeArea">
 				                </div>
-				                <script>
-				                console.log(document.getElementById("likeArea").value);
-				                </script>
 				
 				                <div class="form-group d-flex flex-column flex-wrap justify-content-center" style="width: 400px;">
 				                    <p class="mb-2 ml-2 align-items-start">관심태그를 <strong>클릭</strong>해주세요. (최대 5개)</p>
@@ -417,6 +414,12 @@
 		$("#enrollEmailAut").hide();
 		$("#autCodeCheck").hide();		
 	});
+	
+	//likeArea Select > Option에서 값 받기
+    $("#likeAreaSelect").change(()=>{
+      let ckOption = $("#likeAreaSelect option:checked").text();
+        $("#likeArea").val(ckOption);
+    });
 
 
 	//중복 아이디 + 중복 닉네임 + 틀린 인증코드 가입방지

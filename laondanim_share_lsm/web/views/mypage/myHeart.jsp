@@ -1,12 +1,14 @@
 <%@page import="com.laon.trip.model.vo.TripMyCon"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,com.laon.etc.model.vo.Like" %>
+<%@ page import="java.util.List,com.laon.etc.model.vo.*,com.laon.tripinfo.model.vo.TripinfoMyMind" %>
 <%
 	List<Like> likeT=(List)request.getAttribute("likeT");
 	List<TripMyCon> tripList=(List)request.getAttribute("tripList");
 	List<UserProfile> userNick=(List)request.getAttribute("userNick");
 	int likeTripCount=(int)request.getAttribute("likeTripCount");
+	List<Mind> mind=(List)request.getAttribute("mind");
+	List<TripinfoMyMind> mindList=(List)request.getAttribute("mindList");
 %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
@@ -109,30 +111,84 @@
 						</div>
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
-								<div class="swiper-slide"><img src="https://biketago.com/img/p/0190.jpg"></div>
-								<div class="swiper-slide"><img src="http://ktsmemo.cdn3.cafe24.com/p/0041.jpg"></div>
-								<div class="swiper-slide"><img src="https://biketago.com/img/p/0002.jpg"></div>
-								<div class="swiper-slide"><img src="http://superkts.dothome.co.kr/img/p2/0085.jpg"></div>
-								<div class="swiper-slide"><img src="https://biketago.com/img/p/0750.jpg"></div>
-								<div class="swiper-slide"><img src="http://ktsmemo.cdn3.cafe24.com/p/0701.jpg"></div>
-								<div class="swiper-slide"><img src="https://biketago.com/img/p/0227.jpg"></div>
-								<div class="swiper-slide"><img src="https://biketago.com/img/p/0143.jpg"></div>
-								<div class="swiper-slide"><img src="http://ktsmemo.cdn3.cafe24.com/p/0614.jpg"></div>
-								<div class="swiper-slide"><img src="http://ktsmemo.cdn3.cafe24.com/p/0022.jpg"></div>
-								<div class="swiper-slide"><img src="http://ktsmemo.cdn3.cafe24.com/p/0619.jpg"></div>
-								<div class="swiper-slide"><img src="http://superkts.dothome.co.kr/img/p2/0515.jpg"></div>
-								<div class="swiper-slide"><img src="http://oldmidi.cdn3.cafe24.com/p/0230.jpg"></div>
-								<div class="swiper-slide"><img src="https://biketago.com/img/p/0169.jpg"></div>
-								<div class="swiper-slide"><img src="http://ktsmemo.cdn3.cafe24.com/p/0193.jpg"></div>
-								<div class="swiper-slide" style="font-size:50pt;">- 끝 -</div>
+							<%for(TripinfoMyMind tm:mindList){
+								 if(tm.getCategory().equals("맛집")){ %>
+								<div class="swiper-slide"><img class="card-img" src="<%=request.getContextPath()%>/views/picture/profile/<%=tm.getImage()%>"></div>
+							<%} }%>
 							</div>
 						
 							<!-- 네비게이션 -->
 							<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
 							<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
-						
 						</div>
+					</div>
+					
+					<!-- 명소 -->
+					<div class="menu">
+						<div class="manuBar">
+							<div>
+								<span>명소</span>
+							</div>
+							<div>
+								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
+							</div>
+						</div>
+						<hr>
+					</div>
+					<!-- 닫힘 내용 -->
+					<div>
+						<!-- 정보 -->
+						<div id="myDNInfo">
+							<div style="height:45px;">
+								<span>총 ?개의 ♥ 명소</span>
+							</div>
+						</div>
+						<div class="swiper-container">
+							<div class="swiper-wrapper">
+							<%for(TripinfoMyMind tm:mindList){
+								 if(tm.getCategory().equals("명소")){ %>
+								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/profile/<%=tm.getImage()%>"></div>
+							<%} }%>
+							</div>
 						
+							<!-- 네비게이션 -->
+							<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+							<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
+						</div>
+					</div>
+					
+					<!-- 맛집 -->
+					<div class="menu">
+						<div class="manuBar">
+							<div>
+								<span>숙소</span>
+							</div>
+							<div>
+								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
+							</div>
+						</div>
+						<hr>
+					</div>
+					<!-- 닫힘 내용 -->
+					<div>
+						<!-- 정보 -->
+						<div id="myDNInfo">
+							<div style="height:45px;">
+								<span>총 ?개의 ♥ 숙소</span>
+							</div>
+						</div>
+						<div class="swiper-container">
+							<div class="swiper-wrapper">
+							<%for(TripinfoMyMind tm:mindList){
+								 if(tm.getCategory().equals("숙소")){ %>
+								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/profile/<%=tm.getImage()%>"></div>
+							<%} }%>
+							</div>
+						
+							<!-- 네비게이션 -->
+							<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+							<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
+						</div>
 					</div>
 					
 					
@@ -156,17 +212,17 @@
         text-decoration: none;
         color:black;
         list-style:none;
-        border:1px solid green;
+        /* border:1px solid green; */
     }
     
-    #myDNInfo,#myBDInfo,.manuBar{
+    #myDNInfo,.manuBar{
     	display:flex;
     	justify-content: space-between;
     	margin-left: 40px;
     	margin-right: 40px;
     }
 
-	#dnCk2,.dnCk3,#bdCk2,.bdCk3{
+	#dnCk2,.dnCk3{
 		display:none;
 	}
 	
@@ -185,6 +241,7 @@
 		display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
 		align-items:center; /* 위아래 기준 중앙정렬 */
 		justify-content:center; /* 좌우 기준 중앙정렬 */
+		height:180px;
 	}
 	.swiper-slide img {
 		width:150px; /* 이미지 사이즈 */
@@ -211,29 +268,6 @@
 		},
 	});
 
-	/* 다님길 */
-	$(function(){
-		$("#dnCk1>button").click(()=>{
-			$("#dnCk1").css("display","none");
-			$("#dnCk2").css("display","block");
-			$(".dnCk3").css("display","block");
-		});
-		
-		$("#dnEndBtn").click(()=>{
-			$("#dnCk1").css("display","block");
-			$("#dnCk2").css("display","none");
-			$(".dnCk3").css("display","none");
-		});
-		
-		$("#dnAll").click(()=>{
-			if($("#dnAll").is(":checked")){							
-				$(".dnCks").prop("checked",true);
-			}else{
-				$(".dnCks").prop("checked",false);
-			}
-		});
-	});
-	
 	$(function(){
 		$(".imgDrop").stop().css({"transform":"rotate(90deg)"});
 	});

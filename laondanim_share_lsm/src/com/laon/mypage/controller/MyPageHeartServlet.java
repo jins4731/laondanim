@@ -13,6 +13,7 @@ import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Mind;
 import com.laon.mypage.model.service.MypageService;
 import com.laon.trip.model.vo.TripMyCon;
+import com.laon.tripinfo.model.vo.TripinfoMyMind;
 import com.laon.user.model.vo.UserProfile;
 
 /**
@@ -43,6 +44,7 @@ public class MyPageHeartServlet extends HttpServlet {
 		int likeTripCount=new MypageService().selectLikeTripCount(userNo);
 		
 		List<Mind> mind=new MypageService().selectMind(userNo);
+		List<TripinfoMyMind> mindList=new MypageService().selectMindList(mind);
 		
 		request.setAttribute("userProfile", up);
 		
@@ -50,6 +52,9 @@ public class MyPageHeartServlet extends HttpServlet {
 		request.setAttribute("tripList", tripList);
 		request.setAttribute("userNick", userNick);
 		request.setAttribute("likeTripCount", likeTripCount);
+		
+		request.setAttribute("mind", mind);
+		request.setAttribute("mindList", mindList);
 		
 		request.getRequestDispatcher("/views/mypage/myHeart.jsp").forward(request, response);
 	}

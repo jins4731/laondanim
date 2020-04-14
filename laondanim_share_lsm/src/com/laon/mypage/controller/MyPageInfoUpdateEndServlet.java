@@ -49,8 +49,6 @@ public class MyPageInfoUpdateEndServlet extends HttpServlet {
 		String oriPro=mr.getParameter("oriPro");
 		String nPro=mr.getFilesystemName("profile");
 		
-		System.out.println(likeArea);
-		
 		File f=mr.getFile("profile");
 		if(f!=null && f.length()>0) {
 			File delFile=new File(path+oriPro);

@@ -16,6 +16,7 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.laon.admin.model.vo.Reports;
 import com.laon.board.model.vo.Board;
 import com.laon.board.model.vo.BoardComment;
 import com.laon.board.model.vo.BoardCommentJoinUser;
@@ -367,7 +368,7 @@ public class BoardDao {
 		PreparedStatement pstmt=null;
 		int result=0;
 		String sql=prop.getProperty("alterComment");
-		System.out.println("댓글수정sql:"+sql);
+		
 	try{pstmt=conn.prepareStatement(sql);
 		pstmt.setString(1, alterContent);
 		pstmt.setInt(2, commentNo);
@@ -378,6 +379,24 @@ public class BoardDao {
 		close(pstmt);
 	}return result;
 		
+	}
+
+	public int insertReport(Connection conn, Reports re) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("insertReport");
+	try{pstmt=conn.prepareStatement(sql);
+		pstmt.setInt(1, re.getUserNo());
+		pstmt.setInt(2, re.getBoardNo());
+		pstmt.setString(3, re.getReportContent());
+		result=pstmt.executeUpdate();
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(pstmt);
+	}return result;
+		
+
 	}
 	
 	

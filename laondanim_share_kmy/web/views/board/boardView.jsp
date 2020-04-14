@@ -116,6 +116,7 @@
 		<div>
 			<!--  유저아이콘에 사진 넣을건지.. -->
 			<img src="<%=request.getContextPath()%>/views/picture/board/user.png" width="30px" height="30px"><%=b.getNickName()%>
+			<button type="button" class="btn" data-toggle="modal" data-target="#myModal" ><i class='fas fa-bullhorn' style='font-size:24px'></i></button>
 			<sub><%=b.getWriteDate()%></sub>
 		</div>
 	</div>
@@ -190,6 +191,43 @@
 			</form>
 		</tr>
 	</table>
+<!-- 모달창 -->
+  <!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+   
+        <div class="modal-header">
+            <h4 id="report-title">사용자 신고</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+   <!-- Modal body -->
+    <div class="modal-body">
+    <br>
+    <div class="report-box">
+        <h3>어떤문제가 있나요?</h3>
+        <br>
+        <form action="<%=request.getContextPath()%>/board/userReport.do" method="post">
+        <input type="hidden" name="userNo" value="<%=b.getUserNo()%>">
+        <input type="hidden" name="boardNo" value="<%=b.getNo()%>">
+        <input type="radio" name="report" id="report3" value="폭력적위협" checked>폭력적 위협<br>
+        <input type="radio" name="report" id="report4" value="스팸및사기" checked>스팸 및 사기<br>
+        <input type="radio" name="report" id="report5" value="사생활침해" checked>사생활 침해<br>
+        <input type="radio" name="report" id="report6" value="기타" checked>기타:
+        <input type="text" placeholder="내용을 입력해주세요" name="reportText" id="report7"><br><br>
+       
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+            <input type="submit" class="btn btn-primary" id="reportSubmit" value="신고">
+        </div>
+        
+        </form>
+        </div>
+        </div>
+        </div>
+
+    </div>
+</div>
 </section>
 
 

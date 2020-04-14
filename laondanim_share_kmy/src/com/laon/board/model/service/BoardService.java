@@ -9,6 +9,7 @@ import static com.laon.common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
+import com.laon.admin.model.vo.Reports;
 import com.laon.board.model.dao.BoardDao;
 import com.laon.board.model.vo.Board;
 import com.laon.board.model.vo.BoardComment;
@@ -108,6 +109,16 @@ public class BoardService {
 		close(conn);
 		return result;
 	
+	}
+
+
+	public int insertReport(Reports re) {
+		Connection conn=getConnection();
+		int result=dao.insertReport(conn,re);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
 	}
 	
 	

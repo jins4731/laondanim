@@ -343,7 +343,8 @@ public class TripDao {
 		
 		String sql = prop.getProperty("selectTripCount2");
 		//SELECT COUNT(*) FROM TRIP_TB WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ?
-
+		System.out.println("dao에서 데이터 량 출력 변화 전 : " + sql);
+		System.out.println("dao에서 lo 값 : " + lo); 
 		if(category.equals("null") || category.equals("전체 여행기")) {
 			sql =sql.replaceFirst("=", "!=");
 		}
@@ -353,7 +354,7 @@ public class TripDao {
 		if(keyword.equals("null")) {			
 			sql = sql.replaceFirst("LIKE", "!=");
 		}
-		
+		System.out.println("dao에서 데이터 량 출력 변화 후 : " + sql);
 		int count = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);

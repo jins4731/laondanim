@@ -1,182 +1,224 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<%@ page import="java.util.List,com.laon.donghang.model.vo.MyDong,com.laon.donghang.model.vo.DonghangJoin" %>
+<%
+	List<MyDong> myDong=(List)request.getAttribute("myDong");
+	int myDongCount=(int)request.getAttribute("myDongCount");
+	List<DonghangJoin> joinDong=(List)request.getAttribute("joinDong");
+	List<MyDong> oriJoinDong=(List)request.getAttribute("oriJoinDong");
+	List<UserProfile> userNick=(List)request.getAttribute("userNick");
+	int myJDCount=(int)request.getAttribute("myJDCount");
+%>
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
 
-<div>
-	<!-- 내 동행 -->
-	<div class="menu">
-		<div class="manuBar">
-			<div>
-				<span>내가 만든 동행</span>
-			</div>
-			<div>
-				<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
-			</div>
+<%@ include file="/views/common/header.jsp"%>
+<div class="container">
+	<div class="row">
+	   	<div class="col-4">
+			<%@ include file="/views/mypage/myPageAside.jsp" %>
 		</div>
-		<hr>
-	</div>
-	<!-- 닫힘 내용 -->
-	<div>
-		<!-- 정보 -->
-		<div id="myDHInfo">
-			<div>
-				<span>총 ?개의 동행</span>
-			</div>
-			<div id="dhCk1">
-				<button class="btn">선택삭제</button>
-			</div>
-			<div id="dhCk2">
-				<label><input type="checkbox" id="dhAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-				<button class="btn">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
-				<button class="btn" id="dhEndBtn">돌아가기</button>
-			</div>
-		</div>
-		<!-- 게시글위치 -->
-		<div class="carousel slide" data-ride="carousel" data-interval="false">
-			<div class="carousel-inner">
-				<div class="carousel-item active d-flex justify-content-center" >
-					<table id="dhTbl">
-						<tr>
-							<td class="p-1">
-		                     	<div class="dhCk3" style="margin:10px;">
-									<input type="checkbox" class="dhCks">
-								</div>
-		                        <div class="card" style="width: 235px; height: 415px;" >
-		                            <div class="d-flex justify-content-between p-2">
-		                                <span>모집여부</span>
-		                                <span>2020-02-08</span>
-		                            </div>
-		                            <div>
-		                            	<div style="position: absolute;">
-			                            	<div class="dropdown" style="position: relative;">
-											    <button type="button" class="btn" data-toggle="dropdown">
-											      ...
-											    </button>
-											    <div class="dropdown-menu">
-											      <a class="dropdown-item" href="#">신청서 수신함</a>
-											      <a class="dropdown-item" href="#">모집 마감</a>
-											      <a class="dropdown-item" href="#">동행 수정</a>
-											      <a class="dropdown-item" href="#">동행 삭제</a>
-											    </div>
-											</div>
-		                            	</div>
-		                            	<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="235px" height="235px">
-		                            </div>
-		                            <div class="d-flex flex-column justify-content-center card-body p-2" style="line-height: 22px;">
-		                                <p class="mb-0">제목을 넣을 자리</p>
-		                                <ul class="p-0 m-0">
-		                                    <li>동행지역 : <span>경상북도 경주시</span></li>
-		                                    <li>기간 : <span>20-03-09 ~ 20-03-30</span></li>
-		                                    <li>인원 : <span>6 / 7</span></li>
-		                                </ul>
-		                            </div>
-		                        </div>
-		                    </td>
-						</tr>
-					</table>
+		<div class="col-8">
+			<section>
+				<div id="myMenuBtn">
+					<button type="button" id="myCon" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageContent.do?userNo=<%=loginUser.getNo()%>')">내 컨텐츠</button>
+					<button type="button" id="myH" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageHeart.do?userNo=<%=loginUser.getNo()%>')">내 마음함</button>
+					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong.do?userNo=<%=loginUser.getNo()%>')">내 동행</button>
 				</div>
-				
-				<a class="carousel-control-prev" href="#gallery" role="button" data-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="sr-only">Previous</span>
-				</a>
-				<a class="carousel-control-next" href="#gallery" role="button" data-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="sr-only">Next</span>
-				</a>
-				
-			</div>
-		</div>
-	</div>
-	
-	<!-- 참여중인 동행 -->
-	<div class="menu">
-		<div class="manuBar">
-			<div>
-				<span>참여중인 동행</span>
-			</div>
-			<div>
-				<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
-			</div>
-		</div>
-		<hr>
-	</div>
-	<!-- 닫힘 내용 -->
-	<div>
-		<!-- 정보 -->
-		<div id="joinDHInfo">
-			<div>
-				<span>총 ?개의 동행</span>
-			</div>
-			<div id="jDhCk1">
-				<button class="btn">선택삭제</button>
-			</div>
-			<div id="jDhCk2">
-				<label><input type="checkbox" id="jDhAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-				<button class="btn">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
-				<button class="btn" id="jDhEndBtn">돌아가기</button>
-			</div>
-		</div>
-		<!-- 게시글위치 -->
-		<div class="carousel slide" data-ride="carousel" data-interval="false">
-			<div class="carousel-inner">
-				<div class="carousel-item active d-flex justify-content-center" >
-					<table id="dhTbl">
-						<tr>
-							<td class="p-1">
-		                     	<div class="jDhCk3" style="margin:10px;">
-									<input type="checkbox" class="jDhCks">
-								</div>
-		                        <div class="card" style="width: 235px; height: 415px;" >
-		                            <div class="d-flex justify-content-between p-2">
-		                                <span>동행상태</span>
-		                                <span>2020-02-08</span>
-		                            </div>
-		                            <div>
-		                            	<div style="position: absolute;">
-			                            	<div class="dropdown" style="position: relative;">
-											    <button type="button" class="btn" data-toggle="dropdown">
-											      ...
-											    </button>
-											    <div class="dropdown-menu">
-											      <a class="dropdown-item" href="#">Link 1</a>
-											      <a class="dropdown-item" href="#">Link 2</a>
-											      <a class="dropdown-item" href="#">Link 3</a>
-											    </div>
+				<div id="myPageView">
+					<!-- 내 동행 -->
+					<div class="menu">
+						<div class="manuBar">
+							<div>
+								<span>내가 만든 동행</span>
+							</div>
+							<div>
+								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
+							</div>
+						</div>
+						<hr>
+					</div>
+					<!-- 닫힘 내용 -->
+					<div>
+						<!-- 정보 -->
+						<div id="myDHInfo">
+							<div style="height:45px;">
+								<span>총 <%=myDongCount %>개의 동행</span>
+							</div>
+						</div>
+						<!-- 게시글위치 -->
+						<table id="dhTbl">
+							<tr class="d-flex flex-wrap justify-content-center">
+							<%for(MyDong d:myDong){ %>
+								<td class="p-1">
+				                    <div class="card" style="width: 155px; height: 275px;" >
+				                    	<div class="d-flex justify-content-between p-2" style="font-size:5px;">
+				                    		<%if(d.getEnded().equals("N")){ %>
+				                        		<span>모집중</span>
+				                        	<%}else{ %>
+				                        		<span>모집종료</span>
+				                        	<%} %>
+				                            <span><%=d.getWriteDate() %></span>
+				                        </div>
+				                        <div>
+				                        	<div style="position: absolute;">
+												<div class="dropdown" style="position: relative;">
+													<button type="button" class="btn" data-toggle="dropdown">
+												    	...
+												    </button>
+												    <div class="dropdown-menu">
+												    <%if(d.getEnded().equals("N")){ %>
+						                        		<a class="dropdown-item" href="#">신청서 수신함</a>
+						                        		<a class="dropdown-item" href="#">채팅</a>
+												      	<a class="dropdown-item" href="#">모집 마감</a>
+												     	<a class="dropdown-item" href="#">동행 수정</a>
+												     	<a class="dropdown-item" href="#">동행 삭제</a>
+						                        	<%}else{ %>
+												    	<a class="dropdown-item" href="#">신청서 수신함</a>
+												    	<a class="dropdown-item" href="#">채팅</a>
+												     	<a class="dropdown-item" href="#">동행 수정</a>
+												     	<a class="dropdown-item" href="#">동행 삭제</a>
+						                        	<%} %>
+												    </div>
+												</div>
 											</div>
-		                            	</div>
-		                            	<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="235px" height="235px">
-		                            </div>
-		                            <div class="d-flex flex-column justify-content-center card-body p-2" style="line-height: 22px;">
-		                                <p class="mb-0">제목을 넣을 자리</p>
-		                                <ul class="p-0 m-0">
-		                                    <li>동행지역 : <span>경상북도 경주시</span></li>
-		                                    <li>기간 : <span>20-03-09 ~ 20-03-30</span></li>
-		                                    <li>인원 : <span>6 / 7</span></li>
-		                                </ul>
-		                            </div>
-		                        </div>
-		                    </td>
-						</tr>
-					</table>
+											<%if(d.getImage()==null){ %>
+												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+											<%}else{ %>
+												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=d.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
+											<%} %>
+										</div>
+				                        <div class="d-flex flex-column justify-content-center p-2" style="font-size:7px;">
+				                        	<p class="mb-0"><%=d.getTitle() %></p>
+				                       		<ul class="p-0 m-0">
+				                            	<li class="tover">동행지역 : <span><%=d.getTravleLocale() %></span></li>
+				                            	<li>기간 : <span><%=d.getTravleStartDate() %></span><br>
+				                            			<div style="text-align:right;">
+				                            			  <span> ~ <%=d.getTravleEndDate() %></span>
+				                            			</div>
+				                            	</li>
+				                            	<li>인원 : <span><%=d.getJoinPeopleNo() %> / <%=d.getRecruitPeopleNo() %></span></li>
+				                           	</ul>
+										</div>
+									</div>
+								</td>
+							<%} %>
+							</tr>
+							<%if(myDong.size()==4){ %>
+							<tr>
+								<td colspan="4" style="text-align: center;">
+									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myDongMyDH.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>
+								</td>
+							</tr>
+							<%} %>
+						</table>
+					</div>
+					
+					<!-- 참여중인 동행 -->
+					<div class="menu" style="padding-top:20px;">
+						<div class="manuBar">
+							<div>
+								<span>참여중인 동행</span>
+							</div>
+							<div>
+								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
+							</div>
+						</div>
+						<hr>
+					</div>
+					<!-- 닫힘 내용 -->
+					<div>
+						<!-- 정보 -->
+						<div id="joinDHInfo">
+							<div style="height:45px;">
+								<span>총 <%=myJDCount %>개의 동행</span>
+							</div>
+						</div>
+						<!-- 게시글위치 -->
+						<table id="dhTbl">
+							<tr class="d-flex flex-wrap justify-content-center">
+							<%for(MyDong j:oriJoinDong){ %>
+								<td class="p-1">
+			                       	<div class="card" style="width: 155px; height: 290px;" >
+			                        	<div class="d-flex justify-content-between p-2" style="font-size:5px;">
+			                        		<%for(DonghangJoin dj:joinDong){ 
+			                        			if(j.getNo()==dj.getDonghangNo()){
+					                        		if(dj.getConfirmed().equals("N")){ %>
+						                        		<span>참여거절</span>
+						                        	<%}else if(dj.getConfirmed().equals("Y")){ %>
+						                        		<span>참여중</span>
+						                        	<%}else{ %>
+						                        		<span>대기중</span>
+				                        	<%} } }%>
+			                            	<span><%=j.getWriteDate() %></span>
+			                            </div>
+			                           	<div>
+			                           		<div style="position: absolute;">
+			                            		<div class="dropdown" style="position: relative;">
+											    	<button type="button" class="btn" data-toggle="dropdown">
+											      		...
+											    	</button>
+					                        		<div class="dropdown-menu">
+					                        		<%for(DonghangJoin dj:joinDong){ 
+					                        			if(j.getNo()==dj.getDonghangNo()){
+													    	if(dj.getConfirmed().equals("N")){ %>
+														    	<a class="dropdown-item" href="#">삭제</a>
+								                        	<%}else if(dj.getConfirmed().equals("Y")){ %>
+								                        		<a class="dropdown-item" href="#">채팅</a>
+														      	<a class="dropdown-item" href="#">동행 나가기</a>
+								                        	<%}else{ %>
+								                        		<a class="dropdown-item" href="#">보낸 신청서 보기</a>
+														      	<a class="dropdown-item" href="#">참여 신청 취소</a>
+						                        	<%} } }%>
+						                        	</div>
+												</div>
+			                           		</div>
+			                           		<%if(j.getImage()==null){ %>
+												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+											<%}else{ %>
+												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=j.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
+											<%} %>
+			                           </div>
+			                           <div class="d-flex flex-column justify-content-center card-body p-2" style="font-size:7px;">
+			                               <p class="mb-0"><%=j.getTitle() %></p>
+			                               <%String nick="";
+			                               for(UserProfile un:userNick){ 
+			                            	   if(j.getUserNo()==un.getNo()){
+			                            		   nick=un.getNickName();
+			                            	   }
+		                            	   }%>
+		                            	   <span><%=nick %></span>
+			                               <ul class="p-0 m-0">
+			                                   <li>동행지역 : <span><%=j.getTravleLocale() %></span></li>
+			                                   <li>기간 : <span><%=j.getTravleStartDate() %></span><br>
+				                            			<div style="text-align:right;">
+				                            			  <span> ~ <%=j.getTravleEndDate() %></span>
+				                            			</div>
+			                                   </li>
+			                                   <li>인원 : <span><%=j.getJoinPeopleNo() %> / <%=j.getRecruitPeopleNo() %></span></li>
+			                               </ul>
+			                           </div>
+			                       </div>
+			                   </td>
+			                <%} %>
+							</tr>
+							<%if(joinDong.size()==4){ %>
+							<tr>
+								<td colspan="4" style="text-align: center;">
+									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myDongMyJD.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>
+								</td>
+							</tr>
+							<%} %>
+						</table>
+					</div>
 				</div>
-				
-				<a class="carousel-control-prev" href="#gallery" role="button" data-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="sr-only">Previous</span>
-				</a>
-				<a class="carousel-control-next" href="#gallery" role="button" data-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="sr-only">Next</span>
-				</a>
-				
-			</div>
+			</section>
 		</div>
 	</div>
 </div>
+<%@ include file="/views/common/footer.jsp"%>
 
 <style>
 	div.menu{
@@ -191,7 +233,7 @@
         text-decoration: none;
         color:black;
         list-style:none;
-        border:1px solid green;
+        /* border:1px solid green; */
     }
     
     #myDHInfo,#joinDHInfo,.manuBar{
@@ -205,13 +247,26 @@
 		display:none;
 	}
 	
-	.carousel-control-prev-icon { background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E"); }
-	.carousel-control-next-icon { background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E"); }
+	#myMenuBtn{
+		text-align:center;
+	}
+	
+	#myMenuBtn>button{	
+		width:150px;
+		margin: 20px;
+    	border-radius: 100px;
+	}
+	
+	.tover{
+		white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+	}
 </style>
 
 <script>
 	/* 내동행 */
-	$(function(){
+	/* $(function(){
 		$("#dhCk1>button").click(()=>{
 			$("#dhCk1").css("display","none");
 			$("#dhCk2").css("display","block");
@@ -231,10 +286,10 @@
 				$(".dhCks").prop("checked",false);
 			}
 		});
-	});
+	}); */
 	
 	/* 참여동행 */
-	$(function(){
+	/* $(function(){
 		$("#jDhCk1>button").click(()=>{
 			$("#jDhCk1").css("display","none");
 			$("#jDhCk2").css("display","block");
@@ -254,7 +309,7 @@
 				$(".jDhCks").prop("checked",false);
 			}
 		});
-	});
+	}); */
 	
 	$(function(){
 		$(".imgDrop").stop().css({"transform":"rotate(90deg)"});

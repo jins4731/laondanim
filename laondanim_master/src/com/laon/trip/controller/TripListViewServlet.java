@@ -42,14 +42,17 @@ public class TripListViewServlet extends HttpServlet {
 		//ó�� ����� Ŭ������ ��
 		String first = request.getParameter("first");
 		first=first==null?"null":first;
+		System.out.println("list에서 first : " + first);
 		//�˻���ư ������ ��, keyword �� �������� , null �̸� �˻� ���Ѱ� ������ �˻��Ѱ�
 		String keyword = request.getParameter("keyword");
 		keyword=keyword==null?"null":keyword;
 		//��ü ����� Ŭ�� ��, category �� ��������
-		String category = request.getParameter("category")==null?"��ü �����":request.getParameter("category");
+		String category = request.getParameter("category")==null?"전체 여행기":request.getParameter("category");
+		System.out.println("서블릿에서 category : " + category);
 		category=category==null?"null":category;
 		//���� Ŭ�� ��, lo �� ��������
-		String lo = request.getParameter("lo")==null?"���� ������":request.getParameter("lo");
+		String lo = request.getParameter("lo")==null?"선택 지역별":request.getParameter("lo");
+		System.out.println("서블릿에서 lo : " + lo);
 		lo=lo==null?"null":lo;
 		//�ֱټ� Ŭ���� recent �� ��������
 		String recent = request.getParameter("recent");
@@ -85,11 +88,14 @@ public class TripListViewServlet extends HttpServlet {
 		//�α��ε� ���� no�� ��ġ�ϴ� �±׼��� ���� ���� ����� �Խù� ��������
 		tripTagCountList = new TagFilter().tagCountList(userTag);
 		
-		//����� �Խù��� ��ü ����, ����¡ ó�� �� ����� �Խù� ��������
+		
+		//총 데이터 수
 		totalItemCount = new TripService2().selectTripCount(lo, category, keyword);
 		
 		list = new TripService2().selectTripPage(cPage, perPage, lo, category, keyword, recent, like, tripTagCountList, first);
-		
+		for(Trip2 t : list) {
+			System.out.println("servlet 에서 list" +t );
+		}
 		//����Ʈ���� �������� �ش� ����Ʈ�� ��Ī�Ǵ� picture ��������
 		pictureList = new TripService2().selectPicture(list);
 		
@@ -101,9 +107,6 @@ public class TripListViewServlet extends HttpServlet {
 		
 		//�ش� ����Ʈ�� ��Ī�Ǵ� ���ƿ� ���� ��������
 		likeList = new TripService2().selectLike(userNo);		
-		for(Like l : likeList) {
-			System.out.println("���ƿ� ����"+l);
-		}
 		
 		//����¡ ó��
 		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/tripListView.do", totalItemCount, cPage, perPage, keyword, category, lo, recent, like, first); //�������� ��������

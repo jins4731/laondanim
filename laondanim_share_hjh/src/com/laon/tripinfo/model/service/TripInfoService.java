@@ -12,6 +12,7 @@ import com.laon.tripinfo.model.vo.Picture;
 import com.laon.tripinfo.model.vo.TripInfo;
 import com.laon.tripinfo.model.vo.TripInfoComment;
 import com.laon.tripinfo.model.vo.TripInfoPicture;
+import com.laon.user.model.vo.User;
 
 public class TripInfoService {
 	
@@ -126,6 +127,22 @@ public class TripInfoService {
 		int result=dao.insertComment(conn,tc);
 		close(conn);
 		return result;
+	}
+	
+	public List<TripInfoComment> selectUserComment(){
+		
+		Connection conn = getConnection();
+		List<TripInfoComment> comment = dao.selectUserComment(conn);
+		close(conn);
+		return comment;
+	}
+	
+	public List<User> selectUser(List<TripInfoPicture> list){
+		
+		Connection conn = getConnection();
+		List<User> selectUser = dao.selectUser(conn,list);
+		close(conn);
+		return selectUser;
 	}
 
 	

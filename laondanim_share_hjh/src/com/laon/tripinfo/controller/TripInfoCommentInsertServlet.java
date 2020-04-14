@@ -1,6 +1,7 @@
 package com.laon.tripinfo.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,7 @@ import org.json.simple.JSONObject;
 
 import com.laon.tripinfo.model.service.TripInfoService;
 import com.laon.tripinfo.model.vo.TripInfoComment;
+import com.laon.user.model.vo.User;
 
 /**
  * Servlet implementation class TripInfoCommentInsertServlet
@@ -36,6 +38,7 @@ public class TripInfoCommentInsertServlet extends HttpServlet {
 		String content = request.getParameter("content");
 		int userNo = Integer.parseInt(request.getParameter("userNo"));
 		int tripinfoNo = Integer.parseInt(request.getParameter("tripinfoNo"));
+		String userName = request.getParameter("userName");
 		
 		System.out.println("content : " + content);
 		System.out.println("userNo : " + userNo);
@@ -43,15 +46,36 @@ public class TripInfoCommentInsertServlet extends HttpServlet {
 		
 		
 		
+		
+		
 		TripInfoComment tc = new TripInfoComment(0,tripinfoNo,userNo,null,content,'N');
 		
-		JSONObject jo=new JSONObject();
-		jo.put("content", tc.getContent());
 		
 		
 		int result = new TripInfoService().insertComment(tc);
 		
-		request.getRequestDispatcher("/views/tripinfo/");
+		if(result>0) {
+		
+		
+		List<TripInfoComment> comment=new TripInfoService().selectUserComment();
+		
+		//List<User> user=new TripInfoService().selectUserComment();
+		
+		JSONObject jo=new JSONObject();
+		jo.put("content", tc.getContent());
+		jo.put("writeDate",tc.getWriteDate());
+	
+		System.out.println("¼­ºí¸´¿¡¼­  writeDate : " + tc.getWriteDate());
+		response.getWriter().print(jo); 
+		
+		}
+		
+		
+		//new Gson().toJson(tc,response.getWriter());
+		
+		
+		
+		/* request.getRequestDispatcher("/views/tripinfo/"); */
 	}
 
 	/**

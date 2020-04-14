@@ -10,6 +10,7 @@
 	List<TripInfo> tripInfoList = (List)request.getAttribute("tripInfoList");
 	List<Mind> mindList = (List)request.getAttribute("mindList");
 	List<TripInfoComment> commentList = (List)request.getAttribute("commentList");
+	List<User> userList = (List)request.getAttribute("user");
 	
 
 	//맛집 숙소 명소
@@ -240,6 +241,7 @@
 					%>
 					<script>
 						$(function(){
+							
 							$(".card-heart-button").click(function(e){
 								$.ajax({
 									url : "<%=request.getContextPath()%>/tripinfo/tripinfoMind.do",
@@ -294,6 +296,7 @@
 			
 			<%
 			int cnt2=1;
+			int cnt3=1;
 				for (TripInfoPicture tp: list) {
 				
 			%>
@@ -302,6 +305,7 @@
 			<div class="modal fade" id="myModal<%=cnt2%>">
 			<%
 				cnt2++;
+				cnt3++;
 			%>
 				<div class="modal-dialog modal-xl">
 					<div class="modal-content">
@@ -413,16 +417,35 @@
 										<span>한줄평</span>
 									</div>
 									<div class="tripinfo-comment-list">
+										<table class="tripinfo-comment-table">
+										<%
+											for(TripInfoComment tc : commentList) { 
+												if(tc.getTripinfoTbNo()==tp.getTripinfoNo()) {
+													if(tp.getUserNo()==loginUser.getNo()) {
+										%>
+											<tr>
+												<td class=""><span><%=loginUser==null?"":loginUser.getName()%></span></td>
+												<%} %>
+												<td class="d-flex"><span><%=tc.getContent()%></span></td>
+												<td class=""><span><%=tc.getWriteDate()%></span></td>
+												<td class=""><span>...</span></td>
+											</tr>
+										<%} 
 										
+										}%>
+										</table>
 									</div>
 									<div class="tripinfo-comment-page d-flex"
-										style="height: 50px; justify-content: center;"></div>
+										style="height: 50px; justify-content: center;">
+										</div>
 
 									<div class="tripinfo-comment-input" id="comment-container">
 										<div class="comment-editor">
 									
 												<input type="hidden"  value="<%=tp.getTripinfoNo()%>"/>
 												<input type="hidden" value="<%=loginUser==null?"":loginUser.getNo()%>"/>
+												<input type="hidden" value="<%=loginUser==null?"":loginUser.getName()%>"/>
+												
 												<input type="text"  placeholder="최대  20 글자" maxlength="20"/>
 												<button type="button" class="btn-insert">등록</button>
 										</div>
@@ -438,7 +461,7 @@
 				<%
 					}
 				%>
-				<script>
+				<script> 
 					$(function(){
 						$(".btn-insert").click(function(e){
 							$.ajax({
@@ -452,24 +475,53 @@
 									
 									tripinfoNo :$(this).parent().find("input").eq(0).val(),
 									userNo : $(this).parent().find("input").eq(1).val(),
-									content :  $(this).parent().find("input").eq(2).val()
+									userName : $(this).parent().find("input").eq(2).val(),	
+									content :  $(this).parent().find("input").eq(3).val()
 									
 								},
 								
 								success :data=>{
 									console.log(data);
-									let table=$("<table>");
-									for(let i=0;i<data.lenth;i++){
-										let tr=$("<tr>").append($("<td>").html(data[i]['userNo']))
-											.append($("<td>")).html(data[])
-									}
+									//let table=$("<table>");
+									let tr=$("<tr>").append($("<td>").html("..."))
+											.append($("<td>").html(data["content"]))
+											.append($("<td>").html(data["writeDate"]))
+											.append($("<td>").html("..."));
+									//table.append(tr);
+									console.log(tr);
+									$(".tripinfo-comment-table").append(tr);
+								},
+								
+								error:(r,e,m)=>{ 
+									console.log(r);
+									console.log(m);
 								}
 							})
 						})
 					})
 					
+		       
+					
+			   
+					
+				/* $('#myModal').on('show.bs.modal', function (event) {
+		   		// 값을 순회해서 가져오기
+		    	const parent=$(event.relatedTarget).parent().prev().find("dd");
+		   		const commentNo=parent.find("[name=nobc]").val();
+		   		const curComment=parent.find("span.comment-content").html();
+
+		   		var button = $(event.relatedTarget) // Button that triggered the modal
+			    
+			    //모달창에 있는 값 세팅하기
+			    $(this).find("input[name=content]").val(curComment);
+			    $(this).find("input[name=nobc]").val(commentNo);
+			    
+		    }); */
+					
+					
 					
 				</script>
+		
 			
 	</section>
 

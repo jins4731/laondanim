@@ -19,6 +19,7 @@ import com.laon.tripinfo.model.vo.Picture;
 import com.laon.tripinfo.model.vo.TripInfo;
 import com.laon.tripinfo.model.vo.TripInfoComment;
 import com.laon.tripinfo.model.vo.TripInfoPicture;
+import com.laon.user.model.vo.User;
 
 public class TripInfoDao {
 
@@ -613,7 +614,7 @@ public class TripInfoDao {
 				tc.setTripinfoCommentNo(rs.getInt("no"));
 				tc.setTripinfoTbNo(rs.getInt("tripinfo_no"));
 				tc.setUserTbNo(rs.getInt("user_no"));
-				tc.setWriteDate(rs.getDate("writer_date"));
+				tc.setWriteDate(rs.getDate("write_date"));
 				tc.setContent(rs.getString("content"));
 				tc.setDeleted(rs.getString("deleted").charAt(0));
 				commentList.add(tc);
@@ -625,4 +626,51 @@ public class TripInfoDao {
 			close(pstmt);
 		}return commentList;
 	}
+	
+	/* 방금 작성한 댓글 불러오기 */
+	public List<TripInfoComment> selectUserComment(Connection conn){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<TripInfoComment> comment = new ArrayList();
+		String sql = prop.getProperty("selectUserComment");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				TripInfoComment tc = new TripInfoComment();
+				tc.setTripinfoCommentNo(rs.getInt("no"));
+				tc.setTripinfoTbNo(rs.getInt("tripinfo_no"));
+				tc.setUserTbNo(rs.getInt("user_no"));
+				tc.setWriteDate(rs.getDate("write_date"));
+				tc.setContent(rs.getString("content"));
+				tc.setDeleted(rs.getString("deleted").charAt(0));
+				comment.add(tc);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return comment;
+	}
+	
+	public List<User> selectUser(Connection conn,List<TripInfoPicture> list){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<User> selectUser = new ArrayList();
+		String sql = prop.getProperty("selectUser");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			for(TripInfoPicture tc : list) {
+				rs = pstmt.executeQuery();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return selectUser;
+	}
+	
+	
 }// 클래스

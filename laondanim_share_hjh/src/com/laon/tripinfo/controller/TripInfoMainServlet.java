@@ -73,7 +73,10 @@ public class TripInfoMainServlet extends HttpServlet {
 //		List<TripInfoPicture> list=new TripInfoService().selectTripinfoList(cPage,numPerPage,category);
 		List<TripInfoPicture> list=new TripInfoService().selectTripinfoList(cPage,numPerPage,category,type,keyword,mind);
 		//모든 찜 목록 리스트
-			
+		
+		List<User> userList = new TripInfoService().selectUser(list);
+		
+		
 			List<Mind> mindList = new TripInfoService().selectMind();
 			
 			for(Mind mmm : mindList) {

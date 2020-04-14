@@ -214,7 +214,7 @@ public Like rsProcess(Like item, ResultSet rs) throws SQLException {
 
 
 @Override
-public Like mrProcess(Like item, MultipartRequest mr, Picture pic) {
+public Like mrProcess(Like item, MultipartRequest mr, List<Picture> picList) {
 	// TODO Auto-generated method stub
 	return null;
 }

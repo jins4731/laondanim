@@ -14,8 +14,12 @@ import java.util.Properties;
 
 import com.laon.common.PropPath;
 import com.laon.common.robot.LaonRobot;
+import com.laon.donghang.model.vo.Donghang;
 import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
+import com.laon.trip.model.vo.Trip;
+import com.laon.tripinfo.model.vo.Tripinfo;
+import com.laon.user.model.vo.User;
 
 public class EtcDao {
 	private Properties prop = new Properties();
@@ -27,6 +31,9 @@ public class EtcDao {
 	
 	
 	private String selectPictureUserNo = "selectPictureUserNo";
+	private String selectPictureTripNo = "selectPictureTripNo";
+	private String selectPictureTripinfoNo = "selectPictureTripinfoNo";
+	private String selectPictureDonghangNo = "selectPictureTripDonghangNo";
 	
 	
 	
@@ -78,24 +85,107 @@ public class EtcDao {
 	}
 	
 	
-	public Picture selectPictureUserNo(Connection conn, int no) {
+	public List<Picture> selectPictureListUserNo(Connection conn, int no) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = prop.getProperty(selectPictureUserNo);
-		Picture pic = null;
+		List<Picture> list = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, no);
 			rs = pstmt.executeQuery();
-			pic = rsProcess(rs, new Picture());
+			list = rsProcess(rs, new ArrayList<Picture>(),new Picture());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
 			close(pstmt);
 		}
-		return pic;
+		return list;
 	}
+
+
+	public List<Picture> selectPictureListTripNo(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty(selectPictureTripNo);
+		List<Picture> list = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			list = rsProcess(rs, new ArrayList<Picture>(),new Picture());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	public List<Picture> selectPictureListTripinfoNo(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty(selectPictureTripinfoNo);
+		List<Picture> list = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			list = rsProcess(rs, new ArrayList<Picture>(),new Picture());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	public List<Picture> selectPictureListDonghangNo(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty(selectPictureDonghangNo);
+		List<Picture> list = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			list = rsProcess(rs, new ArrayList<Picture>(),new Picture());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	
+	public List<Picture> selectPictureWhereNoIn(Connection conn, List<Integer> noList ,String coulmnName) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM PICTURE_TB WHERE " +coulmnName + " IN (";
+		for (Integer integer : noList) {
+			sql += "'" + integer + "',";
+		}
+		sql = sql.substring(0, sql.length()-1);
+		sql += ")";
+		System.out.println(sql);
+		List<Picture> list = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			list = rsProcess(rs, new ArrayList<Picture>(),new Picture());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	
 
 	
 }

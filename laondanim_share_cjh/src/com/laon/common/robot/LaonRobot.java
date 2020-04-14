@@ -10,5 +10,5 @@ import com.oreilly.servlet.MultipartRequest;
 public interface LaonRobot<E> {
 	abstract public List<E> rsProcess(List<E>list, ResultSet rs) throws SQLException;
 	abstract public E rsProcess(E item, ResultSet rs) throws SQLException;
-	abstract public E mrProcess(E item, MultipartRequest mr, Picture pic);
+	abstract public E mrProcess(E item, MultipartRequest mr, List<Picture> picList);
 }

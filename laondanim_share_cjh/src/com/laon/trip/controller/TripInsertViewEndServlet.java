@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class AddTripScheduleServlet
+ * Servlet implementation class TripInsertViewEndServlet
  */
-@WebServlet("/trip/addTripSchedule.do")
-public class AddTripScheduleServlet extends HttpServlet {
+@WebServlet("/trip/tripInsertViewEnd.do")
+public class TripInsertViewEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddTripScheduleServlet() {
+    public TripInsertViewEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,7 +27,7 @@ public class AddTripScheduleServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package com.laon.trip.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.service.TripService;
 import com.laon.trip.model.vo.Trip;
 import com.laon.trip.model.vo.TripSchedule;
+import com.laon.tripinfo.model.vo.Tripinfo;
 import com.laon.user.model.service.UserService;
 import com.laon.user.model.vo.User;
 
@@ -42,22 +44,21 @@ public class TripViewServlet extends HttpServlet {
 		String no = request.getParameter("no");
 		
 		
-		Trip trip = new TripService().selectTrip("1");
-		List<TripSchedule> scheduleList = new TripService().selectTripScheduleList(trip.getNo());
-		User user = new UserService().selectUser(trip.getUserNo());
-		Picture pic = new EtcService().selectPictureUserNo(user.getNo());
+		Trip trip = new TripService().selectTripViewAllData("1");
 		
-		System.out.println(trip);
-		System.out.println(scheduleList);
-		System.out.println(user);
-		System.out.println(pic);
+		
+		System.out.println("여행기 : " + trip); // trip
+		System.out.println("여행기 : " + trip.getPictureList().get(0).getImage()); // trip 사진
+		System.out.println("여행기 : " + trip.getUser()); // User
+		System.out.println("여행기 : " + trip.getUser().getPictureList().get(0)); // User 사진
+		System.out.println("여행기 : " + trip.getTripScheduleList().get(0)); // 스케줄
+		System.out.println("여행기 : " + trip.getTripScheduleList().get(0).getTripinfo()); // 트립인포  
+		System.out.println("여행기 : " + trip.getTripScheduleList().get(0).getTripinfo().getPictureList().get(0)); // 트립인포 사진 
+		
 
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		request.setAttribute(CommonKey.TRIP_ITEM, trip);
-		request.setAttribute(CommonKey.USER_ITEM, user);
-		request.setAttribute(CommonKey.SCHEDULE_LIST, scheduleList);
-		request.setAttribute(CommonKey.PICTURE_ITEM, pic);
 		request.getRequestDispatcher("/views/trip/tripView.jsp").forward(request, response);
 	}
 

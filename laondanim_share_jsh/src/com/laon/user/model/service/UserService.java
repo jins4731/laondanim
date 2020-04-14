@@ -9,6 +9,7 @@ import java.sql.Connection;
 
 import com.laon.user.model.dao.UserDao;
 import com.laon.user.model.vo.User;
+import com.laon.user.model.vo.UserProfile;
 
 public class UserService {
 	

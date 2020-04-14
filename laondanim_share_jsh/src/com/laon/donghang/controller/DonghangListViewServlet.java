@@ -26,7 +26,7 @@ import com.laon.user.model.vo.User;
 /**
  * Servlet implementation class DonghangListViewServlet
  */
-@WebServlet("/donghang/donghangListView.do")
+@WebServlet(name = "DonghangListViewServlet", urlPatterns = "/donghang/donghangListView.do")
 public class DonghangListViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -44,6 +44,7 @@ public class DonghangListViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//첫화면을 위해 태그 가져오기
 		String userTag = request.getParameter("userTag");
+		userTag=(userTag==null?"null":userTag);
 		//검색 키워드 값 가져오기 
 		String keyword = request.getParameter("keyword");
 		keyword=(keyword==null?"null":keyword);
@@ -61,15 +62,16 @@ public class DonghangListViewServlet extends HttpServlet {
 		int pagePerRow = 10;
 		
 		List<DonghangJoinUserPicture> list = new ArrayList<DonghangJoinUserPicture>();
-		//Tag를 기준으로 첫화면 이후 화면 나누기
+		//Tag를 기준으로 첫화면 이후 화면 나누면 안됨 어케 처리할까..?
 		if(userTag!=null) {
 			list = new DonghangService().selectDonghangTag(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), userTag);
 		}else {
 			list = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), keyword, recent, viewcount, nearSchedule);
 		}
+		
 		int totalRowCount = new DonghangService().selectDonghangCount(keyword);
 		
-		String pageBar = new Paging().pageBar(request.getContextPath()+"/donghang/donghangListView.do", totalRowCount, currentPage, pagePerRow, keyword, recent, viewcount, nearSchedule );
+		String pageBar = new Paging().pageBar2(request.getContextPath()+"/donghang/donghangListView.do", totalRowCount, currentPage, pagePerRow, userTag, keyword, recent, viewcount, nearSchedule );
 		
 		//쿼리스트링 저장
 		request.setAttribute(CommonKey.KEYWORD, keyword);
@@ -81,7 +83,10 @@ public class DonghangListViewServlet extends HttpServlet {
 		
 		request.getRequestDispatcher("/views/donghang/donghangList.jsp").forward(request, response);
 		
-		
+		System.out.println("********************************");
+		for(DonghangJoinUserPicture dh : list) {
+			System.out.println("list : "+dh);
+		}
 	}
 
 	/**

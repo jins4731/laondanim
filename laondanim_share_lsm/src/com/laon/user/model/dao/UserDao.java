@@ -40,6 +40,8 @@ public class UserDao {
 
 	public User login(Connection conn,String id,String pw) {
 		//로그인 했을때
+		System.out.println("id : " + id);
+		System.out.println("pw : " + pw);
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		User u=null;

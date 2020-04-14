@@ -1,17 +1,19 @@
+<%@page import="com.laon.trip.model.vo.TripMyCon"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
-
+<%@ page import="java.util.List,com.laon.etc.model.vo.Like" %>
+<%
+	List<Like> likeT=(List)request.getAttribute("likeT");
+	List<TripMyCon> tripList=(List)request.getAttribute("tripList");
+	List<UserProfile> userNick=(List)request.getAttribute("userNick");
+	int likeTripCount=(int)request.getAttribute("likeTripCount");
+%>
 <%@ include file="/views/common/header.jsp"%>
 <div class="container">
 	<div class="row">
-		<div class="col-4">
+	   	<div class="col-4">
 			<%@ include file="/views/mypage/myPageAside.jsp" %>
 		</div>
-	
 		<div class="col-8">
 			<section>
 				<div id="myMenuBtn">
@@ -20,146 +22,125 @@
 					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong.do?userNo=<%=loginUser.getNo()%>')">내 동행</button>
 				</div>
 				<div id="myPageView">
-					<div>
-						<!-- 다님길 -->
-						<div class="menu">
-							<div class="manuBar">
-								<div>
-									<span>다님길</span>
-								</div>
-								<div>
-									<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
-								</div>
-							</div>
-							<hr>
-						</div>
-						
-						<!-- 다님길 목록 -->
-						<div>
-							<div id="myDNInfo">
-								<div>
-									<span>총 ?개의 ♥ 다님길</span>
-								</div>
-								<div id="dnCk1">
-									<button class="btn">선택삭제</button>
-								</div>
-								<div id="dnCk2">
-									<label><input type="checkbox" id="dnAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-									<button class="btn">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
-									<button class="btn" id="dnEndBtn">돌아가기</button>
-								</div>
-							</div>
-					
-							
-							<div class="row">
-								<div class="col">
-									<img class="img-fluid"
-										src="http://via.placeholder.com/800x450/caa8f5/ffffff?text=Image+1"
-										alt="Image 1" />
-								</div>
-								<div class="col">
-									<img class="img-fluid"
-										src="http://via.placeholder.com/800x450/9984d4/ffffff?text=Image+2"
-										alt="Image 2" />
-								</div>
-								<div class="col">
-									<img class="img-fluid"
-										src="http://via.placeholder.com/800x450/592e83/ffffff?text=Image+3"
-										alt="Image 3" />
-								</div>
-								<div class="col">
-									<img class="img-fluid"
-										src="http://via.placeholder.com/800x450/230c33/ffffff?text=Image+4"
-										alt="Image 4" />
-								</div>
-							</div>
-					
-							<!-- 맛집 -->
-							<div class="menu">
-								<div class="manuBar">
-									<div>
-										<span>맛집</span>
-									</div>
-									<div>
-										<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
-									</div>
-								</div>
-								<hr>
-							</div>
-						
-							<!-- 맛집 목록 -->
+					<!-- 다님길 -->
+					<div class="menu">
+						<div class="manuBar">
 							<div>
-								<div id="myMGInfo">
-									<div>
-										<span>총 ?개의 ♥ 맛집</span>
-									</div>
-									<div id="mgCk1">
-										<button class="btn">선택삭제</button>
-									</div>
-									<div id="mgCk2">
-										<label><input type="checkbox" id="mgAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-										<button class="btn">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
-										<button class="btn" id="dnEndBtn">돌아가기</button>
-									</div>
-								</div>
-							
-								<div>
-									<div id="gallery" class="carousel slide" data-ride="carousel" data-interval="false">
-									
-										<div class="carousel-inner">
-											<div class="carousel-item active">
-												<div class="row">
-													<div>
-														<img class="card-img-top"
-															src="http://via.placeholder.com/800x450/caa8f5/ffffff?text=Image+1"
-															alt="Image 1" />
-													</div>
-						
-													<div>
-														<img class="card-img-top"
-															src="http://via.placeholder.com/800x450/9984d4/ffffff?text=Image+2"
-															alt="Image 2" />
-													</div>
-						
-													<div>
-														<img class="card-img-top"
-															src="http://via.placeholder.com/800x450/592e83/ffffff?text=Image+3"
-															alt="Image 3" />
-													</div>
-						
-													<div>
-														<img class="card-img-top"
-															src="http://via.placeholder.com/800x450/230c33/ffffff?text=Image+4"
-															alt="Image 4" />
-													</div>
-												</div>
+								<span>다님길</span>
+							</div>
+							<div>
+								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
+							</div>
+						</div>
+						<hr>
+					</div>
+					<!-- 닫힘 내용 -->
+					<div>
+						<!-- 정보 -->
+						<div id="myDNInfo">
+							<div style="height:45px;">
+								<span>총 <%=likeTripCount %>개의 ♥ 다님길</span>
+							</div>
+						</div>
+						<!-- 게시글위치 -->
+						<table id="dnTbl">
+							<tr class="d-flex flex-wrap justify-content-center">
+							<%for(TripMyCon t:tripList){ %>
+								<td class="p-1">
+									<div class="card" style="width: 155px; height: 250px;" >
+										<div class="d-flex justify-content-between p-2" style="font-size:5px;">
+						    				<span><%=t.getCategory() %></span>
+						    				<span><%=t.getWriteDate() %></span>
+										</div>
+										<div>
+											<%if(t.getImage()==null){ %>
+												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+											<%}else{ %>
+												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
+											<%} %>
+			                           </div>
+			                           <div class="d-flex card-body p-2">
+			                           		<div style="width:150px;font-size:12px;">
+												<p class="mb-0"><%=t.getTitle() %></p>
+												<%String nick="";
+												for(UserProfile u:userNick){ 
+													if(t.getUserTbNo()==u.getNo()){
+														nick=u.getNickName();
+													}
+												}%>
+												<span><%=nick %></span>
 											</div>
-											
-											<a class="carousel-control-prev" href="#gallery" role="button" data-slide="prev">
-												<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-												<span class="sr-only">Previous</span>
-											</a>
-												
-											<a class="carousel-control-next" href="#gallery" role="button" data-slide="next">
-												<span class="carousel-control-next-icon" aria-hidden="true"></span>
-												<span class="sr-only">Next</span>
-											</a>
-											
 										</div>
 									</div>
-								</div>
+								</td>
+							<%} %>
+							</tr>
+							<%if(tripList.size()==4){ %>
+							<tr>
+								<td colspan="4" style="text-align: center;">
+									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myConTrip.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>
+								</td>
+							</tr>
+							<%} %>
+						</table>
+					</div>
+					
+					<!-- 맛집 -->
+					<div class="menu">
+						<div class="manuBar">
+							<div>
+								<span>맛집</span>
+							</div>
+							<div>
+								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
 							</div>
 						</div>
+						<hr>
 					</div>
-
+					<!-- 닫힘 내용 -->
+					<div>
+						<!-- 정보 -->
+						<div id="myDNInfo">
+							<div style="height:45px;">
+								<span>총 ?개의 ♥ 맛집</span>
+							</div>
+						</div>
+						<div class="card d-flex">
+							<div class="sl d-flex" style="overflow: hidden;">
+								<img class="card-img slImg" src="<%=request.getContextPath()%>/images/images.jpeg">
+								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/henri.jpeg">
+								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/peng.jpg">
+								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/peng2.jpg">
+								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/peng3.jpeg">
+							</div>
+							<div><img id="prev" src="<%=request.getContextPath()%>/images/prev.png"></div>
+							<%-- <div><img id="next" src="<%=request.getContextPath()%>/images/next.png"></div> --%>
+						</div>
+						<script>
+							$(function(){
+								$(".sl").find(".slImg").css("width","155");
+								$("#next").click(function(){
+									$(".sl").append($(".slImg").first());
+									$(".sl").append($(".slImg").first());
+									$(".sl").append($(".slImg").first());
+									$(".sl").append($(".slImg").first());
+								});
+								
+								/* setInterval(() => {
+									$(".sl").append($(".slImg").first());
+								}, 3000); */
+							});
+						</script>
+					</div>
+					
+					
+					
 				</div>
 			</section>
 		</div>
 	</div>
 </div>
 <%@ include file="/views/common/footer.jsp"%>
-
-
 <style>
 	div.menu{
 		width:auto;
@@ -176,34 +157,26 @@
         border:1px solid green;
     }
     
-    #myDNInfo,#myMGInfo,.manuBar{
+    #myDNInfo,#myBDInfo,.manuBar{
     	display:flex;
     	justify-content: space-between;
     	margin-left: 40px;
     	margin-right: 40px;
     }
 
-	#dnCk2,#dnCk3,#bdCk2,#bdCk3{
+	#dnCk2,.dnCk3,#bdCk2,.bdCk3{
 		display:none;
 	}
 	
-	#gallery img{
-		width:200px;
-		height:200px;
-		
+	#myMenuBtn{
+		text-align:center;
 	}
 	
-	.row{
-        display: flex;
-        justify-content: center;
-    }
-    
-	.row div{
-		padding:10px;
+	#myMenuBtn>button{	
+		width:150px;
+		margin: 20px;
+    	border-radius: 100px;
 	}
-	
-	.carousel-control-prev-icon { background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E"); }
-	.carousel-control-next-icon { background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E"); }
 </style>
 
 <script>
@@ -229,7 +202,7 @@
 			}
 		});
 	});
-
+	
 	$(function(){
 		$(".imgDrop").stop().css({"transform":"rotate(90deg)"});
 	});

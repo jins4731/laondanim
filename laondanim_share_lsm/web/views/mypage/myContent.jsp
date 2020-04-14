@@ -188,7 +188,7 @@
         text-decoration: none;
         color:black;
         list-style:none;
-        /* border:1px solid green; */
+        border:1px solid green;
     }
     
     #myDNInfo,#myBDInfo,.manuBar{
@@ -275,13 +275,4 @@
 			flag=true;
 		}
 	});
-	<%-- $(function(){
-		
-		function fnBoardDel(){
-			$("input[name=bdCks]:checked").each(function() {
-				var bdCks[] = $(this).val();
-				return location.href='<%=request.getContextPath()%>/mypage/myBoardDel';
-			}
-		}
-	}); --%>
 </script>

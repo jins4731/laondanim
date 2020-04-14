@@ -30,7 +30,6 @@ public class DonghangJoinServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("서버에 들어옴!");
 		
 		int userNo = Integer.parseInt(request.getParameter("userNo")); //유저넘버
 		int donghangNo = Integer.parseInt(request.getParameter("donghangNo")); //동행 글 넘버

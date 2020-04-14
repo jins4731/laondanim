@@ -236,7 +236,7 @@ public class DonghangDao {
 		ResultSet rs = null;
 		String sql="";
 		List<DonghangJoinUserPicture> list = null;
-		System.out.println("strat num은?????: "+start+ "  end넘은?? : "+end);
+
 		//sql문 나누기
 		if( !keyword.equals("null") && !recent.equals("null") ) { //키워드 O, 최신순
 			sql = prop.getProperty(selectDonghangKeywordRecent);
@@ -596,8 +596,7 @@ public class DonghangDao {
 			}else {
 				pstmt.setInt(1, dh.getTripNo());
 			}
-			System.out.println("트립넘 이거 머야?ㅡㅡ");
-			System.out.println(dh.getTripNo());
+
 			pstmt.setString(2, dh.getTag());
 			pstmt.setString(3, dh.getTitle());
 			pstmt.setString(4, dh.getContent());

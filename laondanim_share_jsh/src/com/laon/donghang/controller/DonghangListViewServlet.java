@@ -63,11 +63,11 @@ public class DonghangListViewServlet extends HttpServlet {
 		
 		List<DonghangJoinUserPicture> list = new ArrayList<DonghangJoinUserPicture>();
 		//Tag를 기준으로 첫화면 이후 화면 나누면 안됨 어케 처리할까..?
-		if(userTag!=null) {
-			list = new DonghangService().selectDonghangTag(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), userTag);
-		}else {
+//		if(userTag!=null) {
+//			list = new DonghangService().selectDonghangTag(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), userTag);
+//		}else {
 			list = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), keyword, recent, viewcount, nearSchedule);
-		}
+//		}
 		
 		int totalRowCount = new DonghangService().selectDonghangCount(keyword);
 		
@@ -83,10 +83,10 @@ public class DonghangListViewServlet extends HttpServlet {
 		
 		request.getRequestDispatcher("/views/donghang/donghangList.jsp").forward(request, response);
 		
-		System.out.println("********************************");
-		for(DonghangJoinUserPicture dh : list) {
-			System.out.println("list : "+dh);
-		}
+//		System.out.println(userTag+keyword+recent+viewcount+nearSchedule+"********************************");
+//		for(DonghangJoinUserPicture dh : list) {
+//			System.out.println("list : "+dh);
+//		}
 	}
 
 	/**

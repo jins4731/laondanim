@@ -12,7 +12,7 @@
 
 <%
 	List<DonghangJoinUserPicture> list = (List)request.getAttribute(CommonKey.DONGHANG_LIST);
-
+	System.out.println("널...널...널이니..?: "+list.size());
 	int count = 0;
 	List<DonghangJoinUserPicture> topList = new ArrayList();
 	List<DonghangJoinUserPicture> bottomList = new ArrayList();

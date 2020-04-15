@@ -80,6 +80,7 @@
     sub{
      color:#007bff;
     }
+    
    
 
            /*댓글테이블*/
@@ -146,6 +147,9 @@
 			<td>
 				<div class="hidden-container">
 					<button class="btn secondComment" value="<%=bc.getNo()%>"><i class='far fa-comment-alt'></i></button>
+					<%if(loginUser.getNo()!=bc.getUserNo()){ %><!-- 로그인한 사용자와 입력한 사용자가 같지않을때 -->
+				<button type="button" class="btn" data-toggle="modal" data-target="#myModal" ><i class='fas fa-bullhorn'></i></button>	
+					<%}%>
 					<%if (loginUser.getNo() == bc.getUserNo()) {%><!-- 로그인한 사용자와 입력한 사용자가 같을때 -->
 					<button class="btn deleteComment" value="<%=bc.getNo()%>"><i class="fa fa-trash"></i></button>
 					<button class="btn alterComment" value="<%=bc.getNo()%>"><i class='fas fa-eraser'></i></button>
@@ -159,11 +163,13 @@
 			<td>
 			<sub><%=bc.getCommentWriter()%></sub> <sub><%=bc.getWriteDate()%></sub>
 			<br> 
-			<%=bc.getContent()%>
-				 
+			<%=bc.getContent()%>	 
 			</td>
 			<td class="level2-submit">
 			<div class="second-hidden-container">
+			<%if(loginUser.getNo()!=bc.getUserNo()){ %>
+			<button type="button" class="btn" data-toggle="modal" data-target="#myModal" ><i class='fas fa-bullhorn'></i></button>	
+			<%}%>
 			<%if (loginUser.getNo() == bc.getUserNo()) {%>
 				<button class="btn deleteComment" value="<%=bc.getNo()%>"><i class="fa fa-trash"></i></button>
 				<button class="btn alterComment" value="<%=bc.getNo()%>"><i class='fas fa-eraser'></i></button>
@@ -189,7 +195,18 @@
 					<input type="submit" class="btn btn-primary" value="등록">
 				</td>
 			</form>
+		
 		</tr>
+		<tr>
+		 <td colspan="2"  style="text-align:center;">
+		 <%if(loginUser.getNo() == b.getUserNo()||loginUser.getUserId().equals("admin")){ %>
+		  <button class="btn btn-warning alterBoard" value="<%=b.getNo()%>">수정하기</button>
+		  <button class="btn btn-danger deleteBoard" value="<%=b.getNo() %>">삭제하기</button>
+		  <%} %>
+		 </td>
+
+		</tr>
+		
 	</table>
 <!-- 모달창 -->
   <!-- The Modal -->
@@ -310,6 +327,20 @@ $(function(){
 		$(this).off("click");
 		
 	});
+	//게시글 수정
+	$(".alterBoard").click(function(){
+		var boardNo=$(this).val();
+		location.href="<%=request.getContextPath()%>/board/alterBoard.do?boardNo="+boardNo;
+		
+	});
+	
+	//게시글 삭제
+	$(".deleteBoard").click(function(){
+		var boardNo=$(this).val();
+		location.href="<%=request.getContextPath()%>/board/deleteBoard.do?boardNo="+boardNo;
+		
+	});
+	
 	
 	
 	

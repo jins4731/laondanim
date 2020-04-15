@@ -224,7 +224,7 @@ table * {
     <tr>
         <td><%=b.getNo()%></td>
         <td>
-        <a href='<%=request.getContextPath()%>/board/boardView?no=<%=b.getNo()%>'>
+        <a href='<%=request.getContextPath()%>/board/boardView.do?no=<%=b.getNo()%>'>
         <%=b.getTitle()%>
         </td>
         <td><%=b.getNickName()%></td>

@@ -398,6 +398,38 @@ public class BoardDao {
 		
 
 	}
+
+	public int alterBoard(Connection conn, BoardJoinUser b) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("alterBoard");
+	try{pstmt=conn.prepareStatement(sql);
+		pstmt.setString(1, b.getCategory());
+		pstmt.setString(2, b.getTag());
+		pstmt.setString(3, b.getTitle());
+		pstmt.setString(4, b.getContent());
+		pstmt.setInt(5, b.getNo());
+		result=pstmt.executeUpdate();
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(pstmt);
+	}return result;
+	}
+
+	public int deleteBoard(Connection conn, int boardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("deleteBoard");
+	try{pstmt=conn.prepareStatement(sql);
+		pstmt.setInt(1, boardNo);
+		result=pstmt.executeUpdate();
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(pstmt);
+	}return result;
+	}
 	
 	
 }

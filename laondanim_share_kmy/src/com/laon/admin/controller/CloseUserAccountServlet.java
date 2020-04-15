@@ -1,8 +1,6 @@
 package com.laon.admin.controller;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,20 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.laon.admin.model.service.AdminService;
-import com.laon.admin.model.vo.Reports;
-import com.laon.common.Paging;
 
 /**
- * Servlet implementation class AdminPageViewServlet
+ * Servlet implementation class CloseUserAccountServlet
  */
-@WebServlet("/admin/adminView.do")
-public class AdminPageViewServlet extends HttpServlet {
+@WebServlet("/admin/closeAccount.do")
+public class CloseUserAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminPageViewServlet() {
+    public CloseUserAccountServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,33 +28,20 @@ public class AdminPageViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//관리자 페이지
-	
-		
-		
-		
-		//페이징 처리하기 
-		int cPage; 
-		try {
-			cPage=Integer.parseInt(request.getParameter("cPage"));
-		 }catch(NumberFormatException e) { 
-			 cPage=1; 
-			 }
-		 
-		int perPage=7;
-		//신고테이블에 입력된 값 받아서 화면에 뿌려주기
-		List<Reports> list=new AdminService().selectReport(cPage,perPage);
-		
-		int totalData=new AdminService().countReport();
-		
-		String pageBar=new Paging().pageBar(request.getContextPath()+"/admin/adminView.do",totalData,cPage,perPage);
-		
-		request.setAttribute("pageBar", pageBar);
-		request.setAttribute("reports", list);
-		request.getRequestDispatcher("/views/admin/adminPage.jsp").forward(request, response);
-		
-		
+		int userNo=Integer.parseInt(request.getParameter("userNo"));
+		int result=new AdminService().closeAccount(userNo);
+		String msg="";
+		String loc="";
+		if(result>0) {
+			msg="해당회원의 이용이 정지처리되었습니다.";
+			loc="/admin/adminView.do";
+		}else {
+			msg="이용 정지처리에 실패하였습니다.";
+			loc="/admin/adminView.do";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
 	}
 

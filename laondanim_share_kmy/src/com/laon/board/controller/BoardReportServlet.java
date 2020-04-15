@@ -47,10 +47,10 @@ public class BoardReportServlet extends HttpServlet {
 		String msg="";
 		String loc="";
 		if(result>0) { 
-			 msg="신고가 접수되었습니다"; loc="/board/boardView?no="+boardNo;
+			 msg="신고가 접수되었습니다"; loc="/board/boardView.do?no="+boardNo;
 		  
 		}else { 
-			 msg="신고 신청실패(알수없는 오류)"; loc="/board/boardView?no="+boardNo; 
+			 msg="신고 신청실패(알수없는 오류)"; loc="/board/boardView.do?no="+boardNo; 
 			 }
 		  
 		 request.setAttribute("msg", msg); request.setAttribute("loc", loc);

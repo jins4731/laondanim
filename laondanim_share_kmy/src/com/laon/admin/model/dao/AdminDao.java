@@ -26,12 +26,14 @@ public class AdminDao {
 		}
 	}
 
-	public List<Reports> selectReport(Connection conn) {
+	public List<Reports> selectReport(Connection conn,int cPage,int perPage) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<Reports> list=new ArrayList();
 		String sql=prop.getProperty("selectReport");
 	try{pstmt=conn.prepareStatement(sql);
+		pstmt.setInt(1, (cPage-1)*perPage+1);
+		pstmt.setInt(2,cPage*perPage);
 		rs=pstmt.executeQuery();
 		while(rs.next()) {
 		Reports re=new Reports();
@@ -50,6 +52,42 @@ public class AdminDao {
 	}
 		
 		return list;
+	}
+
+	public int closeAccount(Connection conn, int userNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("closeAccount");
+	try{
+		pstmt=conn.prepareStatement(sql);
+		pstmt.setInt(1, userNo);
+		result=pstmt.executeUpdate();
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(pstmt);
+	}return result;
+		
+	}
+
+	public int countReport(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int count=0;
+		String sql=prop.getProperty("countReport");
+	try{pstmt=conn.prepareStatement(sql);
+		rs=pstmt.executeQuery();
+		rs.next();
+		count=rs.getInt(1);
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(rs);
+		close(pstmt);
+	}return count;
+	
+	
+	
 	}
 	
 	

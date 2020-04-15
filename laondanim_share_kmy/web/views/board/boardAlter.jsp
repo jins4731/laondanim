@@ -1,7 +1,20 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="com.laon.board.model.vo.BoardJoinUser" %>	
+<%
+ BoardJoinUser b= (BoardJoinUser)request.getAttribute("BoardJoinUser");
+//태그 분리하여 출력하기
+
+	if(b.getTag()!=null){
+	String tag=b.getTag();
+	String[] taglist=tag.split("#");
+	b.setTag(String.join(" #",taglist));
+	}
+
+
+%>
 <%@ include file="/views/common/header.jsp"%>
- <style>
+<style>
         .dropdown-container{
             /*border: 1px solid black;*/
             width: 150px;
@@ -21,9 +34,10 @@
         	margin-top:20px;
         	} 
     </style>
+ 
 <section>
  
-<form action="<%=request.getContextPath()%>/board/boardWriteEnd.do" method="post" id="frm">
+<form action="<%=request.getContextPath()%>/board/boardalterEnd.do" method="post" id="frm">
 <table class="boardWrite-container">
 <tr>
 	<td>
@@ -41,25 +55,24 @@
 	<div class="input-group-prepend">
 	<span class="input-group-text">제목</span>
 	</div>
-	<input type="text" class="form-control" placeholder="게시글 제목을 입력하세요" name="boardWrite-title" id="boardWrite-title" >
+	<input type="text" class="form-control" placeholder="게시글 제목을 입력하세요"  value="<%=b.getTitle()%>" name="boardWrite-title" id="boardWrite-title" >
 	</div>
 	</td>
 </tr>
 <tr>
 	<td style="width:766px; height:412px;">
-	<textarea name="smarteditor" id="smarteditor" rows="10" cols="100" style="width:100%; height:412px;"></textarea>
+	<textarea name="smarteditor" id="smarteditor" rows="10" cols="100" style="width:100%; height:412px;"><%=b.getContent() %></textarea>
 	
 	</td>
 </tr>
 <tr>
 	<td>
-	<textarea name="boardTag" id="boardTag" placeholder="#태그를 #입력하세요" cols=105 rows=5></textarea>
+	<textarea name="boardTag" id="boardTag" placeholder="#태그를 #입력하세요" cols=105 rows=5><%=b.getTag()==null?" ":b.getTag()%></textarea>
 	</td>
 </tr>
 <tr>
 	<td>
-	<input type="button" class="btn btn-danger" id="cancelWrite" value="작성취소">
-	<input type="button" class="btn btn-success" id="savebutton" value="글작성" />
+	<button class="btn btn-success" id="savebutton" name="boardNo" value="<%=b.getNo() %>">수정완료</button>
 	</td>
 </tr>
 
@@ -67,7 +80,6 @@
 </form>   
 
 </section>
-
 <script>
 $(function(){
     //전역변수선언
@@ -106,12 +118,14 @@ $(function(){
         //폼 submit
         $("#frm").submit();
     })
-    //작성취소버튼 클릭
-    $("#cancelWrite").click(function(){
-    	location.href="<%=request.getContextPath()%>/board/list.do";
-    })
+  
     
 })
-</script>
+</script>	
+	
+
+
+
+
 
 <%@ include file="/views/common/footer.jsp"%> 

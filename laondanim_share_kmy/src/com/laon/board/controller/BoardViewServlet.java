@@ -18,7 +18,7 @@ import com.laon.board.model.vo.BoardJoinUser;
 /**
  * Servlet implementation class BoardViewServlet
  */
-@WebServlet("/board/boardView")
+@WebServlet("/board/boardView.do")
 public class BoardViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

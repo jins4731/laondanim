@@ -1,27 +1,25 @@
-package com.laon.board.controller;
+package com.laon.admin.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.laon.board.model.service.BoardService;
-import com.laon.board.model.vo.BoardComment;
+import com.laon.admin.model.service.AdminService;
 
 /**
- * Servlet implementation class BoardCommentInsertServlet
+ * Servlet implementation class CloseUserAccountServlet
  */
-@WebServlet("/board/commentInsert.do")
-public class BoardCommentInsertServlet extends HttpServlet {
+@WebServlet("/admin/closeAccount.do")
+public class CloseUserAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardCommentInsertServlet() {
+    public CloseUserAccountServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,25 +28,19 @@ public class BoardCommentInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String commentContent=request.getParameter("commentContent");
-		int commentWriter=Integer.parseInt(request.getParameter("commentWriter"));
-		int boardNo=Integer.parseInt(request.getParameter("boardRef"));
-		int level=Integer.parseInt(request.getParameter("level"));
-		int commentRef=Integer.parseInt(request.getParameter("commentRef"));
-		
-		BoardComment bc=new BoardComment(0,commentWriter,boardNo,null,commentContent,null,level,commentRef);
-		System.out.println("댓글 넣을값:"+bc);
-		int result=new BoardService().insertComment(bc);
+		int userNo=Integer.parseInt(request.getParameter("userNo"));
+		int result=new AdminService().closeAccount(userNo);
 		String msg="";
+		String loc="";
 		if(result>0) {
-			msg="댓글등록 성공";
+			msg="해당회원의 이용이 정지처리되었습니다.";
+			loc="/admin/adminView.do";
 		}else {
-			msg="댓글등록 실패";
+			msg="이용 정지처리에 실패하였습니다.";
+			loc="/admin/adminView.do";
 		}
-		
 		request.setAttribute("msg", msg);
-		request.setAttribute("loc", "/board/boardView.do?no="+boardNo);
+		request.setAttribute("loc", loc);
 		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
 	}

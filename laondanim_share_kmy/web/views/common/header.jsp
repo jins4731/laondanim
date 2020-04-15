@@ -57,12 +57,13 @@ footer {
   /*   position:absolute; */
 	bottom:0;
 	width:100%;
-	height:70px;   
+	height:150px;   
 	background:#ccc;
     padding-top:20px;
   	background-color:mediumaquamarine;
 	clear:both;
 	text-align:center;
+	font-size:13px;
 
 } 
 
@@ -117,8 +118,8 @@ header li>a {
 				<div class="mainTitle-container"><a href="<%=request.getContextPath()%>/" >라온다님</a></div>
 			</h1>
 		</div>	
-		<div class="header-container">
 		
+		<div class="header-container">
 			<div class="nav-container">
 				<nav class="navbar navbar-expand-sm ">
 
@@ -139,7 +140,7 @@ header li>a {
 						<a class="nav-link" href="<%=request.getContextPath()%>/user/loginPage.do">로그인
 						</a>
 						</li>
-						<%}else{ %>
+						<%}else if(loginUser!=null&&!loginUser.getUserId().equals("admin")){ %>
 						<!-- null 이 아닐경우  마이페이지/로그아웃 출력, -->
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> 
@@ -150,6 +151,18 @@ header li>a {
 								<a class="dropdown-item" href="<%=request.getContextPath()%>/user/logout.do">로그아웃</a>
 							</div>
 						</li>
+						<%}else{%>
+						<!-- 아이디가 admin일경우 관리자 페이지 출력 -->
+						<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> 
+							<img src="<%=request.getContextPath()%>/icon/profile_icon.png" width="50px" height="50px">
+						</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/admin/adminView.do">관리자페이지</a> 
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/user/logout.do">로그아웃</a>
+							</div>
+						</li>
+						
 						<%} %>
 					</ul>
 

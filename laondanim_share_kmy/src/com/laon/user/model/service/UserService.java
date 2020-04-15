@@ -48,6 +48,15 @@ public class UserService {
 		close(conn);
 		return result;
 	}
+
+	public int searchReport(int userNo) {
+		//신고테이블에서 해당 유저의 넘버를 찾는 로직
+		Connection conn=getConnection();
+		int result=dao.searchReport(conn,userNo);
+		close(conn);
+		return result;
+		
+	}
 	
 	
 }

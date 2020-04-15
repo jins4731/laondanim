@@ -28,6 +28,7 @@ public class CommonKey {
 	public static final String PICTURE_ITEM = "pictureItem";
 	public static final String DONGHANG_ITEM = "donghangItem";
 	public static final String total_Item_Count= "totalItemCount";
+	public static final String DONGHANG_JOIN_ITEM = "donghangJoinItem";
 	
 	
 	public static final String PAGE_BAR = "pageBar";

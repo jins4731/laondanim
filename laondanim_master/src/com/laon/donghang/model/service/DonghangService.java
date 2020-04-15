@@ -13,6 +13,7 @@ import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
 import com.laon.donghang.model.dao.DonghangDao;
 import com.laon.donghang.model.vo.Donghang;
+import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.donghang.model.vo.DonghangJoinUserPicture;
 import com.laon.trip.model.vo.TripMyCon;
 import com.laon.user.model.vo.UserProfile;
@@ -27,9 +28,9 @@ public class DonghangService {
 		return donghang;
 	}
 	
-	public List<DonghangJoinUserPicture> selectDonghangPage(int start,int end, String keyword, String recent, String viewcount, String nearSchedule){
+	public List<DonghangJoinUserPicture> selectDonghangPage(int start,int end, String keyword, String recent, String viewcount, String nearSchedule, String searchFilter){
 		Connection conn = getConnection();
-		List<DonghangJoinUserPicture> list = dao.selectDonghangPage(conn, start ,end, keyword, recent, viewcount, nearSchedule);
+		List<DonghangJoinUserPicture> list = dao.selectDonghangPage(conn, start ,end, keyword, recent, viewcount, nearSchedule, searchFilter);
 		close(conn);
 		return list;
 	}
@@ -41,9 +42,9 @@ public class DonghangService {
 		return result;
 	}
 	
-	public int selectDonghangCount(String keyword) {
+	public int selectDonghangCount(String keyword, String searchFilter) {
 		Connection conn = getConnection();
-		int result = dao.selectDonghangCount(conn, keyword);
+		int result = dao.selectDonghangCount(conn, keyword, searchFilter);
 		close(conn);
 		return result;
 	}
@@ -157,5 +158,24 @@ public class DonghangService {
 		close(conn);
 		
 		return result;
+	}
+
+	public int donghangJoin(DonghangJoin join) {
+		Connection conn = getConnection();
+
+		int result = dao.donghangJoin(conn, join);
+		if(result>0) {
+			commit(conn);
+		} else rollback(conn);
+		close(conn);
+		
+		return result;
+	}
+
+	public DonghangJoin selectUserDonghangJoin(int no, int loginUserNo) {
+		Connection conn = getConnection();
+		DonghangJoin userJoinTb = dao.selectUserDonghangJoin(conn, no, loginUserNo);
+		close(conn);
+		return userJoinTb;
 	}
 }

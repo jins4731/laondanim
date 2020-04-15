@@ -57,12 +57,13 @@ footer {
   /*   position:absolute; */
 	bottom:0;
 	width:100%;
-	height:70px;   
+	height:150px;   
 	background:#ccc;
     padding-top:20px;
   	background-color:mediumaquamarine;
 	clear:both;
 	text-align:center;
+	font-size:13px;
 
 } 
 

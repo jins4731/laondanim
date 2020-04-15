@@ -20,7 +20,8 @@ public class CommonKey {
 	public static final String BOARD_LIST = "boardList";
 	public static final String PICTURE_LIST = "pictureList";
 	public static final String LIKE_LIST = "likeList";
-	
+	public static final String DONGHANG_JOIN_LIST = "donghangJoinList";
+	public static final String USER_LIST = "userList";
 	
 	
 	public static final String TRIP_ITEM = "tripItem";

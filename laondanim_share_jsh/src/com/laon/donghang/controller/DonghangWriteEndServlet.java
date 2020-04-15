@@ -95,7 +95,7 @@ public class DonghangWriteEndServlet extends HttpServlet {
 		}
 		
 		int pw = mr.getParameter("donghangPw")==null||mr.getParameter("donghangPw").equals("")?-1:Integer.parseInt(mr.getParameter("donghangPw")); //-> 비공개인 경우 무조건 -1으로 설정
-		int tripNo = mr.getParameter("selectTripNo")==null||mr.getParameter("selectTripNo").equals("")?Integer.parseInt(mr.getParameter("selectTripNo")):-1; //null인 경우 무조건 -1로 설정
+		int tripNo = mr.getParameter("selectTripNo")==null||mr.getParameter("selectTripNo").equals("")?-1:Integer.parseInt(mr.getParameter("selectTripNo")); //null인 경우 무조건 -1로 설정
 		String content = mr.getParameter("content");
 		String tag = mr.getParameter("tag");
 		

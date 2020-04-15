@@ -1,25 +1,45 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="com.laon.common.CommonKey" %>
+<%@page import="java.util.List" %>
+<%@page import="java.util.ArrayList" %>
+<%@page import="java.util.Date" %>
+<%@page import="java.text.SimpleDateFormat" %>
+<%@page import="com.laon.donghang.model.vo.Donghang" %>
+<%@page import="com.laon.donghang.model.vo.DonghangJoinDonghangJoinTb" %>
+<%@page import="com.laon.user.model.vo.UserProfile" %>
 
 <%@ include file="/views/common/header.jsp"%>
 
+<%
+/* request.setAttribute(CommonKey.DONGHANG_JOIN_LIST, joinList);
+request.setAttribute(CommonKey.PAGE_BAR, pageBar);
+request.setAttribute(CommonKey.USER_LIST, userList);
+request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
 
+	List<DonghangJoinDonghangJoinTb> joinList = (List<DonghangJoinDonghangJoinTb>)request.getAttribute(CommonKey.DONGHANG_JOIN_LIST);
+	String pageBar = (String)request.getAttribute(CommonKey.PAGE_BAR);
+	int totalRowCount = (int)request.getAttribute(CommonKey.TOTAL_ROWCOUNT);
+	
+	List<UserProfile> userList = (List<UserProfile>)request.getAttribute(CommonKey.USER_LIST);
+
+%>
 
    	<div style="height: 170px;"></div>
     
-    <section class="d-flex flex-row justify-content-center">
+<section class="d-flex flex-row justify-content-center">
         <div style="width: 1366px;" class="border pt-5 pb-5 d-flex flex-column align-items-center justify-content-center">
             <div class="p-5">
-                동행 신청 수신함
+                	동행 신청 수신함
             </div>
 
             <!-- 총 컨텐츠 수 & 필터 -->
             <div class="d-flex justify-content-between align-items-center pl-2 pr-2 mt-3 mb-3" style="width: 1140px;">
-                <p class="mb-0" style="margin-left: 15px;">총 빰 변수넣기 빰건의 여행기가 있습니다.</p>
+                <p class="mb-0" style="margin-left: 15px;">총 <%=totalRowCount%>건의 참여신청이 있습니다.</p>
                 <div class="dropdown" style="margin-right: 15px;">
                     <button class="joinFilterBtn  dropdown-toggle" type="button" id="joinFilterBtn" 
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      전체
+                      	전체
                     </button>
                     <input type="hidden" id="confirmedFilter" name="confirmedFilter" value="ALL"/>
                     <div class="dropdown-menu text-center" aria-labelledby="filter" style="width: 140px;">
@@ -44,7 +64,7 @@
                         선택해제
                     </button>
                     <button type="button" style="margin-right: 15px;">
-                        삭제 <span><img src=""</span>
+                        삭제 <span><img src="<%=request.getContextPath()%>/image/trash_icon.png"></span>
                     </button>
                     <button type="button" style="margin-right: 15px;" onclick="fn_deleteBtnsClose();">
                         <img src="icon/deleteBack_icon.png">
@@ -57,7 +77,8 @@
 
             <!-- 신청 목록가져오기 -->
             <div class="d-flex flex-wrap justify-content-start" style="width: 1140px;"> <!-- 목록상자 -->
-
+	
+				<%for(DonghangJoinDonghangJoinTb j : joinList){ %>
                 <!----------------------------------------------------------------------------------------> 
                 <div class="d-flex flex-column" style="height: 200px;">                               
                 <input type="checkbox" name="joinListCB" value="1" id="ch1" class="mb-2 ml-3"/>
@@ -69,13 +90,13 @@
                                 <div class="confirmedJbox mr-1 ml-1" style="line-height:14px;">
                                     대기중
                                 </div>
-                                <img src="icon/newIcon.png">
+                                <%-- <img src="<%=request.getContextPath()%>/image/newIcon.png"> --%>
                             </div>
 
                             <div class="dropdown">
                                 <button class="dropdown-toggle verticalDot pl-3 pr-1" type="button" id="soloDelete" 
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="icon/menu-vertical_icon.png" alt="">
+                                    <img src="<%=request.getContextPath()%>/image/menu-vertical_icon.png" alt="">
                                 </button>
                                 <div class="dropdown-menu text-center" aria-labelledby="soloDelete" style="width: 140px;">
                                     <a class="dropdown-item" onclick="fn_joinItem_soloDelete(this);">
@@ -86,11 +107,11 @@
                                 </div>
                             </div>                               
                         </div>
-                        <div class="border align-self-center titleBox">
-                            제목safkjklasjfkljalkjf;ajdlkfj와우뭐가이렇게길어나화장실다녀와서
+                        <div class="align-self-center titleBox">
+                            	제목safkjklasjfkljalkjf;ajdlkfj와우뭐가이렇게길어나화장실다녀와서
                         </div>
                         <div class="d-flex">
-                            <img src="icon/profile_icon.png" style="width:45px; height: 45px;" class="mr-2">
+                            <img src="<%=request.getContextPath()%>/image/profile_icon.png" style="width:45px; height: 45px;" class="mr-2">
                             <div>
                                 <p class="pId m-0">아이디</p>
                                 <p class="pNick m-0">닉네임</p>                                
@@ -100,9 +121,13 @@
                 </label>
                 </div>
                 <!---------------------------------------------------------------------------------------->
-
+				<%} %>
             </div> <!-- 목록상자 끝 -->
 
+
+			<div class="d-flex justify-content-center align-items-center m-3" style="height: 80px;">
+				<%=pageBar%>
+			</div>
 
         </div>
     </section>
@@ -149,7 +174,7 @@
                                         <div class="dropdown-menu text-center" aria-labelledby="reportUser" style="width: 140px;">
                                             <a class="dropdown-item" onclick="fn_reportUser(this);">
                                                 <span class="d-flex justify-content-center align-items-center">
-                                                    <span>신고하기</span> <img src="icon/report_icon.png" style="width: 20px; height: 20px;" class="ml-3 mb-1">
+                                                    <span>신고하기</span> <img src="<%=request.getContextPath()%>/image/report_icon.png" style="width: 20px; height: 20px;" class="ml-3 mb-1">
                                                 </span>
                                             </a>
                                         </div>
@@ -180,7 +205,7 @@
                         <div class="d-flex flex-column justify-content-end align-items-center" style="border: 1px solid white;">
                             <fieldset class="form-group m-0">
                                 <legend for="email-label" class="bg-white p-0 m-0 w-25 text-center">자기소개</legend>
-                                <textarea class="form-control p-2" cols="87" rows="4" disabled><div>자기소개변수넣기</div></textarea>                                
+                                <textarea class="form-control p-2" cols="87" rows="4" disabled><div></div></textarea>                                
                             </fieldset>
                         </div> 
                     </div>
@@ -255,7 +280,7 @@
             color: #595959;
         }
         .titleBox{
-            width: 260px;
+            width: 240px;
             overflow:hidden; 
             text-overflow:ellipsis; 
             white-space:nowrap;
@@ -417,6 +442,6 @@
     </script>
 
 
-    <!-----------------------------------------------------------------------------------------   스크립트 끝   ---->   	
+    <!-----------------------------------------------------------------------------------------   스크립트 끝   ---->  	
    	
 <%@ include file="/views/common/footer.jsp"%> 

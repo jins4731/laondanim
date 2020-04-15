@@ -1,20 +1,20 @@
 package com.laon.donghang.model.service;
 
 import static com.laon.common.template.JDBCTemplate.close;
-import static com.laon.common.template.JDBCTemplate.getConnection;
 import static com.laon.common.template.JDBCTemplate.commit;
+import static com.laon.common.template.JDBCTemplate.getConnection;
 import static com.laon.common.template.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
 
-
-import com.laon.etc.model.vo.Like;
-import com.laon.etc.model.vo.Picture;
 import com.laon.donghang.model.dao.DonghangDao;
 import com.laon.donghang.model.vo.Donghang;
 import com.laon.donghang.model.vo.DonghangJoin;
+import com.laon.donghang.model.vo.DonghangJoinDonghangJoinTb;
 import com.laon.donghang.model.vo.DonghangJoinUserPicture;
+import com.laon.etc.model.vo.Like;
+import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.vo.TripMyCon;
 import com.laon.user.model.vo.UserProfile;
 
@@ -186,9 +186,9 @@ public class DonghangService {
 		return list;
 	}
 
-	public List<DonghangJoin> selectDonghangJoinList() {
+	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(int loginUserNo) {
 		Connection conn = getConnection();
-		List<DonghangJoin> list = dao.selectDonghangJoinList(conn);
+		List<DonghangJoinDonghangJoinTb> list = dao.selectDonghangJoinList(conn, loginUserNo);
 		close(conn);
 		return list;
 	}
@@ -198,6 +198,13 @@ public class DonghangService {
 		List<UserProfile> list = dao.selectUserProfileAll(conn);
 		close(conn);
 		return list;
+	}
+
+	public int selectJoinCount(int userNo) {
+		Connection conn = getConnection();
+		int result = dao.selectJoinCount(conn, userNo);
+		close(conn);
+		return result;
 	}
 
 }

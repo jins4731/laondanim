@@ -17,6 +17,7 @@ import java.util.Properties;
 import com.laon.common.PropPath; //<-com.laon.common.template.PropPath;로 되어있어 변경함
 import com.laon.donghang.model.vo.Donghang;
 import com.laon.donghang.model.vo.DonghangJoin;
+import com.laon.donghang.model.vo.DonghangJoinDonghangJoinTb;
 import com.laon.donghang.model.vo.DonghangJoinUserPicture;
 import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
@@ -641,8 +642,8 @@ public class DonghangDao {
 			pstmt = conn.prepareStatement(sql);
 //			TAG, TITLE, CONTENT, TRAVLE_LOCALE, TRAVLE_START_DATE, TRAVLE_END_DATE, RECRUIT_START_DATE, RECRUIT_END_DATE, PW, PUBLIC_ENABLED, RECRUIT_PEOPLE_NO			
 
-			if((Integer)dh.getTripNo()==null) {
-				pstmt.setInt(1, (Integer) null);
+			if(dh.getTripNo()==-1) {
+				pstmt.setObject(1, (Integer)null);
 			}else {
 				pstmt.setInt(1, dh.getTripNo());
 			}
@@ -655,7 +656,11 @@ public class DonghangDao {
 			pstmt.setDate(7, dh.getTravleEndDate());
 			pstmt.setDate(8, dh.getRecruitStartDate());
 			pstmt.setDate(9, dh.getRecruitEndDate());
-			pstmt.setInt(10, dh.getPw());
+			if(dh.getPw()==-1) {
+				pstmt.setInt(10, (Integer) null);
+			}else {
+				pstmt.setInt(10, dh.getPw());
+			}
 			pstmt.setString(11, dh.getPublicEnabled());
 			pstmt.setInt(12, dh.getRecruitPeopleNo());
 			pstmt.setInt(13, dh.getNo());
@@ -679,7 +684,6 @@ public class DonghangDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, pic.getImage());
 			pstmt.setInt(2, pic.getDonghangNo());
-			pstmt.setInt(3, pic.getUserNo());
 						
 			result = pstmt.executeUpdate();
 			
@@ -757,7 +761,7 @@ public class DonghangDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, userNo);
+			pstmt.setInt(1, userNo);
 				
 			rs = pstmt.executeQuery();
 			list = rsProcess(rs, new ArrayList<Donghang>());
@@ -770,19 +774,25 @@ public class DonghangDao {
 		return list;
 	}
 
-	public List<DonghangJoin> selectDonghangJoinList(Connection conn) {
+	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(Connection conn, int loginUserNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = prop.getProperty("selectDonghangJoinList");
-		List<DonghangJoin> list = null;
+		List<DonghangJoinDonghangJoinTb> list = new ArrayList();
 		
 		try {
-			pstmt = conn.prepareStatement(sql);				
+			pstmt = conn.prepareStatement(sql);		
+			pstmt.setInt(1, loginUserNo);
+			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				DonghangJoin dhj = new DonghangJoin();
+				DonghangJoinDonghangJoinTb dhj = new DonghangJoinDonghangJoinTb();
 				
+				dhj.setDhNo(rs.getInt("DH_NO"));
+				dhj.setTitle(rs.getString("TITLE"));
+				dhj.setRecruitEndDate(rs.getDate("RECRUIT_END_DATE"));
+				dhj.setEnded(rs.getString("ENDED"));
 				dhj.setNo(rs.getInt("NO"));
 				dhj.setUserNo(rs.getInt("USER_NO"));
 				dhj.setDonghangNo(rs.getInt("DONGHANG_NO"));
@@ -807,7 +817,7 @@ public class DonghangDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = prop.getProperty("selectUserProfileAll");
-		List<UserProfile> list = null;
+		List<UserProfile> list = new ArrayList();
 		
 		try {
 			pstmt = conn.prepareStatement(sql);				
@@ -833,5 +843,25 @@ public class DonghangDao {
 			close(pstmt);
 		}
 		return list;
+	}
+
+	public int selectJoinCount(Connection conn, int userNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectJoinCount");
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);	
+			pstmt.setInt(1, userNo);
+			rs = pstmt.executeQuery();
+			rs.next();
+			result = rs.getInt("CNT");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
 	}
 }

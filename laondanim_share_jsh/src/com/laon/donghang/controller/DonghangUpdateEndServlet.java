@@ -93,17 +93,14 @@ public class DonghangUpdateEndServlet extends HttpServlet {
 			publicEnabled = "Y";			
 		}
 		
-		Integer pw;
-		if(mr.getParameter("donghangPw")!=null) {
-			pw = Integer.parseInt(mr.getParameter("donghangPw"));
-		}else {
-			pw = null;
-		}
-		
-		int tripNo = Integer.parseInt(mr.getParameter("selectTripNo"));
+		System.out.println("살려줘 제발~~~***********************************************************");
+		System.out.println(mr.getParameter("selectTripNo"));
+		int pw = mr.getParameter("donghangPw")==null||mr.getParameter("donghangPw").equals("")?-1:Integer.parseInt(mr.getParameter("donghangPw")); //-> 비공개인 경우 무조건 -1으로 설정
+
+		int tripNo = mr.getParameter("selectTripNo")==null||mr.getParameter("selectTripNo").equals("")?-1:Integer.parseInt(mr.getParameter("selectTripNo")); //null인 경우 무조건 -1로 설정
 		String content = mr.getParameter("content");
 		String tag = mr.getParameter("tag");
-		
+		System.out.println(tripNo);
 
 		//vo저장
 		Donghang donghang = new Donghang(no, userNo, tripNo, null, 0, tag, title, content,
@@ -112,7 +109,7 @@ public class DonghangUpdateEndServlet extends HttpServlet {
 		//insert 결과
 		int dhResult = new DonghangService().updateDonghaong(donghang);
 		//사진 저장
-		Picture pic = new Picture(0, 0, 0, no, userNo, image);
+		Picture pic = new Picture(0, 0, 0, no, 0, image);
 		//insert 결과
 		int ptResult  = new DonghangService().updatePicture(pic);
 

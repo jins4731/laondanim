@@ -86,7 +86,7 @@ public class DonghangUpdateEndServlet extends HttpServlet {
 		
 		
 		String publicEnabled = mr.getParameter("publicEnabled");
-
+		if(publicEnabled==null) publicEnabled = "비공개";
 		if(publicEnabled.equals("공개")||publicEnabled.equals("on")) {
 			publicEnabled = "N";
 		}else {
@@ -121,7 +121,7 @@ public class DonghangUpdateEndServlet extends HttpServlet {
 		String loc = "";
 		if(result > 0) {
 			msg = "동행찾기 글이 수정되었습니다.";
-			loc = "/donghang/donghangView.do?no="+no;
+			loc = "/donghang/donghangView.do?loginUserNo="+userNo+"&no="+no;
 		}else {
 			msg = "동행찾기 글 수정에 실패하였습니다. 다시 시도해주세요.";
 			loc = "/donghang/donghangUpdateEnd.do?userNo="+userNo+"&no="+no;

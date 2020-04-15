@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import com.laon.common.PropPath; //<-com.laon.common.template.PropPath;로 되어있어 변경함
 import com.laon.donghang.model.vo.Donghang;
+import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.donghang.model.vo.DonghangJoinUserPicture;
 import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
@@ -62,6 +63,11 @@ public class DonghangDao {
 	private String selectDonghangJoinMember = "selectDonghangJoinMember";
 	private String selectDonghangJoinUserPicture = "selectDonghangJoinUserPicture";
 	private String updateDonghaong = "updateDonghaong";
+	private String selectUserDonghangJoin = "selectUserDonghangJoin";
+	private String selectDonghangLocalRecent = "selectDonghangLocalRecent";
+	private String selectDonghangLocalViewcount = "selectDonghangLocalViewcount";
+	private String selectDonghangLocalNearSchedule = "selectDonghangLocalNearSchedule";
+	private String selectDonghangLocalCount = "selectDonghangLocalCount";
 
 	public DonghangDao() {
 		try {
@@ -229,18 +235,24 @@ public class DonghangDao {
 		return donghang;
 	}	
 	
-	public List<DonghangJoinUserPicture> selectDonghangPage(Connection conn, int start, int end, String keyword, String recent, String viewcount, String nearSchedule) {
+	public List<DonghangJoinUserPicture> selectDonghangPage(Connection conn, int start, int end, String keyword, String recent, String viewcount, String nearSchedule, String searchFilter) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql="";
 		List<DonghangJoinUserPicture> list = null;
-		System.out.println("strat num은?????: "+start+ "  end넘은?? : "+end);
+
 		//sql문 나누기
-		if( !keyword.equals("null") && !recent.equals("null") ) { //키워드 O, 최신순
+		if(searchFilter.equals("searchLocal") && !keyword.equals("null") && !recent.equals("null")) { //키워드(지역) O, 최신순
+			sql = prop.getProperty(selectDonghangLocalRecent);
+		}else if( searchFilter.equals("searchLocal") && !keyword.equals("null") && !viewcount.equals("null") ) { //키워드(지역) O, 조회수순
+			sql = prop.getProperty(selectDonghangLocalViewcount);
+		}else if( searchFilter.equals("searchLocal") && !keyword.equals("null") && !nearSchedule.equals("null") ) { //키워드(지역) O, 가까운 일정순
+			sql = prop.getProperty(selectDonghangLocalNearSchedule);
+		}else if( searchFilter.equals("searchKeyword") && !keyword.equals("null") && !recent.equals("null") ) { //키워드(태그) O, 최신순
 			sql = prop.getProperty(selectDonghangKeywordRecent);
-		}else if( !keyword.equals("null") && !viewcount.equals("null") ) { //키워드 O, 조회수순
+		}else if( searchFilter.equals("searchKeyword") && !keyword.equals("null") && !viewcount.equals("null") ) { //키워드(태그) O, 조회수순
 			sql = prop.getProperty(selectDonghangKeywordViewcount);
-		}else if( !keyword.equals("null") && !nearSchedule.equals("null") ) { //키워드 O, 가까운 일정순
+		}else if( searchFilter.equals("searchKeyword") && !keyword.equals("null") && !nearSchedule.equals("null") ) { //키워드(태그) O, 가까운 일정순
 			sql = prop.getProperty(selectDonghangKeywordNearSchedule);
 		}else if( keyword.equals("null") && !recent.equals("null") ) { //키워드 X, 최근순
 			sql = prop.getProperty(selectDonghangRecent);
@@ -248,8 +260,10 @@ public class DonghangDao {
 			sql = prop.getProperty(selectDonghangViewcount);
 		}else if( keyword.equals("null") && !nearSchedule.equals("null") ) { //키워드 X, 가까운 일정순
 			sql = prop.getProperty(selectDonghangNearSchedule);
-		}else if( !keyword.equals("null") && recent.equals("null") && viewcount.equals("null") && nearSchedule.equals("null")) {
-			sql = prop.getProperty(selectDonghangKeywordRecent); //검색만 했을 때! (기본 최신순 정렬)
+		}else if( searchFilter.equals("searchLocal")  && !keyword.equals("null") && recent.equals("null") && viewcount.equals("null") && nearSchedule.equals("null")) {
+			sql = prop.getProperty(selectDonghangLocalRecent); // 지역검색만 했을 때! (기본 최신순 정렬)
+		}else if( searchFilter.equals("searchKeyword")  && !keyword.equals("null") && recent.equals("null") && viewcount.equals("null") && nearSchedule.equals("null")) {
+			sql = prop.getProperty(selectDonghangKeywordRecent); // 키워드검색만 했을 때! (기본 최신순 정렬)
 		}else {
 			sql = prop.getProperty(selectDonghangPage);
 		}
@@ -295,13 +309,15 @@ public class DonghangDao {
 		return result;
 	}
 	
-	public int selectDonghangCount(Connection conn, String keyword) {
+	public int selectDonghangCount(Connection conn, String keyword, String searchFilter) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "";
 		
 		if(keyword.equals("null")) {			
 			sql = prop.getProperty(selectDonghangCount);
+		} else if(searchFilter.equals("searchLocal")) {
+			sql = prop.getProperty(selectDonghangLocalCount);
 		} else {
 			sql = prop.getProperty(selectDonghangKeywordCount);
 		}
@@ -636,5 +652,63 @@ public class DonghangDao {
 			close(pstmt);	
 		}
 		return result;
+	}
+
+	public int donghangJoin(Connection conn, DonghangJoin join) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("donghangJoin");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, join.getUserNo());
+			pstmt.setInt(2, join.getDonghangNo());
+			pstmt.setString(3, join.getContent());
+			pstmt.setString(4, "J");
+			pstmt.setString(5, "N");
+			pstmt.setString(6, "N");
+			pstmt.setString(7, "N");
+						
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);	
+		}
+		return result;
+	}
+
+	public DonghangJoin selectUserDonghangJoin(Connection conn, int no, int loginUserNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty(selectUserDonghangJoin);
+		DonghangJoin userJoinTb = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			pstmt.setInt(2, loginUserNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				userJoinTb = new DonghangJoin();
+				userJoinTb.setNo(rs.getInt("NO"));
+				userJoinTb.setUserNo(rs.getInt("USER_NO"));
+				userJoinTb.setDonghangNo(rs.getInt("DONGHANG_NO"));
+				userJoinTb.setContent(rs.getString("CONTENT"));
+				userJoinTb.setConfirmed(rs.getString("CONFIRMED"));
+				userJoinTb.setCancled(rs.getString("CANCLED"));
+				userJoinTb.setReported(rs.getString("REPORTED"));
+				userJoinTb.setDeleted(rs.getString("DELETED"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return userJoinTb;
 	}
 }

@@ -260,7 +260,7 @@ footer {
 						<%
 							for (int i = 0; i < dayList.size(); i++) {
 						%>
-						<a href="#" class="dropdown-item"><%=dayList.get(i)%>일차</a>
+						<a href="javascript:void(0)" class="dropdown-item"><%=dayList.get(i)%>일차</a>
 						<%
 							}
 						%>

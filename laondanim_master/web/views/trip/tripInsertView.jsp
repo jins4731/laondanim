@@ -53,48 +53,48 @@
 	
 	
 	
-	List<Tripinfo> tripinfoList= new ArrayList();
-	tripinfoList.add(new Tripinfo(1,"맛집","# tag","김밥천국1","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"맛집","# tag","김밥천국2","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"맛집","# tag","김밥천국3","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"맛집","# tag","김밥천국4","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"맛집","# tag","김밥천국5","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"맛집","# tag","김밥천국6","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"맛집","# tag","김밥천국7","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"맛집","# tag","김밥천국8","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"맛집","# tag","김밥천국9","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"맛집","# tag","김밥천국10","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"맛집","# tag","김밥천국11","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	List<Tripinfo> matzipList= new ArrayList();
+	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국1","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국2","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국3","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국4","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국5","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국6","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국7","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국8","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국9","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국10","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국11","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
 	
 	
 	
-	
-	tripinfoList.add(new Tripinfo(1,"명소","# tag","남산타워1","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"명소","# tag","남산타워2","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"명소","# tag","남산타워3","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"명소","# tag","남산타워4","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"명소","# tag","남산타워5","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"명소","# tag","남산타워6","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"명소","# tag","남산타워7","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"명소","# tag","남산타워8","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"명소","# tag","남산타워9","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"명소","# tag","남산타워10","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"명소","# tag","남산타워11","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	
-	
+	List<Tripinfo> myoungsoList= new ArrayList();
+	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워1","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워2","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워3","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워4","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워5","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워6","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워7","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워8","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워9","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워10","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워11","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
 	
 	
-	tripinfoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔1","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔2","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔3","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔4","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔5","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔6","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔7","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔8","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔9","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔10","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	tripinfoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔11","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	
+	List<Tripinfo> sooksoList= new ArrayList();
+	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔1","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔2","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔3","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔4","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔5","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔6","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔7","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔8","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔9","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔10","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
+	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔11","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
 	
 	
 	
@@ -112,14 +112,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-    <script src="../../js/bootstrap-datepicker.min.js"></script>
-    <script src="../../js/bootstrap-datepicker.ko.min.js"></script>
-    <link rel="stylesheet" href="../../css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="../../css/mdb.min.css">
-    <script src="../../js/mdb.min.js"></script>
+    <script src="<%=request.getContextPath() %>/js/bootstrap-datepicker.min.js"></script>
+    <script src="<%=request.getContextPath() %>/js/bootstrap-datepicker.ko.min.js"></script>
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mdb.min.css">
+    <script src="<%=request.getContextPath() %>/js/mdb.min.js"></script>
     <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40b8b885a553f3222dde4e5effec0d3e"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="<%=request.getContextPath() %>/js/lodash.js"></script>
     <style>
         @media screen and (min-width: 576px) {
             .container-fluid {
@@ -208,9 +209,7 @@
             <div class="col-3">
                 <div class="row dropdown justify-content-center">
                     <button type="button" id="category" name="category"
-                        class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
-                        글종류 선택
-                    </button>
+                        class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">일정</button>
                     <div class="dropdown-menu">
                         <a id="courseDropBt" href="#" class="dropdown-item">일정</a>
                         <a id="reviewDropBt" href="#" class="dropdown-item">후기</a>
@@ -225,7 +224,7 @@
                 <div class="row align-items-center justify-content-end">
                     <label for="publicEnabled" class="mb-1">공개</label>
                     <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="publicEnabled" name="publicEnabled">
+                        <input type="checkbox" class="custom-control-input" id="publicEnabledId" name="publicEnabled">
                         <label for="publicEnabled" class="custom-control-label"></label>
                     </div>
                 </div>
@@ -247,13 +246,13 @@
 
                         <div class="row form-group mb-0 ">
                             <span class="col-3 pt-1 font-weight-bold">여행지역</span>
-                            <input class="col-6" type="text" id="user"
+                            <input class="col-6" type="text" id="travleLocale"
                                 class="form-control border-top-0 border-left-0 border-right-0 " name="title" id="title"
-                                placeholder="여행기 제목을 입력해주세요.">
+                                placeholder="여행지역을 입력해주세요.">
                         </div>
                         <div class="row form-group mb-0">
                             <span class="col-3 pt-1 font-weight-bold">인원 수</span>
-                            <input class="col-6" type="number" id="user"
+                            <input class="col-6" type="number" id="peopleNum"
                                 class="form-control border-top-0 border-left-0 border-right-0 " name="peopleNum"
                                 id="peopleNum" placeholder="인원수를 입력해주세요." autocomplete="off" min=0>
                         </div>
@@ -261,18 +260,18 @@
                     <div class="col">
                         <div class="row form-group mb-0">
                             <span class="col-3 pt-1 font-weight-bold">여행유형</span>
-                            <input class="col-6" type="text" id="user"
+                            <input class="col-6" type="text" id="travleType"
                                 class="form-control border-top-0 border-left-0 border-right-0 " name="travleType"
                                 id="travleType" placeholder="여행유형을 입력해주세요.">
                         </div>
                         <div class="row form-group mb-0">
                             <span class="col-3 pt-1 font-weight-bold">여행일</span>
-                            <input class="col-3 p-0" type="text" id="travleStartDate"
+                            <input class="col-3 p-0" type="text"
                                 class="form-control border-top-0 border-left-0 border-right-0 " data-date="datePicker"
-                                name="travleStartDate" id="travleStartDate" placeholder="여행시작일 입력">
-                            <input class="col-3 p-0" type="text" id="travleEndDate"
+                                name="travleStartDate" id="travleStartDateId" placeholder="여행시작일 입력">
+                            <input class="col-3 p-0" type="text"
                                 class="form-control border-top-0 border-left-0 border-right-0 " data-date="datePicker"
-                                name="travleEndDate" id="travleEndDate" placeholder="여행종료일 입력">
+                                name="travleEndDate" id="travleEndDateId" placeholder="여행종료일 입력">
                         </div>
                     </div>
                 </div>
@@ -292,105 +291,114 @@
             <div class="row mx-1" style="height: 200px;">
 
 
-                <div class="col d-flex bg-info my-2 align-items-center" style="height: auto; width: 50px;">
+                <div class="col p-0 d-flex my-2 align-items-center view overlay zoom"
+                    style="height: auto; width: 50px;">
                     <a href="javascript:void(0)" id="tripinfoPrevBt">
-                        <span class="carousel-control-prev-icon" style="width: 50px;height: 50px;"></span>
+                        <img class="" src="<%=request.getContextPath()%>/picture/trip/icon/leftArrow.png"
+                            style="width: 50px;height: 50px;"></img>
                     </a>
                 </div>
 
 
-                <div class="col-11 text-nowrap overflow-hidden" style="height: 200px;">
+                <div class="col-11 d-flex align-items-center overflow-hidden p-0 " style="height: 200px;">
 
-                    <div id="mindSlider" class=" " style="transition: all 1.15s ease-in-out;height: 200px;">
+                    <!-- 찜 목록 -->
+                    <div id="mindSlider" class="d-block text-nowrap"
+                        style="transition: all 1.15s ease-in-out;height: 172px;">
 
-                        <div id="tripinfoItem1" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
-                            style="height: 170px; width: 170px;">
-                            <img name="pepe"  id="pepe1"
+
+
+                        <%for(int i=0;i<matzipList.size();i++){ //맛집
+                            Tripinfo info = matzipList.get(i);
+                            String category = info.getCategory();
+                            String tag = info.getTag();
+                            String name = info.getName();
+                            String address = info.getAddress();
+                            String businessHours = info.getBusinessHours();
+                            String tel = info.getTel();
+                            String homepage = info.getHomepage();
+                            String naver = info.getNaver();
+                            String sns = info.getSns();
+							
+						%>
+
+                        <div id="matzipItem<%=i %>" name="matzipItem" class="d-inline-block view zoom"
+                            ondrop="drop(event)" ondragover="dragover(event)"
+                            style="height: 170px; width: 170px;position: relative;">
+                            <img id="matzipImg<%=i %>" name="matzipImg" class="d-block " data-category="<%=category %>"
+                                data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
+                                data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
+                                data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
                                 src="https://image.chosun.com/sitedata/image/201705/08/2017050801699_0.jpg"
-                                draggable="true" ondragstart="dragstart(event)" alt="">
+                                draggable="true" ondragstart="dragstart(event)" alt=""
+                                style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
+                            <div class="mask flex-center rgba-black-strong"
+                                style="width: 100%;height: 30px;z-index: 1;">
+                                <p class="white-text"><%=name%></p>
+                            </div>
+                        </div>
 
-                        </div>
-                        <div id="tripinfoItem2" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
-                             style="height: 170px; width: 170px;">
-                            <img name="pepe"  id="pepe2"
-                                src="https://pbs.twimg.com/profile_images/814761853372895232/IXujsP7W_400x400.jpg"
-                                draggable="true" ondragstart="dragstart(event)" alt="">
-                        </div>
-                        <div id="tripinfoItem3" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
-                             style="height: 170px; width: 170px;">
-                            <img name="pepe"  id="pepe3" name="pepe"
-                                src="https://i.pinimg.com/236x/11/b4/45/11b4457b49ac98ab10f7cd66afe4423e.jpg"
-                                draggable="true" ondragstart="dragstart(event)" alt="">
+                        <%} %>
+                        <%for(int i=0;i<myoungsoList.size();i++){ // 명소
+                            Tripinfo info = myoungsoList.get(i);
+                            String category = info.getCategory();
+                            String tag = info.getTag();
+                            String name = info.getName();
+                            String address = info.getAddress();
+                            String businessHours = info.getBusinessHours();
+                            String tel = info.getTel();
+                            String homepage = info.getHomepage();
+                            String naver = info.getNaver();
+                            String sns = info.getSns();
+						%>
 
+                        <div id="myoungsoItem<%=i %>" name="myoungsoItem" class="d-none view  zoom" ondrop="drop(event)"
+                            ondragover="dragover(event)" style="height: 170px; width: 170px;position: relative;">
+                                <img id="myoungsoImg<%=i %>" name="myoungsoImg" class="d-block"
+                                    data-category="<%=category %>" data-tag="<%=tag %>" data-name="<%=name %>"
+                                    data-address="<%=address %>" data-businessHours="<%=businessHours %>"
+                                    data-tel="<%=tel %>" data-homepage="<%=homepage %>" data-naver="<%=naver %>"
+                                    data-sns="<%=sns %>"
+                                    src="https://image.chosun.com/sitedata/image/201705/08/2017050801699_0.jpg"
+                                    draggable="true" ondragstart="dragstart(event)" alt=""
+                                    style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
+                                <div class="mask flex-center rgba-black-strong"
+                                    style="width: 100%;height: 30px;z-index: 1;">
+                                    <p class="white-text"><%=name%></p>
+                                </div>
                         </div>
-                        <div id="tripinfoItem4" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
-                            style="height: 170px; width: 170px;">
-                            <img name="pepe"  id="pepe4"
-                                src="https://t1.daumcdn.net/cfile/tistory/213D9D48587060432F" draggable="true"
-                                ondragstart="dragstart(event)" alt="">
 
-                        </div>
-                        <div id="tripinfoItem5" class="d-inline-block" ondrop="drop(event)" ondragover="dragover(event)"
-                             style="height: 170px; width: 170px;">
-                            <img name="pepe"  id="pepe5"
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKM3FyepNFfAxawu2e7pT313mRDvi88oA0O0FK1ukWqA-diMTY&usqp=CAU"
-                                draggable="true" ondragstart="dragstart(event)" alt="">
+                        <%} %>
+                        <%for(int i=0;i<sooksoList.size();i++){  //숙소
+                            Tripinfo info = sooksoList.get(i);
+                            String category = info.getCategory();
+                            String tag = info.getTag();
+                            String name = info.getName();
+                            String address = info.getAddress();
+                            String businessHours = info.getBusinessHours();
+                            String tel = info.getTel();
+                            String homepage = info.getHomepage();
+                            String naver = info.getNaver();
+                            String sns = info.getSns();
+							
+						%>
 
-                        </div>
-                        <div id="tripinfoItem6" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
-                             style="height: 170px; width: 170px;">
-                            <img name="pepe"  id="pepe6"
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR0wSpI9Eo22g8lDmchzByOjco2SOLT4F31C9clAYL_k8Bp6ytB&usqp=CAU"
-                                draggable="true" ondragstart="dragstart(event)" alt="">
-
-                        </div>
-                        <div id="tripinfoItem1" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
-                            style="height: 170px; width: 170px;">
-                            <img name="pepe"  id="pepe1"
+                        <div id="sooksoItem<%=i %>" name="sooksoItem" class="d-none view  zoom" ondrop="drop(event)"
+                            ondragover="dragover(event)" style="height: 170px; width: 170px;position: relative;">
+                            <img id="sooksoImg<%=i %>" name="sooksoImg" class="d-block" data-category="<%=category %>"
+                                data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
+                                data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
+                                data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
                                 src="https://image.chosun.com/sitedata/image/201705/08/2017050801699_0.jpg"
-                                draggable="true" ondragstart="dragstart(event)" alt="">
-
+                                draggable="true" ondragstart="dragstart(event)" alt=""
+                                style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
+                            <div class="mask flex-center rgba-black-strong"
+                                style="width: 100%;height: 30px;z-index: 1;">
+                                <p class="white-text"><%=name%></p>
+                            </div>
                         </div>
-                        <div id="tripinfoItem2" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
-                             style="height: 170px; width: 170px;">
-                            <img name="pepe"  id="pepe2"
-                                src="https://pbs.twimg.com/profile_images/814761853372895232/IXujsP7W_400x400.jpg"
-                                draggable="true" ondragstart="dragstart(event)" alt="">
-                        </div>
-                        <div id="tripinfoItem3" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
-                             style="height: 170px; width: 170px;">
-                            <img name="pepe"  id="pepe3" name="pepe"
-                                src="https://i.pinimg.com/236x/11/b4/45/11b4457b49ac98ab10f7cd66afe4423e.jpg"
-                                draggable="true" ondragstart="dragstart(event)" alt="">
 
-                        </div>
-                        <div id="tripinfoItem4" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
-                            style="height: 170px; width: 170px;">
-                            <img name="pepe"  id="pepe4"
-                                src="https://t1.daumcdn.net/cfile/tistory/213D9D48587060432F" draggable="true"
-                                ondragstart="dragstart(event)" alt="">
-
-                        </div>
-                        <div id="tripinfoItem5" class="d-inline-block" ondrop="drop(event)" ondragover="dragover(event)"
-                             style="height: 170px; width: 170px;">
-                            <img name="pepe"  id="pepe5"
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKM3FyepNFfAxawu2e7pT313mRDvi88oA0O0FK1ukWqA-diMTY&usqp=CAU"
-                                draggable="true" ondragstart="dragstart(event)" alt="">
-
-                        </div>
-                        <div id="tripinfoItem6" class="d-inline-block " ondrop="drop(event)" ondragover="dragover(event)"
-                             style="height: 170px; width: 170px;">
-                            <img name="pepe"  id="pepe6"
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR0wSpI9Eo22g8lDmchzByOjco2SOLT4F31C9clAYL_k8Bp6ytB&usqp=CAU"
-                                draggable="true" ondragstart="dragstart(event)" alt="">
-
-                        </div>
-                        
-                        
-
-                        
-
-
+                        <%} %>
 
 
                     </div>
@@ -399,75 +407,61 @@
 
 
 
-
-
-
-                <div class="col d-flex bg-info my-2 align-items-center" style="height: auto; width: 50px;">
+                <div class="col p-0 d-flex my-2 align-items-center view overlay zoom"
+                    style="height: auto; width: 50px;">
                     <a href="javascript:void(0)" id="tripinfoNextBt">
-                        <span class="carousel-control-next-icon" style="width: 50px;height: 50px;"></span>
+                        <img class="" src="<%=request.getContextPath()%>/picture/trip/icon/rightArrow.png"
+                            style="width: 50px;height: 50px;"></img>
                     </a>
                 </div>
+
+
             </div>
 
             <div class="row mx-1 justify-content-center">
                 <span>아이템을 선택해 일정을 추가하세요.</span>
             </div>
 
+
+            <!-- 일차 추가 -->
             <div class="row mx-1" style="height: 50px;">
                 <div class="d-flex bg-primary rounded-pill justify-content-center align-items-center"
-                    style="height: 100%;width: 60px;">
-                    <span class="" style="width: auto;height: auto;">1일차</span>
+                    style="height: 100%;width: 60px;cursor: pointer;" data-save="1" onclick="dayBt(event)">
+                    <span class="" style="width: auto;height: auto;" data-save="1">1일차</span>
                 </div>
-                <div class=" d-flex ml-2 bg-success rounded-pill justify-content-center align-items-center"
-                    style="height: auto;width: 60px;">
-                    <a href="javascript:void(0)" class="font-weight-bold" id="dayPlusBt">+</a>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-
-                </div>
-                <div class="col-11">
-                    <div class="row">
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
-                            onclick="scheduleItemBt()" data-save="1" class="col bg-danger" style="height: 100px;"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
-                            onclick="scheduleItemBt()" data-save="2" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
-                            onclick="scheduleItemBt()" data-save="3" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
-                            onclick="scheduleItemBt()" data-save="4" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
-                            onclick="scheduleItemBt()" data-save="5" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
-                            onclick="scheduleItemBt()" data-save="6" data-save="1" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
-                            onclick="scheduleItemBt()" data-save="7" class="col bg-info">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
-                            onclick="scheduleItemBt()" data-save="8" class="col bg-danger" style="height: 100px;"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
-                            onclick="scheduleItemBt()" data-save="9" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
-                            onclick="scheduleItemBt()" data-save="10" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
-                            onclick="scheduleItemBt()" data-save="11" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
-                            onclick="scheduleItemBt()" data-save="12" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
-                            onclick="scheduleItemBt()" data-save="13" class="col"></div>
-                        <div name="schedule-item" ondrop="drop(event)" ondragover="dragover(event)"
-                            onclick="scheduleItemBt()" data-save="14" class="col bg-info">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
+                <div class=" d-flex ml-2 bg-success rounded-pill justify-content-center align-items-center font-weight-bold"
+                    style="height: auto;width: 60px;cursor: pointer;" id="dayPlusBt">
+                    +
                 </div>
             </div>
+
+
+            <!-- 스케줄 추가 -->
+            <div id="dayContainer" class="col p-0 mx-1">
+
+                <div id="day1" name="day" data-save="1" class="row mx-1" id="schduleContainer">
+                
+               
+
+
+                    <div class="col-12 ">
+    
+                        <div class="border-danger d-inline-block"
+                            style="margin-right: 7rem ;width: 100px;height: 100px;background-size: contain; background-image: url(<%=request.getContextPath()%>/picture/trip/icon/start.png)">
+                        </div>
+    
+                        <div class="border-danger mr-2 d-inline-block"
+                            style=" width: 100px;height: 100px;position: relative;background-size: contain ;background-image: url(<%=request.getContextPath()%>/picture/trip/icon/rectangle.png);"
+                            ondrop="drop(event)" ondragover="dragover(event)">
+                        </div>
+    
+                    </div>
+    
+                  
+                </div>
+
+            </div>
+            
 
 
 
@@ -498,9 +492,9 @@
                 transform: translate(-50%,-50%);z-index: 1;"
                             class="d-inline-flex  view overlay zoom p-1 img-fluid align-items-center justify-content-center">
 
-                            <img src="../../picture/trip/plus.png" alt=""
+                            <img src="<%=request.getContextPath() %>/picture/trip/plus.png" alt=""
                                 style="object-fit: contain;width: 100%;height: 100%;">
-                            <input type="file" id="image" name="image" multiple="true" accept="image/jpg, image/png"
+                            <input type="file" id="image" name="image" multiple accept="image/jpg,image/png"
                                 style="width: 100%;height: 100%;position: absolute;" form="formId">
                         </div>
 
@@ -552,6 +546,68 @@
 
     <footer class="container-fluid"></footer>
 
+
+
+
+
+
+    <!-- 템플릿 -->
+    <div id="template" class="d-none">
+
+
+
+
+
+
+        <!-- 이동방법, 소요시간 -->
+        <div name="tranport" class="col p-0" style="width: 70px;">
+            <input type="number" min="0" class="font-smaller" placeholder="분" style="width: 70px;">
+            <div name="transportDropdown" class="row dropdown justify-content-center">
+                <button name="dropdownBt" class="d-block p-0 btn btn-indigo dropdown-toggle font-small"
+                    style="width: 70px;" data-toggle="dropdown">도보
+                </button>
+                <div name="dropdownMenu" class="dropdown-menu">
+                    <a href="javascript:void(0)" onclick="dropdownItemBt(event)" class="dropdown-item ">도보</a>
+                    <a href="javascript:void(0)" onclick="dropdownItemBt(event)" class="dropdown-item font-small">버스</a>
+                    <a href="javascript:void(0)" onclick="dropdownItemBt(event)"
+                        class="dropdown-item font-small">지하철</a>
+                    <a href="javascript:void(0)" onclick="dropdownItemBt(event)" class="dropdown-item font-small">기차</a>
+                    <a href="javascript:void(0)" onclick="dropdownItemBt(event)" class="dropdown-item font-small">배</a>
+                    <a href="javascript:void(0)" onclick="dropdownItemBt(event)"
+                        class="dropdown-item font-small">비행기</a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 일정추가 아이템 -->
+        <div name="addSchedule" class="border-danger mr-2 d-inline-block"
+            style="margin-left: 7rem; width: 100px;height: 100px;position: relative;background-size: contain ;background-image: url(<%=request.getContextPath()%>/picture/trip/icon/rectangle.png);"
+            ondrop="drop(event)" ondragover="dragover(event)"></div>
+
+
+
+
+            <!-- 일차 추가 -->
+            <div id="dayTemple" class="row mx-1" id="schduleContainer">
+
+                <div class="col-11 ">
+
+                    <div class="border-danger d-inline-block"
+                        style="margin-right: 7rem ;width: 100px;height: 100px;background-size: contain; background-image: url(<%=request.getContextPath()%>/picture/trip/icon/start.png)">
+                    </div>
+                    
+                    <div class="border-danger mr-2 d-inline-block"
+                        style=" width: 100px;height: 100px;position: relative;background-size: contain ;background-image: url(<%=request.getContextPath()%>/picture/trip/icon/rectangle.png);"
+                        ondrop="drop(event)" ondragover="dragover(event)">
+                    </div>
+
+                </div>
+               
+            </div>
+
+
+    </div>
     <style>
         #dd {
             transform: translateX(-200px);
@@ -575,16 +631,46 @@
 
         var dayCount = 1;
         $("#dayPlusBt").on("click", function (event) {
+
             console.log("dayPlusBt");
             var span = $('<span class="" style="width: auto;height: auto;"></span>')
             var a = $('<a href="javascript:void(0)" class="text-light" name="dayDelBt" onclick="dayDelBt(event)">x</a>');
             dayCount++;
             span.html(dayCount + "일차");
-            var div = $('<div class="d-flex ml-2 bg-primary rounded-pill justify-content-center align-items-center" style="height: 100%;width: 60px;"></div>');
+            span[0].dataset.save = dayCount;
+            var div = $('<div class="d-flex ml-2 bg-primary rounded-pill justify-content-center align-items-center" style="height: 100%;width: 60px;cursor: pointer;" onclick="dayBt(event)"></div>');
             div.append(span).append(a);
-            $(event.target).parent().before(div);
+            div.data("save",dayCount);
+            $(event.target).before(div);
+
+            var daytemple = $("#dayTemple").clone();
+            daytemple.attr("id","day"+dayCount);
+            daytemple.attr("name","day");
+            daytemple[0].dataset.save = dayCount;
+            daytemple.addClass("d-none");
+            $("#dayContainer").append(daytemple.clone());
 
         });
+
+        function dayBt(event){
+            console.log("dayBt : " + $(event.target)[0]);
+            console.log("dayCount : " + $(event.target).data("save"));
+            console.log("dayBt Length : " +  $("[name='day']").length);
+            var dayLength = $("[name='day']").length;
+            console.log("eventTargetSave : " + event.target.dataset.save);
+            for(let i = 0 ;i<dayLength;i++){
+                console.log("[name='day']Save : " + $("[name='day']")[i].dataset.save);
+                if($("[name='day']")[i].dataset.save == event.target.dataset.save){
+                    $($("[name='day']")[i]).removeClass("d-none");
+                }else{
+                    $($("[name='day']")[i]).addClass("d-none");
+                }
+               
+                
+                
+            }
+           
+        }
 
         function dayDelBt(e) {
             console.log("dayDelBt");
@@ -608,44 +694,69 @@
         });
 
 
+
+
+
+
+
+
         var sliderSize = 1182.5;
         var prevNextClickCount = 0;
         $("#tripinfoPrevBt").on("click", function (e) {
             console.log("tripinfoPrevBt");
-            prevNextClickCount++;
+            if (prevNextClickCount + 1 <= 0) {
+                prevNextClickCount++;
+            }
+
             $("#mindSlider").css("transform", "translateX(" + (sliderSize * prevNextClickCount) + "px)");
 
         });
+
+        var matzipLength = $("[name='matzipItem']").length;
+        var myoungsoLength = $("[name='myoungsoItem']").length;
+        var sooksoLength = $("[name='sooksoItem']").length;
+        var correctionCount = 0;
+        console.log("matzipLength : " + matzipLength + " myoungsoLength : " + myoungsoLength + " sooksoLength : " + sooksoLength);
         $("#tripinfoNextBt").on("click", function (e) {
             console.log("tripinfoNextBt");
-            prevNextClickCount--;
+            if (isWhereSelected == 0) { // 맛집
+                correctionCount = (matzipLength * 172) / 1182;
+                if (-correctionCount <= prevNextClickCount - 1) {
+                    prevNextClickCount--;
+                }
+            } else if (isWhereSelected == 1) { // 명소
+                correctionCount = (myoungsoLength * 172) / 1182;
+                if (-correctionCount <= prevNextClickCount - 1) {
+                    prevNextClickCount--;
+                }
+            } else if (isWhereSelected == 2) { // 숙소
+                correctionCount = (sooksoLength * 172) / 1182;
+                if (-correctionCount <= prevNextClickCount - 1) {
+                    prevNextClickCount--;
+                }
+            }
+
             $("#mindSlider").css("transform", "translateX(" + (sliderSize * prevNextClickCount) + "px)");
 
         });
-        $("#tripinfoItem1").on("click", function (e) {
-            console.log("tripinfoItem1");
+
+
+        $("[name='matzipItem']").on("click", function (event) {
+            console.log(event.target);
+        });
+        $("[name='myoungsoItem']").on("click", function (event) {
+            console.log(event.target);
 
         });
-        $("#tripinfoItem2").on("click", function (e) {
-            console.log("tripinfoItem2");
+        $("[name='sooksoItem']").on("click", function (event) {
+            console.log(event.target);
 
         });
-        $("#tripinfoItem3").on("click", function (e) {
-            console.log("tripinfoItem3");
 
-        });
-        $("#tripinfoItem4").on("click", function (e) {
-            console.log("tripinfoItem4");
 
-        });
-        $("#tripinfoItem5").on("click", function (e) {
-            console.log("tripinfoItem5");
 
-        });
-        $("#tripinfoItem6").on("click", function (e) {
-            console.log("tripinfoItem6");
 
-        });
+
 
         $("#tag").on("keyup", function (e) {
             console.log("tag : " + e.keyCode);
@@ -664,22 +775,49 @@
         });
 
 
-        function drop(event) {
+
+        function drop(event) { // 드래그 해서 놓았을때
             console.log("ondrop");
             event.preventDefault();
-            var data = event.dataTransfer.getData("text");
-            event.target.appendChild(document.getElementById(data));
+            const div = $(event.target)[0];
+            var data = event.dataTransfer.getData("itemId");
+
+            var itemClone = $("#" + data).clone(); // 이미지
+            console.log(itemClone);
+            itemClone.attr("name","schedule"+itemClone.attr("name"));
+            $(itemClone).css({
+                width: "100px",
+                height: "100px"
+            });
+            div.appendChild(itemClone.clone()[0]);
+            var trantport = $("[name='tranport']").clone(); // 교통편, 이동시간
+            var input = trantport.find("input");
+            input.val(0);
+            input.val(null);
+            var button = trantport.find("button");
+            button.html("도보");
+            trantport.css({
+                position: "absolute",
+                top: "25px",
+                left: "-90px"
+            });
+            div.appendChild(trantport[0]);
+            var addSchedule = $("[name='addSchedule']")[0].cloneNode()// 아이템 추가 공간 생성
+            event.target.after(addSchedule);
+            
+
         }
 
-        function dragover(event) {
+        function dragover(event) { // 드래그 해서 위해 호버되었을때
             console.log("ondragover");
             event.preventDefault();
 
 
         }
-        function dragstart(event) {
+        function dragstart(event) { // 드래그 할 아이템을 움직이기 시작했을때
             console.log("ondragstart");
-            event.dataTransfer.setData("text", event.target.id);
+            event.dataTransfer.setData("itemId", $(event.target).parent()[0].id);
+            console.log("itemId : " + $(event.target).parent()[0].id);
 
         }
 
@@ -689,19 +827,55 @@
             $(event.target).parent().remove();
         }
 
-
+        var isWhereSelected = 0;
         function matzipBt() {
             console.log("matzipBt");
+            $("[name='matzipItem']").removeClass("d-none");
+            $("[name='matzipItem']").addClass("d-inline-block");
 
+            $("[name='myoungsoItem']").removeClass("d-inline-block");
+            $("[name='myoungsoItem']").addClass("d-none");
+
+            $("[name='sooksoItem']").removeClass("d-inline-block");
+            $("[name='sooksoItem']").addClass("d-none");
+            isWhereSelected = 0;
+            $("#mindSlider").css("transform", "translateX(0px)");
         }
         function myoungsoBt() {
             console.log("myoungsoBt");
+            $("[name='matzipItem']").removeClass("d-inline-block");
+            $("[name='matzipItem']").addClass("d-none");
+
+            $("[name='myoungsoItem']").removeClass("d-none");
+            $("[name='myoungsoItem']").addClass("d-inline-block");
+
+            $("[name='sooksoItem']").removeClass("d-inline-block");
+            $("[name='sooksoItem']").addClass("d-none");
+            isWhereSelected = 1;
+            $("#mindSlider").css("transform", "translateX(0px)");
         }
         function sooksoBt() {
             console.log("sooksoBt");
+            $("[name='matzipItem']").removeClass("d-inline-block");
+            $("[name='matzipItem']").addClass("d-none");
+
+            $("[name='myoungsoItem']").removeClass("d-inline-block");
+            $("[name='myoungsoItem']").addClass("d-none");
+
+            $("[name='sooksoItem']").removeClass("d-none");
+            $("[name='sooksoItem']").addClass("d-inline-block");
+            isWhereSelected = 2;
+            $("#mindSlider").css("transform", "translateX(0px)");
         }
         function myBt() {
             console.log("myBt");
+        }
+
+        function dropdownItemBt(event) {
+            console.log("dropdownBt");
+            $(event.target).parent().prev().html($(event.target).html());
+            
+
         }
 
 
@@ -709,17 +883,27 @@
         $("#submitBt").on("click", function () {
             console.log("submitBt");
             var _userNo = "";
-            var _category = $("#category");
-            var _writeDate = $("#writeDate");
-            var _tag = $("#tag");
-            var _title = $("#title");
-            var _content = $("#content");
+            var _category = $("#category").html(); // 확인
+            // var _writeDate = $("#writeDate");  
+            var _tag = ""; 
+            for(let i =0;i<$("[name='tag']").length;i++){
+                _tag += $($("[name='tag']")[0]).val() + ",";
+            }
+            _tag = _tag.substr(0,_tag.length-1);
+
+            var _title = $("#title").val();
+            var _content = $("#content").html();
             var _travleLocale = $("#travleLocale");
             var _peopleNum = $("#peopleNum");
             var _travleType = $("#travleType");
             var _travleStartDate = $("#travleStartDate");
             var _travleEndDate = $("#travleEndDate");
             var _publicEnabled = $("#publicEnabled");
+
+
+            for(let i = 0;i<$("[name='day']").length;i++){
+
+            }
 
 
             var _tripinfoNo = $("#category");
@@ -734,7 +918,7 @@
             var trip = {
                 user: _userNo,
                 category: _category,
-                writeDate: _writeDate,
+                // writeDate: _writeDate,
                 tag: _tag,
                 title: _title,
                 content: _content,
@@ -755,6 +939,13 @@
                 requiredHours: _requiredHours,
                 transport: _transport,
             }
+
+
+
+
+
+
+
         });
 
 
@@ -774,7 +965,7 @@
             return fileTypes.includes(file.type);
         }
         function returnFileSize(number) {
-            if (number < 1024) {
+            if (number < 10) {
                 return number + 'bytes';
             } else if (number >= 1024 && number < 1048576) {
                 return (number / 1024).toFixed(1) + 'KB';

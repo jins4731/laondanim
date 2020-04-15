@@ -32,8 +32,9 @@
 	int totalRowNum = (int)request.getAttribute(CommonKey.TOTAL_ROWCOUNT);
 %>
 
+   	<div style="height: 170px;"></div>
     <section class="d-flex flex-row justify-content-center">
-        <div style="width: 1366px;" class="border pt-5 pb-5">
+        <div style="width: 1366px;" class="pt-5 pb-5">
 
 
         <!--검색창-->
@@ -41,8 +42,8 @@
             <div id="searchDIV" class="d-flex justify-content-center align-items-center m-5">
                 <select class="form-control border-0 rounded-0" name="searchFilter" id="searchFilter">
                     <!-- <option value="">전체 검색</option> -->
-                    <option value="">지역검색</option>
-                    <option value="">키워드 검색</option>                    
+                    <option value="searchLocal">지역검색</option>
+                    <option value="searchKeyword">키워드 검색</option>                    
                 </select>
                 <input type="text" id="keyword" name="keyword" class="pl-2" 
                 <%if(!keyword.equals("null")){ %>value='<%=keyword%>'
@@ -116,7 +117,7 @@
             <div class="d-flex justify-content-end align-items-end" style="width: 1140px;">
                 <button class="btn btn-lg btn-outline-secondary d-flex align-items-end justify-content-center mt-3 mb-3" 
                         onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangWrite.do?userNo=<%=loginUser.getNo()%>')" id="dhWriteBtn">
-                    <p class="m-0">다님길 작성</p>                    
+                    <p class="m-0">동행찾기 작성</p>                    
                     <img src="<%=request.getContextPath()%>/image/write_icon.png" class="ml-2 w-25">
                 </button>            
             </div>
@@ -366,6 +367,13 @@
     
     <!-- INPUT SCRIPT -->
     <script>
+		//셀렉트 옵션 값 받기
+		let searchFilter = $("#searchFilter option:selected").val();
+		$("#searchFilter").change(()=>{
+			searchFilter = $("#searchFilter option:selected").val();
+			alert(searchFilter);
+		});
+		
     	//1) 검색텍스트를 넣고 버튼을 늘릭 했을 때 (검색어만 있고 최근순default)
 		$("#inputKeywordBtn").click(()=>{
 			let keyword = $("#keyword").val();
@@ -373,7 +381,7 @@
 			if(keyword==null||keyword.trim()==""){
 					alert("검색어를 입력해주세요!");
 			}else{
-				location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword);
+				location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?searchFilter=' + searchFilter + '&keyword=' + keyword);
 			}
 		});
     	
@@ -410,6 +418,7 @@
     		let nearSchedule = 'nearSchedule';
     		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
     	});
+    	
     	
     </script>
 </section>

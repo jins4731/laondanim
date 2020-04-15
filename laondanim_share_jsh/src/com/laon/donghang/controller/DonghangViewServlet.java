@@ -15,10 +15,9 @@ import com.laon.common.DonghangKey;
 import com.laon.common.MypageKey;
 import com.laon.common.UserKey;
 import com.laon.donghang.model.service.DonghangService;
+import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.donghang.model.vo.DonghangJoinUserPicture;
 import com.laon.mypage.model.service.MypageService;
-import com.laon.user.model.service.UserService;
-import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
 /**
@@ -83,7 +82,11 @@ public class DonghangViewServlet extends HttpServlet {
 		int loginUserNo= Integer.parseInt(request.getParameter("loginUserNo"));
 		String loginUserImg = new MypageService().selectUserNo(loginUserNo).getImage();
 		
+		//로그인 유저가 해당 동행의 참여했는지 여부 가져오기
+		DonghangJoin donghangJoinItem = new DonghangService().selectUserDonghangJoin(no, loginUserNo);
+		
 		request.setAttribute(CommonKey.DONGHANG_ITEM, donghangItem);
+		request.setAttribute(CommonKey.DONGHANG_JOIN_ITEM, donghangJoinItem);
 		request.setAttribute(MypageKey.USER_IMAGE, writerImage);
 		request.setAttribute(DonghangKey.JOIN_PEOPLE, joinList);
 		request.setAttribute(UserKey.IMAGE, loginUserImg);

@@ -32,49 +32,54 @@
 <style>
 /* 헤더 푸터 값조절 */
 html,body {
-
     margin:0;
 	padding:0;
 	height:100%;
-
+	width: 100%;
 }
 header {
-
-	height:150px;
-	border: 1px solid black;
+	width: 100%;
+	height:160px;
 	display: flex;
-
-
+	position: absolute;
+	z-index:10;
+	top:0px;
+	background-color: white;
+	box-shadow: 0 0 15px #00acbfb3;
+	justify-content: center;
 }
 
+#headerDiv{
+	width: 1366px;
+	height: 100%;
+}
+#logoNav a #laonLogo{
+	width: 230px;
+	margin-top: 50px;
+}
 section {
-
+	display:flex;
+	justify-content: center;
     padding:20px;
-
 }
 
 footer {
-
   /*   position:absolute; */
 	bottom:0;
 	width:100%;
-	height:70px;   
-	background:#ccc;
+	height:100px;   
+	background:#00abbf;
     padding-top:20px;
-  	background-color:mediumaquamarine;
+	color: white;
 	clear:both;
 	text-align:center;
-
 } 
 
 /* body안의 전체를 감싸는 wrapper컨테이너 */
-.body-wrapper{
-
+/* .body-wrapper{
 	position:relative;
 	min-height:100%;
-
-}
-
+} */
 .mainTitle-container{
 	margin-top:30px;
 	margin-left:50px;
@@ -83,14 +88,7 @@ footer {
 /* 글자색 통일 */
 header a {
 	text-decoration: none;
-	color: mediumaquamarine;
-}
-
-.header-container{
-	border: 1px solid black;
-	padding-top: 70px;
-	margin-left: auto;
-	margin-right: 90px;
+	color: #00abbf;
 }
 
 header li>a {
@@ -102,7 +100,7 @@ header li>a {
 }
 
 .main-nav {
-	list-style: none;
+	list-style: none;	
 }
 
 	/* 메뉴에 마우스 커서만 올려도 드롭다운 메뉴가 자동으로 나오게 */
@@ -113,22 +111,18 @@ header li>a {
 
 </style>
 </head>
-<body>
-	<div class="body-wrapper">
+<body style="position: absolute;" >
+	<!-- <div class="body-wrapper"> -->
 	<header>
-	
-		<div class="title-container">
-			<h1>
-				<div class="mainTitle-container"><a href="" >라온다님</a></div>
-			</h1>
-		</div>	
-		<div class="header-container">
+		<div id="headerDiv" class="d-flex justify-content-center">
+			<div id="logoNav" class="d-flex flex-column justify-content-center w-100">
+				<a class="m-0 mt-2 align-items-start" href="<%=request.getContextPath()%>">
+					<img src="<%=request.getContextPath()%>/main/laonLogo.png" class="m-0 p-0" id="laonLogo">
+				</a>
 		
-			<div class="nav-container">
-				<nav class="navbar navbar-expand-sm ">
-
+				<nav class="navbar navbar-expand-sm d-flex justify-content-end">
 					<!-- Links -->
-					<ul class="navbar-nav main-nav">
+					<ul class="main-nav d-flex p-0 m-0 justify-content-center align-items-center" style="width:450px;">
 						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/trip/list.do">여행기</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">여행정보</a></li>
 						<li class="nav-item dropdown">
@@ -152,7 +146,7 @@ header li>a {
 						<!-- null 이 아닐경우  마이페이지/로그아웃 출력, -->
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> 
-							<img src="<%=request.getContextPath()%>/icon/profile_icon.png" width="50px" height="50px">
+							<img src="<%=request.getContextPath()%>/image/profile_icon.png" width="50px" height="50px" class="p-0 m-0">
 						</a>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="#">마이페이지</a> 
@@ -160,12 +154,9 @@ header li>a {
 							</div>
 						</li>
 						<%} %>
-						<li >
-							<a href="<%=request.getContextPath()%>/user/enroll.do">회원가입</a>
-						</li>
 					</ul>
-
 				</nav>
+
 			</div>
 		</div>
 	</header>

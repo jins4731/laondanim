@@ -48,6 +48,9 @@ public class DonghangListViewServlet extends HttpServlet {
 		//검색 키워드 값 가져오기 
 		String keyword = request.getParameter("keyword");
 		keyword=(keyword==null?"null":keyword);
+		// +) 키워드 카테고리 값 가져오기
+		String searchFilter = request.getParameter("searchFilter");
+		searchFilter=(searchFilter==null?"null":searchFilter);
 		//최근순 클릭 recent값
 		String recent = request.getParameter("recent");
 		recent=(recent==null?"null":recent);
@@ -63,15 +66,15 @@ public class DonghangListViewServlet extends HttpServlet {
 		
 		List<DonghangJoinUserPicture> list = new ArrayList<DonghangJoinUserPicture>();
 		//Tag를 기준으로 첫화면 이후 화면 나누면 안됨 어케 처리할까..?
-		if(userTag!=null) {
-			list = new DonghangService().selectDonghangTag(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), userTag);
-		}else {
-			list = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), keyword, recent, viewcount, nearSchedule);
-		}
+//		if(userTag!=null) {
+//			list = new DonghangService().selectDonghangTag(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), userTag);
+//		}else {
+			list = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), keyword, recent, viewcount, nearSchedule, searchFilter);
+//		}
 		
-		int totalRowCount = new DonghangService().selectDonghangCount(keyword);
+		int totalRowCount = new DonghangService().selectDonghangCount(keyword, searchFilter);
 		
-		String pageBar = new Paging().pageBar2(request.getContextPath()+"/donghang/donghangListView.do", totalRowCount, currentPage, pagePerRow, userTag, keyword, recent, viewcount, nearSchedule );
+		String pageBar = new Paging().pageBar2(request.getContextPath()+"/donghang/donghangListView.do", totalRowCount, currentPage, pagePerRow, userTag, keyword, recent, viewcount, nearSchedule, searchFilter );
 		
 		//쿼리스트링 저장
 		request.setAttribute(CommonKey.KEYWORD, keyword);
@@ -83,10 +86,10 @@ public class DonghangListViewServlet extends HttpServlet {
 		
 		request.getRequestDispatcher("/views/donghang/donghangList.jsp").forward(request, response);
 		
-		System.out.println("********************************");
-		for(DonghangJoinUserPicture dh : list) {
-			System.out.println("list : "+dh);
-		}
+//		System.out.println(userTag+keyword+recent+viewcount+nearSchedule+"********************************");
+//		for(DonghangJoinUserPicture dh : list) {
+//			System.out.println("list : "+dh);
+//		}
 	}
 
 	/**

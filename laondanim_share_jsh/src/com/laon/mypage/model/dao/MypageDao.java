@@ -52,7 +52,7 @@ public class MypageDao {
 				up.setNickName(rs.getString("nick_name"));
 				up.setBirthday(rs.getDate("birthday"));
 				up.setGender(rs.getString("gender"));
-				up.setPhone(rs.getInt("phone"));
+				up.setPhone(rs.getString("phone"));
 				up.setEmail(rs.getString("email"));
 				up.setTag(rs.getString("tag"));
 				up.setImage(rs.getString("image"));

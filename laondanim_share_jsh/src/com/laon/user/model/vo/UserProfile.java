@@ -11,7 +11,7 @@ public class UserProfile {
     private String nickName;
     private Date birthday;
     private String gender;
-    private int phone;
+    private String phone;
     private String email;
     private String tag;
     private String image;
@@ -19,7 +19,7 @@ public class UserProfile {
     public UserProfile() {}
 
 	public UserProfile(int no, Date createdDate, String userId, String password, String name, String nickName,
-			Date birthday, String gender, int phone, String email, String tag, String image) {
+			Date birthday, String gender, String phone, String email, String tag, String image) {
 		super();
 		this.no = no;
 		this.createdDate = createdDate;
@@ -99,11 +99,11 @@ public class UserProfile {
 		this.gender = gender;
 	}
 
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 

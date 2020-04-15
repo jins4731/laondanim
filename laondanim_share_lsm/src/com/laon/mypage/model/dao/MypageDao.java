@@ -603,6 +603,40 @@ public class MypageDao {
 		return tripList;
 	}
 	
+	//내가 좋아요한 여행기 리스트 전체
+	public List<TripMyCon> selectTripListAll(Connection conn,List<Like> likeT,int start,int end){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<TripMyCon> tripList=new ArrayList<TripMyCon>();
+		String sql=prop.getProperty("selectTripListAll");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			for(Like l:likeT) {
+				pstmt.setInt(1, l.getTripNo());
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					TripMyCon t=new TripMyCon();
+					t.setNo(rs.getInt("no"));
+					t.setUserTbNo(rs.getInt("user_no"));
+					t.setCategory(rs.getString("category"));
+					t.setWriteDate(rs.getDate("write_date"));
+					t.setTitle(rs.getString("title"));
+					t.setImage(rs.getString("image"));
+					tripList.add(t);
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return tripList;
+	}
+	
 	//내가 좋아요한 여행기 작성자 닉네임
 	public List<UserProfile> selectTripUserNick(Connection conn,List<TripMyCon> tl){
 		PreparedStatement pstmt=null;

@@ -164,7 +164,7 @@
 								</tr>
 							<%} %>
 							</table>
-							<div>
+							<div class="d-flex justify-content-center">
 								<%=boardPasing %>
 							</div>
 						</div>

@@ -2,7 +2,7 @@
 <%@page import="com.laon.trip.model.vo.TripMyCon"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,com.laon.etc.model.vo.*,com.laon.tripinfo.model.vo.TripinfoMyMind" %>
+<%@ page import="java.util.List,com.laon.etc.model.vo.*,com.laon.trip.model.vo.TripMyCon,com.laon.tripinfo.model.vo.TripinfoMyMind" %>
 <%
 	List<Like> likeT=(List)request.getAttribute("likeT");
 	List<TripMyCon> tripList=(List)request.getAttribute("tripList");
@@ -42,13 +42,13 @@
 					<!-- 닫힘 내용 -->
 					<div>
 						<!-- 정보 -->
-						<div id="myDNInfo">
+						<div id="myLTInfo">
 							<div style="height:45px;">
 								<span>총 <%=likeTripCount %>개의 ♥ 다님길</span>
 							</div>
 						</div>
 						<!-- 게시글위치 -->
-						<table id="dnTbl">
+						<table id="ltTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
 							<%for(TripMyCon t:tripList){ %>
 								<td class="p-1">
@@ -83,16 +83,16 @@
 							<%if(tripList.size()==4){ %>
 							<tr>
 								<td colspan="4" style="text-align: center;">
-									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myConTrip.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>
+									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myLikeTrip.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>
 								</td>
 							</tr>
 							<%} %>
 						</table>
 					</div>
 					
-					<%List restaurant=new ArrayList();
-					List lodging=new ArrayList();
-					List attraction=new ArrayList();
+					<%List<TripinfoMyMind> restaurant=new ArrayList<TripinfoMyMind>();
+					List<TripinfoMyMind> lodging=new ArrayList<TripinfoMyMind>();
+					List<TripinfoMyMind> attraction=new ArrayList<TripinfoMyMind>();
 					int resCount=0;
 					int lodCount=0;
 					int attCount=0;
@@ -132,9 +132,9 @@
 						</div>
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
-							<%-- <%for(){ %>
-								<div class="swiper-slide"><img class="card-img" src="<%=request.getContextPath()%>/views/picture/profile/<%=%>"></div>
-							<%} %> --%>
+							<%for(TripinfoMyMind res:restaurant){ %>
+								<div class="swiper-slide"><img class="card-img" src="<%=request.getContextPath()%>/views/picture/profile/<%=res.getImage()%>"></div>
+							<%} %>
 							</div>
 						
 							<!-- 네비게이션 -->
@@ -165,10 +165,9 @@
 						</div>
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
-							<%for(TripinfoMyMind tm:mindList){
-								 if(tm.getCategory().equals("숙소")){ %>
-								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/profile/<%=tm.getImage()%>"></div>
-							<%} }%>
+							<%for(TripinfoMyMind lod:lodging){ %>
+								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/profile/<%=lod.getImage()%>"></div>
+							<%} %>
 							</div>
 						
 							<!-- 네비게이션 -->
@@ -199,10 +198,9 @@
 						</div>
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
-							<%for(TripinfoMyMind tm:mindList){
-								 if(tm.getCategory().equals("명소")){ %>
-								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/profile/<%=tm.getImage()%>"></div>
-							<%} }%>
+							<%for(TripinfoMyMind att:attraction){ %>
+								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/profile/<%=att.getImage()%>"></div>
+							<%} %>
 							</div>
 						
 							<!-- 네비게이션 -->
@@ -232,16 +230,12 @@
         /* border:1px solid green; */
     }
     
-    #myDNInfo,.manuBar{
+    #myLTInfo,.manuBar{
     	display:flex;
     	justify-content: space-between;
     	margin-left: 40px;
     	margin-right: 40px;
     }
-
-	#dnCk2,.dnCk3{
-		display:none;
-	}
 	
 	#myMenuBtn{
 		text-align:center;

@@ -201,6 +201,15 @@ public class MypageService {
 		return tripList;
 	}
 	
+	//내가 좋아요한 여행기 리스트 전체
+	public List<TripMyCon> selectTripListAll(List<Like> likeT,int start,int end){
+		Connection conn=getConnection();
+		List<TripMyCon> tripList=dao.selectTripListAll(conn,likeT,start,end);
+		close(conn);
+		
+		return tripList;
+	}
+	
 	//내가 좋아요한 여행기 작성자 닉네임
 	public List<UserProfile> selectTripUserNick(List<TripMyCon> tl){
 		Connection conn=getConnection();

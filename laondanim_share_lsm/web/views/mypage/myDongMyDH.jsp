@@ -112,7 +112,7 @@
 							<%} %>
 							</tr>
 						</table>
-						<div>
+						<div class="d-flex justify-content-center">
 							<%=myDHPasing %>
 						</div>
 					</div>

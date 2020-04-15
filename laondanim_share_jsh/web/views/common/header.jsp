@@ -123,6 +123,9 @@ header li>a {
 				<nav class="navbar navbar-expand-sm d-flex justify-content-end">
 					<!-- Links -->
 					<ul class="main-nav d-flex p-0 m-0 justify-content-center align-items-center" style="width:450px;">
+						<%if(loginUser!=null) {%>
+						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>">뿅</a></li>
+						<%} %>
 						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/trip/list.do">여행기</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">여행정보</a></li>
 						<li class="nav-item dropdown">

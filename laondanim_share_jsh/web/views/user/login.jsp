@@ -120,7 +120,7 @@
 
 		<tr>
 			<td>
-			 <input type="button" class="btn btn-primary btn-block" onclick="location.replace('<%=request.getContextPath()%><%=request.getContextPath()%>/user/enroll.do')" value="회원가입">
+			 <input type="button" class="btn btn-primary btn-block" onclick="location.replace('<%=request.getContextPath()%>/user/enroll.do")" value="회원가입">
 			</td>
 		</tr>
 	</table>

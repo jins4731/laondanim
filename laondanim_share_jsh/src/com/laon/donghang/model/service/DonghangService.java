@@ -104,9 +104,9 @@ public class DonghangService {
 		return result;
 	}
 
-	public int selectDonghangSeqNextVal() {
+	public int selectDonghangSeqNextVal(int userNo, String title) {
 		Connection conn = getConnection();
-		int nextVal = dao.selectDonghangSeqNextVal(conn);
+		int nextVal = dao.selectDonghangSeqNextVal(conn, userNo, title);
 		close(conn);
 		return nextVal;
 	}
@@ -178,4 +178,26 @@ public class DonghangService {
 		close(conn);
 		return userJoinTb;
 	}
+
+	public List<Donghang> selectDonghangList(int userNo) {
+		Connection conn = getConnection();
+		List<Donghang> list = dao.selectDonghangList(conn, userNo);
+		close(conn);
+		return list;
+	}
+
+	public List<DonghangJoin> selectDonghangJoinList() {
+		Connection conn = getConnection();
+		List<DonghangJoin> list = dao.selectDonghangJoinList(conn);
+		close(conn);
+		return list;
+	}
+
+	public List<UserProfile> selectUserProfileAll() {
+		Connection conn = getConnection();
+		List<UserProfile> list = dao.selectUserProfileAll(conn);
+		close(conn);
+		return list;
+	}
+
 }

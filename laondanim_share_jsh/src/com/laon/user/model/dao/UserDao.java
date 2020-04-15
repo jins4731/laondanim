@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
+import com.laon.etc.model.vo.Picture;
 import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
@@ -273,6 +274,51 @@ public class UserDao {
 	      }
 	      return user;
 	   }
+
+	public int selectUserNo(Connection conn, String userId, String password, String email) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectUserNo");
+		int userNo = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);		
+			pstmt.setString(1, userId);
+			pstmt.setString(2, password);
+			pstmt.setString(3, email);
+
+			rs = pstmt.executeQuery();			
+			rs.next();
+			userNo = rs.getInt("NO");
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		
+		return userNo;
+	}
+
+	public int insertPicture(Connection conn, int userNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertUserPicture");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+						
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);	
+		}
+		return result;
+	}
 
 	   
 }

@@ -55,7 +55,11 @@ public class MypageDao {
 				up.setPhone(rs.getString("phone"));
 				up.setEmail(rs.getString("email"));
 				up.setTag(rs.getString("tag"));
-				up.setImage(rs.getString("image"));
+//				if(rs.getString("image")==null) {
+//					up.setImage("null");
+//				}else {
+					up.setImage(rs.getString("image"));
+//				}
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();

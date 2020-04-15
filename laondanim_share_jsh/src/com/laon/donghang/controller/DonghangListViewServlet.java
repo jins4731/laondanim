@@ -86,10 +86,6 @@ public class DonghangListViewServlet extends HttpServlet {
 		
 		request.getRequestDispatcher("/views/donghang/donghangList.jsp").forward(request, response);
 		
-//		System.out.println(userTag+keyword+recent+viewcount+nearSchedule+"********************************");
-//		for(DonghangJoinUserPicture dh : list) {
-//			System.out.println("list : "+dh);
-//		}
 	}
 
 	/**

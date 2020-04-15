@@ -94,30 +94,23 @@ public class DonghangWriteEndServlet extends HttpServlet {
 			publicEnabled = "Y";			
 		}
 		
-		Integer pw;
-		if(mr.getParameter("donghangPw")!=null) {
-			pw = Integer.parseInt(mr.getParameter("donghangPw"));
-		}else {
-			pw = null;
-		}
-		
-		int tripNo = Integer.parseInt(mr.getParameter("selectTripNo"));
+		int pw = mr.getParameter("donghangPw")==null||mr.getParameter("donghangPw").equals("")?-1:Integer.parseInt(mr.getParameter("donghangPw")); //-> 비공개인 경우 무조건 -1으로 설정
+		int tripNo = mr.getParameter("selectTripNo")==null||mr.getParameter("selectTripNo").equals("")?Integer.parseInt(mr.getParameter("selectTripNo")):-1; //null인 경우 무조건 -1로 설정
 		String content = mr.getParameter("content");
 		String tag = mr.getParameter("tag");
 		
-		//동행&사진 테이블을 위한 시퀀스 번호를 가져와서 저장
-		int donghangNo = new DonghangService().selectDonghangSeqNextVal();
-		System.out.println(donghangNo);
-		System.out.println("메소드 실행 전 :"+donghangNo);
 		//vo저장
-		Donghang donghang = new Donghang(donghangNo, userNo, tripNo, null, 0, tag, title, content,
+		Donghang donghang = new Donghang(0, userNo, tripNo, null, 0, tag, title, content,
 				travleLocale, sqlTravelStartDate, sqlTravelEndDate, sqlRecruitStartDate, sqlRecruitEndDate,
 				pw, publicEnabled, "N", "N", recruitPeopleNo, 0);
 		//insert 결과
 		int dhResult = new DonghangService().insertDonghaong(donghang);
-		System.out.println("실행 후 :"+donghangNo);
+		
+		//방금 저장한 no번호 찾기
+		int donghangNo = new DonghangService().selectDonghangSeqNextVal(userNo, title);
+		
 		//사진 저장
-		Picture pic = new Picture(0, 0, 0, donghangNo+1, userNo, image);
+		Picture pic = new Picture(0, 0, 0, donghangNo, 0, image);
 		//insert 결과
 		int ptResult  = new DonghangService().insertPicture(pic);
 

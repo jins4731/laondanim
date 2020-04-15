@@ -74,7 +74,7 @@ public class DonghangViewServlet extends HttpServlet {
 		//작성자 프로필사진 가져오기
 		int writerNo = donghangItem.getUserNo();
 		String writerImage = new MypageService().selectUserNo(writerNo).getImage();
-		
+
 		//해당 동행의 참여자 리스트 가져오기
 		List<UserProfile> joinList = new DonghangService().selectDonghangJoinMember(no);
 		

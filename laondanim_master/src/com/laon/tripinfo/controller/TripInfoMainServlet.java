@@ -1,6 +1,7 @@
 package com.laon.tripinfo.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.laon.tripinfo.model.service.TripInfoService;
 import com.laon.tripinfo.model.vo.Mind;
+import com.laon.tripinfo.model.vo.Picture;
 import com.laon.tripinfo.model.vo.TripInfoComment;
 import com.laon.tripinfo.model.vo.TripInfoPicture;
 import com.laon.user.model.vo.User;
@@ -51,12 +53,6 @@ public class TripInfoMainServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User loginUser = (User)session.getAttribute("loginUser");
 		int userNo = loginUser.getNo();
-		System.out.println("�������� userNo :"+userNo);
-		
-		List<TripInfoComment> commentList = new TripInfoService().selectComment();
-		
-		
-		
 		
 		
 		int cPage;
@@ -69,36 +65,17 @@ public class TripInfoMainServlet extends HttpServlet {
 		
 		int numPerPage=10;
 		
-		/* �������� ����Ʈ �������� (ī�װ�)*/
-//		List<TripInfoPicture> list=new TripInfoService().selectTripinfoList(cPage,numPerPage,category);
 		List<TripInfoPicture> list=new TripInfoService().selectTripinfoList(cPage,numPerPage,category,type,keyword,mind);
-		//��� �� ��� ����Ʈ
 			
-			List<Mind> mindList = new TripInfoService().selectMind();
+		List<Mind> mindList = new TripInfoService().selectMind();
 			
-			for(Mind mmm : mindList) {
-				System.out.println("����������?" + mmm);
-			}
-			
-			
-		
-		
-		
-		
-		//Mind vo �� count ��������� �� �����
-		//dao ���� ���� count(*) ���� count ��� ������ set�ϰ� mind ���̺��� ������ ���������� Mind vo �� ����
-		
-		//list ���� �ؿ� heartCount�� �ְ� 
-		//set �Ѵ��� jsp�� ����
-		//jsp ���� �ش� mind ����Ʈ�� �������� no ���� ��µ� �������� �Խñ��� no ���� ���ؼ� ��ġ�ϴ� mind vo ��ü�� count ���� �� ������ ���� 
 		List<Mind> heartCount = new TripInfoService().heartCount(list);
-		//LIST�� NO �� �Ű� ������ MIND_TB ���� no�� ��ġ�ϴ� row ���� ���� �޼ҵ� ����
-		//SELECT * FROM MIND_TB WHERE TRIP_INFO_NO=?
-		//���⼭ row�� ������ ���� �� �� �ְ� �׷��� ���� �� �� ����
-	
 		
+		//TripInfoPicture list로 picture list 가져오기
+		ArrayList<Picture> pictureList = new TripInfoService().selectPicture((ArrayList<TripInfoPicture>)list);
 		
-		
+		//TripInfoPicture list로 tripinfo_comment list 가져오기
+		ArrayList<TripInfoComment> tripInfoCommentList = new TripInfoService().selectComment(list);
 		
 		int totalDate=new TripInfoService().selectCountTripInfo(category,type,keyword);
 		int totalPage=(int)Math.ceil((double)totalDate/numPerPage);
@@ -147,10 +124,11 @@ public class TripInfoMainServlet extends HttpServlet {
 		
 		request.setAttribute("heartCount", heartCount);
 		
-		request.setAttribute("mindList", mindList);
+		request.setAttribute("mindList", mindList);		
 		
-		request.setAttribute("commentList",  commentList);
+		request.setAttribute("pictureList", pictureList);
 		
+		request.setAttribute("tripInfoCommentList", tripInfoCommentList);
 		request.getRequestDispatcher("/views/tripinfo/tripinfoMain.jsp").forward(request, response);
 		
 		

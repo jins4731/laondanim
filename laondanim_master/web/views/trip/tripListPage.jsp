@@ -29,6 +29,7 @@
      	<input type="hidden" value="<%=keyword %>" id="keyword"/>
      	<input type="hidden" value="<%=lo==null?"선택 지역별":lo %>" id="location"/>     	
         <input type="hidden" value="aa" id="rl" />
+        
         <!-- 검색창 -->
         <div class="container mb-5 mt-4">
             <div class="row justify-content-center">
@@ -457,6 +458,7 @@
                             
                             <span class="mr-1"><%=i-5<count?list.get(i).getWriteDate():"" %></span>
                         </div>
+                        
                         <div class="card-body h-50 w-100 p-0 border-0">
                         	<div class="hdTagBox">
                                 <ul class="hdTag">                            
@@ -479,6 +481,7 @@
                             }
                             %><%=request.getContextPath()+"/views/picture/trip/"+picture%>" class="img-thumbnail p-0 h-100 w-100 rounded-0 border-0"/>
                         </div>
+                        
                         <div class="card-footer h-30 d-flex flex-column p-1 text-center bg-white">
                             <span><%=i-5<count?list.get(i).getTitle():"" %></span>
                             <span>
@@ -506,6 +509,7 @@
                            			}
                            		}
                            %>
+                           
                             <div class="d-flex flex-row justify-content-center align-items-center">
                                 <div class="mr-2">
                                 	<input type="hidden" value="<%=i-5<count?list.get(i).getNo():""%>"/>

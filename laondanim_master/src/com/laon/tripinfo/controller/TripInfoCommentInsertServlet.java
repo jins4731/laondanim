@@ -40,18 +40,18 @@ public class TripInfoCommentInsertServlet extends HttpServlet {
 		System.out.println("content : " + content);
 		System.out.println("userNo : " + userNo);
 		System.out.println("tripinfoNo : " + tripinfoNo);
-		
-		
-		
+						
 		TripInfoComment tc = new TripInfoComment(0,tripinfoNo,userNo,null,content,'N');
-		
-		JSONObject jo=new JSONObject();
-		jo.put("content", tc.getContent());
-		
-		
 		int result = new TripInfoService().insertComment(tc);
+		System.out.println(result);
+		if(result>0) {
+			JSONObject jo=new JSONObject();
+			jo.put("content", tc.getContent());
+			jo.put("userNo", tc.getUserTbNo());
+			jo.put("tripinfoNo", tc.getUserTbNo());
 		
-		request.getRequestDispatcher("/views/tripinfo/");
+			response.getWriter().print(jo);
+		}
 	}
 
 	/**

@@ -9,8 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b"></script>
-<!-- 카카오 맵 api 추가 정호-->
+
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 

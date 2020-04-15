@@ -1,18 +1,21 @@
 package com.laon.tripinfo.model.service;
 
-import static com.laon.common.template.JDBCTemplate.*;
-
+import static com.laon.common.template.JDBCTemplate.close;
+import static com.laon.common.template.JDBCTemplate.getConnection;
+import static com.laon.common.template.JDBCTemplate.commit;
+import static com.laon.common.template.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.laon.tripinfo.model.dao.TripInfoDao;
 import com.laon.tripinfo.model.vo.Mind;
 import com.laon.tripinfo.model.vo.Picture;
 import com.laon.tripinfo.model.vo.TripInfo2;
-import com.laon.tripinfo.model.vo.Tripinfo;
 import com.laon.tripinfo.model.vo.TripInfoComment;
 import com.laon.tripinfo.model.vo.TripInfoPicture;
+import com.laon.tripinfo.model.vo.Tripinfo;
 
 public class TripInfoService {
 	
@@ -123,6 +126,22 @@ public class TripInfoService {
 		return pictureList;
 	}
 	
+	//TripInfoPicture를 가지고 picture 리스트 가져오기
+	public ArrayList<Picture> selectPicture(ArrayList<TripInfoPicture> list){
+		Connection conn = getConnection();
+		ArrayList<Picture> pictureList = dao.selectPicture(conn, list);
+		close(conn);
+		return pictureList;
+	}
+	
+	//TripInfoPicture를 가지고 comment 리스트 가져오기
+	public ArrayList<TripInfoComment> selectComment(List<TripInfoPicture> list){
+		Connection conn = getConnection();
+		ArrayList<TripInfoComment> tripInfoCommentList = dao.selectComment(conn, list);
+		close(conn);
+		return tripInfoCommentList;
+	}
+	
 	public List<TripInfo2> selectTripinfo(List<Mind> userMindList) {
 		
 		Connection conn = getConnection();
@@ -139,17 +158,18 @@ public class TripInfoService {
 		return selectMind;
 	}
 	
-	public List<TripInfoComment> selectComment(){
-		
-		Connection conn = getConnection();
-		List<TripInfoComment> commentList = dao.selectComment(conn);
-		close(conn);
-		return commentList;
-	}
+	/*
+	 * public List<TripInfoComment> selectComment(){
+	 * 
+	 * Connection conn = getConnection(); List<TripInfoComment> commentList =
+	 * dao.selectComment(conn); close(conn); return commentList; }
+	 */
 	
 	public int insertComment(TripInfoComment tc) {
 		Connection conn=getConnection();
 		int result=dao.insertComment(conn,tc);
+		if(result>0) commit(conn);
+		else rollback(conn);
 		close(conn);
 		return result;
 	}

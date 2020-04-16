@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="/views/common/header.jsp"%>
-
+<div style="height: 160px"></div>
 <section>
     <div class="d-flex flex-column align-items-center justify-content-center">
         <!-- 회원가입 -->

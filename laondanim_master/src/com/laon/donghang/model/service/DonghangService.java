@@ -1,21 +1,20 @@
 package com.laon.donghang.model.service;
 
 import static com.laon.common.template.JDBCTemplate.close;
-import static com.laon.common.template.JDBCTemplate.getConnection;
 import static com.laon.common.template.JDBCTemplate.commit;
+import static com.laon.common.template.JDBCTemplate.getConnection;
 import static com.laon.common.template.JDBCTemplate.rollback;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 
-
-import com.laon.etc.model.vo.Like;
-import com.laon.etc.model.vo.Picture;
 import com.laon.donghang.model.dao.DonghangDao;
 import com.laon.donghang.model.vo.Donghang;
 import com.laon.donghang.model.vo.DonghangJoin;
+import com.laon.donghang.model.vo.DonghangJoinDonghangJoinTb;
 import com.laon.donghang.model.vo.DonghangJoinUserPicture;
+import com.laon.etc.model.vo.Like;
+import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.vo.TripMyCon;
 import com.laon.user.model.vo.UserProfile;
 
@@ -105,9 +104,9 @@ public class DonghangService {
 		return result;
 	}
 
-	public int selectDonghangSeqNextVal() {
+	public int selectDonghangSeqNextVal(int userNo, String title) {
 		Connection conn = getConnection();
-		int nextVal = dao.selectDonghangSeqNextVal(conn);
+		int nextVal = dao.selectDonghangSeqNextVal(conn, userNo, title);
 		close(conn);
 		return nextVal;
 	}
@@ -178,13 +177,34 @@ public class DonghangService {
 		DonghangJoin userJoinTb = dao.selectUserDonghangJoin(conn, no, loginUserNo);
 		close(conn);
 		return userJoinTb;
-	} 
-	
-	//사용자 우선순위 태그 정렬
-	public ArrayList<Donghang> selectTagList(){
-		Connection conn = getConnection();
-		ArrayList<Donghang> tagList = dao.selectTagList(conn);
-		close(conn);
-		return tagList;
 	}
+
+	public List<Donghang> selectDonghangList(int userNo) {
+		Connection conn = getConnection();
+		List<Donghang> list = dao.selectDonghangList(conn, userNo);
+		close(conn);
+		return list;
+	}
+
+	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(int loginUserNo) {
+		Connection conn = getConnection();
+		List<DonghangJoinDonghangJoinTb> list = dao.selectDonghangJoinList(conn, loginUserNo);
+		close(conn);
+		return list;
+	}
+
+	public List<UserProfile> selectUserProfileAll() {
+		Connection conn = getConnection();
+		List<UserProfile> list = dao.selectUserProfileAll(conn);
+		close(conn);
+		return list;
+	}
+
+	public int selectJoinCount(int userNo) {
+		Connection conn = getConnection();
+		int result = dao.selectJoinCount(conn, userNo);
+		close(conn);
+		return result;
+	}
+
 }

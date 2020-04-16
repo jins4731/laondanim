@@ -7,6 +7,7 @@
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="com.laon.donghang.model.vo.Donghang" %>
+<%@page import="com.laon.donghang.model.vo.DonghangJoinUserPicture" %>
 
 <%@ include file="/views/common/header.jsp"%>
 
@@ -420,5 +421,5 @@
     	});
     	
     </script>
-</section>
+
 <%@ include file="/views/common/footer.jsp"%> 

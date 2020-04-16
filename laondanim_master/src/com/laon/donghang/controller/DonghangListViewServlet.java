@@ -42,22 +42,22 @@ public class DonghangListViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Ã¹È­¸éÀ» À§ÇØ ÅÂ±× °¡Á®¿À±â
+		//Ã¹È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Â±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		String userTag = request.getParameter("userTag");
 		userTag=(userTag==null?"null":userTag);
-		//°Ë»ö Å°¿öµå °ª °¡Á®¿À±â 
+		//ï¿½Ë»ï¿½ Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 		String keyword = request.getParameter("keyword");
 		keyword=(keyword==null?"null":keyword);
-		// +) Å°¿öµå Ä«Å×°í¸® °ª °¡Á®¿À±â
+		// +) Å°ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½×°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		String searchFilter = request.getParameter("searchFilter");
 		searchFilter=(searchFilter==null?"null":searchFilter);
-		//ÃÖ±Ù¼ø Å¬¸¯ recent°ª
+		//ï¿½Ö±Ù¼ï¿½ Å¬ï¿½ï¿½ recentï¿½ï¿½
 		String recent = request.getParameter("recent");
 		recent=(recent==null?"null":recent);
-		//Á¶È¸¼ö¼ø Å¬¸¯ viewcount°ª
+		//ï¿½ï¿½È¸ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ viewcountï¿½ï¿½
 		String viewcount = request.getParameter("viewcount");
 		viewcount=(viewcount==null?"null":viewcount);
-		//°¡±î¿îÀÏÁ¤¼ø Å¬¸¯ 
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ 
 		String nearSchedule = request.getParameter("nearSchedule");
 		nearSchedule=(nearSchedule==null?"null":nearSchedule);
 		
@@ -65,7 +65,7 @@ public class DonghangListViewServlet extends HttpServlet {
 		int pagePerRow = 10;
 		
 		List<DonghangJoinUserPicture> list = new ArrayList<DonghangJoinUserPicture>();
-		//Tag¸¦ ±âÁØÀ¸·Î Ã¹È­¸é ÀÌÈÄ È­¸é ³ª´©¸é ¾ÈµÊ ¾îÄÉ Ã³¸®ÇÒ±î..?
+		//Tagï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¹È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ò±ï¿½..?
 //		if(userTag!=null) {
 //			list = new DonghangService().selectDonghangTag(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), userTag);
 //		}else {
@@ -76,10 +76,11 @@ public class DonghangListViewServlet extends HttpServlet {
 		
 		String pageBar = new Paging().pageBar2(request.getContextPath()+"/donghang/donghangListView.do", totalRowCount, currentPage, pagePerRow, userTag, keyword, recent, viewcount, nearSchedule, searchFilter );
 		
-		//Äõ¸®½ºÆ®¸µ ÀúÀå
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		request.setAttribute(CommonKey.KEYWORD, keyword);
 		
 		request.setAttribute(CommonKey.DONGHANG_LIST, list);
+		System.out.println("______________"+list);
 		request.setAttribute(CommonKey.PAGE_BAR, pageBar);
 		request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount);
 		

@@ -6,10 +6,10 @@ import java.util.List;
 import com.laon.admin.model.dao.AdminDao;
 import com.laon.admin.model.vo.Reports;
 import com.laon.board.model.dao.BoardDao;
-import static com.laon.common.JDBCTemplate.getConnection;
-import static com.laon.common.JDBCTemplate.close;
-import static com.laon.common.JDBCTemplate.commit;
-import static com.laon.common.JDBCTemplate.rollback;
+import static com.laon.common.template.JDBCTemplate.getConnection;
+import static com.laon.common.template.JDBCTemplate.close;
+import static com.laon.common.template.JDBCTemplate.commit;
+import static com.laon.common.template.JDBCTemplate.rollback;
 
 
 public class AdminService {

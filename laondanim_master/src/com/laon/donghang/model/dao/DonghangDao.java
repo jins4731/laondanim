@@ -5,6 +5,7 @@ import static com.laon.common.template.JDBCTemplate.close;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.laon.common.PropPath; //<-com.laon.common.template.PropPath;·Î µÇ¾îÀÖ¾î º¯°æÇÔ
+import com.laon.common.PropPath; //<-com.laon.common.template.PropPath;ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½Ö¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 import com.laon.donghang.model.vo.Donghang;
 import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.donghang.model.vo.DonghangJoinUserPicture;
@@ -102,7 +103,7 @@ public class DonghangDao {
 		return donghang;
 	}
 	
-	//join vo¿ë rd
+	//join voï¿½ï¿½ rd
 	public DonghangJoinUserPicture rsProcess(ResultSet rs, DonghangJoinUserPicture donghang) throws SQLException {
 		while (rs.next()) {
 			donghang.setNo(rs.getInt(no));
@@ -135,7 +136,7 @@ public class DonghangDao {
 	}
 	
 	
-	//join vo¿ë rs list
+	//join voï¿½ï¿½ rs list
 	public List<DonghangJoinUserPicture> joinRsProcess(ResultSet rs, List<DonghangJoinUserPicture> list) throws SQLException {
 		while (rs.next()) {
 			DonghangJoinUserPicture donghang = new DonghangJoinUserPicture();
@@ -241,36 +242,36 @@ public class DonghangDao {
 		String sql="";
 		List<DonghangJoinUserPicture> list = null;
 
-		//sql¹® ³ª´©±â
-		if(searchFilter.equals("searchLocal") && !keyword.equals("null") && !recent.equals("null")) { //Å°¿öµå(Áö¿ª) O, ÃÖ½Å¼ø
+		//sqlï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		if(searchFilter.equals("searchLocal") && !keyword.equals("null") && !recent.equals("null")) { //Å°ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½) O, ï¿½Ö½Å¼ï¿½
 			sql = prop.getProperty(selectDonghangLocalRecent);
-		}else if( searchFilter.equals("searchLocal") && !keyword.equals("null") && !viewcount.equals("null") ) { //Å°¿öµå(Áö¿ª) O, Á¶È¸¼ö¼ø
+		}else if( searchFilter.equals("searchLocal") && !keyword.equals("null") && !viewcount.equals("null") ) { //Å°ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½) O, ï¿½ï¿½È¸ï¿½ï¿½ï¿½ï¿½
 			sql = prop.getProperty(selectDonghangLocalViewcount);
-		}else if( searchFilter.equals("searchLocal") && !keyword.equals("null") && !nearSchedule.equals("null") ) { //Å°¿öµå(Áö¿ª) O, °¡±î¿î ÀÏÁ¤¼ø
+		}else if( searchFilter.equals("searchLocal") && !keyword.equals("null") && !nearSchedule.equals("null") ) { //Å°ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½) O, ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			sql = prop.getProperty(selectDonghangLocalNearSchedule);
-		}else if( searchFilter.equals("searchKeyword") && !keyword.equals("null") && !recent.equals("null") ) { //Å°¿öµå(ÅÂ±×) O, ÃÖ½Å¼ø
+		}else if( searchFilter.equals("searchKeyword") && !keyword.equals("null") && !recent.equals("null") ) { //Å°ï¿½ï¿½ï¿½ï¿½(ï¿½Â±ï¿½) O, ï¿½Ö½Å¼ï¿½
 			sql = prop.getProperty(selectDonghangKeywordRecent);
-		}else if( searchFilter.equals("searchKeyword") && !keyword.equals("null") && !viewcount.equals("null") ) { //Å°¿öµå(ÅÂ±×) O, Á¶È¸¼ö¼ø
+		}else if( searchFilter.equals("searchKeyword") && !keyword.equals("null") && !viewcount.equals("null") ) { //Å°ï¿½ï¿½ï¿½ï¿½(ï¿½Â±ï¿½) O, ï¿½ï¿½È¸ï¿½ï¿½ï¿½ï¿½
 			sql = prop.getProperty(selectDonghangKeywordViewcount);
-		}else if( searchFilter.equals("searchKeyword") && !keyword.equals("null") && !nearSchedule.equals("null") ) { //Å°¿öµå(ÅÂ±×) O, °¡±î¿î ÀÏÁ¤¼ø
+		}else if( searchFilter.equals("searchKeyword") && !keyword.equals("null") && !nearSchedule.equals("null") ) { //Å°ï¿½ï¿½ï¿½ï¿½(ï¿½Â±ï¿½) O, ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			sql = prop.getProperty(selectDonghangKeywordNearSchedule);
-		}else if( keyword.equals("null") && !recent.equals("null") ) { //Å°¿öµå X, ÃÖ±Ù¼ø
+		}else if( keyword.equals("null") && !recent.equals("null") ) { //Å°ï¿½ï¿½ï¿½ï¿½ X, ï¿½Ö±Ù¼ï¿½
 			sql = prop.getProperty(selectDonghangRecent);
-		}else if( keyword.equals("null") && !viewcount.equals("null") ) { //Å°¿öµå X, Á¶È¸¼ö¼ø
+		}else if( keyword.equals("null") && !viewcount.equals("null") ) { //Å°ï¿½ï¿½ï¿½ï¿½ X, ï¿½ï¿½È¸ï¿½ï¿½ï¿½ï¿½
 			sql = prop.getProperty(selectDonghangViewcount);
-		}else if( keyword.equals("null") && !nearSchedule.equals("null") ) { //Å°¿öµå X, °¡±î¿î ÀÏÁ¤¼ø
+		}else if( keyword.equals("null") && !nearSchedule.equals("null") ) { //Å°ï¿½ï¿½ï¿½ï¿½ X, ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			sql = prop.getProperty(selectDonghangNearSchedule);
 		}else if( searchFilter.equals("searchLocal")  && !keyword.equals("null") && recent.equals("null") && viewcount.equals("null") && nearSchedule.equals("null")) {
-			sql = prop.getProperty(selectDonghangLocalRecent); // Áö¿ª°Ë»ö¸¸ ÇßÀ» ¶§! (±âº» ÃÖ½Å¼ø Á¤·Ä)
+			sql = prop.getProperty(selectDonghangLocalRecent); // ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½! (ï¿½âº» ï¿½Ö½Å¼ï¿½ ï¿½ï¿½ï¿½ï¿½)
 		}else if( searchFilter.equals("searchKeyword")  && !keyword.equals("null") && recent.equals("null") && viewcount.equals("null") && nearSchedule.equals("null")) {
-			sql = prop.getProperty(selectDonghangKeywordRecent); // Å°¿öµå°Ë»ö¸¸ ÇßÀ» ¶§! (±âº» ÃÖ½Å¼ø Á¤·Ä)
+			sql = prop.getProperty(selectDonghangKeywordRecent); // Å°ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½! (ï¿½âº» ï¿½Ö½Å¼ï¿½ ï¿½ï¿½ï¿½ï¿½)
 		}else {
 			sql = prop.getProperty(selectDonghangPage);
 		}
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			//Å°¿öµå o, x ºĞ±â
+			//Å°ï¿½ï¿½ï¿½ï¿½ o, x ï¿½Ğ±ï¿½
 			if(!keyword.equals("null")) {
 				pstmt.setString(1, "%"+keyword+"%");
 				pstmt.setInt(2, start);
@@ -344,7 +345,7 @@ public class DonghangDao {
 		ResultSet rs = null;
 		String sql = "";
 		List<DonghangJoinUserPicture> list = null;
-		//ÅÂ±×±æÀÌ¸¸Å­  when~then sql¹® ¸¸µé±â
+		//ï¿½Â±×±ï¿½ï¿½Ì¸ï¿½Å­  when~then sqlï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 		String[] userTagArr = userTag.split(",");
 		String likeSql = "";
 		for(String tag : userTagArr) {
@@ -419,7 +420,7 @@ public class DonghangDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, no);
 			
-			//¡å±â¾ïÇÏ±â
+			//ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -710,5 +711,54 @@ public class DonghangDao {
 			close(pstmt);
 		}
 		return userJoinTb;
+	}
+	
+	//ì‚¬ìš©ì ìš°ì„ ìˆœìœ„ íƒœê·¸ ì •ë ¬
+	
+	public ArrayList<Donghang> selectTagList(Connection conn){
+		PreparedStatement pstmt = null;
+		ResultSet rs =null;
+		
+		String sql = prop.getProperty("selectTagList");
+		Donghang d = null;
+		
+		ArrayList<Donghang> tagList = new ArrayList<Donghang>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				d = new Donghang();
+				d.setNo(rs.getInt("NO"));
+				d.setUserNo(rs.getInt("USER_NO"));
+				d.setTripNo(rs.getInt("TRIP_NO"));
+				d.setWriteDate(rs.getDate("WRITE_DATE"));
+				d.setViewcount(rs.getInt("VIEW_COUNT"));
+				d.setTag(rs.getString("TAG"));
+				d.setTitle(rs.getString("TITLE"));
+				d.setContent(rs.getString("CONTENT"));
+				d.setTravleLocale(rs.getString("TRAVLE_LOCALE"));
+				d.setTravleStartDate(rs.getDate("TRAVLE_START_DATE"));
+				d.setTravleEndDate(rs.getDate("TRAVLE_END_DATE"));
+				d.setRecruitStartDate(rs.getDate("RECRUIT_START_DATE"));
+				d.setRecruitEndDate(rs.getDate("RECRUIT_END_DATE"));
+				d.setPw(rs.getInt("PW"));
+				d.setPublicEnabled(rs.getString("PUBLIC_ENABLED"));
+				d.setEnded(rs.getString("ENDED"));
+				d.setDeleted(rs.getString("DELETED"));
+				d.setRecruitPeopleNo(rs.getInt("RECRUIT_PEOPLE_NO"));
+				d.setJoinPeopleNo(rs.getInt("JOIN_PEOPLE_NO"));
+				
+				tagList.add(d);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return tagList;
 	}
 }

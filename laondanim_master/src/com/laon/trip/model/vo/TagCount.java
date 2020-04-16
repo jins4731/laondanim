@@ -22,10 +22,47 @@ public class TagCount {
 	
 	private int tagCount;
 	
+//	private int tripNo; 
+//	private int viewcount;
+//	private String travleLocale;
+//	private Date travleStartDate; 
+//	private Date travleEndDate;
+//	private Date recruitStartDate;
+//	private Date recruitEndDate;
+//	private int pw;
+//	private String ended;
+//	private int recruitPeopleNo;
+//	private int joinPeopleNo;
+	
 	public TagCount() {
 		// TODO Auto-generated constructor stub
 	}
 
+//	public tagCount(int no, int userTbNo, int tripNo, Date writeDate, int viewcount, String[] tag, String title, String content,
+//		String travleLocale, Date travleStartDate, Date travleEndDate, Date recruitStartDate, Date recruitEndDate,
+//		int pw, String publicEnabled, String ended, String deleted, int recruitPeopleNo, int joinPeopleNo) {
+//		
+//		this.no = no;
+//		this.userTbNo = userTbNo;
+//		this.tripNo = tripNo;
+//		this.writeDate = writeDate;
+//		this.viewcount = viewcount;
+//		this.tag = tag;
+//		this.title = title;
+//		this.content = content;
+//		this.travleLocale = travleLocale;
+//		this.travleStartDate = travleStartDate;
+//		this.travleEndDate = travleEndDate;
+//		this.recruitStartDate = recruitStartDate;
+//		this.recruitEndDate = recruitEndDate;
+//		this.pw = pw;
+//		this.publicEnabled = publicEnabled;
+//		this.ended = ended;
+//		this.deleted = deleted;
+//		this.recruitPeopleNo = recruitPeopleNo;
+//		this.joinPeopleNo = joinPeopleNo;
+//	}
+	
 	public TagCount(int no, int userTbNo, String category, Date writeDate, String[] tag, String title, String content,
 			String tripLocate, int peopleNum, String tripType, Date startDate, Date endDate, char publicEnabled,
 			char deleted, int tagCount) {

@@ -23,7 +23,9 @@
     	System.out.println("jsp에서 category : " + category);
     	System.out.println("jsp에서 lo : " + lo);
      %>
-    <section>
+     <div style="height: 170px;"></div>
+     
+    <section class="d-flex flex-row justify-content-center">
     	<!--필터 버튼 눌렀을 때 데이터 처리-->
      	<input type="hidden" value="<%=category==null?"전체 여행기":category %>" id="category"/> <!-- category 저장 input 태그 -->
      	<input type="hidden" value="<%=keyword %>" id="keyword"/>

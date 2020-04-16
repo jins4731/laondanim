@@ -6,6 +6,7 @@ import static com.laon.common.template.JDBCTemplate.commit;
 import static com.laon.common.template.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -177,5 +178,13 @@ public class DonghangService {
 		DonghangJoin userJoinTb = dao.selectUserDonghangJoin(conn, no, loginUserNo);
 		close(conn);
 		return userJoinTb;
+	} 
+	
+	//사용자 우선순위 태그 정렬
+	public ArrayList<Donghang> selectTagList(){
+		Connection conn = getConnection();
+		ArrayList<Donghang> tagList = dao.selectTagList(conn);
+		close(conn);
+		return tagList;
 	}
 }

@@ -142,7 +142,7 @@ public class TagFilter {
 //		}
 //		
 //		//����
-//		Collections.sort(countList, tcc);
+		Collections.sort(countList, tcc);
 //		
 //		System.out.println("====정렬 후====");
 //		

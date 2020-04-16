@@ -69,7 +69,9 @@ public class DonghangListViewServlet extends HttpServlet {
 		
 		//by 승연
 		ArrayList<DonghangTagCount> tagCountList = new TagFilter().donghangTagCountList(userTag);
-		
+		for(DonghangTagCount tg : tagCountList) {
+			System.out.println(tg);
+		}
 		int[] order = new int[tagCountList.size()];
 		
 		for(int i=0; i<tagCountList.size(); i++) {
@@ -159,6 +161,11 @@ public class DonghangListViewServlet extends HttpServlet {
 					}
 				}
 			}
+			for(DonghangJoinUserPicture dd : list) {
+				System.out.println(dd);
+			}
+			
+			
 		}else {
 			list = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), keyword, recent, viewcount, nearSchedule, searchFilter);
 		}

@@ -259,7 +259,7 @@ $(function(){
 		if(<%=loginUser != null%>){
 			const tr=$("<tr>");
 			const td=$("<td>").css({
-				"display":"inline","text-align":"left"
+				"display":"inline","text-align":"left","border-style":"none"
 			}).attr("colspan",2);
 			const form=$("<form>").attr({
 				"action":"<%=request.getContextPath()%>/board/commentInsert.do",

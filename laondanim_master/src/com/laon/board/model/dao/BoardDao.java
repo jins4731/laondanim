@@ -374,6 +374,7 @@ public class BoardDao {
 		String sql=prop.getProperty("deleteComment");
 	try{pstmt=conn.prepareStatement(sql);
 		pstmt.setInt(1, commentNo);
+		pstmt.setInt(2, commentNo);
 		result=pstmt.executeUpdate();
 	}catch(SQLException e) {
 		e.printStackTrace();

@@ -41,8 +41,20 @@ public class LoginServlet extends HttpServlet {
 		
 		User u=new UserService().login(id,pw);
 		System.out.println("유저 존재하는지:"+u);
+		if(u!=null) {//회원일때
+		int userNo=u.getNo();
+		System.out.println("유저번호:"+userNo);
+		int result=new UserService().searchReport(userNo);
+		System.out.println("리포트결과 있니:"+result);
 		//세션 만들어주기
-		if(u!=null) {//로그인 성공했을떄
+		if(u!=null&&result>0) {
+			
+			request.setAttribute("msg", "관리자에 의해 정지된 회원입니다");
+			request.setAttribute("loc", "/views/user/login.jsp");
+			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+			
+			
+		}else if(u!=null) {//로그인 성공했을떄
 			HttpSession session=request.getSession();
 			session.setAttribute("loginUser", u);
 			/* request.getRequestDispatcher("/").forward(request, response); */
@@ -60,12 +72,13 @@ public class LoginServlet extends HttpServlet {
 			 response.addCookie(c);
 			 response.sendRedirect(request.getContextPath());
 			
-		}else {//로그인 실패했을때
+		}
+		
+		}else if(u==null) {//로그인 실패했을때 user가 null일떄
 			
 			request.setAttribute("msg", "아이디나 비밀번호가 일치하지 않습니다");
-			request.setAttribute("loc", "/");//메인으로 이동
-			RequestDispatcher rd=request.getRequestDispatcher("/views/common/msg.jsp");
-			rd.forward(request, response);
+			request.setAttribute("loc", "/user/loginPage.do");//메인으로 이동
+			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
 		
 		}

@@ -9,6 +9,7 @@ import static com.laon.common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
+import com.laon.admin.model.vo.Reports;
 import com.laon.board.model.dao.BoardDao;
 import com.laon.board.model.vo.Board;
 import com.laon.board.model.vo.BoardComment;
@@ -32,14 +33,6 @@ public class BoardService {
 		return result;
 	}
 	
-	/*
-	 * public List<BoardJoinUser> selectBoard(int cPage,int numPerPage){ Connection
-	 * conn=getConnection(); List<BoardJoinUser>
-	 * list=dao.selectBoard(conn,cPage,numPerPage); close(conn); return list;
-	 * 
-	 * 
-	 * }
-	 */
 	
 	public int countBoard() {
 		Connection conn=getConnection();
@@ -62,6 +55,14 @@ public class BoardService {
 			else rollback(conn);
 			
 		}
+		close(conn);
+		return b;
+		
+	}
+	public BoardJoinUser boardDetail(int boardNo) {
+		//수정할 내용 받아올때
+		Connection conn=getConnection();
+		BoardJoinUser b=dao.boardDetail(conn,boardNo);
 		close(conn);
 		return b;
 		
@@ -103,6 +104,49 @@ public class BoardService {
 		int result=dao.deleteComment(conn,commentNo);
 		if(result>0) commit(conn);
 		else rollback(conn);		
+		close(conn);
+		return result;
+	}
+
+
+	public int alterComment(String alterContent, int commentNo) {
+		Connection conn=getConnection();
+		int result=dao.alterComment(conn,alterContent,commentNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	
+	}
+
+
+	public int insertReport(Reports re) {
+		Connection conn=getConnection();
+		int result=dao.insertReport(conn,re);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+
+	public int alterBoard(BoardJoinUser b) {
+		//게시글 수정end로직
+		Connection conn=getConnection();
+		int result=dao.alterBoard(conn,b);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+
+	public int deleteBoard(int boardNo) {
+		//게시글 삭제로직
+		Connection conn=getConnection();
+		int result=dao.deleteBoard(conn,boardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
 		close(conn);
 		return result;
 	}

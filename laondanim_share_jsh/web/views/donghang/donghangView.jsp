@@ -1,6 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.laon.donghang.model.vo.DonghangJoinUserPicture"%>
+<%@ page import="com.laon.donghang.model.vo.DonghangJoin"%>
 <%@ page import="com.laon.user.model.vo.UserProfile"%>
 
 <%@ page import="com.laon.common.CommonKey"%>
@@ -19,8 +20,12 @@
 	
 	//페이지이용하고 있는 로그인 유저의 프로필 사진
 	String loginUserImg = (String)request.getAttribute(UserKey.IMAGE);
+	
+	//페이지이용하고 있는 로그인 유저의 동행 참여여부(테이블로 가져와서 안에서 처리)
+	DonghangJoin dji = (DonghangJoin)request.getAttribute(CommonKey.DONGHANG_JOIN_ITEM);
+	
 %>
-
+   	<div style="height: 170px;"></div>
     <section class="d-flex flex-column justify-content-center align-items-center">
         <div style="width: 1366px;" class="d-flex flex-column justify-content-center align-items-center">
 
@@ -33,9 +38,13 @@
                     <div class="d-flex flex-column pl-1" style="width: 380px;">
                         <div class="d-flex flex-row align-items-center">
                             <% if(dh.getEnded().equals("N")){%>
-                            	<div class="recruitBox d-inline-block mr-1">모집중</div>
+                            	<div class="recruitBox d-inline-block mr-1" style="line-height:14px;">
+                            		모집중
+                            	</div>
                             <%}else{%>
-                            	<div class="recruitEndBox d-inline-block mr-1">모집종료</div>
+                            	<div class="recruitEndBox d-inline-block mr-1" style="line-height:14px;">
+                            		모집종료
+                           		</div>
                             <%}%>
                             <p class="m-0"><%=dh.getTitle()%></p>
 
@@ -55,11 +64,10 @@
                     	다님일정 보기 <strong class="ml-1">&#9002;</strong>
                     </button>                    	
                     <%}%>
-                    <%if(loginUser.getNo()!=dh.getUserNo()){ %>
-                    <button type="button" class="ldBtn ml-2" data-toggle="modal" data-target="#myModal">
-                    	참여하기
-                    </button>
-                    <%}else {%>
+
+
+					<!-- 로그인 유저가 동행작성자일 때 -->
+                    <%if( loginUser.getNo()==dh.getUserNo() ) {%>
                     <button type="button" class="ldBtn ml-2"
 						onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangUpdate.do?userNo=<%=loginUser.getNo()%>&no=<%=dh.getNo()%>')">
                     	수정
@@ -68,7 +76,32 @@
 						onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangDelete.do?no=<%=dh.getNo()%>&fileName=<%=dh.getImage()%>')">
                     	삭제
                     </button>                    
-                    <%}%>
+                    <%} else if( dji==null || (loginUser.getNo()!=dji.getUserNo())  ){ %>                    
+	                    <button type="button" class="ldBtn ml-2" data-toggle="modal" data-target="#myModal">
+	                    	참여하기
+	                    </button>
+                 	<%} else if( dji!=null && (loginUser.getNo() == dji.getUserNo()) ) {%>
+                 	
+                    	<!-- 수락대기중과 거절됨 분기 -->
+		                    <%	if(dji.getConfirmed().equals("J")) {%>
+		                 	    <button type="button" class="ldBtnInactive ml-2" disabled>
+			                    	수락대기중
+			                    </button>
+			                <%} else if(dji.getConfirmed().equals("N")) {%>
+			                	<button type="button" class="ldBtnInactive ml-2" disabled>
+			                    	참여거절됨
+			                    </button>
+			                <%} else if(dji.getConfirmed().equals("Y")) {%>
+			                	<button type="button" class="ldBtnInactive ml-2" disabled>
+			                    	참여중인 동행
+			                    </button>
+			                <%}%>
+			                
+                    <%} else if(dh.getEnded().equals("Y")) {%>
+                   		<button type="button" class="ldBtnInactive ml-2" disabled>
+	                    	동행마감
+	                    </button>
+					<%} %>
                 </div>
             </div>
 
@@ -84,9 +117,13 @@
                             <td class="p-0">
                                 <div class="d-flex flex-row justify-content-between align-items-center">
 	                            <% if(dh.getEnded().equals("N")){%>
-                                    <div class="recruitBox">모집중</div>
+                                    <div class="recruitBox" style="line-height:14px;">
+                                    	모집중
+                                    </div>
 	                            <%}else{%>
-	                            	<div class="recruitEndBox">모집종료</div>
+	                            	<div class="recruitEndBox" style="line-height:14px;">
+	                            		모집종료
+	                            	</div>
 	                            <%}%>                           
                                     <p class="m-0">~ <%=dh.getRecruitEndDate()%></p>
                                 </div>
@@ -160,13 +197,23 @@
 
     <!------------------------------------------------------------------------------------------------------------------------------>
     <!-- 참여신청 모달 -->
+		
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header d-flex justify-content-center border-bottom-0 mt-3">
                     <div class="d-flex justify-content-between align-items-center" style="width: 650px;">                        
-                        <div class="d-flex flex-row justify-content-start align-items-center">                            
-                            <div class="recruitBox d-inline-block mr-1">모집중</div>
+                        <div class="d-flex flex-row justify-content-start align-items-center"> 
+                                                   
+                            <% if(dh.getEnded().equals("N")){%>
+                            	<div class="recruitBox d-inline-block mr-1" style="line-height:14px;">
+                            		모집중
+                            	</div>
+                            <%}else{%>
+                            	<div class="recruitEndBox d-inline-block mr-1" style="line-height:14px;">
+                            		모집종료
+                           		</div>
+                            <%}%>
                             <h5 class="m-0"><%=dh.getTitle()%></h5>
                             <p class="m-0 ml-4">~ <%=dh.getRecruitEndDate()%></p>
                         </div>
@@ -212,19 +259,48 @@
                         <div class="d-flex flex-column justify-content-end align-items-center" style="border: 1px solid white;">
                             <fieldset class="form-group m-0">
                                 <legend for="email-label" class="bg-white p-0 m-0 w-25 text-center">자기소개</legend>
-                                <textarea class="form-control p-2" cols="87" rows="4"></textarea>
+                                <textarea class="form-control p-2" cols="87" rows="4" name="donghangJoinContent" id="donghangJoinContent"></textarea>
                             </fieldset>
                         </div> 
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center border-top-0">
-                    <button id="danimJoinBtn" type="button" class="ldBtn mb-3" data-dismiss="modal">
+                    <button id="donghangJoinSubmitBtn" type="button" class="ldBtn mb-3" data-dismiss="modal" onclick="fn_DonghangJoin();">
                     	참여신청
                     </button>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+
+	<!--  참여확인 안내 모달  ------------------------------------------------------------------------->
+    <div class="modal" id="donghangJoinResultModal">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        
+            <!-- Modal Header -->
+            <div class="modal-header border-bottom-0">
+            <!-- <h4 class="modal-title">Modal Heading</h4> -->
+            <button type="button" class="close modal-close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body" id="donghangJoinResult">
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer border-top-0">
+            <button id="pageReload" type="button" class="ldBtn modal-close" data-dismiss="modal">Close</button>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+
+
 
     <!--스타일-->
     <style>
@@ -239,7 +315,7 @@
           transition: all .4s linear;
         }
         .recruitBox{
-            width: 40px;
+            width: 45px;
             height: 17px;
             border-radius: 15px;
             text-align: center;
@@ -248,6 +324,8 @@
             font-size: 10px;
             font-weight: 600;
             padding: 2px 4px 2px 4px;
+            display: table-cell;
+            vertical-align: middle;
         }
         .recruitEndBox{
             width: 45px;
@@ -312,6 +390,33 @@
                 $("#joinMemberBtn").removeClass('rotateBtn');
             }
         });
+        
+        
+        //Ajax 참여신청 모달
+        function fn_DonghangJoin(){
+         	$.ajax({
+        		url : "<%=request.getContextPath()%>/donghang/donghangJoin.do",
+        		type : "get",
+        		dataType : "html",
+        		data : {userNo: <%=loginUser.getNo()%>,
+	        			donghangNo: <%=dh.getNo()%>,
+	        			content: $("#donghangJoinContent").val()},
+        		success : data=>{
+        			$("#donghangJoinResult").html(data);
+        		}
+        	})    	
+        }
+        
+         $("#donghangJoinSubmitBtn").click(()=>{
+        	setTimeout(()=>{
+                $("#donghangJoinResultModal").modal("show");
+        	}, 600)
+        });
+
+         $('#pageReload').click(function() {
+        	    location.reload();
+        	});         
+		
     </script>
     
     

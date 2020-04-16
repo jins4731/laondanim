@@ -19,6 +19,33 @@
 	padding-top: 50px;
 	padding-bottom: 20px;
 }
+/* 검색창 구현 */
+#searchButton-container{
+height:40px;
+width:400px;
+border:1px solid mediumaquamarine;
+background:#ffffff;
+
+}
+#searchBox{
+font-size:16px;
+width:325px;
+padding:10px;
+border:0px;
+outline:none;
+float:left;
+}
+#searchSubmit{
+width:50px;
+height:100%;
+border:0px;
+background:mediumaquamarine;
+outline:none;
+float:right;
+color:#ffffff;
+}
+
+
 
 .searchBox {
 	/* border: 1px solid coral; */
@@ -49,6 +76,9 @@
 	margin-right: 5px;
 }
 
+#search-form{
+	display:flex;
+}
 .searchContainer input {
 	height: 30px;
 	/* border: none; */
@@ -77,7 +107,8 @@
 	/* border: 1px solid black; */
 	width: 180px;
 	margin-left: auto;
-	margin-right: 200px;
+	margin-right: 22%;
+	margin-top:2%;
 	margin-bottom: 30px;
 }
 
@@ -138,7 +169,7 @@ table * {
 			
 				<img src="<%=request.getContextPath()%>/views/picture/board/search_icon.png"
 					alt="search_icon">
-				<form action="<%=request.getContextPath()%>/board/search.do" type="post" id="form">
+				<form action="<%=request.getContextPath()%>/board/search.do" type="post" id="search-form">
 					<select name="category"  data-width="fit">
 						<option value="all">전체게시글</option>
 						<option value="qna">질문글</option>
@@ -150,10 +181,10 @@ table * {
 						<option value="content">내용</option>
 						<option value="tags">키워드태그</option>
 					</select>
-		
-				<input type="text"  name="searchBox" id="search" size="40px" style="border-radius:5px;">
-				
-				<input type="submit" class="btn btn-secondary btn-sm" id="searchSubmit" value="검색">
+				<div id="searchButton-container">
+				<input type="text" placeholder="검색어 입력" name="searchBox" id="searchBox" size="40px">
+				<button type="submit" class="btn btn-secondary btn-sm" id="searchSubmit" >검색</button>
+				</div>
 				<!-- 검색한후에 버튼 필터 사용시 -->
 				<input type="hidden" value="<%=searchBox %>" id="searchBox"/>
 				<input type="hidden" value="<%=category==null?"all":category %>" id="category"/>
@@ -193,7 +224,7 @@ table * {
     <tr>
         <td><%=b.getNo()%></td>
         <td>
-        <a href='<%=request.getContextPath()%>/board/boardView?no=<%=b.getNo()%>'>
+        <a href='<%=request.getContextPath()%>/board/boardView.do?no=<%=b.getNo()%>'>
         <%=b.getTitle()%>
         </td>
         <td><%=b.getNickName()%></td>

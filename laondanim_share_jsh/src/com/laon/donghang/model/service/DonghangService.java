@@ -1,19 +1,20 @@
 package com.laon.donghang.model.service;
 
 import static com.laon.common.template.JDBCTemplate.close;
-import static com.laon.common.template.JDBCTemplate.getConnection;
 import static com.laon.common.template.JDBCTemplate.commit;
+import static com.laon.common.template.JDBCTemplate.getConnection;
 import static com.laon.common.template.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
 
-
-import com.laon.etc.model.vo.Like;
-import com.laon.etc.model.vo.Picture;
 import com.laon.donghang.model.dao.DonghangDao;
 import com.laon.donghang.model.vo.Donghang;
+import com.laon.donghang.model.vo.DonghangJoin;
+import com.laon.donghang.model.vo.DonghangJoinDonghangJoinTb;
 import com.laon.donghang.model.vo.DonghangJoinUserPicture;
+import com.laon.etc.model.vo.Like;
+import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.vo.TripMyCon;
 import com.laon.user.model.vo.UserProfile;
 
@@ -27,9 +28,9 @@ public class DonghangService {
 		return donghang;
 	}
 	
-	public List<DonghangJoinUserPicture> selectDonghangPage(int start,int end, String keyword, String recent, String viewcount, String nearSchedule){
+	public List<DonghangJoinUserPicture> selectDonghangPage(int start,int end, String keyword, String recent, String viewcount, String nearSchedule, String searchFilter){
 		Connection conn = getConnection();
-		List<DonghangJoinUserPicture> list = dao.selectDonghangPage(conn, start ,end, keyword, recent, viewcount, nearSchedule);
+		List<DonghangJoinUserPicture> list = dao.selectDonghangPage(conn, start ,end, keyword, recent, viewcount, nearSchedule, searchFilter);
 		close(conn);
 		return list;
 	}
@@ -41,9 +42,9 @@ public class DonghangService {
 		return result;
 	}
 	
-	public int selectDonghangCount(String keyword) {
+	public int selectDonghangCount(String keyword, String searchFilter) {
 		Connection conn = getConnection();
-		int result = dao.selectDonghangCount(conn, keyword);
+		int result = dao.selectDonghangCount(conn, keyword, searchFilter);
 		close(conn);
 		return result;
 	}
@@ -103,9 +104,9 @@ public class DonghangService {
 		return result;
 	}
 
-	public int selectDonghangSeqNextVal() {
+	public int selectDonghangSeqNextVal(int userNo, String title) {
 		Connection conn = getConnection();
-		int nextVal = dao.selectDonghangSeqNextVal(conn);
+		int nextVal = dao.selectDonghangSeqNextVal(conn, userNo, title);
 		close(conn);
 		return nextVal;
 	}
@@ -158,4 +159,52 @@ public class DonghangService {
 		
 		return result;
 	}
+
+	public int donghangJoin(DonghangJoin join) {
+		Connection conn = getConnection();
+
+		int result = dao.donghangJoin(conn, join);
+		if(result>0) {
+			commit(conn);
+		} else rollback(conn);
+		close(conn);
+		
+		return result;
+	}
+
+	public DonghangJoin selectUserDonghangJoin(int no, int loginUserNo) {
+		Connection conn = getConnection();
+		DonghangJoin userJoinTb = dao.selectUserDonghangJoin(conn, no, loginUserNo);
+		close(conn);
+		return userJoinTb;
+	}
+
+	public List<Donghang> selectDonghangList(int userNo) {
+		Connection conn = getConnection();
+		List<Donghang> list = dao.selectDonghangList(conn, userNo);
+		close(conn);
+		return list;
+	}
+
+	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(int loginUserNo) {
+		Connection conn = getConnection();
+		List<DonghangJoinDonghangJoinTb> list = dao.selectDonghangJoinList(conn, loginUserNo);
+		close(conn);
+		return list;
+	}
+
+	public List<UserProfile> selectUserProfileAll() {
+		Connection conn = getConnection();
+		List<UserProfile> list = dao.selectUserProfileAll(conn);
+		close(conn);
+		return list;
+	}
+
+	public int selectJoinCount(int userNo) {
+		Connection conn = getConnection();
+		int result = dao.selectJoinCount(conn, userNo);
+		close(conn);
+		return result;
+	}
+
 }

@@ -33,21 +33,13 @@ public class BoardCommentDeleteServlet extends HttpServlet {
 		int commentNo=Integer.parseInt(request.getParameter("comment"));
 		int result=new BoardService().deleteComment(commentNo);
 		
-		String msg="";
-		String loc="";
 		if(result>0) {
-			msg="댓글이 성공적으로 삭제되었습니다";
-			
-			
+			response.getWriter().write("댓글이 삭제되었습니다");
+		
 		}else {
-			msg="댓글 삭제에 실패하였습니다(알수없는 오류)";
-			
+			response.getWriter().write("댓글삭제에 실패하였습니다.(알수없는 오류)");
+		
 		}
-		
-		request.setAttribute("msg",msg);
-		
-		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
-		
 		
 	}
 

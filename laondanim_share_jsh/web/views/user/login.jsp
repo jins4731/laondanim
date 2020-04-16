@@ -76,7 +76,8 @@
 }
 </style>
 <!-- 로그인 페이지 -->
-<div class="login-container">
+<div style="height: 160px"></div>
+<div class="login-container" style="height: 717px;">
 	<div id="title">
 	<h1><a href="메인페이지">라온다님</a></h1>
 	</div>
@@ -119,7 +120,7 @@
 
 		<tr>
 			<td>
-			 <input type="button" class="btn btn-primary btn-block" onclick="location.replace('<%=request.getContextPath()%>/memberEnroll.do')" value="회원가입">
+			 <input type="button" class="btn btn-primary btn-block" onclick="location.replace('<%=request.getContextPath()%>/user/enroll.do")" value="회원가입">
 			</td>
 		</tr>
 	</table>

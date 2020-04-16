@@ -48,7 +48,7 @@ public class BoardCommentInsertServlet extends HttpServlet {
 		}
 		
 		request.setAttribute("msg", msg);
-		request.setAttribute("loc", "/board/boardView?no="+boardNo);
+		request.setAttribute("loc", "/board/boardView.do?no="+boardNo);
 		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
 	}

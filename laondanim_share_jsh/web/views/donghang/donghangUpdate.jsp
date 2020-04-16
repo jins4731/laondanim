@@ -19,7 +19,7 @@
 %>
 
 <%@ include file="/views/common/header.jsp"%>
-
+   	<div style="height: 170px;"></div>
     <section class="d-flex flex-column justify-content-center align-items-center">
         <div style="width: 1366px;" class="d-flex flex-column justify-content-center align-items-center">
 
@@ -37,7 +37,7 @@
                 <div style="width: 480px; height: 270px; position: relative;" class="border d-flex justify-content-center align-items-center mr-5">
                     <!--사진 넣는 버튼-->
                     <input type="file" id="file" name="imageFile" accept="image/*" onchange="changeValue(this)"/>
-                    <button id="btnFileUplaod" style="width: 50px; height: 50px; border-radius: 25px; position: absolute; background-color: rgba(0, 0, 0, 0.746); color: white; display: flex;
+                    <button type="button" id="btnFileUplaod" style="width: 50px; height: 50px; border-radius: 25px; position: absolute; background-color: rgba(0, 0, 0, 0.746); color: white; display: flex;
                     justify-content: center; align-items: center; font-size: 25px;" class="border-0">
                         <p style="height: 50px;" class="m-0 pt-1">+</p>
                     </button>
@@ -153,12 +153,12 @@
                 <div class="d-flex flex-column justify-content-center align-items-center" style="height: 150px; border: 1px solid white;">
                     <button type="button" id="danimLinkBtn" class="ldBtn mb-3" data-toggle="modal" data-target="#myModal">다님일정 연결하기</button>
                     <div id="danimTitleBox"><strong class="mr-3">연결된 다님일정</strong>
-                    	<span id="danimTitle"><%=((Integer)dh.getTripNo()!=null)?tripList.get(dh.getTripNo()).getTitle():""%></span>
+                    	<span id="danimTitle"></span>
                     </div>
                 </div>
 
 				<!-- tripList에서 클릭된 값을 저장하는 input -->
-				<input type="hidden" name="selectTripNo" id="selectTripNo" value="0">
+				<input type="hidden" name="selectTripNo" id="selectTripNo" value="">
 
 
                 <!--상세내용-->
@@ -241,10 +241,10 @@
                                 
                                 
                                     <div style="width: 766px; position: absolute;" class="d-flex flex-row justify-content-md-between">
-                                        <button style="border:none; background: none;" id="back">
+                                        <button type="button" style="border:none; background: none;" id="back">
                                             <img src="icon/img-left_icon.png" style="width: 50px;">
                                         </button>
-                                        <button style="border:none; background: none;" id="next">
+                                        <button type="button" style="border:none; background: none;" id="next">
                                             <img src="icon/img-right_icon.png"style="width: 50px;">
                                         </button>
                                     </div>
@@ -457,12 +457,12 @@
                 });
 
                 /*리스트에 체크된 값을 히든인풋에 넣어주기*/                
-                $('button[data-dismiss="modal"]').click(()=>{
-                    alert($('input[name="selectTrip"]:checked').val());
+/*                 $('button[data-dismiss="modal"]').click(()=>{
+                    alert($('input[name="selectTrip"]:checked').val()); */
                     let no = $('input[name="selectTrip"]:checked').val();
                     $("#selectTripNo").val(no);
                     console.log( $("#selectTripNo").val());
-                });
+/*                 }); */
    
                 let liNo = $('input[name="selectTrip"]:checked').val();
                 let str = "#ck"+liNo;

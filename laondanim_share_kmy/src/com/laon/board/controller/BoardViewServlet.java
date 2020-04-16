@@ -18,7 +18,7 @@ import com.laon.board.model.vo.BoardJoinUser;
 /**
  * Servlet implementation class BoardViewServlet
  */
-@WebServlet("/board/boardView")
+@WebServlet("/board/boardView.do")
 public class BoardViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -65,6 +65,7 @@ public class BoardViewServlet extends HttpServlet {
 		
 		BoardJoinUser b=new BoardService().boardDetail(boardNo,hasRead);
 		System.out.println("b는뭐야:"+b);
+	
 		//댓글도 받아오자
 		//게시글의 번호를 댓글도 참조하고 있으니까!
 		List<BoardCommentJoinUser> comments=new BoardService().selectComment(boardNo);
@@ -74,7 +75,7 @@ public class BoardViewServlet extends HttpServlet {
 			String msg="선택한 게시물이 존재하지 않습니다"; 
 			String loc="/board/board"; 
 			request.setAttribute("msg", "선택한 게시물이 존재하지 않습니다");
-			request.setAttribute("loc", "/views/board/boardMain.jsp");
+			request.setAttribute("loc", "/board/list.do");
 			request.getRequestDispatcher("/views/common/msg.jsp");
 			
 		}else {

@@ -87,7 +87,7 @@ public class DonghangListViewServlet extends HttpServlet {
 //		}else {
 //			list = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), keyword, recent, viewcount, nearSchedule, searchFilter);
 //		}
-		System.out.println("모냐 이거"+currentPage*pagePerRow);
+		
 		Donghang d = null;
 		ArrayList<Donghang> donghangList = new ArrayList<Donghang>();
 		if(first.equals("first")) {
@@ -119,9 +119,7 @@ public class DonghangListViewServlet extends HttpServlet {
 			
 			ArrayList<Picture> pictureList = new DonghangService().selectPicture(donghangList);
 			ArrayList<User> userList = new DonghangService().selectUser(donghangList);
-			for(User u : userList) {
-				System.out.println(u);
-			}
+			
 			DonghangJoinUserPicture dp = null;
 			
 			for(Donghang dh : donghangList) {
@@ -165,10 +163,7 @@ public class DonghangListViewServlet extends HttpServlet {
 			list = new DonghangService().selectDonghangPage(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow), keyword, recent, viewcount, nearSchedule, searchFilter);
 		}
 		
-		//list 출력
-		for(DonghangJoinUserPicture d1 : list) {
-			System.out.println(d1);
-		}
+		
 		int totalRowCount = new DonghangService().selectDonghangCount(keyword, searchFilter);
 		
 		String pageBar = new Paging().pageBar2(request.getContextPath()+"/donghang/donghangListView.do", totalRowCount, currentPage, pagePerRow, userTag, keyword, recent, viewcount, nearSchedule, searchFilter, first);

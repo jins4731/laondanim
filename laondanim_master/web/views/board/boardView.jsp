@@ -18,12 +18,10 @@
   	section{
   		margin-top:50px;
   	}
-  	.backToAll{
+/*   	.backToAll{
   		margin-left:27%;
-  	}
-  	.btn-secondary{
-  		margin-left:14%;
-  	}
+  	} */
+
   
     .board-title {
         /* border:1px solid red; */
@@ -102,10 +100,13 @@
 	.level2-submit{ display:flex; border-style: none;
 	}
     </style>
-<section>
-	<div class="boardView-first-container">
+<div style="height: 170px;"></div>
+<section class="d-flex flex-column justify-content-center align-items-center">
+
+	<div class="boardView-first-container d-flex justify-content-between" style="width: 720px;">
 		<a href="<%=request.getContextPath() %>/board/list.do" class="backToAll"> &lt;전체 게시글</a>
 		<input type="button" class="btn btn-secondary disabled" value="<%=b.getCategory()%>">
+		<p class="backToAll"  style="visibility: hidden;">&lt;전체 게시글</p>
 	</div>
 	<hr width="720px" />
 	<div class="board-title">

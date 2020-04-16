@@ -124,10 +124,7 @@ table{
 	margin-right:auto;
 	text-align: center;
 }
-table * {
 
-	
-}
 
 .filter {
 	/* border: 1px solid black; */
@@ -156,14 +153,15 @@ table * {
 	margin-left:100px;
 }
 
-.board-container {
+/* .board-container {
 	width: 1000px;
 	margin-left: auto;
 	margin-right: auto;
-}
+} */
 
 </style>
-<section>
+<div style="height:170px;"></div>
+<section class="d-flex flex-column justify-content-center align-items-center">
 	<div class="searchContainer">
 		<div class="searchBox">
 			

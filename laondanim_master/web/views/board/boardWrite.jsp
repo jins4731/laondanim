@@ -21,6 +21,7 @@
         	margin-top:20px;
         	} 
     </style>
+<div style="height: 170px;"></div>
 <section>
  
 <form action="<%=request.getContextPath()%>/board/boardWriteEnd.do" method="post" id="frm">

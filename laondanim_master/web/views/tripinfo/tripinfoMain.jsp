@@ -29,7 +29,8 @@
 <%
 	int userNo = loginUser.getNo();
 %>
-	<section>
+	<div style="height: 170px;"></div>
+	<section class="d-flex flex-column justfy-content-center">
 		<div class="container">
 			<!-- 필터 버튼 눌렀을 때 데이터 처리 -->
 			<input type="hidden" value="<%=type==null?"상호명":type %>" id="type"/> <!-- type 저장 input 태그 -->

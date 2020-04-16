@@ -29,8 +29,14 @@
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <title>라온다님 메인</title>
+	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css"> .nanumsquare { font-family: 'NanumSquare', sans-serif !important; }
 <style>
 /* 헤더 푸터 값조절 */
+	<style type="text/css">
+	/* 카테고리 제목 폰트 */
+	@font-face { font-family: 'Cafe24Danjunghae'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Danjunghae.woff') format('woff'); font-weight: normal; font-style: normal; }
+	/* 본문 폰트 */
+	@font-face { font-family: 'S-CoreDream-4Regular'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff'); font-weight: normal; font-style: normal; }
 html,body {
 
     margin:0;
@@ -101,10 +107,12 @@ header li>a {
 	padding-left: 30px;
 	font-size: 20px;
 	text-decoration: none;
+	font-family: NanumSquare;
 }
 
 .main-nav {
 	list-style: none;	
+	height: 60px;
 }
 
 	/* 메뉴에 마우스 커서만 올려도 드롭다운 메뉴가 자동으로 나오게 */
@@ -119,14 +127,14 @@ header li>a {
 	<!-- <div class="body-wrapper"> -->
 	<header>
 		<div id="headerDiv" class="d-flex justify-content-center">
-			<div id="logoNav" class="d-flex flex-column justify-content-center w-100">
-				<a class="m-0 mt-2 align-items-start" href="<%=request.getContextPath()%>">
+			<div id="logoNav" class="d-flex justify-content-between align-items-center w-100">
+				<a class="m-0 mb-1 ml-3 align-items-start" href="<%=request.getContextPath()%>">
 					<img src="<%=request.getContextPath()%>/main/laonLogo.png" class="m-0 p-0" id="laonLogo">
 				</a>
 		
 				<nav class="navbar navbar-expand-sm d-flex justify-content-end">
 					<!-- Links -->
-					<ul class="navbar-nav main-nav">
+					<ul class="main-nav d-flex p-0 m-0 justify-content-center align-items-center">
 						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/trip/tripListView.do?first=first">여행기</a></li>
 						<!-- 여행정보 링크 추가 정호 -->
 						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?1:loginUser.getNo()%>">여행정보</a></li>

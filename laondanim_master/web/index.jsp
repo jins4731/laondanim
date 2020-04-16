@@ -3,10 +3,10 @@
 <%@page import="java.util.Random"%>
 <%@ include file="/views/common/header.jsp"%>
 
+	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css"> .nanumsquare { font-family: 'NanumSquare', sans-serif !important; }
 	<style type="text/css">
 	/* 카테고리 제목 폰트 */
-	@font-face { font-family: 'UhBeenamsoyoung'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeenamsoyoung.woff') format('woff'); font-weight: normal; font-style: normal; }
-	@font-face { font-family: 'UhBeeDongKyung'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeDongKyung.woff') format('woff'); font-weight: normal; font-style: normal; }
+	@font-face { font-family: 'Cafe24Danjunghae'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Danjunghae.woff') format('woff'); font-weight: normal; font-style: normal; }
 	/* 본문 폰트 */
 	@font-face { font-family: 'S-CoreDream-4Regular'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff'); font-weight: normal; font-style: normal; }
 	
@@ -39,9 +39,9 @@
 		font-size: 55px;
 		/* font-weight: 700; */
 		color: white;
-		text-shadow: 0 0 6px #00abbf;
+		text-shadow: 0 0 8px #000000;
 		letter-spacing: 3px;
-		font-family: UhBeenamsoyoung;
+		font-family: Cafe24Danjunghae;
 	}
 	.pHr{
 		width: 800px;

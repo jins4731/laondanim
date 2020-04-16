@@ -1,13 +1,18 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.laon.trip.model.vo.TripMyCon"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,com.laon.etc.model.vo.Like" %>
+<%@ page import="java.util.List,com.laon.etc.model.vo.*,com.laon.trip.model.vo.TripMyCon,com.laon.tripinfo.model.vo.TripinfoMyMind" %>
 <%
 	List<Like> likeT=(List)request.getAttribute("likeT");
 	List<TripMyCon> tripList=(List)request.getAttribute("tripList");
 	List<UserProfile> userNick=(List)request.getAttribute("userNick");
 	int likeTripCount=(int)request.getAttribute("likeTripCount");
+	List<Mind> mind=(List)request.getAttribute("mind");
+	List<TripinfoMyMind> mindList=(List)request.getAttribute("mindList");
 %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
 <%@ include file="/views/common/header.jsp"%>
 <div class="container">
 	<div class="row">
@@ -37,13 +42,13 @@
 					<!-- 닫힘 내용 -->
 					<div>
 						<!-- 정보 -->
-						<div id="myDNInfo">
+						<div id="myLTInfo">
 							<div style="height:45px;">
 								<span>총 <%=likeTripCount %>개의 ♥ 다님길</span>
 							</div>
 						</div>
 						<!-- 게시글위치 -->
-						<table id="dnTbl">
+						<table id="ltTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
 							<%for(TripMyCon t:tripList){ %>
 								<td class="p-1">
@@ -78,12 +83,32 @@
 							<%if(tripList.size()==4){ %>
 							<tr>
 								<td colspan="4" style="text-align: center;">
-									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myConTrip.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>
+									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myLikeTrip.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>
 								</td>
 							</tr>
 							<%} %>
 						</table>
 					</div>
+					
+					<%List<TripinfoMyMind> restaurant=new ArrayList<TripinfoMyMind>();
+					List<TripinfoMyMind> lodging=new ArrayList<TripinfoMyMind>();
+					List<TripinfoMyMind> attraction=new ArrayList<TripinfoMyMind>();
+					int resCount=0;
+					int lodCount=0;
+					int attCount=0;
+					for(TripinfoMyMind tm:mindList){
+						int count=1;
+						if(tm.getCategory().equals("맛집")){
+							restaurant.add(tm);
+							resCount+=count;
+						}else if(tm.getCategory().equals("숙소")){
+							lodging.add(tm);
+							lodCount+=count;
+						}else if(tm.getCategory().equals("명소")){
+							attraction.add(tm);
+							attCount+=count;
+						}
+					} %>
 					
 					<!-- 맛집 -->
 					<div class="menu">
@@ -102,39 +127,87 @@
 						<!-- 정보 -->
 						<div id="myDNInfo">
 							<div style="height:45px;">
-								<span>총 ?개의 ♥ 맛집</span>
+								<span>총 <%=resCount %>개의 ♥ 맛집</span>
 							</div>
 						</div>
-						<div class="card d-flex">
-							<div class="sl d-flex" style="overflow: hidden;">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/images/images.jpeg">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/henri.jpeg">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/peng.jpg">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/peng2.jpg">
-								<img class="card-img slImg" src="<%=request.getContextPath()%>/views/picture/profile/peng3.jpeg">
+						<div class="swiper-container">
+							<div class="swiper-wrapper">
+							<%for(TripinfoMyMind res:restaurant){ %>
+								<div class="swiper-slide"><img class="card-img" src="<%=request.getContextPath()%>/views/picture/profile/<%=res.getImage()%>"></div>
+							<%} %>
 							</div>
-							<div><img id="prev" src="<%=request.getContextPath()%>/images/prev.png"></div>
-							<%-- <div><img id="next" src="<%=request.getContextPath()%>/images/next.png"></div> --%>
+						
+							<!-- 네비게이션 -->
+							<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+							<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
 						</div>
-						<script>
-							$(function(){
-								$(".sl").find(".slImg").css("width","155");
-								$("#next").click(function(){
-									$(".sl").append($(".slImg").first());
-									$(".sl").append($(".slImg").first());
-									$(".sl").append($(".slImg").first());
-									$(".sl").append($(".slImg").first());
-								});
-								
-								/* setInterval(() => {
-									$(".sl").append($(".slImg").first());
-								}, 3000); */
-							});
-						</script>
 					</div>
 					
+					<!-- 숙소 -->
+					<div class="menu">
+						<div class="manuBar">
+							<div>
+								<span>숙소</span>
+							</div>
+							<div>
+								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
+							</div>
+						</div>
+						<hr>
+					</div>
+					<!-- 닫힘 내용 -->
+					<div>
+						<!-- 정보 -->
+						<div id="myDNInfo">
+							<div style="height:45px;">
+								<span>총 <%=lodCount %>개의 ♥ 숙소</span>
+							</div>
+						</div>
+						<div class="swiper-container">
+							<div class="swiper-wrapper">
+							<%for(TripinfoMyMind lod:lodging){ %>
+								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/profile/<%=lod.getImage()%>"></div>
+							<%} %>
+							</div>
+						
+							<!-- 네비게이션 -->
+							<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+							<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
+						</div>
+					</div>
 					
-					
+					<!-- 명소 -->
+					<div class="menu">
+						<div class="manuBar">
+							<div>
+								<span>명소</span>
+							</div>
+							<div>
+								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
+							</div>
+						</div>
+						<hr>
+					</div>
+					<!-- 닫힘 내용 -->
+					<div>
+						<!-- 정보 -->
+						<div id="myDNInfo">
+							<div style="height:45px;">
+								<span>총 <%=attCount %>개의 ♥ 명소</span>
+							</div>
+						</div>
+						<div class="swiper-container">
+							<div class="swiper-wrapper">
+							<%for(TripinfoMyMind att:attraction){ %>
+								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/profile/<%=att.getImage()%>"></div>
+							<%} %>
+							</div>
+						
+							<!-- 네비게이션 -->
+							<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+							<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
+						</div>
+					</div>
 				</div>
 			</section>
 		</div>
@@ -154,19 +227,15 @@
         text-decoration: none;
         color:black;
         list-style:none;
-        border:1px solid green;
+        /* border:1px solid green; */
     }
     
-    #myDNInfo,#myBDInfo,.manuBar{
+    #myLTInfo,.manuBar{
     	display:flex;
     	justify-content: space-between;
     	margin-left: 40px;
     	margin-right: 40px;
     }
-
-	#dnCk2,.dnCk3,#bdCk2,.bdCk3{
-		display:none;
-	}
 	
 	#myMenuBtn{
 		text-align:center;
@@ -177,32 +246,39 @@
 		margin: 20px;
     	border-radius: 100px;
 	}
+	
+	.swiper-slide {
+		text-align:center;
+		display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
+		align-items:center; /* 위아래 기준 중앙정렬 */
+		justify-content:center; /* 좌우 기준 중앙정렬 */
+		height:180px;
+	}
+	.swiper-slide img {
+		width:150px; /* 이미지 사이즈 */
+		max-width:100%; /* 지우면 안됨 이미지 여러장일때 꼭 필요함 */
+	}
 </style>
 
 <script>
-	/* 다님길 */
-	$(function(){
-		$("#dnCk1>button").click(()=>{
-			$("#dnCk1").css("display","none");
-			$("#dnCk2").css("display","block");
-			$(".dnCk3").css("display","block");
-		});
-		
-		$("#dnEndBtn").click(()=>{
-			$("#dnCk1").css("display","block");
-			$("#dnCk2").css("display","none");
-			$(".dnCk3").css("display","none");
-		});
-		
-		$("#dnAll").click(()=>{
-			if($("#dnAll").is(":checked")){							
-				$(".dnCks").prop("checked",true);
-			}else{
-				$(".dnCks").prop("checked",false);
-			}
-		});
-	});
+	new Swiper('.swiper-container', {
 	
+		slidesPerView : 4, // 동시에 보여줄 슬라이드 갯수
+		spaceBetween : 20, // 슬라이드간 간격
+		slidesPerGroup : 4, // 그룹으로 묶을 수, slidesPerView 와 같은 값을 지정하는게 좋음
+	
+		// 그룹수가 맞지 않을 경우 빈칸으로 메우기
+		// 3개가 나와야 되는데 1개만 있다면 2개는 빈칸으로 채워서 3개를 만듬
+		loopFillGroupWithBlank : true,
+	
+		loop : false, // 무한 반복
+		
+		navigation : { // 네비게이션
+			nextEl : '.swiper-button-next', // 다음 버튼 클래스명
+			prevEl : '.swiper-button-prev', // 이번 버튼 클래스명
+		},
+	});
+
 	$(function(){
 		$(".imgDrop").stop().css({"transform":"rotate(90deg)"});
 	});

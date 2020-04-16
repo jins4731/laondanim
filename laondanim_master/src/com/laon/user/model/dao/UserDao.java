@@ -294,6 +294,9 @@ public class UserDao {
 		close(rs);
 		close(pstmt);
 	}return result;}
+	
+	
+	
 public int selectUserNo(Connection conn, String userId, String password, String email) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

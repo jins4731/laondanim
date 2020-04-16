@@ -34,8 +34,8 @@
         	margin-top:20px;
         	} 
     </style>
- 
-<section>
+<div style="height: 170px;"></div> 
+<section class="d-flex flex-column justify-content-center align-items-center">
  
 <form action="<%=request.getContextPath()%>/board/boardalterEnd.do" method="post" id="frm">
 <table class="boardWrite-container">

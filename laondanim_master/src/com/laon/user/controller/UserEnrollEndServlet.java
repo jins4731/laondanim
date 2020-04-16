@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.laon.donghang.model.service.DonghangService;
+import com.laon.etc.model.vo.Picture;
 import com.laon.user.model.service.UserService;
 import com.laon.user.model.vo.User;
 
@@ -53,8 +55,16 @@ public class UserEnrollEndServlet extends HttpServlet {
 		User u = new User(0, null, userId, password, name, nickName, birthday, gender, phone, email, tag);
 		
 		//JDBC
-		int result = new UserService().userInsert(u);
+		int uResult = new UserService().userInsert(u);
+		
+		//방금 저장한 유저 NO가져오기
+		int UserNo = new UserService().selectUserNo(userId, password, email);
+		
+		//사진TB에 가입 시 NULL값으로 프사 넣어주기
+		int pResult  = new UserService().insertPicture(UserNo);
+		
 
+		int result = uResult*pResult;
 		//응답페이지 작성하기
 		String msg="";
 		String loc="";

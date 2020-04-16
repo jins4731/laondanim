@@ -9,47 +9,6 @@
 
 	String userNo = "1";
 
-	List<TripSchedule> scheduleList= new ArrayList();
-	scheduleList.add(new TripSchedule(1,1,1,1,1,"10분","bus"));
-	scheduleList.add(new TripSchedule(1,1,1,1,2,"20분","train"));
-	scheduleList.add(new TripSchedule(1,1,1,1,3,"30분","walk"));
-	scheduleList.add(new TripSchedule(1,1,1,1,4,"40분","plane"));
-	scheduleList.add(new TripSchedule(1,1,1,1,5,"50분","subway"));
-	scheduleList.add(new TripSchedule(1,1,1,1,6,"10분","bus"));
-	scheduleList.add(new TripSchedule(1,1,1,1,7,"20분","train"));
-	scheduleList.add(new TripSchedule(1,1,1,1,8,"30분","walk"));
-	scheduleList.add(new TripSchedule(1,1,1,1,9,"40분","plane"));
-	scheduleList.add(new TripSchedule(1,1,1,1,10,"10분","bus"));
-	scheduleList.add(new TripSchedule(1,1,1,1,11,"20분","train"));
-	scheduleList.add(new TripSchedule(1,1,1,1,12,"30분","walk"));
-	scheduleList.add(new TripSchedule(1,1,1,1,13,"40분","plane"));
-	scheduleList.add(new TripSchedule(1,1,1,1,14,"50분","subway"));
-	scheduleList.add(new TripSchedule(1,1,1,1,15,"10분","bus"));
-	scheduleList.add(new TripSchedule(1,1,1,1,16,"20분","train"));
-	scheduleList.add(new TripSchedule(1,1,1,1,17,"30분","walk"));
-	scheduleList.add(new TripSchedule(1,1,1,1,18,"40분","plane"));
-	
-	
-	
-	
-	scheduleList.add(new TripSchedule(1,1,1,2,1,"50분","boat"));
-	scheduleList.add(new TripSchedule(1,1,1,2,2,"10분","bus"));
-	scheduleList.add(new TripSchedule(1,1,1,2,3,"20분","train"));
-	scheduleList.add(new TripSchedule(1,1,1,2,4,"30분","walk"));
-	scheduleList.add(new TripSchedule(1,1,1,2,5,"40분","plane"));
-	scheduleList.add(new TripSchedule(1,1,1,2,6,"50분","subway"));
-	scheduleList.add(new TripSchedule(1,1,1,2,7,"10분","bus"));
-	scheduleList.add(new TripSchedule(1,1,1,2,8,"20분","train"));
-	scheduleList.add(new TripSchedule(1,1,1,2,9,"30분","plane"));
-	scheduleList.add(new TripSchedule(1,1,1,2,10,"50분","boat"));
-	scheduleList.add(new TripSchedule(1,1,1,2,11,"10분","bus"));
-	scheduleList.add(new TripSchedule(1,1,1,2,12,"20분","train"));
-	scheduleList.add(new TripSchedule(1,1,1,2,13,"30분","walk"));
-	scheduleList.add(new TripSchedule(1,1,1,2,14,"40분","plane"));
-	scheduleList.add(new TripSchedule(1,1,1,2,15,"50분","subway"));
-	scheduleList.add(new TripSchedule(1,1,1,2,16,"10분","bus"));
-	scheduleList.add(new TripSchedule(1,1,1,2,17,"20분","train"));
-	scheduleList.add(new TripSchedule(1,1,1,2,18,"30분","plane"));
 	
 	
 	
@@ -538,6 +497,7 @@
                     enctype="multipart/form-data">
                     <input class="btn btn-grey" type="reset" id="resetBt" value="취소">
                     <input class="btn btn-grey ml-4" type="button" id="submitBt" value="전송">
+                    <input type="hidden" id="fileNames" name="fileNames" value="">
 
                 </form>
             </div>
@@ -678,6 +638,10 @@
 
         function dayDelBt(e) {
             console.log("dayDelBt");
+            $("[name='day']")
+            
+            console.log("daylksjdflkjsldkjlfkj : "  + $(e.target).parent()[0].dataset.save)
+           
             $(e.target).parent().remove();
             dayCount--;
         }

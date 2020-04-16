@@ -18,17 +18,17 @@ public class TagFilter {
 		//userTag = userTag.replaceAll(" ", "");
 		System.out.println("로그인한 유저 tag : " + userTag);
 		
-		ArrayList<Trip2> tagList = new TripService2().selectTagList();	//��� ����� �Խù��� ���� �±� ������ �±� ����Ʈ�� ����
+		ArrayList<Trip2> tagList = new TripService2().selectTagList();	//여행기 정보 다 가져오기 
 				
-		String[] userTagArr = userTag.split(",");	//�α����� ������ tag String �� �迭�� �ɰ���
+		String[] userTagArr = userTag.split(",");	//로그인한 유저의 tag String을 배열로 쪼개기
 		
-		ArrayList<TagCount> tripTagCountList = new ArrayList<TagCount>();
+		ArrayList<TagCount> tripTagCountList = new ArrayList<TagCount>();	//
 		
 		int cnt = 0;
 		
 		TagCount tagCount = null;
 		
-		//����� �Խù� ��ȣ, �±�(�迭) �� tagListArr ����Ʈ�� ����
+		//모든 여행기 정보(tagList) 의 tag String을 tag String 배열로 바꿔주고 새로운 tagCount vo에 저장 하고 리스트 생성
 		for(Trip2 t : tagList) {	
 			int tripNo = t.getNo();
 			
@@ -40,7 +40,7 @@ public class TagFilter {
 			tagCount.setUserTbNo(t.getUserTbNo());
 			tagCount.setCategory(t.getCategory());
 			tagCount.setWriteDate(t.getWriteDate());
-			tagCount.setTag(t.getTag().split(",")); //��� ����� �Խù��� tag String �� �迭�� �ɰ��� ����Ʈ�� ����
+			tagCount.setTag(t.getTag().split(",")); //태그 배열로 쪼개기
 			tagCount.setTitle(t.getTitle());
 			tagCount.setContent(t.getContent());
 			tagCount.setTripLocate(t.getTripLocate());
@@ -56,6 +56,9 @@ public class TagFilter {
 		for(TagCount t : tripTagCountList) {	//Tag ��ġ�� ī��Ʈ ����
 			for(String u : userTagArr) {
 				if(Arrays.asList(t.getTag()).contains(u)) {	//�迭�� �� ���� Ȯ��
+					t.setTagCount(t.getTagCount()+1);
+				}
+				if(t.getTripLocate().equals(u)) {
 					t.setTagCount(t.getTagCount()+1);
 				}
 			}

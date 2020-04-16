@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.laon.admin.model.service.AdminService;
 import com.laon.admin.model.vo.Reports;
+import com.laon.admin.model.vo.ReportsJoinUser;
 import com.laon.common.Paging;
 
 /**
@@ -48,7 +49,7 @@ public class AdminPageViewServlet extends HttpServlet {
 		 
 		int perPage=7;
 		//신고테이블에 입력된 값 받아서 화면에 뿌려주기
-		List<Reports> list=new AdminService().selectReport(cPage,perPage);
+		List<ReportsJoinUser> list=new AdminService().selectReport(cPage,perPage);
 		
 		int totalData=new AdminService().countReport();
 		

@@ -1,8 +1,8 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="java.util.List,com.laon.admin.model.vo.Reports" %>
+<%@page import="java.util.List,com.laon.admin.model.vo.ReportsJoinUser" %>
 <%
-	List<Reports> list=(List)request.getAttribute("reports");
+	List<ReportsJoinUser> list=(List)request.getAttribute("reports");
 
 %>	
 	
@@ -42,10 +42,10 @@
             <td>자세히보기</td>
             <td>유저관리</td>
         </tr>
-        <%for (Reports re:list){ %>
+        <%for (ReportsJoinUser re:list){ %>
         <tr>
             <td><%=re.getNo() %></td>
-            <td><%=re.getUserNo() %></td>
+            <td><%=re.getUserId() %></td>
             <td>커뮤니티 게시판</td>
             <td><%=re.getReportContent() %></td>
             <td><button class="ref-page btn btn-primary" value="<%=re.getBoardNo()%>">게시글보기</button></td>

@@ -125,6 +125,7 @@ public class DonghangListViewServlet extends HttpServlet {
 			DonghangJoinUserPicture dp = null;
 			
 			for(Donghang dh : donghangList) {
+				if(dh.getDeleted().equals("N")) {
 				for(Picture p : pictureList) {					
 						if(dh.getNo() == p.getDonghangNo()) {							
 								dp = new DonghangJoinUserPicture();
@@ -151,7 +152,8 @@ public class DonghangListViewServlet extends HttpServlet {
 								
 								list.add(dp);
 					}
-				}				
+				}	
+				}
 			}
 			
 			for(DonghangJoinUserPicture djup : list) {

@@ -1,24 +1,25 @@
-package com.laon.trip.controller;
+package com.laon.mypage.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.laon.mypage.model.service.MypageService;
+
 /**
- * Servlet implementation class TripInsertViewServlet
+ * Servlet implementation class MyPageDongJoinRefusal
  */
-@WebServlet("/trip/tripInsertView.do")
-public class TripInsertViewServlet extends HttpServlet {
+@WebServlet("/myPage/myDongJoinRefusal.do")
+public class MyPageDongJoinRefusal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TripInsertViewServlet() {
+    public MyPageDongJoinRefusal() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,9 +28,24 @@ public class TripInsertViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("TripInsertViewServlet. doGet()");
+		int userNo=Integer.parseInt(request.getParameter("userNo"));
 		
-		request.getRequestDispatcher("/views/trip/tripInsertView.jsp").forward(request, response);
+		int dongJoinNo=Integer.parseInt(request.getParameter("dongJoinNo"));
+		
+		int result=new MypageService().dongJoinRefusal(dongJoinNo);
+		
+		String msg="";
+		String loc="";
+		if(result>0) {
+			msg="거절된 동행 삭제가 완료되었습니다.";
+			loc="/myPage/myPageContent.do?userNo="+userNo;
+		}else {
+			msg="거절된 동행 삭제에 실패했습니다.";
+			loc="/myPage/myPageContent.do?userNo="+userNo;
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc",loc);
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 	}
 
 	/**

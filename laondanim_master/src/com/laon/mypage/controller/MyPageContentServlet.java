@@ -50,8 +50,8 @@ public class MyPageContentServlet extends HttpServlet {
 		int tripCount = new MypageService().selectMyTripCount(userNo);
 		List tripLike=new MypageService().selectMyTripLike(userNo);
 		
-		List<Board> board=new MypageService().selectMyBoard(getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
-		int boardCount = new MypageService().selectMyBoardCount();
+		List<Board> board=new MypageService().selectMyBoard(userNo, getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
+		int boardCount = new MypageService().selectMyBoardCount(userNo);
 		String boardPasing = getPageBar(boardCount, currentPage, pagePerRow, request, "/myPage/myPageContent.do");
 		
 		request.setAttribute("userProfile", up);

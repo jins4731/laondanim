@@ -51,7 +51,8 @@
 						<!-- 게시글위치 -->
 						<table id="dhTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
-							<%for(MyDong d:myDong){ %>
+							<%if(myDong.size()>0){
+								for(MyDong d:myDong){ %>
 								<td class="p-1">
 				                    <div class="card" style="width: 155px; height: 275px;" >
 				                    	<div class="d-flex justify-content-between p-2" style="font-size:5px;">
@@ -104,6 +105,10 @@
 										</div>
 									</div>
 								</td>
+							<%} }else{ %>
+								<td colspan="4">
+									<span>등록된 나의 동행이 없습니다.</span>
+								</td>
 							<%} %>
 							</tr>
 							<%if(myDong.size()==4){ %>
@@ -139,7 +144,8 @@
 						<!-- 게시글위치 -->
 						<table id="dhTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
-							<%for(MyDong j:oriJoinDong){ %>
+							<%if(oriJoinDong.size()>0){
+								for(MyDong j:oriJoinDong){ %>
 								<td class="p-1">
 			                       	<div class="card" style="width: 155px; height: 290px;" >
 			                        	<div class="d-flex justify-content-between p-2" style="font-size:5px;">
@@ -164,7 +170,7 @@
 					                        		<%for(DonghangJoin dj:joinDong){ 
 					                        			if(j.getNo()==dj.getDonghangNo()){
 													    	if(dj.getConfirmed().equals("N")){ %>
-														    	<a class="dropdown-item" href="#">삭제</a>
+														    	<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myDongJoinRefusal.do?userNo=<%=loginUser.getNo()%>&dongJoinNo=<%=dj.getNo()%>">삭제</a>
 								                        	<%}else if(dj.getConfirmed().equals("Y")){ %>
 								                        		<a class="dropdown-item" href="#">채팅</a>
 														      	<a class="dropdown-item" href="#">동행 나가기</a>
@@ -202,6 +208,10 @@
 			                           </div>
 			                       </div>
 			                   </td>
+			                <%} }else{ %>
+			                	<td colspan="4">
+									<span>참여중인 동행이 없습니다.</span>
+								</td>
 			                <%} %>
 							</tr>
 							<%if(joinDong.size()==4){ %>

@@ -70,7 +70,7 @@ footer {
   /*   position:absolute; */
 	bottom:0;
 	width:100%;
-	height:100px;   
+	height:170px;   
 	background:#00abbf;
     padding-top:20px;
 	color: white;
@@ -161,7 +161,7 @@ header li>a {
 							<img src="<%=request.getContextPath()%>/icon/profile_icon.png" width="50px" height="50px">
 						</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#">마이페이지</a> 
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myPageContent.do?userNo=<%=loginUser.getNo()%>">마이페이지</a>  
 								<a class="dropdown-item" href="<%=request.getContextPath()%>/user/logout.do">로그아웃</a>
 							</div>
 						</li>

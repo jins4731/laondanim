@@ -6,6 +6,7 @@ import static com.laon.common.template.JDBCTemplate.getConnection;
 import static com.laon.common.template.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.laon.donghang.model.dao.DonghangDao;
@@ -16,6 +17,7 @@ import com.laon.donghang.model.vo.DonghangJoinUserPicture;
 import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.vo.TripMyCon;
+import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
 public class DonghangService {
@@ -206,5 +208,26 @@ public class DonghangService {
 		close(conn);
 		return result;
 	}
-
+	
+	//by 승연
+	public ArrayList<Donghang> selectDonghangAll(){
+		Connection conn = getConnection();
+		ArrayList<Donghang> donghangList = dao.selectDonghangAll(conn);
+		close(conn);
+		return donghangList;
+	}
+	
+	public ArrayList<Picture> selectPicture(ArrayList<Donghang> donghangList){
+		Connection conn = getConnection();
+		ArrayList<Picture> pictureList = dao.selectPicture(conn, donghangList);
+		close(conn);
+		return pictureList;
+	}
+	
+	public ArrayList<User> selectUser(ArrayList<Donghang> donghangList){
+		Connection conn = getConnection();
+		ArrayList<User> userList = dao.selectUser(conn, donghangList);
+		close(conn);
+		return userList;
+	}
 }

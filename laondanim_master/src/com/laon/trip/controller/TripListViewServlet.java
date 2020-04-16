@@ -91,8 +91,7 @@ public class TripListViewServlet extends HttpServlet {
 		
 		//총 데이터 수
 		totalItemCount = new TripService2().selectTripCount(lo, category, keyword);
-		System.out.println("======================");
-		System.out.println("총 데이터 수 : " + totalItemCount); 
+		
 		list = new TripService2().selectTripPage(cPage, perPage, lo, category, keyword, recent, like, tripTagCountList, first);
 		for(Trip2 t : list) {
 			System.out.println("servlet 에서 list" +t );

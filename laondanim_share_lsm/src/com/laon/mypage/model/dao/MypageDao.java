@@ -745,4 +745,22 @@ public class MypageDao {
 		return mindList;
 	}
 	
+	//참여 동행 거절 삭제
+	public int dongJoinRefusal(Connection conn,int no) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("dongJoinRefusal");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 }

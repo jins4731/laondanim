@@ -170,7 +170,7 @@
 					                        		<%for(DonghangJoin dj:joinDong){ 
 					                        			if(j.getNo()==dj.getDonghangNo()){
 													    	if(dj.getConfirmed().equals("N")){ %>
-														    	<a class="dropdown-item" href="#">삭제</a>
+														    	<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myDongJoinRefusal.do?userNo=<%=loginUser.getNo()%>&dongJoinNo=<%=dj.getNo()%>">삭제</a>
 								                        	<%}else if(dj.getConfirmed().equals("Y")){ %>
 								                        		<a class="dropdown-item" href="#">채팅</a>
 														      	<a class="dropdown-item" href="#">동행 나가기</a>

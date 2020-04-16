@@ -1,9 +1,16 @@
 package com.laon.trip.model.vo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-public class TripData {
+import com.google.gson.Gson;
+import com.laon.common.robot.LaonRobot;
+import com.laon.etc.model.vo.Picture;
+import com.oreilly.servlet.MultipartRequest;
+
+public class TripData implements LaonRobot<TripData>{
 	private String userNo;
 	private String category;
 	private String tag;
@@ -152,6 +159,31 @@ public class TripData {
 
 	public void setScheduleData(Day[] scheduleData) {
 		this.scheduleData = scheduleData;
+	}
+
+	@Override
+	public List<TripData> rsProcess(List<TripData> list, ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TripData rsProcess(TripData item, ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TripData mrProcess(TripData item, MultipartRequest mr, List<Picture> picList) {
+		String tripData = mr.getParameter("tripData");
+		System.out.println("tripData : " + tripData);
+		
+		Gson g = new Gson();
+		item = g.fromJson(tripData, TripData.class);
+		System.out.println("item : " + item);
+		
+		
+		return item;
 	}
 	
 	

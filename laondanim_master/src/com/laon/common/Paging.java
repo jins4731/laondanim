@@ -63,7 +63,7 @@ public class Paging {
 			pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?currentPage=" + (rowNum-1) +"&userTag="+ userTag +"&searchFilter="+searchFilter+"&keyword="+keyword+"&recent="+recent+"&viewcount="+viewcount+"&nearSchedule="+nearSchedule+"' area-label='Previous'>&lt;</a></li>";
 		}
 		
-		while(!(rowNum>pageLast || (rowNum>totalPage))) {
+		while(!(rowNum>pageLast || rowNum>totalPage)) {
 			if(cPage==rowNum) {
 				pageBar += "<li class='page-item'><a class='page-link' href=''>"+rowNum+"</a></li>";
 			}else {
@@ -135,10 +135,10 @@ public class Paging {
 		String pageBar = "<ul class=\"pagination justify-content-center\"> <li class='page-item'><a class='page-link' href='' area-label='Previous'>&laquo;</a></li>";
 		
 		int totalPage = totalItemCount/perPage+1;
-		System.out.println("총페이지수:"+totalPage);
+		
 		int pageBarSize = 5;
 	
-		int rowNum = ((cPage-1)/pageBarSize)*pageBarSize+1;
+		int rowNum = (cPage-1)/pageBarSize*pageBarSize+1;
 		int pageLast = rowNum+pageBarSize-1;
 		
 		if(rowNum == 1) {
@@ -172,21 +172,31 @@ public class Paging {
 	
 		
 		String pageBar = "<ul class=\"pagination justify-content-center\"> <li class='page-item'><a class='page-link' href='' area-label='Previous'>&laquo;</a></li>";
+		System.out.println("총 데이터 : " + totalData);
+		int totalPage = 0;
 		
-		int totalPage = totalData/perPage+1;
-		
+		if(totalData%perPage==0) {
+			totalPage = totalData/perPage;
+		}else {
+			totalPage = totalData/perPage+1;
+		}
+	
+		System.out.println("왜출력안되");
+		System.out.println("총페이지수:"+totalPage);
 		int pageBarSize = 5;
 	
-		int rowNum = (cPage-1)/pageBarSize*pageBarSize+1;
+		int rowNum = ((cPage-1)/pageBarSize)*pageBarSize+1;
 		int pageLast = rowNum+pageBarSize-1;
-		
+		System.out.println("rowNum : " + rowNum);
+		System.out.println("pageLast : " + pageLast);
+		System.out.println("totalPage : " + totalPage);
 		if(rowNum == 1) {
 			pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&lt;</a></li>";
 		}else {
 			pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?cPage=" + (rowNum-1) +"&keyword="+keyword+"&category="+category+"&lo="+lo+"&recent="+recent+"&like="+like+"&first="+first+"' area-label='Previous'>&lt;</a></li>";
 		}
 		
-		while(!(rowNum>pageLast || (rowNum>totalPage))) {
+		while(!(rowNum>pageLast || rowNum>totalPage)) {
 			if(cPage==rowNum) {
 				pageBar += "<li class='page-item'><a class='page-link' href=''>"+rowNum+"</a></li>";
 			}else {

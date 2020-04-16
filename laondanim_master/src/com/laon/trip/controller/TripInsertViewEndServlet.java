@@ -54,7 +54,7 @@ public class TripInsertViewEndServlet extends HttpServlet {
 		String encoding = "UTF-8";
 		
 		
-//		MultiPartFormTemplate.mulitPartProcess(request, response, saveDir, item);
+		MultiPartFormTemplate.mulitPartProcess(request, response, saveDir, new TripData());
 		
 		
 //		MultipartRequest mr = new MultipartRequest(request, saveDir, maxSize,encoding, new DefaultFileRenamePolicy());

@@ -41,7 +41,7 @@ public class MultiPartFormTemplate {
 			return null;
 		}
 		
-		String saveDir = request.getServletContext().getRealPath("path");
+		String saveDir = request.getServletContext().getRealPath(path);
 		int maxSize = 1024*1024*10;
 		String encoding = "UTF-8";
 		

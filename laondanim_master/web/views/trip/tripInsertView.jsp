@@ -324,7 +324,7 @@
 						%>
 
                         <div id="matzipItem<%=i %>" name="matzipItem" class="d-inline-block view zoom"
-                            ondrop="drop(event)" ondragover="dragover(event)"
+                           
                             style="height: 170px; width: 170px;position: relative;">
                             <img id="matzipImg<%=i %>" name="matzipImg" class="d-block " data-no="<%=no%>" data-category="<%=category %>"
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
@@ -354,8 +354,7 @@
                             String sns = info.getSns();
 						%>
 
-                        <div id="myoungsoItem<%=i %>" name="myoungsoItem" class="d-none view  zoom" ondrop="drop(event)"
-                            ondragover="dragover(event)" style="height: 170px; width: 170px;position: relative;">
+                        <div id="myoungsoItem<%=i %>" name="myoungsoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
                                 <img id="myoungsoImg<%=i %>" name="myoungsoImg" class="d-block" data-no="<%=no%>"
                                     data-category="<%=category %>" data-tag="<%=tag %>" data-name="<%=name %>"
                                     data-address="<%=address %>" data-businessHours="<%=businessHours %>"
@@ -386,8 +385,7 @@
 							
 						%>
 
-                        <div id="sooksoItem<%=i %>" name="sooksoItem" class="d-none view  zoom" ondrop="drop(event)"
-                            ondragover="dragover(event)" style="height: 170px; width: 170px;position: relative;">
+                        <div id="sooksoItem<%=i %>" name="sooksoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
                             <img id="sooksoImg<%=i %>" name="sooksoImg" class="d-block" data-no="<%=no%>" data-category="<%=category %>"
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
@@ -915,12 +913,13 @@
 
                     var schedule = {
                     tripinfoNo: schduleData.no,
-                    day: dayData.save,
+                    days: dayData.save,
                     orders: schduleData.order,
                     requiredHours: requiredTime,
                     transport: transport,
                     
                     }
+                    console.log("dayData.save : " + dayData.save);
                     console.log("tripinfoNo : " + schedule.tripinfoNo);
                     console.log("order : " + schduleData.order);
                     console.log("requiredTime : " + requiredTime);

@@ -281,7 +281,8 @@ public class UserDao {
 		int result=0;
 		String sql=prop.getProperty("searchReport");
 		System.out.println("������ sql="+sql);
-	try{pstmt=conn.prepareStatement(sql);
+	try{
+		pstmt=conn.prepareStatement(sql);
 		pstmt.setInt(1, userNo);
 		rs=pstmt.executeQuery();
 		rs.next();

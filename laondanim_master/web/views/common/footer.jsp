@@ -5,8 +5,8 @@
 	(주) 라온다님 |  대표:라온다님<br/>
 	사업자 등록번호: 123-456-78900<br/>
 	서울특별시 강남구   4F<br/>
-	문의:laondanim@gmail.com<br/>
-	(주)트리플은 여행정보 커뮤니티로서 금전거래 등에 대해 책임을 지지 않습니다<br/>
+	문의:laondanim@gmail.com<br/><br>
+	(주)라온다님은 여행정보 커뮤니티로서 금전거래 등에 대해 책임을 지지 않습니다<br/>
     </div>   
 
 
@@ -29,7 +29,7 @@
 
    
 <script>
-        $('select').selectpicker();
+       /*  $('select').selectpicker(); */
 </script> 
 </body>
 </html>

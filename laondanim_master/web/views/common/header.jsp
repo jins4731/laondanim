@@ -70,7 +70,7 @@ footer {
   /*   position:absolute; */
 	bottom:0;
 	width:100%;
-	height:100px;   
+	height:170px;   
 	background:#00abbf;
     padding-top:20px;
 	color: white;

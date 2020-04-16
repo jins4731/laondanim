@@ -245,7 +245,7 @@ public class MypageDao {
 	}
 	
 	//내 게시글 리스트
-	public List<Board> selectMyBoard(Connection conn,int start,int end){
+	public List<Board> selectMyBoard(Connection conn,int userNo,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<Board> list=new ArrayList<Board>();
@@ -253,8 +253,9 @@ public class MypageDao {
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				Board b=new Board();
@@ -274,13 +275,14 @@ public class MypageDao {
 	}
 	
 	//내 게시글 총 개수
-	public int selectMyBoardCount(Connection conn) {
+	public int selectMyBoardCount(Connection conn,int userNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = prop.getProperty("selectMyBoardCount");
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
 			rs = pstmt.executeQuery();
 			rs.next();
 			result = rs.getInt(1);
@@ -700,8 +702,8 @@ public class MypageDao {
 			while(rs.next()) {
 				Mind m=new Mind();
 				m.setNo(rs.getInt("no"));
-				m.setUserTbNo(rs.getInt("user_no"));
-				m.setTripinfoTbNo(rs.getInt("tripinfo_no"));
+				m.setUserNo(rs.getInt("user_no"));
+				m.setTripinfoNo(rs.getInt("tripinfo_no"));
 				m.setCancled(rs.getString("cancled"));
 				mind.add(m);
 			}
@@ -724,7 +726,7 @@ public class MypageDao {
 		try {
 			pstmt=conn.prepareStatement(sql);
 			for(Mind m:mind) {
-				pstmt.setInt(1, m.getTripinfoTbNo());
+				pstmt.setInt(1, m.getTripinfoNo());
 				rs=pstmt.executeQuery();
 				if(rs.next()) {
 					TripinfoMyMind tm=new TripinfoMyMind();

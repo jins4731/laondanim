@@ -1,7 +1,7 @@
 <%@page import="com.laon.user.model.vo.UserProfile"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.laon.user.model.vo.User" %>	
+<%@ page import="com.laon.user.model.vo.UserProfile" %>	
 <%
 	UserProfile up=(UserProfile)request.getAttribute("userProfile");
 %>
@@ -10,11 +10,11 @@
 	<div>
 		<!-- 프로필 -->
 		<div class="card" style="width: 300px">
-		<%-- <%if(up.getImage()!=null && !up.getImage().equals("")){ %>
-			<img class="card-img-top" src="<%=request.getContextPath() %>/images/defaultProfile.png" style="width: 100%">
-		<%}else{ %> --%>
+		<%if(up.getImage()!=null && !up.getImage().equals("")){ %>
 			<img class="card-img-top" src="<%=request.getContextPath() %>/views/picture/profile/<%=up.getImage() %>" style="width: 100%">
-		<%-- <%} %> --%>
+		<%}else{ %>
+			<img class="card-img-top" src="<%=request.getContextPath() %>/images/defaultProfile.png" style="width: 100%">
+		<%} %>
 			<div class="card-body">
 				<div id="myProfile">
 					<div>

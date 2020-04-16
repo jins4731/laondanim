@@ -94,18 +94,18 @@ public class MypageService {
 	}
 	
 	//내 게시글 리스트
-	public List<Board> selectMyBoard(int start,int end){
+	public List<Board> selectMyBoard(int userNo,int start,int end){
 		Connection conn=getConnection();
-		List<Board> list=dao.selectMyBoard(conn,start,end);
+		List<Board> list=dao.selectMyBoard(conn,userNo,start,end);
 		close(conn);
 		
 		return list;
 	}
 	
 	//내 게시글 총 개수
-	public int selectMyBoardCount() {
+	public int selectMyBoardCount(int userNo) {
 		Connection conn = getConnection();
-		int result = dao.selectMyBoardCount(conn);
+		int result = dao.selectMyBoardCount(conn,userNo);
 		close(conn);
 		
 		return result;

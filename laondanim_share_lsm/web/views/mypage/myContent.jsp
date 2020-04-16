@@ -56,7 +56,8 @@
 						<!-- 게시글위치 -->
 						<table id="dnTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
-							<%for(TripMyCon t:trip){ %>
+							<%if(trip.size()>0){
+								for(TripMyCon t:trip){ %>
 								<td class="p-1">
 									<div class="card" style="width: 155px; height: 250px;" >
 										<div class="d-flex justify-content-between p-2" style="font-size:5px;">
@@ -92,6 +93,10 @@
 										</div>
 									</div>
 								</td>
+							<%} }else{ %>
+								<td colspan="4">
+									<span>등록된 여행기가 없습니다.</span>
+								</td>
 							<%} %>
 							</tr>
 							<%if(trip.size()==4){ %>
@@ -120,9 +125,10 @@
 					<div>
 						<!-- 정보 -->
 						<div id="myBDInfo">
-							<div>
+							<div style="height:45px;">
 								<span>총 <%=boardCount %>개의 게시글</span>
 							</div>
+							<%if(board.size()>0){ %>
 							<div id="bdCk1">
 								<button class="btn">선택삭제</button>
 							</div>
@@ -131,6 +137,7 @@
 								<button class="btn" onclick="fnBoardDel();">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
 								<button class="btn" id="bdEndBtn">돌아가기</button>
 							</div>
+							<%} %>
 						</div>
 						<!-- 게시글위치 -->
 						<div>
@@ -142,7 +149,8 @@
 									<th>작성시간</th>
 									<th></th>
 								</tr>
-							<%for(Board b:board){ %>
+							<%if(board.size()>0){
+								for(Board b:board){ %>
 								<tr>
 									<td style="width:50px;">
 										<div class="bdCk3">
@@ -160,6 +168,12 @@
 									</td>
 									<td style="width:80px;">
 										<button class="btn">수정</button>
+									</td>
+								</tr>
+							<%} }else{ %>
+								<tr>
+									<td colspan="5">
+										<span>등록된 게시물이 없습니다.</span>
 									</td>
 								</tr>
 							<%} %>

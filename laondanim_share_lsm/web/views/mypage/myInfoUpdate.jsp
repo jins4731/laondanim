@@ -199,6 +199,15 @@
 			}
 		});
 	});
+	
+	/* $(function(){
+		var tag=document.getElementsByName("likeTag");
+		for(var i=0; i<tag.length; i++){			
+			if(up.getTag()==tag.val()){
+				$("#likeTag").prop("checked",true);
+			}
+		}
+	}); */
 </script>
 
 

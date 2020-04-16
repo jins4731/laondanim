@@ -20,7 +20,7 @@ import static com.laon.common.template.MsgTemplate.*;
 /**
  * Servlet Filter implementation class LoginCheckFilter
  */
-@WebFilter("/LoginCheckFilter")
+@WebFilter(urlPatterns= {"/board/*","/donghang/*","/guide/*","/trip/*","/tripinfo/*"})
 public class LoginCheckFilter implements Filter {
 
     /**
@@ -44,9 +44,9 @@ public class LoginCheckFilter implements Filter {
 		// TODO Auto-generated method stub
 		// place your code here
 		HttpSession session  = ((HttpServletRequest)request).getSession();
-		User m = (User) session.getAttribute(CommonKey.LOGGIN_USER);
+		User m = (User) session.getAttribute("loginUser");
 		if(m ==null) {
-			sendMSG("로그인해 주세요.", "/", (HttpServletRequest)request, (HttpServletResponse)response);
+			sendMSG("로그인 후 이용 가능한 서비스입니다.", "/", (HttpServletRequest)request, (HttpServletResponse)response);
 		}else {
 			chain.doFilter(request, response);
 		}

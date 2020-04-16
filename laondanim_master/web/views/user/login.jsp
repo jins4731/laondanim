@@ -356,7 +356,12 @@
 			
 		});
 			//세션값이 null이아니면 완료할때 alert창을 띄워줄까??
-			
+		function finishPw(){
+				var userId=$("#findPwuserId").val();
+				//아이디값을 넘겨서 아이디, 비밀번호를 가져와
+				location.href="<%=request.getContextPath()%>/user/alterPw.do?userId="+userId;
+		
+			}	
 		
 		
 	

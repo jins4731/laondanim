@@ -1,5 +1,10 @@
 package com.laon.mypage.controller;
 
+import static com.laon.common.MyPaging.getCurrentPage;
+import static com.laon.common.MyPaging.getEndNum;
+import static com.laon.common.MyPaging.getPageBar;
+import static com.laon.common.MyPaging.getStartNum;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -10,23 +15,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.laon.etc.model.vo.Like;
-import com.laon.etc.model.vo.Mind;
 import com.laon.mypage.model.service.MypageService;
 import com.laon.trip.model.vo.TripMyCon;
-import com.laon.tripinfo.model.vo.TripinfoMyMind;
 import com.laon.user.model.vo.UserProfile;
 
 /**
- * Servlet implementation class MyPageHeartServlet
+ * Servlet implementation class MyPageLikeTripServlet
  */
-@WebServlet("/myPage/myPageHeart.do")
-public class MyPageHeartServlet extends HttpServlet {
+@WebServlet("/myPage/myLikeTrip.do")
+public class MyPageLikeTripServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageHeartServlet() {
+    public MyPageLikeTripServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,13 +41,14 @@ public class MyPageHeartServlet extends HttpServlet {
 		int userNo=Integer.parseInt(request.getParameter("userNo"));
 		UserProfile up=new MypageService().selectUserNo(userNo);
 		
+		int currentPage = getCurrentPage(request);
+		int pagePerRow = 20;
+		
 		List<Like> likeT=new MypageService().selectTripLike(userNo);
-		List<TripMyCon> tripList=new MypageService().selectTripList(likeT);
+		List<TripMyCon> tripList=new MypageService().selectTripListAll(likeT, getStartNum(currentPage, pagePerRow), getEndNum(currentPage, pagePerRow));
 		List<UserProfile> userNick=new MypageService().selectTripUserNick(tripList);
 		int likeTripCount=new MypageService().selectLikeTripCount(userNo);
-		
-		List<Mind> mind=new MypageService().selectMind(userNo);
-		List<TripinfoMyMind> mindList=new MypageService().selectMindList(mind);
+		String myLTPasing = getPageBar(likeTripCount, currentPage, pagePerRow, request, "/myPage/myLikeTrip.do");
 		
 		request.setAttribute("userProfile", up);
 		
@@ -52,11 +56,9 @@ public class MyPageHeartServlet extends HttpServlet {
 		request.setAttribute("tripList", tripList);
 		request.setAttribute("userNick", userNick);
 		request.setAttribute("likeTripCount", likeTripCount);
+		request.setAttribute("myLTPasing", myLTPasing);
 		
-		request.setAttribute("mind", mind);
-		request.setAttribute("mindList", mindList);
-		
-		request.getRequestDispatcher("/views/mypage/myHeart.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/mypage/myLikeTrip.jsp").forward(request, response);
 	}
 
 	/**

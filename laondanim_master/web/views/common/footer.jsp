@@ -1,8 +1,14 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <footer>
-        <p>&lt;CopyRight 2020. <Strong>Laondanim</Strong>
-        .All right reserved.&gt;</p>
+	<div>
+	사업자명 (주)라온다님 |  대표:라온다님<br/>
+	사업자 등록번호 123-456-78900<br/>
+	통신판매업 신고번호 2020-라온다님-0418<br/>
+	서울특별시 강남구 테헤란로 14길 6, 남도빌딩 4F<br/>
+	문의:laondanim@gmail.com<br/>
+	(주)라온다님은 여행커뮤니티 사이트로서 금전 거래 등에 대해 책임을 지지 않습니다.<br/>
+    </div>   
 
 
 </footer>

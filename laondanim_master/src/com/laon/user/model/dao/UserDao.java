@@ -100,7 +100,7 @@ public class UserDao {
 	}
 	
 	public User findId(Connection conn,String name,String email) {
-		//ÀÌ¸§,ÀÌ¸ŞÀÏÀÌ ÀÏÄ¡ÇÏ´Â È¸¿øÀÌ ÀÖ´ÂÁö È®ÀÎ ÈÄ. ¸ŞÀÏº¸³»Áà
+		//ï¿½Ì¸ï¿½,ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½. ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½ï¿½
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		User u=null;
@@ -127,7 +127,7 @@ public class UserDao {
 		
 	}
 	public User findPw(Connection conn,String id,String email) {
-		//ÀÌ¸§,ÀÌ¸ŞÀÏÀÌ ÀÏÄ¡ÇÏ´Â È¸¿øÀÌ ÀÖ´ÂÁö È®ÀÎ ÈÄ. ¸ŞÀÏº¸³»Áà
+		//ï¿½Ì¸ï¿½,ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½. ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½ï¿½
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		User u=null;
@@ -155,7 +155,7 @@ public class UserDao {
 
 
 	public int updateTemPw(Connection conn,String id, String authenticationKey) {
-		//ÀÓ½Ãºñ¹Ğ¹øÈ£·Î µğºñ¿¡ º¯°æÇÏ´Â ·ÎÁ÷
+		//ï¿½Ó½Ãºï¿½Ğ¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
 		PreparedStatement pstmt=null;
 		int result=0;
 		String sql=prop.getProperty("updateTemPw");
@@ -279,7 +279,7 @@ public class UserDao {
 		ResultSet rs=null;
 		int result=0;
 		String sql=prop.getProperty("searchReport");
-		System.out.println("½ÇÇàÇÒ sql="+sql);
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ sql="+sql);
 	try{pstmt=conn.prepareStatement(sql);
 		pstmt.setInt(1, userNo);
 		rs=pstmt.executeQuery();
@@ -293,4 +293,5 @@ public class UserDao {
 		close(pstmt);
 	}return result;
 	   
+}
 }

@@ -217,7 +217,7 @@
                 </div>
 
                 <div class="row form-group mb-1">
-                    <input type="text" id="user" class="form-control border-top-0 border-left-0 border-right-0 "
+                    <input type="text" id="title" class="form-control border-top-0 border-left-0 border-right-0 "
                         name="userName" placeholder="여행기 제목을 입력해주세요.">
                 </div>
 
@@ -225,7 +225,7 @@
                     <label for="publicEnabled" class="mb-1">공개</label>
                     <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="publicEnabledId" name="publicEnabled">
-                        <label for="publicEnabled" class="custom-control-label"></label>
+                        <label for="publicEnabledId" class="custom-control-label"></label>
                     </div>
                 </div>
             </div>
@@ -247,7 +247,7 @@
                         <div class="row form-group mb-0 ">
                             <span class="col-3 pt-1 font-weight-bold">여행지역</span>
                             <input class="col-6" type="text" id="travleLocale"
-                                class="form-control border-top-0 border-left-0 border-right-0 " name="title" id="title"
+                                class="form-control border-top-0 border-left-0 border-right-0 " name="title" 
                                 placeholder="여행지역을 입력해주세요.">
                         </div>
                         <div class="row form-group mb-0">
@@ -310,6 +310,7 @@
 
                         <%for(int i=0;i<matzipList.size();i++){ //맛집
                             Tripinfo info = matzipList.get(i);
+                            int no = info.getNo();
                             String category = info.getCategory();
                             String tag = info.getTag();
                             String name = info.getName();
@@ -325,7 +326,7 @@
                         <div id="matzipItem<%=i %>" name="matzipItem" class="d-inline-block view zoom"
                             ondrop="drop(event)" ondragover="dragover(event)"
                             style="height: 170px; width: 170px;position: relative;">
-                            <img id="matzipImg<%=i %>" name="matzipImg" class="d-block " data-category="<%=category %>"
+                            <img id="matzipImg<%=i %>" name="matzipImg" class="d-block " data-no="<%=no%>" data-category="<%=category %>"
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
@@ -341,6 +342,7 @@
                         <%} %>
                         <%for(int i=0;i<myoungsoList.size();i++){ // 명소
                             Tripinfo info = myoungsoList.get(i);
+                            int no = info.getNo();
                             String category = info.getCategory();
                             String tag = info.getTag();
                             String name = info.getName();
@@ -354,7 +356,7 @@
 
                         <div id="myoungsoItem<%=i %>" name="myoungsoItem" class="d-none view  zoom" ondrop="drop(event)"
                             ondragover="dragover(event)" style="height: 170px; width: 170px;position: relative;">
-                                <img id="myoungsoImg<%=i %>" name="myoungsoImg" class="d-block"
+                                <img id="myoungsoImg<%=i %>" name="myoungsoImg" class="d-block" data-no="<%=no%>"
                                     data-category="<%=category %>" data-tag="<%=tag %>" data-name="<%=name %>"
                                     data-address="<%=address %>" data-businessHours="<%=businessHours %>"
                                     data-tel="<%=tel %>" data-homepage="<%=homepage %>" data-naver="<%=naver %>"
@@ -371,6 +373,7 @@
                         <%} %>
                         <%for(int i=0;i<sooksoList.size();i++){  //숙소
                             Tripinfo info = sooksoList.get(i);
+                            int no = info.getNo();
                             String category = info.getCategory();
                             String tag = info.getTag();
                             String name = info.getName();
@@ -385,7 +388,7 @@
 
                         <div id="sooksoItem<%=i %>" name="sooksoItem" class="d-none view  zoom" ondrop="drop(event)"
                             ondragover="dragover(event)" style="height: 170px; width: 170px;position: relative;">
-                            <img id="sooksoImg<%=i %>" name="sooksoImg" class="d-block" data-category="<%=category %>"
+                            <img id="sooksoImg<%=i %>" name="sooksoImg" class="d-block" data-no="<%=no%>" data-category="<%=category %>"
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
@@ -450,7 +453,7 @@
                             style="margin-right: 7rem ;width: 100px;height: 100px;background-size: contain; background-image: url(<%=request.getContextPath()%>/picture/trip/icon/start.png)">
                         </div>
     
-                        <div class="border-danger mr-2 d-inline-block"
+                        <div class="border-danger mr-2 d-inline-block" data-order="1"
                             style=" width: 100px;height: 100px;position: relative;background-size: contain ;background-image: url(<%=request.getContextPath()%>/picture/trip/icon/rectangle.png);"
                             ondrop="drop(event)" ondragover="dragover(event)">
                         </div>
@@ -495,7 +498,7 @@
                             <img src="<%=request.getContextPath() %>/picture/trip/plus.png" alt=""
                                 style="object-fit: contain;width: 100%;height: 100%;">
                             <input type="file" id="image" name="image" multiple accept="image/jpg,image/png"
-                                style="width: 100%;height: 100%;position: absolute;" form="formId">
+                                style="width: 100%;height: 100%;position: absolute;" form="tripForm">
                         </div>
 
 
@@ -597,7 +600,7 @@
                         style="margin-right: 7rem ;width: 100px;height: 100px;background-size: contain; background-image: url(<%=request.getContextPath()%>/picture/trip/icon/start.png)">
                     </div>
                     
-                    <div class="border-danger mr-2 d-inline-block"
+                    <div name="scheduleOrder" class="border-danger mr-2 d-inline-block"
                         style=" width: 100px;height: 100px;position: relative;background-size: contain ;background-image: url(<%=request.getContextPath()%>/picture/trip/icon/rectangle.png);"
                         ondrop="drop(event)" ondragover="dragover(event)">
                     </div>
@@ -640,14 +643,17 @@
             span[0].dataset.save = dayCount;
             var div = $('<div class="d-flex ml-2 bg-primary rounded-pill justify-content-center align-items-center" style="height: 100%;width: 60px;cursor: pointer;" onclick="dayBt(event)"></div>');
             div.append(span).append(a);
-            div.data("save",dayCount);
+            div[0].dataset.save = dayCount;
             $(event.target).before(div);
 
+
             var daytemple = $("#dayTemple").clone();
+           
             daytemple.attr("id","day"+dayCount);
             daytemple.attr("name","day");
             daytemple[0].dataset.save = dayCount;
             daytemple.addClass("d-none");
+            daytemple.find("[name='scheduleOrder']")[0].dataset.order = 1;
             $("#dayContainer").append(daytemple.clone());
 
         });
@@ -780,15 +786,18 @@
             console.log("ondrop");
             event.preventDefault();
             const div = $(event.target)[0];
+            var order = div.dataset.order;
             var data = event.dataTransfer.getData("itemId");
 
             var itemClone = $("#" + data).clone(); // 이미지
             console.log(itemClone);
+            itemClone.find("img")[0].dataset.order = order;
             itemClone.attr("name","schedule"+itemClone.attr("name"));
             $(itemClone).css({
                 width: "100px",
                 height: "100px"
             });
+
             div.appendChild(itemClone.clone()[0]);
             var trantport = $("[name='tranport']").clone(); // 교통편, 이동시간
             var input = trantport.find("input");
@@ -803,6 +812,7 @@
             });
             div.appendChild(trantport[0]);
             var addSchedule = $("[name='addSchedule']")[0].cloneNode()// 아이템 추가 공간 생성
+            addSchedule.dataset.order= (Number(order)+1);
             event.target.after(addSchedule);
             
 
@@ -882,6 +892,46 @@
 
         $("#submitBt").on("click", function () {
             console.log("submitBt");
+           
+
+
+            var dayList = [];
+
+           
+            
+            for(let i = 0;i<$("[name='day']").length;i++){
+                console.log("day : " + i);
+
+                var day = {
+                    no:i,
+                    scheduleList:[]
+                }
+                for(let k = 0 ;k<$($("[name='day']")[i]).find("img").length;k++){
+                    console.log("img : " + k)
+                    var dayData = $("[name='day']")[i].dataset;
+                    var requiredTime = $($($("[name='day']")[i]).find("input")[k]).val();
+                    var transport = $($($("[name='day']")[i]).find("button")[k]).html();
+                    var schduleData = $($("[name='day']")[i]).find("img")[k].dataset;
+
+                    var schedule = {
+                    tripinfoNo: schduleData.no,
+                    day: dayData.save,
+                    orders: schduleData.order,
+                    requiredHours: requiredTime,
+                    transport: transport,
+                    
+                    }
+                    console.log("tripinfoNo : " + schedule.tripinfoNo);
+                    console.log("order : " + schduleData.order);
+                    console.log("requiredTime : " + requiredTime);
+                    console.log("transport : " + transport);
+                    day.scheduleList.push(schedule);
+                }
+                dayList.push(day);
+            }
+
+
+
             var _userNo = "";
             var _category = $("#category").html(); // 확인
             // var _writeDate = $("#writeDate");  
@@ -891,54 +941,57 @@
             }
             _tag = _tag.substr(0,_tag.length-1);
 
-            var _title = $("#title").val();
-            var _content = $("#content").html();
-            var _travleLocale = $("#travleLocale");
-            var _peopleNum = $("#peopleNum");
-            var _travleType = $("#travleType");
-            var _travleStartDate = $("#travleStartDate");
-            var _travleEndDate = $("#travleEndDate");
-            var _publicEnabled = $("#publicEnabled");
+            var _title = $("#title").val(); 
+            var _content = $("#content").val();
+            var _travleLocale = $("#travleLocale").val();
+            var _peopleNum = $("#peopleNum").val();
+            var _travleType = $("#travleType").val();
+            var _travleStartDate = $("#travleStartDateId").val();
+            var _travleEndDate = $("#travleEndDateId").val();
+            var _publicEnabled = $("#publicEnabledId").val();
+          
 
-
-            for(let i = 0;i<$("[name='day']").length;i++){
-
+            var tripData = {
+                userNo:_userNo,
+                category:_category,
+                tag:_tag,
+                title:_title,
+                content:_content,
+                travleLocale:_travleLocale,
+                peopleNum:_peopleNum,
+                travleTyp:_travleType,
+                travleStartDate:_travleStartDate,
+                travleEndDate:_travleEndDate,
+                publicEnabled:_publicEnabled,
+                deleted:'n',
+                scheduleData:dayList
             }
+            
+            var f = $("#tripForm")[0];
+            var formData = new FormData(f);
+            formData.append("tripData",JSON.stringify(tripData));
 
-
-            var _tripinfoNo = $("#category");
-            var _day = $("#category");
-            var _orders = $("#category");
-            var _requiredHours = $("#category");
-            var _transport = $("#category");
-
-            var form = $("#tripForm")[0];
-            var data = new Form(form);
-
-            var trip = {
-                user: _userNo,
-                category: _category,
-                // writeDate: _writeDate,
-                tag: _tag,
-                title: _title,
-                content: _content,
-                travleLocale: _travleLocale,
-                peopleNum: _peopleNum,
-                travleType: _travleType,
-                travleStartDate: _travleStartDate,
-                travleEndDate: _travleEndDate,
-                publicEnabled: _publicEnabled,
-                deleted: 'n',
-                scheduleList: []
-            }
-
-            var schedule = {
-                tripinfoNo: _tripinfoNo,
-                day: _day,
-                orders: _orders,
-                requiredHours: _requiredHours,
-                transport: _transport,
-            }
+         
+            $.ajax({
+                url: "<%=request.getContextPath()%>/trip/tripInsertViewEnd.do",
+                type: "post",
+                enctype: "multipart/form-data", 
+                data:formData,
+                processData: false,
+                contentType: false,
+                dataType: "html", //xml,html,script,json,jsonp,text
+                success: function (data, status, xmlHttpRequest) {
+                    console.log(data, status, xmlHttpRequest);
+                    // location.replace('<%=request.getContextPath()%>/');
+                },
+                error: function (xmlHttpRequest, status, error) {
+                    console.log(xmlHttpRequest, status, error);
+                },
+                complete: function (xmlHttpRequest, status) {
+                    console.log(xmlHttpRequest, status);
+                }
+            });
+            
 
 
 

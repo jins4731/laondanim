@@ -16,8 +16,10 @@ import com.laon.board.model.vo.Board;
 import com.laon.donghang.model.vo.DonghangJoin;
 import com.laon.donghang.model.vo.MyDong;
 import com.laon.etc.model.vo.Like;
+import com.laon.etc.model.vo.Mind;
 import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.vo.TripMyCon;
+import com.laon.tripinfo.model.vo.TripinfoMyMind;
 import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
@@ -33,6 +35,7 @@ public class MypageDao {
 		}
 	}
 	
+	//�α��� ���� ������ ����
 	public UserProfile selectUserNo(Connection conn, int no) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -67,6 +70,7 @@ public class MypageDao {
 		return up;
 	}
 	
+	//�������������� �� �н����� üũ
 	public boolean selectPwck(Connection conn,int userNo,String pw){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -90,6 +94,7 @@ public class MypageDao {
 		return flag;
 	}
 	
+	//��������
 	public int updateUserInfo(Connection conn,User u) {
 		PreparedStatement pstmt=null;
 		int result=0;
@@ -112,6 +117,7 @@ public class MypageDao {
 		return result;
 	}
 	
+	//�������� ������ ����
 	public int updateUserProfile(Connection conn,Picture p) {
 		PreparedStatement pstmt=null;
 		int result=0;
@@ -130,6 +136,7 @@ public class MypageDao {
 		return result;
 	}
 	
+	//�� ������ �ֽű� 4��
 	public List<TripMyCon> selectMyTrip(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -158,6 +165,7 @@ public class MypageDao {
 		return list;
 	}
 	
+	//�� ������ �������� ��� ����Ʈ
 	public List<TripMyCon> selectMyTripAll(Connection conn,int userNo,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -188,6 +196,7 @@ public class MypageDao {
 		return list;
 	}
 	
+	//�� ������ ���ƿ� ����
 	public List selectMyTripLike(Connection conn,int userNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -214,6 +223,7 @@ public class MypageDao {
 		return like;
 	}
 	
+	//�� ������ �� ����
 	public int selectMyTripCount(Connection conn,int userNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -234,6 +244,7 @@ public class MypageDao {
 		return result;
 	}
 	
+	//�� �Խñ� ����Ʈ
 	public List<Board> selectMyBoard(Connection conn,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -262,6 +273,7 @@ public class MypageDao {
 		return list;
 	}
 	
+	//�� �Խñ� �� ����
 	public int selectMyBoardCount(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -281,6 +293,7 @@ public class MypageDao {
 		return result;
 	}
 	
+	//�� ���� �ֽű� 4��
 	public List<MyDong> selectMyDong(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -314,6 +327,7 @@ public class MypageDao {
 		return list;
 	}
 	
+	//�� ���� �������� ��� ����Ʈ
 	public List<MyDong> selectMyDHAll(Connection conn,int userNo,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -349,6 +363,7 @@ public class MypageDao {
 		return list;
 	}
 	
+	//�� ���� �� ����
 	public int selectMyDongCount(Connection conn,int userNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -369,6 +384,7 @@ public class MypageDao {
 		return result;
 	}
 	
+	//�������� ��ȸ
 	public List<DonghangJoin> selectJoin(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -400,6 +416,7 @@ public class MypageDao {
 		return list;
 	}
 	
+	//�������� �������� ���� ����Ʈ �ֽű� 4��
 	public List<MyDong> selectOriJoin(Connection conn, List<DonghangJoin> jd){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -437,6 +454,7 @@ public class MypageDao {
 		return list;
 	}
 	
+	//�������� �������� �������� �� ������ ��� ����Ʈ
 	public List<MyDong> selectOriJoinAll(Connection conn, List<DonghangJoin> jd,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -476,6 +494,7 @@ public class MypageDao {
 		return list;
 	}
 	
+	//�������� ����Ʈ�� ���� �ۼ��� �г���
 	public List<UserProfile> selectUserNick(Connection conn, List<MyDong> ojd){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -503,6 +522,7 @@ public class MypageDao {
 		return userNick;
 	}
 	
+	//�������� �� ����
 	public int selectMyJDCount(Connection conn,int userNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -523,6 +543,7 @@ public class MypageDao {
 		return result;
 	}
 	
+	//���� ���ƿ��� ����� �ѹ�
 	public List<Like> selectTripLike(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -550,6 +571,7 @@ public class MypageDao {
 		return likeT;
 	}
 	
+	//���� ���ƿ��� ����� ����Ʈ
 	public List<TripMyCon> selectTripList(Connection conn,List<Like> likeT){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -581,6 +603,41 @@ public class MypageDao {
 		return tripList;
 	}
 	
+	//���� ���ƿ��� ����� ����Ʈ ��ü
+	public List<TripMyCon> selectTripListAll(Connection conn,List<Like> likeT,int start,int end){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<TripMyCon> tripList=new ArrayList<TripMyCon>();
+		String sql=prop.getProperty("selectTripListAll");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			for(Like l:likeT) {
+				pstmt.setInt(1, l.getTripNo());
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					TripMyCon t=new TripMyCon();
+					t.setNo(rs.getInt("no"));
+					t.setUserTbNo(rs.getInt("user_no"));
+					t.setCategory(rs.getString("category"));
+					t.setWriteDate(rs.getDate("write_date"));
+					t.setTitle(rs.getString("title"));
+					t.setImage(rs.getString("image"));
+					tripList.add(t);
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return tripList;
+	}
+	
+	//���� ���ƿ��� ����� �ۼ��� �г���
 	public List<UserProfile> selectTripUserNick(Connection conn,List<TripMyCon> tl){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -608,6 +665,7 @@ public class MypageDao {
 		return userNick;
 	}
 	
+	//���� ���ƿ��� ����� �� ����
 	public int selectLikeTripCount(Connection conn,int userNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -626,6 +684,63 @@ public class MypageDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	//���� ���� �������� �ѹ�
+	public List<Mind> selectMind(Connection conn,int userNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Mind> mind=new ArrayList<Mind>();
+		String sql=prop.getProperty("selectMind");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Mind m=new Mind();
+				m.setNo(rs.getInt("no"));
+				m.setUserNo(rs.getInt("user_no"));
+				m.setTripinfoNo(rs.getInt("tripinfo_no"));
+				m.setCancled(rs.getString("cancled"));
+				mind.add(m);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return mind;
+	}
+	
+	//���� ���� �������� ����Ʈ
+	public List<TripinfoMyMind> selectMindList(Connection conn,List<Mind> mind){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<TripinfoMyMind> mindList=new ArrayList<TripinfoMyMind>();
+		String sql=prop.getProperty("selectMindList");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			for(Mind m:mind) {
+				pstmt.setInt(1, m.getTripinfoNo());
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					TripinfoMyMind tm=new TripinfoMyMind();
+					tm.setNo(rs.getInt("no"));
+					tm.setCategory(rs.getString("category"));
+					tm.setImage(rs.getString("image"));
+					mindList.add(tm);
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return mindList;
 	}
 	
 }

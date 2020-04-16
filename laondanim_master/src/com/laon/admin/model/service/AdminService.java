@@ -12,6 +12,7 @@ import static com.laon.common.template.JDBCTemplate.commit;
 import static com.laon.common.template.JDBCTemplate.rollback;
 
 
+
 public class AdminService {
 
 	public AdminDao dao=new AdminDao();

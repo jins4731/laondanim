@@ -70,7 +70,7 @@ footer {
   /*   position:absolute; */
 	bottom:0;
 	width:100%;
-	height:100px;   
+	height:170px;   
 	background:#00abbf;
     padding-top:20px;
 	color: white;
@@ -141,7 +141,14 @@ header li>a {
 								<a class="dropdown-item" href="<%=request.getContextPath()%>/board/list.do">게시판</a>
 							</div>
 						</li>
-						<%if(loginUser==null){ %>
+						
+						<%
+						if(loginUser!=null){
+						System.out.println("헤더에서 출력:");
+						System.out.println(loginUser);	
+						System.out.println(loginUser.getUserId());
+						}
+						if(loginUser==null){ %>
 						<!-- 세션의 멤버 값을 가져와서 null 일경우 로그인 페이지로 이동-->
 						<li class="nav-item">
 						<a class="nav-link" href="<%=request.getContextPath()%>/user/loginPage.do">로그인

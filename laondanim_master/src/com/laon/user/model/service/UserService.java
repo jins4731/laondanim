@@ -7,6 +7,7 @@ import static com.laon.common.template.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
 
+import com.laon.etc.model.vo.Picture;
 import com.laon.user.model.dao.UserDao;
 import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
@@ -78,6 +79,23 @@ public class UserService {
 		User user = dao.selectUser(conn, no);
 		close(conn);
 		return user;
+	}
+		public int selectUserNo(String userId, String password, String email) {
+		Connection conn=getConnection();
+		int userNo = dao.selectUserNo(conn, userId, password, email);
+		close(conn);
+		return userNo;
+	}
+
+	public int insertPicture(int userNo) {
+		Connection conn = getConnection();
+		int result = dao.insertPicture(conn, userNo);
+		if(result>0) {
+			commit(conn);
+		} else rollback(conn);
+		close(conn);
+		
+		return result;
 	}
 	
 		public int searchReport(int userNo) {

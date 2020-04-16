@@ -417,6 +417,12 @@
 		$("#enrollEmailAut").hide();
 		$("#autCodeCheck").hide();		
 	});
+	
+	//likeArea Select > Option에서 값 받기
+    $("#likeAreaSelect").change(()=>{
+      let ckOption = $("#likeAreaSelect option:checked").text();
+        $("#likeArea").val(ckOption);
+    });
 
 
 	//중복 아이디 + 중복 닉네임 + 틀린 인증코드 가입방지

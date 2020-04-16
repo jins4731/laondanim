@@ -18,7 +18,7 @@ import com.laon.board.model.vo.BoardJoinUser;
 /**
  * Servlet implementation class BoardViewServlet
  */
-@WebServlet("/board/boardView")
+@WebServlet("/board/boardView.do")
 public class BoardViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -34,22 +34,22 @@ public class BoardViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//°Ô½Ã±Û º¸´Â ¼­ºí¸´
-		//°Ô½Ã±Û ¹øÈ£ °¡Á®¿È
+		//ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		//ï¿½Ô½Ã±ï¿½ ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		int boardNo=Integer.parseInt(request.getParameter("no"));
-		System.out.println("µé¾î¿Ô´Ï?"+boardNo);
-		//ÄíÅ°·Î Á¶È¸¼ö ¼³Á¤. f5´©¸£¸é Á¶È¸¼ö°¡ °è¼Ó¿Ã¶ó°¡À¯
+		System.out.println("ï¿½ï¿½ï¿½Ô´ï¿½?"+boardNo);
+		//ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. f5ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ó¿Ã¶ï¿½ï¿½ï¿½
 		Cookie[] cookies=request.getCookies();
 		String cookieVal="";
-		boolean hasRead=false;//false¸é  Á¶È¸¼ö Áõ°¡, true¸é Á¶È¸¼ö ±×´ë·Î
+		boolean hasRead=false;//falseï¿½ï¿½  ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, trueï¿½ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½×´ï¿½ï¿½
 		if(cookies!=null) {
 			for(Cookie c:cookies) {
 				String name=c.getName();
 				String value=c.getValue();
-				System.out.println("ÄíÅ°°ª:"+name+":"+value);
+				System.out.println("ï¿½ï¿½Å°ï¿½ï¿½:"+name+":"+value);
 				if("boardCookie".equals(name)) {
 					cookieVal=value;
-					if(value.contains("|"+boardNo+"|")) {//"|"´Â ±¸ºÐÀÚ. ¾Û¿¡¼­ ÄíÅ°°ª È®ÀÎÇÏ¸é ÀÌÇØ °¡´É.
+					if(value.contains("|"+boardNo+"|")) {//"|"ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. ï¿½Û¿ï¿½ï¿½ï¿½ ï¿½ï¿½Å°ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 						hasRead=true;
 						break;
 					}
@@ -57,23 +57,22 @@ public class BoardViewServlet extends HttpServlet {
 			}
 		}
 		if(!hasRead) {
-			//¾ÈÀÐÀº°Å¸é
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½
 			Cookie c=new Cookie("boardCookie",cookieVal+"|"+boardNo+"|");
-			c.setMaxAge(-1);//session Á¾·á½Ã »èÁ¦
+			c.setMaxAge(-1);//session ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			response.addCookie(c);
 		}
 		
 		BoardJoinUser b=new BoardService().boardDetail(boardNo,hasRead);
-		System.out.println("b´Â¹¹¾ß:"+b);
-		//´ñ±Ûµµ ¹Þ¾Æ¿ÀÀÚ
-		//°Ô½Ã±ÛÀÇ ¹øÈ£¸¦ ´ñ±Ûµµ ÂüÁ¶ÇÏ°í ÀÖÀ¸´Ï±î!
-		List<BoardCommentJoinUser> comments=new BoardService().selectComment(boardNo);
-		System.out.println("´ñ±Û ÀÖ´Ï:"+comments.size());
 		
-		if(b==null) { //°Ô½Ã±ÛÀÌ ¾øÀ»°æ¿ì
-			String msg="¼±ÅÃÇÑ °Ô½Ã¹°ÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù"; 
-			String loc="/board/board"; 
-			request.setAttribute("msg", "¼±ÅÃÇÑ °Ô½Ã¹°ÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù");
+		//ï¿½ï¿½Ûµï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½
+		//ï¿½Ô½Ã±ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½Ûµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½!
+		List<BoardCommentJoinUser> comments=new BoardService().selectComment(boardNo);
+		System.out.println("ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½:"+comments.size());
+		
+		if(b==null) { //ï¿½Ô½Ã±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			
+			request.setAttribute("msg", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½");
 			request.setAttribute("loc", "/board/list.do");
 			request.getRequestDispatcher("/views/common/msg.jsp");
 			

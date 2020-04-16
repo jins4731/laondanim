@@ -2,12 +2,11 @@
 	pageEncoding="UTF-8"%>
 <footer>
 	<div>
-	»ç¾÷ÀÚ¸í (ÁÖ)¶ó¿Â´Ù´Ô |  ´ëÇ¥:¶ó¿Â´Ù´Ô<br/>
-	»ç¾÷ÀÚ µî·Ï¹øÈ£ 123-456-78900<br/>
-	Åë½ÅÆÇ¸Å¾÷ ½Å°í¹øÈ£ 2020-¶ó¿Â´Ù´Ô-0418<br/>
-	¼­¿ïÆ¯º°½Ã °­³²±¸ Å×Çì¶õ·Î 14±æ 6, ³²µµºôµù 4F<br/>
-	¹®ÀÇ:laondanim@gmail.com<br/>
-	(ÁÖ)¶ó¿Â´Ù´ÔÀº ¿©ÇàÄ¿¹Â´ÏÆ¼ »çÀÌÆ®·Î¼­ ±ÝÀü °Å·¡ µî¿¡ ´ëÇØ Ã¥ÀÓÀ» ÁöÁö ¾Ê½À´Ï´Ù.<br/>
+	(ì£¼) ë¼ì˜¨ë‹¤ë‹˜ |  ëŒ€í‘œ:ë¼ì˜¨ë‹¤ë‹˜<br/>
+	ì‚¬ì—…ìž ë“±ë¡ë²ˆí˜¸: 123-456-78900<br/>
+	ì„œìš¸íŠ¹ë³„ì‹œ ê°•ë‚¨êµ¬   4F<br/>
+	ë¬¸ì˜:laondanim@gmail.com<br/><br>
+	(ì£¼)ë¼ì˜¨ë‹¤ë‹˜ì€ ì—¬í–‰ì •ë³´ ì»¤ë®¤ë‹ˆí‹°ë¡œì„œ ê¸ˆì „ê±°ëž˜ ë“±ì— ëŒ€í•´ ì±…ìž„ì„ ì§€ì§€ ì•ŠìŠµë‹ˆë‹¤<br/>
     </div>   
 
 
@@ -30,7 +29,7 @@
 
    
 <script>
-        $('select').selectpicker();
+       /*  $('select').selectpicker(); */
 </script> 
 </body>
 </html>

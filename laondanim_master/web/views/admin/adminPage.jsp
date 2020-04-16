@@ -8,9 +8,9 @@
 	
 <%@ include file="/views/common/header.jsp"%>
 <style>
-	.admin-header{
+/* 	.admin-header{
 	margin-left:23%;
-	}
+	} */
 	table{
 	text-align:center;
 	margin-left:auto;
@@ -21,12 +21,15 @@
 	
 	
 </style>
-<section>
+<div style='height: 170px;'></div>
+<section class="d-flex flex-column justify-content-center align-items-center">
+
  <hr/>
-    <div class="admin-header">
+    <div class="admin-header d-flex flex-column justify-content-center align-items-center">
         <h2>관리자 게시판</h2>
+        <hr class="boder w-100">
     </div>
-    <hr/>
+
     <table class="table table-bordered" style="width:1000px">
         <tr>
             <td colspan="6">

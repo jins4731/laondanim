@@ -40,41 +40,43 @@ public class LoginServlet extends HttpServlet {
 		//클라이언트가 보낸 데이터가 db에 있는 Member테이블에 있는지 확인
 		
 		User u=new UserService().login(id,pw);
-		System.out.println("유저 존재하는지:"+u);
-		if(u!=null) {//회원일때
+		System.out.println("유저 존재하는지:"+u.getUserId());
+		
+		
+		if(u.getNo()>0) {//회원일때
 		int userNo=u.getNo();
 		System.out.println("유저번호:"+userNo);
 		int result=new UserService().searchReport(userNo);
 		System.out.println("리포트결과 있니:"+result);
 		//세션 만들어주기
-		if(u!=null&&result>0) {
+			if(u!=null&&result>0) {
 			
-			request.setAttribute("msg", "관리자에 의해 정지된 회원입니다");
-			request.setAttribute("loc", "/views/user/login.jsp");
-			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+				request.setAttribute("msg", "관리자에 의해 정지된 회원입니다");
+				request.setAttribute("loc", "/views/user/login.jsp");
+				request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 			
 			
-		}else if(u!=null) {//로그인 성공했을떄
-			HttpSession session=request.getSession();
-			session.setAttribute("loginUser", u);
+			}else if(u!=null) {//로그인 성공했을떄
+				HttpSession session=request.getSession();
+				session.setAttribute("loginUser", u);
 			/* request.getRequestDispatcher("/").forward(request, response); */
 			//아이디 저장 위한 쿠키 설정
-			 System.out.println(request.getParameter("saveId"));
-			 String saveId=request.getParameter("saveId");
-			 Cookie c=new Cookie("saveId",u.getUserId());
-			 if(saveId!=null) {
-				 //쿠키에 로그인한 아이디 저장
-				 c.setMaxAge(3*24*60*60);
-				 //쿠키값 저장 메소드 실행
-			 }else {
+				System.out.println(request.getParameter("saveId"));
+				String saveId=request.getParameter("saveId");
+				Cookie c=new Cookie("saveId",u.getUserId());
+				if(saveId!=null) {
+					//쿠키에 로그인한 아이디 저장
+					c.setMaxAge(3*24*60*60);
+					//쿠키값 저장 메소드 실행
+				}else {
 				 c.setMaxAge(0);				 
-			 }
-			 response.addCookie(c);
-			 response.sendRedirect(request.getContextPath());
+				}
+				response.addCookie(c);
+				response.sendRedirect(request.getContextPath());
 			
-		}
-		
-		}else if(u==null) {//로그인 실패했을때 user가 null일떄
+				}
+				
+		}else {//로그인 실패했을때 user가 null일떄
 			
 			request.setAttribute("msg", "아이디나 비밀번호가 일치하지 않습니다");
 			request.setAttribute("loc", "/user/loginPage.do");//메인으로 이동

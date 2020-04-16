@@ -1,10 +1,11 @@
 package com.laon.trip.model.dao;
 
-import static com.laon.common.template.JDBCTemplate.*;
+import static com.laon.common.template.JDBCTemplate.close;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,9 +19,12 @@ import com.laon.common.PropPath;
 import com.laon.common.robot.LaonRobot;
 import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
+import com.laon.trip.model.vo.Day;
+import com.laon.trip.model.vo.Schedule;
 import com.laon.trip.model.vo.TagCount;
 import com.laon.trip.model.vo.Trip;
 import com.laon.trip.model.vo.Trip2;
+import com.laon.trip.model.vo.TripData;
 import com.laon.trip.model.vo.TripSchedule;
 import com.laon.tripinfo.model.vo.Tripinfo;
 import com.laon.user.model.vo.User;
@@ -35,6 +39,9 @@ public class TripDao {
 	private String selectTripCount = "selectTripCount";
 	
 	 private String selectTripScheduleList = "selectTripScheduleList";
+	 private String insertTrip = "insertTrip";
+	 private String insertTripSchedule = "insertTripSchedule";
+	 private String selectTripLastNum = "selectTripLastNum";
 	 
 	 
 	 
@@ -704,6 +711,110 @@ public class TripDao {
 
 		   } 
 
-		} 
+		}
+
+	public List<Tripinfo> selectTripinfoList(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM TRIPINFO_TB";
+		List<Tripinfo> list = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			list = rsProcess(rs, new ArrayList<Tripinfo>(),new Tripinfo());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public int insertTrip(Connection conn, TripData data) {
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty(insertTrip);
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+//			pstmt.setInt(1, Integer.parseInt(data.getUserNo()));
+			pstmt.setInt(1, 1);
+			pstmt.setString(2, data.getCategory());
+			pstmt.setString(3, data.getTag());
+			pstmt.setString(4, data.getTitle());
+			pstmt.setString(5, data.getContent());
+			pstmt.setString(6, data.getTravleLocale());
+			pstmt.setInt(7, Integer.parseInt(data.getPeopleNum()));
+			pstmt.setString(8, data.getTravleTyp());
+			pstmt.setDate(9, Date.valueOf(data.getTravleStartDate()));
+			pstmt.setDate(10, Date.valueOf(data.getTravleEndDate()));
+//			pstmt.setString(11, data.getPublicEnabled());
+			pstmt.setString(11, "y");
+			pstmt.setString(12, data.getDeleted());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int[] insertTripSchedule(Connection conn, TripData data2, int tripNo) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty(insertTripSchedule);
+		int result[] = null;
+		System.out.println("tripNo : " + tripNo);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			for(int i=0;i<data2.getScheduleData().length;i++) {
+				Day d = data2.getScheduleData()[i];
+				for (int k = 0; k < d.getScheduleList().length; k++) {
+					Schedule s = d.getScheduleList()[k];
+					
+					pstmt.setInt(1, tripNo);
+					pstmt.setInt(2, Integer.parseInt(s.getTripinfoNo()));
+					pstmt.setInt(3, Integer.parseInt(s.getDays()));
+					pstmt.setInt(4, Integer.parseInt(s.getOrders()));
+					pstmt.setString(5, s.getRequiredHours());
+					pstmt.setString(6, s.getTransport());
+					
+					pstmt.addBatch();
+					
+				}
+			}
+			result = pstmt.executeBatch();
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+
+	public int selectTripLastSeq(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty(selectTripLastNum);
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			result = rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	} 
 
 }

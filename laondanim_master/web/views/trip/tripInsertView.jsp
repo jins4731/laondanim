@@ -1,3 +1,4 @@
+<%@page import="sun.reflect.ReflectionFactory.GetReflectionFactoryAction"%>
 <%@page import="com.laon.tripinfo.model.vo.Tripinfo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.laon.trip.model.vo.TripSchedule"%>
@@ -7,56 +8,12 @@
 
 <%
 
-	String userNo = "1";
+	String userNo = (String)request.getAttribute("userNo");
+	
+	List<Tripinfo> matzipList= (List<Tripinfo>)request.getAttribute("matzipList");
+	List<Tripinfo> myoungsoList= (List<Tripinfo>)request.getAttribute("myoungsoList");
+	List<Tripinfo> sooksoList=(List<Tripinfo>)request.getAttribute("sooksoList");
 
-	
-	
-	
-	List<Tripinfo> matzipList= new ArrayList();
-	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국1","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국2","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국3","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국4","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국5","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국6","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국7","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국8","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국9","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국10","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	matzipList.add(new Tripinfo(1,"맛집","# tag","김밥천국11","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	
-	
-	
-	List<Tripinfo> myoungsoList= new ArrayList();
-	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워1","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워2","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워3","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워4","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워5","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워6","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워7","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워8","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워9","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워10","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	myoungsoList.add(new Tripinfo(1,"명소","# tag","남산타워11","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	
-	
-	
-	List<Tripinfo> sooksoList= new ArrayList();
-	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔1","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔2","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔3","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔4","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔5","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔6","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔7","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔8","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔9","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔10","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	sooksoList.add(new Tripinfo(1,"숙소","# tag","힐튼호텔11","서울시 강남구","07:00 ~ 21:00","02-2654-7575","home","naver","sns"));
-	
-	
-	
 
 %>
 <!DOCTYPE html>
@@ -279,6 +236,7 @@
                             String homepage = info.getHomepage();
                             String naver = info.getNaver();
                             String sns = info.getSns();
+                            String image = info.getPictureList().get(0).getImage();
 							
 						%>
 
@@ -289,7 +247,7 @@
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
-                                src="https://image.chosun.com/sitedata/image/201705/08/2017050801699_0.jpg"
+                                src="<%=request.getContextPath()+"/upload/"+image %>"
                                 draggable="true" ondragstart="dragstart(event)" alt=""
                                 style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
                             <div class="mask flex-center rgba-black-strong"
@@ -311,6 +269,7 @@
                             String homepage = info.getHomepage();
                             String naver = info.getNaver();
                             String sns = info.getSns();
+                            String image = info.getPictureList().get(0).getImage();
 						%>
 
                         <div id="myoungsoItem<%=i %>" name="myoungsoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
@@ -319,7 +278,7 @@
                                     data-address="<%=address %>" data-businessHours="<%=businessHours %>"
                                     data-tel="<%=tel %>" data-homepage="<%=homepage %>" data-naver="<%=naver %>"
                                     data-sns="<%=sns %>"
-                                    src="https://image.chosun.com/sitedata/image/201705/08/2017050801699_0.jpg"
+                                    src="<%=request.getContextPath()+"/upload/"+image %>"
                                     draggable="true" ondragstart="dragstart(event)" alt=""
                                     style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
                                 <div class="mask flex-center rgba-black-strong"
@@ -341,6 +300,7 @@
                             String homepage = info.getHomepage();
                             String naver = info.getNaver();
                             String sns = info.getSns();
+                            String image = info.getPictureList().get(0).getImage();
 							
 						%>
 
@@ -349,7 +309,7 @@
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
-                                src="https://image.chosun.com/sitedata/image/201705/08/2017050801699_0.jpg"
+                                src="<%=request.getContextPath()+"/upload/"+image %>"
                                 draggable="true" ondragstart="dragstart(event)" alt=""
                                 style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
                             <div class="mask flex-center rgba-black-strong"
@@ -385,7 +345,7 @@
 
             <!-- 일차 추가 -->
             <div class="row mx-1" style="height: 50px;">
-                <div class="d-flex bg-primary rounded-pill justify-content-center align-items-center"
+                <div id="firstDay" class="d-flex bg-primary rounded-pill justify-content-center align-items-center"
                     style="height: 100%;width: 60px;cursor: pointer;" data-save="1" onclick="dayBt(event)">
                     <span class="" style="width: auto;height: auto;" data-save="1">1일차</span>
                 </div>
@@ -603,6 +563,7 @@
             div.append(span).append(a);
             div[0].dataset.save = dayCount;
             $(event.target).before(div);
+            $(event.target).prev().prev().find("a").remove();
 
 
             var daytemple = $("#dayTemple").clone();
@@ -612,8 +573,13 @@
             daytemple[0].dataset.save = dayCount;
             daytemple.addClass("d-none");
             daytemple.find("[name='scheduleOrder']")[0].dataset.order = 1;
-            $("#dayContainer").append(daytemple.clone());
-
+            var daytempleClone = daytemple.clone();
+            $("#dayContainer").append(daytempleClone);
+            setTimeout(function(){
+                $(event.target).prev().trigger("click");
+               
+                
+            },10);
         });
 
         function dayBt(event){
@@ -629,21 +595,35 @@
                 }else{
                     $($("[name='day']")[i]).addClass("d-none");
                 }
-               
-                
-                
             }
            
+           console.log("dayBt")
         }
 
         function dayDelBt(e) {
             console.log("dayDelBt");
             $("[name='day']")
+            for(let i=0;i<$("[name='day']").length;i++){
+                if($(e.target).parent()[0].dataset.save == $("[name='day']")[i].dataset.save){
+                    $($("[name='day']")[i]).remove();
+                }
+                
+            }
             
             console.log("daylksjdflkjsldkjlfkj : "  + $(e.target).parent()[0].dataset.save)
-           
+            if($(e.target).parent().prev()[0].dataset.save != 1){
+                    var a = $('<a href="javascript:void(0)" class="text-light" name="dayDelBt" onclick="dayDelBt(event)">x</a>');
+                    $(e.target).parent().prev().append(a);
+            }
+            var prev = $(e.target).parent().prev();
             $(e.target).parent().remove();
             dayCount--;
+           
+            setTimeout(function(){
+                prev.trigger("click");
+               
+                
+            },10);
         }
 
 
@@ -895,7 +875,7 @@
 
 
 
-            var _userNo = "";
+            var _userNo = "<%=userNo%>";
             var _category = $("#category").html(); // 확인
             // var _writeDate = $("#writeDate");  
             var _tag = ""; 
@@ -945,7 +925,7 @@
                 dataType: "html", //xml,html,script,json,jsonp,text
                 success: function (data, status, xmlHttpRequest) {
                     console.log(data, status, xmlHttpRequest);
-                    // location.replace('<%=request.getContextPath()%>/');
+                    window.document.write(data);
                 },
                 error: function (xmlHttpRequest, status, error) {
                     console.log(xmlHttpRequest, status, error);

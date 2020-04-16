@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.google.gson.Gson;
+import com.laon.common.template.MsgTemplate;
 import com.laon.common.template.MultiPartFormTemplate;
+import com.laon.trip.model.service.TripService;
 import com.laon.trip.model.vo.TripData;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -49,27 +51,18 @@ public class TripInsertViewEndServlet extends HttpServlet {
 		}
 		
 		
-		String saveDir = getServletContext().getRealPath("/upload/");
-		int maxSize = 1024*1024*10;
-		String encoding = "UTF-8";
+		TripData data = MultiPartFormTemplate.mulitPartProcess(request, response, "/upload/", new TripData());
+		boolean isGood = new TripService().insertTrip(data);
 		
 		
-		MultiPartFormTemplate.mulitPartProcess(request, response, saveDir, new TripData());
+		if(isGood) {
+			MsgTemplate.sendMSG("작성 완료", "/trip/tripListView.do", request, response);
+		}else {
+			MsgTemplate.sendMSG("작성 실패", "/trip/tripInsertView.do", request, response);
+		}
 		
 		
-//		MultipartRequest mr = new MultipartRequest(request, saveDir, maxSize,encoding, new DefaultFileRenamePolicy());
-//		Enumeration e = mr.getParameterNames();
-//		while (e.hasMoreElements()) {
-//			System.out.println(e.nextElement());
-//		}
-		
-//		String tripData = mr.getParameter("tripData");
-//		System.out.println(tripData);
-//		
-//		
-//		Gson g = new Gson();
-//		TripData trip = g.fromJson(tripData, TripData.class);
-//		System.out.println(trip);
+
 		
 		
 	}

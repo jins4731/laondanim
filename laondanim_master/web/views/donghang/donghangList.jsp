@@ -13,7 +13,7 @@
 
 <%
 	List<DonghangJoinUserPicture> list = (List)request.getAttribute(CommonKey.DONGHANG_LIST);
-System.out.println("___jsp___________"+list);
+
 	int count = 0;
 	List<DonghangJoinUserPicture> topList = new ArrayList();
 	List<DonghangJoinUserPicture> bottomList = new ArrayList();
@@ -421,5 +421,5 @@ System.out.println("___jsp___________"+list);
     	});
     	
     </script>
-</section>
+
 <%@ include file="/views/common/footer.jsp"%> 

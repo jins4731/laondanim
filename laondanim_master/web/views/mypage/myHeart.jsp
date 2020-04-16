@@ -49,10 +49,10 @@
 							</div>
 						</div>
 						<!-- 게시글위치 -->
+						<%if(tripList.size()>0){%>
 						<table id="ltTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
-							<%if(tripList.size()>0){
-								for(TripMyCon t:tripList){ %>
+								<%for(TripMyCon t:tripList){ %>
 								<td class="p-1">
 									<div class="card" style="width: 155px; height: 250px;" >
 										<div class="d-flex justify-content-between p-2" style="font-size:5px;">
@@ -80,10 +80,6 @@
 										</div>
 									</div>
 								</td>
-							<%} }else{ %>
-								<td colspan="4">
-									<span>관심있는 여행기가 없습니다.</span>
-								</td>
 							<%} %>
 							</tr>
 							<%if(tripList.size()==4){ %>
@@ -94,6 +90,11 @@
 							</tr>
 							<%} %>
 						</table>
+						<%}else{  %>
+						<div style="text-align: center;">
+							<span>관심있는 여행기가 없습니다.</span>
+						</div>
+						<%} %>
 					</div>
 					
 					<%List<TripinfoMyMind> restaurant=new ArrayList<TripinfoMyMind>();

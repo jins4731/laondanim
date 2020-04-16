@@ -55,10 +55,10 @@
 							</div>
 						</div>
 						<!-- 게시글위치 -->
+						<%if(trip.size()>0){ %>
 						<table id="dnTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
-							<%if(trip.size()>0){
-								for(TripMyCon t:trip){ %>
+								<%for(TripMyCon t:trip){ %>
 								<td class="p-1">
 									<div class="card" style="width: 155px; height: 250px;" >
 										<div class="d-flex justify-content-between p-2" style="font-size:5px;">
@@ -94,10 +94,6 @@
 										</div>
 									</div>
 								</td>
-							<%} }else{ %>
-								<td colspan="4">
-									<span>등록된 여행기가 없습니다.</span>
-								</td>
 							<%} %>
 							</tr>
 							<%if(trip.size()==4){ %>
@@ -108,6 +104,11 @@
 							</tr>
 							<%} %>
 						</table>
+						<%}else{ %>
+						<div style="text-align: center;">
+							<span>등록된 여행기가 없습니다.</span>
+						</div>
+						<%} %>
 					</div>
 					
 					<!-- 내 게시글 -->
@@ -142,6 +143,7 @@
 						</div>
 						<!-- 게시글위치 -->
 						<div>
+						<%if(board.size()>0){%>
 							<table id="bdTbl" class="table">
 								<tr>
 									<th style="width:50px;"></th>
@@ -150,8 +152,7 @@
 									<th>작성시간</th>
 									<th></th>
 								</tr>
-							<%if(board.size()>0){
-								for(Board b:board){ %>
+								<%for(Board b:board){ %>
 								<tr>
 									<td style="width:50px;">
 										<div class="bdCk3">
@@ -171,14 +172,13 @@
 										<button class="btn">수정</button>
 									</td>
 								</tr>
-							<%} }else{ %>
-								<tr>
-									<td colspan="5">
-										<span>등록된 게시물이 없습니다.</span>
-									</td>
-								</tr>
 							<%} %>
 							</table>
+							<%}else{  %>
+							<div style="text-align: center;">
+								<span>등록된 게시물이 없습니다.</span>
+							</div>
+							<%} %>
 							<div class="d-flex justify-content-center">
 								<%=boardPasing %>
 							</div>
@@ -203,7 +203,7 @@
         text-decoration: none;
         color:black;
         list-style:none;
-        border:1px solid green;
+        /* border:1px solid green; */
     }
     
     #myDNInfo,#myBDInfo,.manuBar{

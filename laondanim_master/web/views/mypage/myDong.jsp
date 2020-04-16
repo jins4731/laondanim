@@ -50,10 +50,10 @@
 							</div>
 						</div>
 						<!-- 게시글위치 -->
+						<%if(myDong.size()>0){%>
 						<table id="dhTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
-							<%if(myDong.size()>0){
-								for(MyDong d:myDong){ %>
+								<%for(MyDong d:myDong){ %>
 								<td class="p-1">
 				                    <div class="card" style="width: 155px; height: 275px;" >
 				                    	<div class="d-flex justify-content-between p-2" style="font-size:5px;">
@@ -106,10 +106,6 @@
 										</div>
 									</div>
 								</td>
-							<%} }else{ %>
-								<td colspan="4">
-									<span>등록된 나의 동행이 없습니다.</span>
-								</td>
 							<%} %>
 							</tr>
 							<%if(myDong.size()==4){ %>
@@ -120,6 +116,11 @@
 							</tr>
 							<%} %>
 						</table>
+						<%}else{  %>
+						<div style="text-align: center;">
+							<span>등록된 나의 동행이 없습니다.</span>
+						</div>
+						<%} %>
 					</div>
 					
 					<!-- 참여중인 동행 -->
@@ -143,10 +144,10 @@
 							</div>
 						</div>
 						<!-- 게시글위치 -->
+						<%if(oriJoinDong.size()>0){%>
 						<table id="dhTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
-							<%if(oriJoinDong.size()>0){
-								for(MyDong j:oriJoinDong){ %>
+								<%for(MyDong j:oriJoinDong){ %>
 								<td class="p-1">
 			                       	<div class="card" style="width: 155px; height: 290px;" >
 			                        	<div class="d-flex justify-content-between p-2" style="font-size:5px;">
@@ -209,10 +210,6 @@
 			                           </div>
 			                       </div>
 			                   </td>
-			                <%} }else{ %>
-			                	<td colspan="4">
-									<span>참여중인 동행이 없습니다.</span>
-								</td>
 			                <%} %>
 							</tr>
 							<%if(joinDong.size()==4){ %>
@@ -223,6 +220,11 @@
 							</tr>
 							<%} %>
 						</table>
+						<% }else{ %>
+	                	<div style="text-align: center;">
+							<span>참여중인 동행이 없습니다.</span>
+						</div>
+		                <%} %>
 					</div>
 				</div>
 			</section>

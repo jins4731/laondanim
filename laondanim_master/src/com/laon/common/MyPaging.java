@@ -40,7 +40,7 @@ public class MyPaging {
 		if(totalPageSize > pageBarSize&&!(pageBarLast==pageBarSize)) {
 			pageBar += "<span><a href='"+request.getContextPath()+ mappingAddress +"?currentPage="+(pageBarFirst-1)+"'>"+"이전"+"</a></span>";
 		}else {
-			pageBar += "<span>"+"이전"+"</span>";
+			pageBar += " ";
 		}
 		
 		// 페이지 숫자
@@ -57,7 +57,7 @@ public class MyPaging {
 		if(totalPageSize > pageBarSize&&!(pageBarLast==totalPageSize)) {
 			pageBar += "<span><a href='"+request.getContextPath()+ mappingAddress +"?currentPage="+(pageBarLast+1)+"'>"+"다음"+"</a></span>";
 		}else {
-			pageBar += "<span>"+"다음"+"</span>";
+			pageBar += " ";
 		}
 		
 		return pageBar;

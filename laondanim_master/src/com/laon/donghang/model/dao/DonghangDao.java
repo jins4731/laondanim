@@ -22,6 +22,7 @@ import com.laon.donghang.model.vo.DonghangJoinUserPicture;
 import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.vo.TripMyCon;
+import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
 public class DonghangDao {
@@ -267,7 +268,7 @@ public class DonghangDao {
 		ResultSet rs = null;
 		String sql="";
 		List<DonghangJoinUserPicture> list = null;
-
+			
 		//sql문 나누기
 		if(searchFilter.equals("searchLocal") && !keyword.equals("null") && !recent.equals("null")) { //키워드(지역) O, 최신순
 			sql = prop.getProperty(selectDonghangLocalRecent);
@@ -863,5 +864,130 @@ public class DonghangDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	//by 승연
+	public ArrayList<Donghang> selectDonghangAll(Connection conn){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = prop.getProperty("selectDonghangAll");
+		
+		Donghang d = null;
+		ArrayList<Donghang> donghangList = new ArrayList<Donghang>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				d = new Donghang();
+				d.setNo(rs.getInt("NO"));
+				d.setUserNo(rs.getInt("USER_No"));
+				d.setTripNo(rs.getInt("TRIP_NO"));
+				d.setWriteDate(rs.getDate("WRITE_DATE"));
+				d.setViewcount(rs.getInt("VIEWCOUNT"));
+				d.setTag(rs.getString("TAG"));
+				d.setTitle(rs.getString("TITLE"));
+				d.setContent(rs.getString("CONTENT"));
+				d.setTravleLocale(rs.getString("TRAVLE_LOCALE"));
+				d.setTravleStartDate(rs.getDate("TRAVLE_START_DATE"));
+				d.setTravleEndDate(rs.getDate("TRAVLE_END_DATE"));
+				d.setPw(rs.getInt("PW"));
+				d.setPublicEnabled(rs.getString("PUBLIC_ENABLED"));
+				d.setEnded(rs.getString("ENDED"));
+				d.setDeleted(rs.getString("DELETED"));
+				d.setRecruitPeopleNo(rs.getInt("RECRUIT_PEOPLE_NO"));
+				d.setJoinPeopleNo(rs.getInt("JOIN_PEOPLE_NO"));
+				
+				donghangList.add(d);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return donghangList;
+	};
+	
+	public ArrayList<Picture> selectPicture(Connection conn, ArrayList<Donghang> donghangList){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = prop.getProperty("selectPicture");
+		
+		Picture p =null;
+		
+		ArrayList<Picture> pictureList = new ArrayList<Picture>();
+		
+		try {			
+			for(Donghang d : donghangList) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, d.getNo());
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					p = new Picture();
+					p.setNo(rs.getInt("NO"));
+					p.setTripNo(rs.getInt("TRIP_NO"));
+					p.setTripinfoNo(rs.getInt("TRIPINFO_NO"));
+					p.setDonghangNo(rs.getInt("DONGHANG_NO"));
+					p.setUserNo(rs.getInt("USER_NO"));
+					p.setImage(rs.getString("IMAGE"));
+					
+					pictureList.add(p);
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return pictureList;
+	}
+	
+	public ArrayList<User> selectUser(Connection conn, ArrayList<Donghang> donghangList){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = prop.getProperty("selectUser");
+		
+		User u =null;
+		
+		ArrayList<User> userList = new ArrayList<User>();
+		
+		try {
+			for(Donghang d : donghangList) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, d.getUserNo());
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					u = new User();
+					u.setNo(rs.getInt("NO"));
+					u.setCreatedDate(rs.getDate("CREATED_DATE"));
+					u.setUserId(rs.getString("USER_ID"));
+					u.setPassword(rs.getString("PASSWORD"));
+					u.setName(rs.getString("NAME"));
+					u.setNickName(rs.getString("NICK_NAME"));
+					u.setBirthday(rs.getDate("BIRTHDAY"));
+					u.setGender(rs.getString("GENDER"));
+					u.setPhone(rs.getString("PHONE"));
+					u.setEmail(rs.getString("EMAIL"));
+					u.setTag(rs.getString("TAG"));
+					
+					userList.add(u);
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return userList;
 	}
 }

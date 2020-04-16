@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import static com.laon.common.JDBCTemplate.close;
+import static com.laon.common.template.JDBCTemplate.*;
 
 import com.laon.admin.model.vo.Reports;
 

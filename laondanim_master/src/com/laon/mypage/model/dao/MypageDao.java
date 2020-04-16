@@ -35,7 +35,7 @@ public class MypageDao {
 		}
 	}
 	
-	//·Î±×ÀÎ À¯Àú ÇÁ·ÎÇÊ Á¤º¸
+	//ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public UserProfile selectUserNo(Connection conn, int no) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -70,7 +70,7 @@ public class MypageDao {
 		return up;
 	}
 	
-	//Á¤º¸¼öÁ¤ÆäÀÌÁö Àü ÆÐ½º¿öµå Ã¼Å©
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
 	public boolean selectPwck(Connection conn,int userNo,String pw){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -94,7 +94,7 @@ public class MypageDao {
 		return flag;
 	}
 	
-	//Á¤º¸¼öÁ¤
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public int updateUserInfo(Connection conn,User u) {
 		PreparedStatement pstmt=null;
 		int result=0;
@@ -117,7 +117,7 @@ public class MypageDao {
 		return result;
 	}
 	
-	//Á¤º¸¼öÁ¤ ÇÁ·ÎÇÊ »çÁø
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int updateUserProfile(Connection conn,Picture p) {
 		PreparedStatement pstmt=null;
 		int result=0;
@@ -136,7 +136,7 @@ public class MypageDao {
 		return result;
 	}
 	
-	//³» ÄÁÅÙÃ÷ ÃÖ½Å±Û 4°³
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö½Å±ï¿½ 4ï¿½ï¿½
 	public List<TripMyCon> selectMyTrip(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -165,7 +165,7 @@ public class MypageDao {
 		return list;
 	}
 	
-	//³» ÄÁÅÙÃ÷ »ó¼¼ÆäÀÌÁö ¸ðµç ¸®½ºÆ®
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	public List<TripMyCon> selectMyTripAll(Connection conn,int userNo,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -196,7 +196,7 @@ public class MypageDao {
 		return list;
 	}
 	
-	//³» ÄÁÅÙÃ÷ ÁÁ¾Æ¿ä °³¼ö
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public List selectMyTripLike(Connection conn,int userNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -223,7 +223,7 @@ public class MypageDao {
 		return like;
 	}
 	
-	//³» ÄÁÅÙÃ÷ ÃÑ °³¼ö
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int selectMyTripCount(Connection conn,int userNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -244,7 +244,7 @@ public class MypageDao {
 		return result;
 	}
 	
-	//³» °Ô½Ã±Û ¸®½ºÆ®
+	//ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	public List<Board> selectMyBoard(Connection conn,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -273,7 +273,7 @@ public class MypageDao {
 		return list;
 	}
 	
-	//³» °Ô½Ã±Û ÃÑ °³¼ö
+	//ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int selectMyBoardCount(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -293,7 +293,7 @@ public class MypageDao {
 		return result;
 	}
 	
-	//³» µ¿Çà ÃÖ½Å±Û 4°³
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö½Å±ï¿½ 4ï¿½ï¿½
 	public List<MyDong> selectMyDong(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -327,7 +327,7 @@ public class MypageDao {
 		return list;
 	}
 	
-	//³» µ¿Çà »ó¼¼ÆäÀÌÁö ¸ðµç ¸®½ºÆ®
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	public List<MyDong> selectMyDHAll(Connection conn,int userNo,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -363,7 +363,7 @@ public class MypageDao {
 		return list;
 	}
 	
-	//³» µ¿Çà ÃÑ °³¼ö
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int selectMyDongCount(Connection conn,int userNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -384,7 +384,7 @@ public class MypageDao {
 		return result;
 	}
 	
-	//Âü¿©µ¿Çà Á¶È¸
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	public List<DonghangJoin> selectJoin(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -416,7 +416,7 @@ public class MypageDao {
 		return list;
 	}
 	
-	//Âü¿©µ¿Çà ±âÁØÀ¸·Î µ¿Çà ¸®½ºÆ® ÃÖ½Å±Û 4°³
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ö½Å±ï¿½ 4ï¿½ï¿½
 	public List<MyDong> selectOriJoin(Connection conn, List<DonghangJoin> jd){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -454,7 +454,7 @@ public class MypageDao {
 		return list;
 	}
 	
-	//Âü¿©µ¿Çà ±âÁØÀ¸·Î Âü¿©µ¿Çà »ó¼¼ ÆäÀÌÁö ¸ðµç ¸®½ºÆ®
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	public List<MyDong> selectOriJoinAll(Connection conn, List<DonghangJoin> jd,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -494,7 +494,7 @@ public class MypageDao {
 		return list;
 	}
 	
-	//Âü¿©µ¿Çà ¸®½ºÆ®ÀÇ ¿ø±Û ÀÛ¼ºÀÚ ´Ð³×ÀÓ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½ï¿½
 	public List<UserProfile> selectUserNick(Connection conn, List<MyDong> ojd){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -522,7 +522,7 @@ public class MypageDao {
 		return userNick;
 	}
 	
-	//Âü¿©µ¿Çà ÃÑ °³¼ö
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int selectMyJDCount(Connection conn,int userNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -543,7 +543,7 @@ public class MypageDao {
 		return result;
 	}
 	
-	//³»°¡ ÁÁ¾Æ¿äÇÑ ¿©Çà±â ³Ñ¹ö
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¹ï¿½
 	public List<Like> selectTripLike(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -571,7 +571,7 @@ public class MypageDao {
 		return likeT;
 	}
 	
-	//³»°¡ ÁÁ¾Æ¿äÇÑ ¿©Çà±â ¸®½ºÆ®
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	public List<TripMyCon> selectTripList(Connection conn,List<Like> likeT){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -603,7 +603,7 @@ public class MypageDao {
 		return tripList;
 	}
 	
-	//³»°¡ ÁÁ¾Æ¿äÇÑ ¿©Çà±â ¸®½ºÆ® ÀüÃ¼
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Ã¼
 	public List<TripMyCon> selectTripListAll(Connection conn,List<Like> likeT,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -637,7 +637,7 @@ public class MypageDao {
 		return tripList;
 	}
 	
-	//³»°¡ ÁÁ¾Æ¿äÇÑ ¿©Çà±â ÀÛ¼ºÀÚ ´Ð³×ÀÓ
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½ï¿½
 	public List<UserProfile> selectTripUserNick(Connection conn,List<TripMyCon> tl){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -665,7 +665,7 @@ public class MypageDao {
 		return userNick;
 	}
 	
-	//³»°¡ ÁÁ¾Æ¿äÇÑ ¿©Çà±â ÃÑ °³¼ö
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int selectLikeTripCount(Connection conn,int userNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -686,7 +686,7 @@ public class MypageDao {
 		return result;
 	}
 	
-	//³»°¡ ÂòÇÑ ¿©ÇàÁ¤º¸ ³Ñ¹ö
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¹ï¿½
 	public List<Mind> selectMind(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -700,8 +700,8 @@ public class MypageDao {
 			while(rs.next()) {
 				Mind m=new Mind();
 				m.setNo(rs.getInt("no"));
-				m.setUserTbNo(rs.getInt("user_no"));
-				m.setTripinfoTbNo(rs.getInt("tripinfo_no"));
+				m.setUserNo(rs.getInt("user_no"));
+				m.setTripinfoNo(rs.getInt("tripinfo_no"));
 				m.setCancled(rs.getString("cancled"));
 				mind.add(m);
 			}
@@ -714,7 +714,7 @@ public class MypageDao {
 		return mind;
 	}
 	
-	//³»°¡ ÂòÇÑ ¿©ÇàÁ¤º¸ ¸®½ºÆ®
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	public List<TripinfoMyMind> selectMindList(Connection conn,List<Mind> mind){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -724,7 +724,7 @@ public class MypageDao {
 		try {
 			pstmt=conn.prepareStatement(sql);
 			for(Mind m:mind) {
-				pstmt.setInt(1, m.getTripinfoTbNo());
+				pstmt.setInt(1, m.getTripinfoNo());
 				rs=pstmt.executeQuery();
 				if(rs.next()) {
 					TripinfoMyMind tm=new TripinfoMyMind();

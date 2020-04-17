@@ -385,7 +385,7 @@
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
-                                src="<%=request.getContextPath()+"/upload/"+image %>"
+                                src="<%=request.getContextPath()+"/views/picture/trip/"+image %>"
                                 draggable="true" ondragstart="dragstart(event)" alt=""
                                 style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
                             <div class="mask flex-center rgba-black-strong text-nowrap"
@@ -416,7 +416,7 @@
                                     data-address="<%=address %>" data-businessHours="<%=businessHours %>"
                                     data-tel="<%=tel %>" data-homepage="<%=homepage %>" data-naver="<%=naver %>"
                                     data-sns="<%=sns %>"
-                                    src="<%=request.getContextPath()+"/upload/"+image %>"
+                                    src="<%=request.getContextPath()+"/views/picture/trip/"+image %>"
                                     draggable="true" ondragstart="dragstart(event)" alt=""
                                     style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
                                 <div class="mask flex-center rgba-black-strong text-nowrap"
@@ -447,7 +447,7 @@
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
-                                src="<%=request.getContextPath()+"/upload/"+image %>"
+                                src="<%=request.getContextPath()+"/views/picture/trip/"+image %>"
                                 draggable="true" ondragstart="dragstart(event)" alt=""
                                 style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
                             <div class="mask flex-center rgba-black-strong text-nowrap"
@@ -553,7 +553,7 @@
 
                             <img src="<%=request.getContextPath() %>/picture/trip/plus.png" alt=""
                                 style="object-fit: contain;width: 100%;height: 100%;">
-                            <input type="file" id="image" name="image" multiple accept="image/jpg,image/png"
+                            <input type="file" id="image" name="image" multiple accept=".jpg, .png"
                                 style="width: 100%;height: 100%;position: absolute;" form="tripForm" required>
                         </div>
 

@@ -134,7 +134,7 @@
 		#head {
 			height: 230px;
 			background-color: rgba(53, 171, 191, 0.5);
-			background-image: url(<%=request.getContextPath()%>/upload/<%=tripPicList.get(0).getImage()%>);
+			background-image: url(<%=request.getContextPath()%>/views/picture/trip/<%=tripPicList.get(0).getImage()%>);
 			background-size: cover;
 			background-position: center center;
 		}
@@ -315,7 +315,7 @@
 									
 									class="col-2 text-center p-2" style="height: 100px;">
 									<div class="w-100 h-100 text-center view overlay zoom ">
-										<img src="<%=request.getContextPath() %>>/upload/<%=image%>" width="120px"
+										<img src="<%=request.getContextPath() %>/views/picture/trip/<%=image%>" width="120px"
 											height="100%" class="d-inline-block rounded-lg py-1 shadow">
 										<div class="mx-auto mask flex-center rgba-black-strong text-nowrap"
 											style="width: 73%;height: 100%;z-index: 1;overflow: hidden;" data-address="<%=info.getAddress()%>" data-name="<%=info.getName() %>">
@@ -335,7 +335,7 @@
 									data-address="<%=info.getAddress()%>" data-name="<%=info.getName() %>"
 									class="col-2 text-center p-2" style="height: 100px;">
 									<div class="w-100 h-100 text-center view overlay zoom ">
-										<img src="<%=request.getContextPath() %>>/upload/<%=image%>" width="120px"
+										<img src="<%=request.getContextPath() %>/views/picture/trip/<%=image%>" width="120px"
 											height="100%" class="d-inline-block rounded-lg py-1 shadow">
 										<div class="mx-auto mask flex-center rgba-black-strong text-nowrap"
 											style="width: 73%;height: 100%;z-index: 1;overflow: hidden;" data-address="<%=info.getAddress()%>" data-name="<%=info.getName() %>">
@@ -417,7 +417,7 @@
 							%>
 										<!-- 1번 아이템 -->
 										<div class="carousel-item <%if (i == 0) {%>active<%}%>" style="width:100%;height:500px;"">
-											<img src="<%=request.getContextPath()%>/upload/<%=tripPicList.get(i).getImage()%>" alt=""
+											<img src="<%=request.getContextPath()%>/views/picture/trip/<%=tripPicList.get(i).getImage()%>" alt=""
 											style="width: 100%;height: 100%;object-fit: contain;">
 											<!-- <div class="carousel-caption">
 	<h3>Los Angeles</h3>

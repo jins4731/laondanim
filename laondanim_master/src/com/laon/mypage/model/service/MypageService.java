@@ -23,7 +23,7 @@ import com.laon.user.model.vo.UserProfile;
 public class MypageService {
 	private MypageDao dao=new MypageDao();
 	
-	//·Î±×ÀÎ À¯Àú ÇÁ·ÎÇÊ Á¤º¸
+	//ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public UserProfile selectUserNo(int no) {
 		Connection conn=getConnection();
 		UserProfile up=dao.selectUserNo(conn,no);
@@ -32,7 +32,7 @@ public class MypageService {
 		return up;
 	}
 	
-	//Á¤º¸¼öÁ¤ÆäÀÌÁö Àü ÆÐ½º¿öµå Ã¼Å©
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
 	public boolean selectPwck(int userNo,String pw){
 		Connection conn=getConnection();
 		boolean flag=dao.selectPwck(conn,userNo,pw);
@@ -41,7 +41,7 @@ public class MypageService {
 		return flag;
 	}
 	
-	//Á¤º¸¼öÁ¤ + ÇÁ·ÎÇÊ »çÁø
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ + ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int updateUserProfile(User u,Picture p) {
 		Connection conn=getConnection();
 		int result=dao.updateUserInfo(conn,u);
@@ -58,7 +58,7 @@ public class MypageService {
 		return result;
 	}
 	
-	//³» ÄÁÅÙÃ÷ ÃÖ½Å±Û 4°³
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö½Å±ï¿½ 4ï¿½ï¿½
 	public List<TripMyCon> selectMyTrip(int userNo){
 		Connection conn=getConnection();
 		List<TripMyCon> list=dao.selectMyTrip(conn,userNo);
@@ -67,7 +67,7 @@ public class MypageService {
 		return list;
 	}
 	
-	//³» ÄÁÅÙÃ÷ »ó¼¼ÆäÀÌÁö ¸ðµç ¸®½ºÆ®
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	public List<TripMyCon> selectMyTripAll(int userNo,int start,int end){
 		Connection conn=getConnection();
 		List<TripMyCon> list=dao.selectMyTripAll(conn,userNo,start,end);
@@ -76,7 +76,7 @@ public class MypageService {
 		return list;
 	}
 	
-	//³» ÄÁÅÙÃ÷ ÁÁ¾Æ¿ä °³¼ö
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public List selectMyTripLike(int userNo) {
 		Connection conn=getConnection();
 		List like=dao.selectMyTripLike(conn,userNo);
@@ -85,7 +85,7 @@ public class MypageService {
 		return like;
 	}
 	
-	//³» ÄÁÅÙÃ÷ ÃÑ °³¼ö
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int selectMyTripCount(int userNo) {
 		Connection conn = getConnection();
 		int result = dao.selectMyTripCount(conn,userNo);
@@ -93,7 +93,7 @@ public class MypageService {
 		return result;
 	}
 	
-	//³» °Ô½Ã±Û ¸®½ºÆ®
+	//ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	public List<Board> selectMyBoard(int userNo,int start,int end){
 		Connection conn=getConnection();
 		List<Board> list=dao.selectMyBoard(conn,userNo,start,end);
@@ -102,7 +102,7 @@ public class MypageService {
 		return list;
 	}
 	
-	//³» °Ô½Ã±Û ÃÑ °³¼ö
+	//ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int selectMyBoardCount(int userNo) {
 		Connection conn = getConnection();
 		int result = dao.selectMyBoardCount(conn,userNo);
@@ -111,7 +111,7 @@ public class MypageService {
 		return result;
 	}
 	
-	//³» µ¿Çà ÃÖ½Å±Û 4°³
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö½Å±ï¿½ 4ï¿½ï¿½
 	public List<MyDong> selectMyDong(int userNo){
 		Connection conn=getConnection();
 		List<MyDong> list=dao.selectMyDong(conn,userNo);
@@ -120,7 +120,7 @@ public class MypageService {
 		return list;
 	}
 	
-	//³» µ¿Çà »ó¼¼ÆäÀÌÁö ¸ðµç ¸®½ºÆ®
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	public List<MyDong> selectMyDHAll(int userNo,int start,int end){
 		Connection conn=getConnection();
 		List<MyDong> list=dao.selectMyDHAll(conn,userNo,start,end);
@@ -129,7 +129,7 @@ public class MypageService {
 		return list;
 	}
 	
-	//³» µ¿Çà ÃÑ °³¼ö
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int selectMyDongCount(int userNo) {
 		Connection conn = getConnection();
 		int result = dao.selectMyDongCount(conn,userNo);
@@ -138,7 +138,7 @@ public class MypageService {
 		return result;
 	}
 	
-	//Âü¿©µ¿Çà Á¶È¸
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	public List<DonghangJoin> selectJoin(int userNo){
 		Connection conn=getConnection();
 		List<DonghangJoin> list=dao.selectJoin(conn,userNo);
@@ -147,7 +147,7 @@ public class MypageService {
 		return list;
 	}
 	
-	//Âü¿©µ¿Çà ±âÁØÀ¸·Î µ¿Çà ¸®½ºÆ® ÃÖ½Å±Û 4°³
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ö½Å±ï¿½ 4ï¿½ï¿½
 	public List<MyDong> selectOriJoin(List<DonghangJoin> jd){
 		Connection conn=getConnection();
 		List<MyDong> list=dao.selectOriJoin(conn,jd);
@@ -156,7 +156,7 @@ public class MypageService {
 		return list;
 	}
 	
-	//Âü¿©µ¿Çà ±âÁØÀ¸·Î Âü¿©µ¿Çà »ó¼¼ ÆäÀÌÁö ¸ðµç ¸®½ºÆ®
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	public List<MyDong> selectOriJoinAll(List<DonghangJoin> jd,int start,int end){
 		Connection conn=getConnection();
 		List<MyDong> list=dao.selectOriJoinAll(conn,jd,start,end);
@@ -165,7 +165,7 @@ public class MypageService {
 		return list;
 	}
 	
-	//Âü¿©µ¿Çà ¸®½ºÆ®ÀÇ ¿ø±Û ÀÛ¼ºÀÚ ´Ð³×ÀÓ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½ï¿½
 	public List<UserProfile> selectUserNick(List<MyDong> ojd){
 		Connection conn=getConnection();
 		List<UserProfile> userNick=dao.selectUserNick(conn,ojd);
@@ -174,7 +174,7 @@ public class MypageService {
 		return userNick;
 	}
 	
-	//Âü¿©µ¿Çà ÃÑ °³¼ö
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int selectMyJDCount(int userNo) {
 		Connection conn=getConnection();
 		int result=dao.selectMyJDCount(conn,userNo);
@@ -183,7 +183,7 @@ public class MypageService {
 		return result;
 	}
 	
-	//³»°¡ ÁÁ¾Æ¿äÇÑ ¿©Çà±â ³Ñ¹ö
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¹ï¿½
 	public List<Like> selectTripLike(int userNo){
 		Connection conn=getConnection();
 		List<Like> likeT=dao.selectTripLike(conn, userNo);
@@ -192,7 +192,7 @@ public class MypageService {
 		return likeT;
 	}
 	
-	//³»°¡ ÁÁ¾Æ¿äÇÑ ¿©Çà±â ¸®½ºÆ®
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	public List<TripMyCon> selectTripList(List<Like> likeT){
 		Connection conn=getConnection();
 		List<TripMyCon> tripList=dao.selectTripList(conn,likeT);
@@ -201,7 +201,7 @@ public class MypageService {
 		return tripList;
 	}
 	
-	//³»°¡ ÁÁ¾Æ¿äÇÑ ¿©Çà±â ¸®½ºÆ® ÀüÃ¼
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Ã¼
 	public List<TripMyCon> selectTripListAll(List<Like> likeT,int start,int end){
 		Connection conn=getConnection();
 		List<TripMyCon> tripList=dao.selectTripListAll(conn,likeT,start,end);
@@ -210,7 +210,7 @@ public class MypageService {
 		return tripList;
 	}
 	
-	//³»°¡ ÁÁ¾Æ¿äÇÑ ¿©Çà±â ÀÛ¼ºÀÚ ´Ð³×ÀÓ
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½ï¿½
 	public List<UserProfile> selectTripUserNick(List<TripMyCon> tl){
 		Connection conn=getConnection();
 		List<UserProfile> userNick=dao.selectTripUserNick(conn,tl);
@@ -219,7 +219,7 @@ public class MypageService {
 		return userNick;
 	}
 	
-	//³»°¡ ÁÁ¾Æ¿äÇÑ ¿©Çà±â ÃÑ °³¼ö
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int selectLikeTripCount(int userNo) {
 		Connection conn=getConnection();
 		int count=dao.selectLikeTripCount(conn,userNo);
@@ -228,7 +228,7 @@ public class MypageService {
 		return count;
 	}
 	
-	//³»°¡ ÂòÇÑ ¿©ÇàÁ¤º¸ ³Ñ¹ö
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¹ï¿½
 	public List<Mind> selectMind(int userNo){
 		Connection conn=getConnection();
 		List<Mind> mind=dao.selectMind(conn,userNo);
@@ -237,7 +237,7 @@ public class MypageService {
 		return mind;
 	}
 	
-	//³»°¡ ÂòÇÑ ¿©ÇàÁ¤º¸ ¸®½ºÆ®
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	public List<TripinfoMyMind> selectMindList(List<Mind> mind){
 		Connection conn=getConnection();
 		List<TripinfoMyMind> mindList=dao.selectMindList(conn,mind);
@@ -246,10 +246,24 @@ public class MypageService {
 		return mindList;
 	}
 	
-	//Âü¿© µ¿Çà °ÅÀý »èÁ¦
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int dongJoinRefusal(int no) {
 		Connection conn=getConnection();
 		int result=dao.dongJoinRefusal(conn,no);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	//ë‚´ ì—¬í–‰ê¸° ì‚­ì œ
+	public int myTripDelete(int tripNo) {
+		Connection conn=getConnection();
+		int result=dao.myTripDelete(conn,tripNo);
 		if(result>0) {
 			commit(conn);
 		}else {

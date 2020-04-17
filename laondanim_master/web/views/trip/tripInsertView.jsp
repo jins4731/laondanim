@@ -33,8 +33,10 @@
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mdb.min.css">
     <script src="<%=request.getContextPath() %>/js/mdb.min.js"></script>
-    <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40b8b885a553f3222dde4e5effec0d3e"></script>
+    <!-- <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40b8b885a553f3222dde4e5effec0d3e"></script> -->
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b&libraries=services"></script>
+						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b&libraries=LIBRARY"></script>	
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="<%=request.getContextPath() %>/js/lodash.js"></script>
     <style>
@@ -320,7 +322,7 @@
                         <div id="matzipItem<%=i %>" name="matzipItem" class="d-inline-block view zoom"
                            
                             style="height: 170px; width: 170px;position: relative;">
-                            <img id="matzipImg<%=i %>" name="matzipImg" class="d-block " data-no="<%=no%>" data-category="<%=category %>"
+                            <img id="matzipImg<%=i %>" onclick="itemBt(event)" name="matzipImg" class="d-block " data-no="<%=no%>" data-category="<%=category %>"
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
@@ -350,7 +352,7 @@
 						%>
 
                         <div id="myoungsoItem<%=i %>" name="myoungsoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
-                                <img id="myoungsoImg<%=i %>" name="myoungsoImg" class="d-block" data-no="<%=no%>"
+                                <img id="myoungsoImg<%=i %>"  onclick="itemBt(event)" name="myoungsoImg" class="d-block" data-no="<%=no%>"
                                     data-category="<%=category %>" data-tag="<%=tag %>" data-name="<%=name %>"
                                     data-address="<%=address %>" data-businessHours="<%=businessHours %>"
                                     data-tel="<%=tel %>" data-homepage="<%=homepage %>" data-naver="<%=naver %>"
@@ -382,7 +384,7 @@
 						%>
 
                         <div id="sooksoItem<%=i %>" name="sooksoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
-                            <img id="sooksoImg<%=i %>" name="sooksoImg" class="d-block" data-no="<%=no%>" data-category="<%=category %>"
+                            <img id="sooksoImg<%=i %>" onclick="itemBt(event)" name="sooksoImg" class="d-block" data-no="<%=no%>" data-category="<%=category %>"
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
@@ -678,6 +680,65 @@
            console.log("dayBt")
         }
 
+        
+        
+        
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+        mapOption = {
+            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+
+    // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+    function itemBt(event) {
+        console.log("itemBt")
+        console.log("nodeName : " + $.nodeName(event.target, "img"));
+        var target = event.target;
+        if ($.nodeName(event.target, "img")) {
+
+        } else {
+            // target = $(event.target).parent()[0];
+        }
+
+
+        var search = target.dataset.address;
+        var name = target.dataset.name;
+        console.log("search : " + search);
+
+
+        // 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new kakao.maps.services.Geocoder();
+
+
+        // 주소로 좌표를 검색합니다
+        geocoder.addressSearch(search, function (result, status) {
+
+            // 정상적으로 검색이 완료됐으면 
+            if (status === kakao.maps.services.Status.OK) {
+
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                // 결과값으로 받은 위치를 마커로 표시합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+
+                // 인포윈도우로 장소에 대한 설명을 표시합니다
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: '<div style="width:150px;text-align:center;padding:6px 0;">' + name + '</div>'
+                });
+                infowindow.open(map, marker);
+
+                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                map.setCenter(coords);
+            }
+        });
+    }
+    
+    
         function dayDelBt(e) {
             console.log("dayDelBt");
             $("[name='day']")

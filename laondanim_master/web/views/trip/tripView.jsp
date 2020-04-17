@@ -77,18 +77,21 @@
 	<meta charset="UTF-8">
 	<title>여행기</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
-	<link href="../css/trip/mdb.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-	<!-- <script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40b8b885a553f3222dde4e5effec0d3e"></script> -->
-	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b&libraries=services"></script>
-	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b&libraries=LIBRARY"></script>
-	<script src="../js/trip/mdb.min.js"></script>
+    <script src="<%=request.getContextPath() %>/js/bootstrap-datepicker.min.js"></script>
+    <script src="<%=request.getContextPath() %>/js/bootstrap-datepicker.ko.min.js"></script>
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mdb.min.css">
+    <script src="<%=request.getContextPath() %>/js/mdb.min.js"></script>
+    <!-- <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40b8b885a553f3222dde4e5effec0d3e"></script> -->
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b&libraries=services"></script>
+						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b&libraries=LIBRARY"></script>	
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="<%=request.getContextPath() %>/js/lodash.js"></script>
 	<style>
 		@media screen and (min-width: 576px) {
 			.container-fluid {
@@ -432,7 +435,7 @@
 							%>
 										<!-- 1번 아이템 -->
 										<div class="carousel-item active">
-											<img src="https://www.w3schools.com/bootstrap4/la.jpg" alt="Los angeles">
+											<img src="https://health.chosun.com/site/data/img_dir/2018/10/09/2018100901198_0.jpg" alt="Los angeles">
 											<!-- <div class="carousel-caption">
 	<h3>Los Angeles</h3>
 	<p>우리가 보낸 최고의 시간</p>
@@ -446,9 +449,9 @@
 									</div>
 
 									<a href="#reviewImage" data-slide="prev" class="carousel-control-prev"> <span
-											class="carousel-control-prev-icon"></span>
+											class="carousel-control-prev-icon"  style="width: 50px;height: 50px;"></span>
 									</a> <a href="#reviewImage" data-slide="next" class="carousel-control-next"> <span
-											class="carousel-control-next-icon"></span>
+											class="carousel-control-next-icon" style="width: 50px;height: 50px;"></span>
 									</a>
 						</div>
 					</div>

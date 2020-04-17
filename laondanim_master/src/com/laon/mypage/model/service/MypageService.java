@@ -274,4 +274,18 @@ public class MypageService {
 		return result;
 	}
 	
+	//내 게시글 삭제
+	public int myBoardDelete(int[] boardNo) {
+		Connection conn=getConnection();
+		int result=dao.myBoardDelete(conn,boardNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
 }

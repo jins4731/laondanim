@@ -13,6 +13,10 @@
 	List<Tripinfo> matzipList= (List<Tripinfo>)request.getAttribute("matzipList");
 	List<Tripinfo> myoungsoList= (List<Tripinfo>)request.getAttribute("myoungsoList");
 	List<Tripinfo> sooksoList=(List<Tripinfo>)request.getAttribute("sooksoList");
+	
+	System.out.println("matzipList : " + matzipList);
+	System.out.println("myoungsoList : " + myoungsoList);
+	System.out.println("sooksoList : " + sooksoList);
 
 
 %>
@@ -33,8 +37,12 @@
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mdb.min.css">
     <script src="<%=request.getContextPath() %>/js/mdb.min.js"></script>
+    <!-- <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40b8b885a553f3222dde4e5effec0d3e"></script> -->
     <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40b8b885a553f3222dde4e5effec0d3e"></script>
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b&libraries=services"></script>
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b&libraries=LIBRARY"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="<%=request.getContextPath() %>/js/lodash.js"></script>
     <style>
@@ -113,6 +121,24 @@
             width: 100%;
             height: 100%;
         }
+
+        div>input[type=checkbox] {
+            display: none;
+        }
+
+        div>input[type=checkbox]+label {
+            display: inline-block;
+            cursor: pointer;
+            color: grey;
+            width: auto;
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+
+        div>input[type=checkbox]:checked+label {
+            color: #00abbf;
+            font-weight: 550;
+        }
     </style>
 </head>
 
@@ -140,7 +166,8 @@
                 <div class="row align-items-center justify-content-end">
                     <label for="publicEnabled" class="mb-1">공개</label>
                     <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="publicEnabledId" name="publicEnabled" required>
+                        <input type="checkbox" class="custom-control-input" id="publicEnabledId" name="publicEnabled"
+                            required>
                         <label for="publicEnabledId" class="custom-control-label"></label>
                     </div>
                 </div>
@@ -163,7 +190,7 @@
                         <div class="row form-group mb-0 ">
                             <span class="col-3 pt-1 font-weight-bold">여행지역</span>
                             <input class="col-6" type="text" id="travleLocale"
-                                class="form-control border-top-0 border-left-0 border-right-0 " name="title" 
+                                class="form-control border-top-0 border-left-0 border-right-0 " name="title"
                                 placeholder="여행지역을 입력해주세요." required>
                         </div>
                         <div class="row form-group mb-0">
@@ -241,14 +268,14 @@
 						%>
 
                         <div id="matzipItem<%=i %>" name="matzipItem" class="d-inline-block view zoom"
-                           
                             style="height: 170px; width: 170px;position: relative;">
-                            <img id="matzipImg<%=i %>" name="matzipImg" class="d-block " data-no="<%=no%>" data-category="<%=category %>"
-                                data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
+                            <img id="matzipImg<%=i %>" onclick="itemBt(event)" name="matzipImg" class="d-block "
+                                data-no="<%=no%>" data-category="<%=category %>" data-tag="<%=tag %>"
+                                data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
-                                src="<%=request.getContextPath()+"/upload/"+image %>"
-                                draggable="true" ondragstart="dragstart(event)" alt=""
+                                src="<%=request.getContextPath()+"/upload/"+image %>" draggable="true"
+                                ondragstart="dragstart(event)" alt=""
                                 style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
                             <div class="mask flex-center rgba-black-strong text-nowrap"
                                 style="width: 100%;height: 30px;z-index: 1;overflow: hidden;">
@@ -272,19 +299,20 @@
                             String image = info.getPictureList().get(0).getImage();
 						%>
 
-                        <div id="myoungsoItem<%=i %>" name="myoungsoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
-                                <img id="myoungsoImg<%=i %>" name="myoungsoImg" class="d-block" data-no="<%=no%>"
-                                    data-category="<%=category %>" data-tag="<%=tag %>" data-name="<%=name %>"
-                                    data-address="<%=address %>" data-businessHours="<%=businessHours %>"
-                                    data-tel="<%=tel %>" data-homepage="<%=homepage %>" data-naver="<%=naver %>"
-                                    data-sns="<%=sns %>"
-                                    src="<%=request.getContextPath()+"/upload/"+image %>"
-                                    draggable="true" ondragstart="dragstart(event)" alt=""
-                                    style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
-                                <div class="mask flex-center rgba-black-strong text-nowrap"
-                                    style="width: 100%;height: 30px;z-index: 1;overflow: hidden;">
-                                    <p class="white-text"><%=name%></p>
-                                </div>
+                        <div id="myoungsoItem<%=i %>" name="myoungsoItem" class="d-none view  zoom"
+                            style="height: 170px; width: 170px;position: relative;">
+                            <img id="myoungsoImg<%=i %>" onclick="itemBt(event)" name="myoungsoImg" class="d-block"
+                                data-no="<%=no%>" data-category="<%=category %>" data-tag="<%=tag %>"
+                                data-name="<%=name %>" data-address="<%=address %>"
+                                data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
+                                data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
+                                src="<%=request.getContextPath()+"/upload/"+image %>" draggable="true"
+                                ondragstart="dragstart(event)" alt=""
+                                style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
+                            <div class="mask flex-center rgba-black-strong text-nowrap"
+                                style="width: 100%;height: 30px;z-index: 1;overflow: hidden;">
+                                <p class="white-text"><%=name%></p>
+                            </div>
                         </div>
 
                         <%} %>
@@ -304,13 +332,15 @@
 							
 						%>
 
-                        <div id="sooksoItem<%=i %>" name="sooksoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
-                            <img id="sooksoImg<%=i %>" name="sooksoImg" class="d-block" data-no="<%=no%>" data-category="<%=category %>"
-                                data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
+                        <div id="sooksoItem<%=i %>" name="sooksoItem" class="d-none view  zoom"
+                            style="height: 170px; width: 170px;position: relative;">
+                            <img id="sooksoImg<%=i %>" onclick="itemBt(event)" name="sooksoImg" class="d-block"
+                                data-no="<%=no%>" data-category="<%=category %>" data-tag="<%=tag %>"
+                                data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
-                                src="<%=request.getContextPath()+"/upload/"+image %>"
-                                draggable="true" ondragstart="dragstart(event)" alt=""
+                                src="<%=request.getContextPath()+"/upload/"+image %>" draggable="true"
+                                ondragstart="dragstart(event)" alt=""
                                 style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
                             <div class="mask flex-center rgba-black-strong text-nowrap"
                                 style="width: 100%;height: 30px;z-index: 1;overflow: hidden;">
@@ -360,28 +390,28 @@
             <div id="dayContainer" class="col p-0 mx-1">
 
                 <div id="day1" name="day" data-save="1" class="row mx-1" id="schduleContainer">
-                
-               
+
+
 
 
                     <div class="col-12 ">
-    
+
                         <div class="border-danger d-inline-block"
                             style="margin-right: 7rem ;width: 100px;height: 100px;background-size: contain; background-image: url(<%=request.getContextPath()%>/picture/trip/icon/start.png)">
                         </div>
-    
+
                         <div class="border-danger mr-2 d-inline-block" data-order="1"
                             style=" width: 100px;height: 100px;position: relative;background-size: contain ;background-image: url(<%=request.getContextPath()%>/picture/trip/icon/rectangle.png);"
                             ondrop="drop(event)" ondragover="dragover(event)">
                         </div>
-    
+
                     </div>
-    
-                  
+
+
                 </div>
 
             </div>
-            
+
 
 
 
@@ -440,11 +470,34 @@
             </div>
 
 
-            <div class="row mx-2" style="height: 100px;">
-                <div class="d-flex flex-wrap" style="height: 30px;">
+            <div class="row mx-2 justify-content-center" style="height: 120px;">
+                <!-- <div class="d-flex flex-wrap" style="height: 30px;">
                     <div>
                         <input id="tag" name="tag" type="text" class="border-0" style="width: auto;" required>
 
+                    </div>
+                </div> -->
+
+
+                <div class="form-group d-flex flex-column flex-wrap justify-content-center"
+                    style="width: 100%;height: 120px;">
+                    <p class="mb-2 ml-2 align-items-start">관심태그를 <strong>클릭</strong>해주세요. (최대 5개)</p>
+                    <div class="checkbox border text-center p-2 rounded-lg">
+                        <input type="checkbox" name="likeTag" id="cb1" value="혼자여행"><label for="cb1">#혼자여행</label>
+                        <input type="checkbox" name="likeTag" id="cb2" value="가족여행"><label for="cb2">#가족여행</label>
+                        <input type="checkbox" name="likeTag" id="cb3" value="우정여행"><label for="cb3">#우정여행</label>
+                        <input type="checkbox" name="likeTag" id="cb4" value="커플여행"><label for="cb4">#커플여행</label>
+                        <input type="checkbox" name="likeTag" id="cb5" value="맛집투어"><label for="cb5">#맛집투어</label>
+                        <input type="checkbox" name="likeTag" id="cb6" value="카페투어"><label for="cb6">#카페투어</label>
+                        <input type="checkbox" name="likeTag" id="cb7" value="관광지_탐방"><label for="cb7">#관광지_탐방</label>
+                        <input type="checkbox" name="likeTag" id="cb8" value="힐링"><label for="cb8">#힐링</label>
+                        <input type="checkbox" name="likeTag" id="cb9" value="축제"><label for="cb9">#축제</label>
+                        <input type="checkbox" name="likeTag" id="cb10" value="인생샷"><label for="cb10">#인생샷</label>
+                        <input type="checkbox" name="likeTag" id="cb11" value="숨은_명소"><label for="cb11">#숨은_명소</label>
+                        <input type="checkbox" name="likeTag" id="cb12" value="액티비티"><label for="cb12">#액티비티</label>
+                        <input type="checkbox" name="likeTag" id="cb13" value="당일치기"><label for="cb13">#당일치기</label>
+                        <input type="checkbox" name="likeTag" id="cb14" value="주말여행"><label for="cb14">#주말여행</label>
+                        <input type="checkbox" name="likeTag" id="cb15" value="캠핑"><label for="cb15">#캠핑</label>
                     </div>
                 </div>
 
@@ -509,23 +562,23 @@
 
 
 
-            <!-- 일차 추가 -->
-            <div id="dayTemple" class="row mx-1" id="schduleContainer">
+        <!-- 일차 추가 -->
+        <div id="dayTemple" class="row mx-1" id="schduleContainer">
 
-                <div class="col-11 ">
+            <div class="col-11 ">
 
-                    <div class="border-danger d-inline-block"
-                        style="margin-right: 7rem ;width: 100px;height: 100px;background-size: contain; background-image: url(<%=request.getContextPath()%>/picture/trip/icon/start.png)">
-                    </div>
-                    
-                    <div name="scheduleOrder" class="border-danger mr-2 d-inline-block"
-                        style=" width: 100px;height: 100px;position: relative;background-size: contain ;background-image: url(<%=request.getContextPath()%>/picture/trip/icon/rectangle.png);"
-                        ondrop="drop(event)" ondragover="dragover(event)">
-                    </div>
-
+                <div class="border-danger d-inline-block"
+                    style="margin-right: 7rem ;width: 100px;height: 100px;background-size: contain; background-image: url(<%=request.getContextPath()%>/picture/trip/icon/start.png)">
                 </div>
-               
+
+                <div name="scheduleOrder" class="border-danger mr-2 d-inline-block"
+                    style=" width: 100px;height: 100px;position: relative;background-size: contain ;background-image: url(<%=request.getContextPath()%>/picture/trip/icon/rectangle.png);"
+                    ondrop="drop(event)" ondragover="dragover(event)">
+                </div>
+
             </div>
+
+        </div>
 
 
     </div>
@@ -567,63 +620,63 @@
 
 
             var daytemple = $("#dayTemple").clone();
-           
-            daytemple.attr("id","day"+dayCount);
-            daytemple.attr("name","day");
+
+            daytemple.attr("id", "day" + dayCount);
+            daytemple.attr("name", "day");
             daytemple[0].dataset.save = dayCount;
             daytemple.addClass("d-none");
             daytemple.find("[name='scheduleOrder']")[0].dataset.order = 1;
             var daytempleClone = daytemple.clone();
             $("#dayContainer").append(daytempleClone);
-            setTimeout(function(){
+            setTimeout(function () {
                 $(event.target).prev().trigger("click");
-               
-                
-            },10);
+
+
+            }, 10);
         });
 
-        function dayBt(event){
+        function dayBt(event) {
             console.log("dayBt : " + $(event.target)[0]);
             console.log("dayCount : " + $(event.target).data("save"));
-            console.log("dayBt Length : " +  $("[name='day']").length);
+            console.log("dayBt Length : " + $("[name='day']").length);
             var dayLength = $("[name='day']").length;
             console.log("eventTargetSave : " + event.target.dataset.save);
-            for(let i = 0 ;i<dayLength;i++){
+            for (let i = 0; i < dayLength; i++) {
                 console.log("[name='day']Save : " + $("[name='day']")[i].dataset.save);
-                if($("[name='day']")[i].dataset.save == event.target.dataset.save){
+                if ($("[name='day']")[i].dataset.save == event.target.dataset.save) {
                     $($("[name='day']")[i]).removeClass("d-none");
-                }else{
+                } else {
                     $($("[name='day']")[i]).addClass("d-none");
                 }
             }
-           
-           console.log("dayBt")
+
+            console.log("dayBt")
         }
 
         function dayDelBt(e) {
             console.log("dayDelBt");
             $("[name='day']")
-            for(let i=0;i<$("[name='day']").length;i++){
-                if($(e.target).parent()[0].dataset.save == $("[name='day']")[i].dataset.save){
+            for (let i = 0; i < $("[name='day']").length; i++) {
+                if ($(e.target).parent()[0].dataset.save == $("[name='day']")[i].dataset.save) {
                     $($("[name='day']")[i]).remove();
                 }
-                
+
             }
-            
-            console.log("daylksjdflkjsldkjlfkj : "  + $(e.target).parent()[0].dataset.save)
-            if($(e.target).parent().prev()[0].dataset.save != 1){
-                    var a = $('<a href="javascript:void(0)" class="text-light" name="dayDelBt" onclick="dayDelBt(event)">x</a>');
-                    $(e.target).parent().prev().append(a);
+
+            console.log("daylksjdflkjsldkjlfkj : " + $(e.target).parent()[0].dataset.save)
+            if ($(e.target).parent().prev()[0].dataset.save != 1) {
+                var a = $('<a href="javascript:void(0)" class="text-light" name="dayDelBt" onclick="dayDelBt(event)">x</a>');
+                $(e.target).parent().prev().append(a);
             }
             var prev = $(e.target).parent().prev();
             $(e.target).parent().remove();
             dayCount--;
-           
-            setTimeout(function(){
+
+            setTimeout(function () {
                 prev.trigger("click");
-               
-                
-            },10);
+
+
+            }, 10);
         }
 
 
@@ -640,6 +693,8 @@
             $("#category").val("후기")
 
         });
+
+
 
 
 
@@ -701,26 +756,47 @@
 
         });
 
+        var tag = "";
+        $(":checkbox").change(function () {
+            tag = "";
+            var cnt = 5;
 
-
-
-
-
-        $("#tag").on("keyup", function (e) {
-            console.log("tag : " + e.keyCode);
-            var str = $(e.target).val();
-            if ($(e.target).val().length > 0 && e.keyCode == 13) {
-                var input = $('<input name="tag" type="text" class="border-0" style="width: auto;">');
-                input.val(str);
-                var a = $('<a href="javascript:void(0)" name="tagDelBt" onclick="tagDelBt(event)">x</a>');
-                var div = $("<div>");
-                div.addClass("mr-2");
-                div.append(input).append(a);
-                $(e.target).parent().before(div);
-
-                $(e.target).val("");
+            // 셀렉트박스의 값과 체크박스중 체크된 갯수가 같을때, 다른 체크박스들을 disable 처리
+            if (cnt == $(":checkbox:checked").length) {
+                $(":checkbox:not(:checked)").attr("disabled", "disabled");
             }
+            // 체크된 갯수가 다르면 활성화 시킴
+            else {
+                $(":checkbox").removeAttr("disabled");
+            }
+
+            for(let i=0;i<$(":checkbox:checked").length;i++){
+                str += $($(":checkbox:checked")[i]).val()+",";
+            }
+
+
         });
+
+
+
+
+
+
+        // $("#tag").on("keyup", function (e) {
+        //     console.log("tag : " + e.keyCode);
+        //     var str = $(e.target).val();
+        //     if ($(e.target).val().length > 0 && e.keyCode == 13) {
+        //         var input = $('<input name="tag" type="text" class="border-0" style="width: auto;">');
+        //         input.val(str);
+        //         var a = $('<a href="javascript:void(0)" name="tagDelBt" onclick="tagDelBt(event)">x</a>');
+        //         var div = $("<div>");
+        //         div.addClass("mr-2");
+        //         div.append(input).append(a);
+        //         $(e.target).parent().before(div);
+
+        //         $(e.target).val("");
+        //     }
+        // });
 
 
 
@@ -734,7 +810,7 @@
             var itemClone = $("#" + data).clone(); // 이미지
             console.log(itemClone);
             itemClone.find("img")[0].dataset.order = order;
-            itemClone.attr("name","schedule"+itemClone.attr("name"));
+            itemClone.attr("name", "schedule" + itemClone.attr("name"));
             $(itemClone).css({
                 width: "100px",
                 height: "100px"
@@ -754,9 +830,9 @@
             });
             div.appendChild(trantport[0]);
             var addSchedule = $("[name='addSchedule']")[0].cloneNode()// 아이템 추가 공간 생성
-            addSchedule.dataset.order= (Number(order)+1);
+            addSchedule.dataset.order = (Number(order) + 1);
             event.target.after(addSchedule);
-            
+
 
         }
 
@@ -826,29 +902,91 @@
         function dropdownItemBt(event) {
             console.log("dropdownBt");
             $(event.target).parent().prev().html($(event.target).html());
-            
 
+
+        }
+
+
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            mapOption = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+
+        function itemBt(event) {
+            console.log("itemBt")
+            console.log("nodeName : " + $.nodeName(event.target, "img"));
+            var target = event.target;
+            if ($.nodeName(event.target, "img")) {
+
+            } else {
+                // target = $(event.target).parent()[0];
+            }
+
+
+            var search = target.dataset.address;
+            var name = target.dataset.name;
+            console.log("search : " + search);
+
+
+            // 주소-좌표 변환 객체를 생성합니다
+            var geocoder = new kakao.maps.services.Geocoder();
+
+
+            // 주소로 좌표를 검색합니다
+            geocoder.addressSearch(search, function (result, status) {
+
+                // 정상적으로 검색이 완료됐으면 
+                if (status === kakao.maps.services.Status.OK) {
+
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                    // 결과값으로 받은 위치를 마커로 표시합니다
+                    var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: coords
+                    });
+
+                    // 인포윈도우로 장소에 대한 설명을 표시합니다
+                    var infowindow = new kakao.maps.InfoWindow({
+                        content: '<div style="width:150px;text-align:center;padding:6px 0;">' + name + '</div>'
+                    });
+                    infowindow.open(map, marker);
+
+                    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                    map.setCenter(coords);
+                }
+            });
         }
 
 
 
         $("#submitBt").on("click", function () {
             console.log("submitBt");
-           
+
+            //관심사 태그 체크박스 하나 이상 확인
+            if ($("input[type=checkbox][name=likeTag]:checked").length == 0) {
+                alert("관심 태그 항목을 하나 이상 체크해 주세요.");
+                return false;
+            }
+
 
 
             var dayList = [];
 
-           
-            
-            for(let i = 0;i<$("[name='day']").length;i++){
+
+
+            for (let i = 0; i < $("[name='day']").length; i++) {
                 console.log("day : " + i);
 
                 var day = {
-                    no:i,
-                    scheduleList:[]
+                    no: i,
+                    scheduleList: []
                 }
-                for(let k = 0 ;k<$($("[name='day']")[i]).find("img").length;k++){
+                for (let k = 0; k < $($("[name='day']")[i]).find("img").length; k++) {
                     console.log("img : " + k)
                     var dayData = $("[name='day']")[i].dataset;
                     var requiredTime = $($($("[name='day']")[i]).find("input")[k]).val();
@@ -856,12 +994,12 @@
                     var schduleData = $($("[name='day']")[i]).find("img")[k].dataset;
 
                     var schedule = {
-                    tripinfoNo: schduleData.no,
-                    days: dayData.save,
-                    orders: schduleData.order,
-                    requiredHours: requiredTime,
-                    transport: transport,
-                    
+                        tripinfoNo: schduleData.no,
+                        days: dayData.save,
+                        orders: schduleData.order,
+                        requiredHours: requiredTime,
+                        transport: transport,
+
                     }
                     console.log("dayData.save : " + dayData.save);
                     console.log("tripinfoNo : " + schedule.tripinfoNo);
@@ -877,49 +1015,46 @@
 
             var _userNo = "<%=userNo%>";
             var _category = $("#category").html(); // 확인
-            // var _writeDate = $("#writeDate");  
-            var _tag = ""; 
-            for(let i =0;i<$("[name='tag']").length;i++){
-                _tag += $($("[name='tag']")[0]).val() + ",";
-            }
-            _tag = _tag.substr(0,_tag.length-1);
-
-            var _title = $("#title").val(); 
+            // var _writeDate = $("#writeDate");
+            tag = tag.substr(0,tag.length-1);
+            var _tag = tag;
+            var _title = $("#title").val();
             var _content = $("#content").val();
             var _travleLocale = $("#travleLocale").val();
             var _peopleNum = $("#peopleNum").val();
             var _travleType = $("#travleType").val();
             var _travleStartDate = $("#travleStartDateId").val();
             var _travleEndDate = $("#travleEndDateId").val();
-            var _publicEnabled = $("#publicEnabledId").val();
-          
+            var isEnabled = $("#publicEnabledId").is(":checked") == ture ? 'y' : 'n';
+            var _publicEnabled = isEnabled;
+
 
             var tripData = {
-                userNo:_userNo,
-                category:_category,
-                tag:_tag,
-                title:_title,
-                content:_content,
-                travleLocale:_travleLocale,
-                peopleNum:_peopleNum,
-                travleTyp:_travleType,
-                travleStartDate:_travleStartDate,
-                travleEndDate:_travleEndDate,
-                publicEnabled:_publicEnabled,
-                deleted:'n',
-                scheduleData:dayList
+                userNo: _userNo,
+                category: _category,
+                tag: _tag,
+                title: _title,
+                content: _content,
+                travleLocale: _travleLocale,
+                peopleNum: _peopleNum,
+                travleTyp: _travleType,
+                travleStartDate: _travleStartDate,
+                travleEndDate: _travleEndDate,
+                publicEnabled: _publicEnabled,
+                deleted: 'n',
+                scheduleData: dayList
             }
-            
+
             var f = $("#tripForm")[0];
             var formData = new FormData(f);
-            formData.append("tripData",JSON.stringify(tripData));
+            formData.append("tripData", JSON.stringify(tripData));
 
-         
+
             $.ajax({
                 url: "<%=request.getContextPath()%>/trip/tripInsertViewEnd.do",
                 type: "post",
-                enctype: "multipart/form-data", 
-                data:formData,
+                enctype: "multipart/form-data",
+                data: formData,
                 processData: false,
                 contentType: false,
                 dataType: "html", //xml,html,script,json,jsonp,text
@@ -934,7 +1069,7 @@
                     console.log(xmlHttpRequest, status);
                 }
             });
-            
+
 
 
 
@@ -1027,14 +1162,7 @@
 
 
 
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-            mapOption = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
-            };
 
-        // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-        var map = new kakao.maps.Map(mapContainer, mapOption);
     </script>
 </body>
 

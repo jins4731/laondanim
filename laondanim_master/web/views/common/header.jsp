@@ -139,7 +139,7 @@ header li>a {
 					<ul class="main-nav d-flex p-0 m-0 justify-content-center align-items-center">
 						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/trip/tripListView.do?first=first">여행기</a></li>
 						<!-- 여행정보 링크 추가 정호 -->
-						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?1:loginUser.getNo()%>">여행정보</a></li>
+						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?1:loginUser.getNo()%>&first=first">여행정보</a></li>
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">커뮤니티</a>
 							<div class="dropdown-menu">

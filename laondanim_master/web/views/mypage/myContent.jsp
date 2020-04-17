@@ -73,7 +73,7 @@
 											    	</button>
 											   	 	<div class="dropdown-menu">
 											      		<a class="dropdown-item" href="#">수정</a>
-											     		<a class="dropdown-item" href="#">삭제</a>
+											     		<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myTripDelete.do?userNo=<%=loginUser.getNo()%>&tripNo=<%=t.getNo()%>">삭제</a>
 											    	</div>
 												</div>
 											</div>
@@ -123,6 +123,7 @@
 						</div>
 						<hr>
 					</div>
+					<form action="<%=request.getContextPath()%>/mypage/myBoardDel.do" method="get">
 					<!-- 닫힘 내용 -->
 					<div>
 						<!-- 정보 -->
@@ -136,7 +137,7 @@
 							</div>
 							<div id="bdCk2">
 								<label><input type="checkbox" id="bdAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn" onclick="fnBoardDel();">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
+								<button class="btn" type="submit" onclick="return fn_boardDel();">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
 								<button class="btn" id="bdEndBtn">돌아가기</button>
 							</div>
 							<%} %>
@@ -156,7 +157,7 @@
 								<tr>
 									<td style="width:50px;">
 										<div class="bdCk3">
-											<input type="checkbox" class="bdCks" name="bdCks">
+											<input type="checkbox" class="bdCks" name="bdCks" value="<%=b.getNo()%>">
 										</div>
 									</td>
 									<td style="width:100px;">
@@ -168,7 +169,7 @@
 									<td style="width:150px;">
 										<%=b.getWriteDate() %>
 									</td>
-									<td style="width:80px;">
+									<td style="width:100px;">
 										<button class="btn">수정</button>
 									</td>
 								</tr>
@@ -184,6 +185,7 @@
 							</div>
 						</div>
 					</div>
+				</form>
 				</div>
 			</section>
 		</div>
@@ -276,18 +278,26 @@
 	});
 	
 	$(function(){
-		$(".imgDrop").stop().css({"transform":"rotate(90deg)"});
+		$(".imgDrop").stop().css({"transform":"rotate(-90deg)"});
 	});
 	var flag=false;
 	$(".menu").click(function(){
 		if(flag){
 			$(this).next().slideDown();
-			$(this).find(".imgDrop").stop().css({'transform': 'rotate(90deg)'},1000);
+			$(this).find(".imgDrop").stop().css({'transform': 'rotate(-90deg)'},1000);
 			flag=false;
 		}else{
 			$(this).next().slideUp();
-			$(this).find(".imgDrop").stop().css({'transform': 'rotate(-90deg)'},1000);
+			$(this).find(".imgDrop").stop().css({'transform': 'rotate(90deg)'},1000);
 			flag=true;
 		}
+	});
+	
+	$(function(){
+		function fn_boardDel(){
+			var boardCk=new Array();
+			boardCk.push($("#bdCks").val());
+		}
+		
 	});
 </script>

@@ -229,7 +229,7 @@
                 <button id="matzipBt" onclick="matzipBt()" class="btn btn-grey">맛집</button>
                 <button id="myoungsoBt" onclick="myoungsoBt()" class="btn btn-grey">명소</button>
                 <button id="sooksoBt" onclick="sooksoBt()" class="btn btn-grey">숙소</button>
-                <button id="myBt" onclick="myBt()" class="btn btn-grey">마이</button>
+                <!-- <button id="myBt" onclick="myBt()" class="btn btn-grey">마이</button> -->
             </div>
             <div class="row mx-1" style="height: 200px;">
 

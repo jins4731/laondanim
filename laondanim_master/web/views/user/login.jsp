@@ -33,7 +33,7 @@
 	color: #595959;
 }
 td > label{
-	font-family: NanumSquare;
+	/* font-family: NanumSquare; */
 	font-weight: 600px;
 	color: #595959;
 }
@@ -251,7 +251,7 @@ td > label{
    </div>
             <!-- Modal footer -->
             <div class="modal-footer findPwFooter" style="display: none;">
-               <input type="submit" class="ldBtnSubmit" data-dismiss="modal" value="완료" onclick="finishPw();" />
+               <button class="btn btn-primary" data-dismiss="modal" id="finishPw" >완료</button>
             </div>
 <!-- 전체 모달창 닫는 div들 -->
          </div>
@@ -392,12 +392,13 @@ td > label{
          
       });
          //세션값이 null이아니면 완료할때 alert창을 띄워줄까??
-      function finishPw(){
+     $("#finishPw").click(()=>{
             var userId=$("#findPwuserId").val();
             //아이디값을 넘겨서 아이디, 비밀번호를 가져와
+            
             location.href="<%=request.getContextPath()%>/user/alterPw.do?userId="+userId;
-      
-         }   
+            }
+         });   
       
       
    

@@ -72,14 +72,12 @@
 												    </button>
 												    <div class="dropdown-menu">
 												    <%if(d.getEnded().equals("N")){ %>
-						                        		<a class="dropdown-item" href="#">신청서 수신함</a>
-						                        		<a class="dropdown-item" href="#">채팅</a>
-												      	<a class="dropdown-item" href="#">모집 마감</a>
+												    	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">신청서 수신함</a>
+												      	<a class="dropdown-item" href="fn_myDongDeadline">모집 마감</a>
 												     	<a class="dropdown-item" href="#">동행 수정</a>
 												     	<a class="dropdown-item" href="#">동행 삭제</a>
 						                        	<%}else{ %>
-												    	<a class="dropdown-item" href="#">신청서 수신함</a>
-												    	<a class="dropdown-item" href="#">채팅</a>
+						                        		<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">신청서 수신함</a>
 												     	<a class="dropdown-item" href="#">동행 수정</a>
 												     	<a class="dropdown-item" href="#">동행 삭제</a>
 						                        	<%} %>
@@ -174,7 +172,6 @@
 													    	if(dj.getConfirmed().equals("N")){ %>
 														    	<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myDongJoinRefusal.do?userNo=<%=loginUser.getNo()%>&dongJoinNo=<%=dj.getNo()%>">삭제</a>
 								                        	<%}else if(dj.getConfirmed().equals("Y")){ %>
-								                        		<a class="dropdown-item" href="#">채팅</a>
 														      	<a class="dropdown-item" href="#">동행 나가기</a>
 								                        	<%}else{ %>
 								                        		<a class="dropdown-item" href="#">보낸 신청서 보기</a>
@@ -278,65 +275,23 @@
 </style>
 
 <script>
-	/* 내동행 */
-	/* $(function(){
-		$("#dhCk1>button").click(()=>{
-			$("#dhCk1").css("display","none");
-			$("#dhCk2").css("display","block");
-			$(".dhCk3").css("display","block");
-		});
-		
-		$("#dhEndBtn").click(()=>{
-			$("#dhCk1").css("display","block");
-			$("#dhCk2").css("display","none");
-			$(".dhCk3").css("display","none");
-		});
-		
-		$("#dhAll").click(()=>{
-			if($("#dhAll").is(":checked")){							
-				$(".dhCks").prop("checked",true);
-			}else{
-				$(".dhCks").prop("checked",false);
-			}
-		});
-	}); */
-	
-	/* 참여동행 */
-	/* $(function(){
-		$("#jDhCk1>button").click(()=>{
-			$("#jDhCk1").css("display","none");
-			$("#jDhCk2").css("display","block");
-			$(".jDhCk3").css("display","block");
-		});
-		
-		$("#dhEndBtn").click(()=>{
-			$("#jDhCk1").css("display","block");
-			$("#jDhCk2").css("display","none");
-			$(".jDhCk3").css("display","none");
-		});
-		
-		$("#jDhAll").click(()=>{
-			if($("#jDhAll").is(":checked")){							
-				$(".jDhCks").prop("checked",true);
-			}else{
-				$(".jDhCks").prop("checked",false);
-			}
-		});
-	}); */
-	
 	$(function(){
-		$(".imgDrop").stop().css({"transform":"rotate(90deg)"});
+		$(".imgDrop").stop().css({"transform":"rotate(-90deg)"});
 	});
 	var flag=false;
 	$(".menu").click(function(){
 		if(flag){
 			$(this).next().slideDown();
-			$(this).find(".imgDrop").stop().css({'transform': 'rotate(90deg)'},1000);
+			$(this).find(".imgDrop").stop().css({'transform': 'rotate(-90deg)'},1000);
 			flag=false;
 		}else{
 			$(this).next().slideUp();
-			$(this).find(".imgDrop").stop().css({'transform': 'rotate(-90deg)'},1000);
+			$(this).find(".imgDrop").stop().css({'transform': 'rotate(90deg)'},1000);
 			flag=true;
 		}
 	});
+	
+	function fn_myDongDeadline(){
+		
+	}
 </script>

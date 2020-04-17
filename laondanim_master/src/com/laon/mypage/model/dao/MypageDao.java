@@ -763,4 +763,22 @@ public class MypageDao {
 		return result;
 	}
 	
+	//내 여행기 삭제
+	public int myTripDelete(Connection conn,int tripNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("myTripDelete");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, tripNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 }

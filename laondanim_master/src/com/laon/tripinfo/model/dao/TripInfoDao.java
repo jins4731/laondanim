@@ -711,7 +711,7 @@ public class TripInfoDao {
 	
 	
 	/* ��� �ҷ����� */
-	public ArrayList<TripInfoComment> selectComment(Connection conn, List<TripInfoPicture> list){
+	public ArrayList<TripInfoComment> selectComment(Connection conn){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<TripInfoComment> commentList = new ArrayList();
@@ -719,10 +719,10 @@ public class TripInfoDao {
 		TripInfoComment tc=null;
 		try {
 			
-			for(int i=0; i<list.size(); i++) {
+			
 				pstmt = conn.prepareStatement(sql);
 				
-				pstmt.setInt(1, list.get(i).getTripinfoNo());
+				
 				
 				rs = pstmt.executeQuery();
 				
@@ -736,7 +736,7 @@ public class TripInfoDao {
 					tc.setDeleted(rs.getString("deleted").charAt(0));
 					commentList.add(tc);
 				}
-			}
+			
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -745,4 +745,101 @@ public class TripInfoDao {
 			close(pstmt);
 		}return commentList;
 	}
+	
+	public TripInfoComment selectComment2(Connection conn){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		TripInfoComment comment2 = null;
+		String sql = prop.getProperty("selectComment2");
+		TripInfoComment tc=null;
+		try {
+			
+			
+				pstmt = conn.prepareStatement(sql);
+				
+				
+				
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					tc = new TripInfoComment();
+					tc.setTripinfoCommentNo(rs.getInt("no"));
+					tc.setTripinfoTbNo(rs.getInt("tripinfo_no"));
+					tc.setUserTbNo(rs.getInt("user_no"));
+					tc.setWriteDate(rs.getDate("write_date"));
+					tc.setContent(rs.getString("content"));
+					tc.setDeleted(rs.getString("deleted").charAt(0));
+					
+				}
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return comment2;
+	}
+	
+	public int deleteMind(Connection conn , int tripinfoNo , int userNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteMind");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, tripinfoNo);
+			
+		
+
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	//tag 
+	//by 승연
+	
+	public ArrayList<TripInfo2> selectTagList(Connection conn, String category){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectTagList");
+		TripInfo2 t = null;
+		ArrayList<TripInfo2> infoList = new ArrayList<TripInfo2>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				t = new TripInfo2();
+				t.setTripinfoNo(rs.getInt("NO"));
+				t.setTripinfoCategory(rs.getString("CATEGORY"));
+				t.setTripinfoTag(rs.getString("TAG"));
+				t.setTripinfoName(rs.getString("NAME"));
+				t.setTripinfoAddress(rs.getString("ADDRESS"));
+				t.setTripinfotime(rs.getString("BUSINESS_HOURS"));
+				t.setTripinfoNumber(rs.getString("TEL"));
+				t.setTripinfoHomePage(rs.getString("HOMEPAGE"));
+				t.setTripinfoNaver(rs.getString("NAVER"));
+				t.setTripinfoSns(rs.getString("SNS"));
+				
+				infoList.add(t);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return infoList;
+	}
+	
 }// Ŭ����

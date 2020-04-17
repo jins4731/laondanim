@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.laon.common.TagFilter;
 import com.laon.tripinfo.model.service.TripInfoService;
+import com.laon.tripinfo.model.vo.InfoTagCount;
 import com.laon.tripinfo.model.vo.Mind;
 import com.laon.tripinfo.model.vo.Picture;
+import com.laon.tripinfo.model.vo.TripInfo2;
 import com.laon.tripinfo.model.vo.TripInfoComment;
 import com.laon.tripinfo.model.vo.TripInfoPicture;
 import com.laon.user.model.vo.User;
@@ -40,6 +43,9 @@ public class TripInfoMainServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String category=request.getParameter("category");
 		
+		String first = request.getParameter("first");
+		first=first==null?"null":first;
+		
 		String type=request.getParameter("type");
 		type = type==null?"상호명":type;
 		
@@ -53,7 +59,15 @@ public class TripInfoMainServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User loginUser = (User)session.getAttribute("loginUser");
 		int userNo = loginUser.getNo();
+		//tag
+		String userTag = loginUser.getTag();
 		
+		ArrayList<InfoTagCount> infoTagCountList = null;
+		infoTagCountList = new TagFilter().infoTagCountList(userTag, category);
+		
+		for(InfoTagCount it : infoTagCountList) {
+			System.out.println(it);
+		}
 		
 		int cPage;
 		
@@ -65,7 +79,32 @@ public class TripInfoMainServlet extends HttpServlet {
 		
 		int numPerPage=10;
 		
-		List<TripInfoPicture> list=new TripInfoService().selectTripinfoList(cPage,numPerPage,category,type,keyword,mind);
+		TripInfoPicture ti = null;
+		List<TripInfoPicture> list = new ArrayList<TripInfoPicture>();
+				
+		if(first.equals("first")) {
+			for(int i=(cPage-1)*numPerPage; i<(cPage)*numPerPage; i++) {
+				if(i<infoTagCountList.size()) {
+					ti = new TripInfoPicture();
+					
+					ti.setTripinfoNo(infoTagCountList.get(i).getNo());
+					ti.setTripinfoCategory(infoTagCountList.get(i).getCategory());
+					ti.setTripinfoTag(String.join(",", infoTagCountList.get(i).getTag()));
+					ti.setTripinfoName(infoTagCountList.get(i).getName());
+					ti.setTripinfoAddress(infoTagCountList.get(i).getAddress());
+					ti.setTripinfotime(infoTagCountList.get(i).getBusinessHours());
+					ti.setTripinfoNumber(infoTagCountList.get(i).getTel());
+					ti.setTripinfoHomePage(infoTagCountList.get(i).getHomepage());
+					ti.setTripinfoNaver(infoTagCountList.get(i).getNaver());
+					ti.setTripinfoSns(infoTagCountList.get(i).getSNS());
+					
+					list.add(ti);
+				}
+			}
+		}else {
+			list =new TripInfoService().selectTripinfoList(cPage,numPerPage,category,type,keyword,mind);
+		}
+		
 			
 		List<Mind> mindList = new TripInfoService().selectMind();
 			
@@ -93,7 +132,7 @@ public class TripInfoMainServlet extends HttpServlet {
 		}else {
 			pageBar+="<a href='"+request.getContextPath()
 			+"/tripinfo/tripinfoMain?cPage="+(pageNo-1)
-			+"&category="+category+"&type="+type+"&keyword="+keyword+"&mind="+mind
+			+"&category="+category+"&type="+type+"&keyword="+keyword+"&mind="+mind+"&first="+first
 			+"'>이전</a>";
 		}
 		
@@ -103,7 +142,7 @@ public class TripInfoMainServlet extends HttpServlet {
 			}else {
 				pageBar+="<a href='"+request.getContextPath()
 				+"/tripinfo/tripinfoMain?cPage="+pageNo
-				+"&category="+category+"&type="+type+"&keyword="+keyword+"&mind="+mind
+				+"&category="+category+"&type="+type+"&keyword="+keyword+"&mind="+mind+"&first="+first
 				+"'>"+pageNo+"</a>";
 			}
 			pageNo++;
@@ -114,7 +153,7 @@ public class TripInfoMainServlet extends HttpServlet {
 		}else {
 			pageBar+="<a href='"+request.getContextPath()
 			+"/tripinfo/tripinfoMain?cPage="+pageNo
-			+"&category="+category+"&type="+type+"&keyword="+keyword+"&mind="+mind
+			+"&category="+category+"&type="+type+"&keyword="+keyword+"&mind="+mind+"&first="+first
 			+"'>다음</a>";
 		}
 		
@@ -130,7 +169,7 @@ public class TripInfoMainServlet extends HttpServlet {
 		
 		request.setAttribute("pictureList", pictureList);
 		
-		
+		request.setAttribute("first", first);
 		
 		request.setAttribute("commentList",commentList);
 		request.getRequestDispatcher("/views/tripinfo/tripinfoMain.jsp").forward(request, response);

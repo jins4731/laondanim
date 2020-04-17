@@ -185,4 +185,12 @@ public class TripInfoService {
 		return result;
 	}
 
+	//tag by 승연
+	public ArrayList<TripInfo2> selectTagList(String category){
+		Connection conn = getConnection();
+		ArrayList<TripInfo2> infoList = dao.selectTagList(conn, category);
+		close(conn);
+		return infoList;
+	}
+	
 }

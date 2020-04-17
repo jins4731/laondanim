@@ -21,8 +21,8 @@
 	//검색 태그 값
    	String keyword = (String)request.getAttribute("keyword");
    	
-
-	
+	String first = (String)request.getAttribute("first");
+	first = first!=null?first:"";
 %>
 <style>
 #myHeart {
@@ -52,7 +52,7 @@
 			<input type="hidden" value="<%=type==null?"상호명":type %>" id="type"/> <!-- type 저장 input 태그 -->
      		<input type="hidden" value="<%=keyword %>" id="keyword"/>
      		<input type="hidden" id="userNo" value="<%=loginUser==null?"":userNo%>"/>
-     		
+     		  		
 			<script>
 				//선택 type 드랍 다운 선택 시 서블릿 요청 필터 처리 
 				$(function(){
@@ -257,19 +257,19 @@
 	           <div class="row justify-content-between" >
 	                <div class="d-flex flex-row">
 		                <div class="col category">              		        		
-							<button type="button" id="cafe-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>')">
+							<button type="button" id="cafe-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
 								맛집
 							</button>
 						</div>
 						
 						<div class="col category">
-							<button type="button" id="room-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="숙소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>')">
+							<button type="button" id="room-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="숙소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
 								숙소
 							</button>
 						</div>
 							
 						<div class="col category">
-							<button type="button" id="attraction-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="명소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>')">
+							<button type="button" id="attraction-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="명소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
 								명소
 							</button>							
 						</div>					

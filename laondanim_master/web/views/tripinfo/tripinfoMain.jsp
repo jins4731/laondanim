@@ -221,36 +221,6 @@
 					</div>
 				</div>
 			</div> -->
-			<script>
-    var swiper = new Swiper('.swiper-container', {
-      slidesPerView: 5,
-      spaceBetween: 30,
-      slidesPerGroup: 5,
-      loop: true,
-      loopFillGroupWithBlank: true,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    });
-  </script>
-  <style>
-.swiper-slide {
-		text-align:center;
-		display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
-		align-items:center; /* 위아래 기준 중앙정렬 */
-		justify-content:center; /* 좌우 기준 중앙정렬 */
-		height:180px;
-	}
-	.swiper-slide img {
-		width:150px; /* 이미지 사이즈 */
-		max-width:100%; /* 지우면 안됨 이미지 여러장일때 꼭 필요함 */
-	}
-</style>
   
 			<!--------------------------------------------------찜목록 버튼---------------------------------------------------->
 			<div class="my-heart">

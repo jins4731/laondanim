@@ -2,7 +2,7 @@ package com.laon.trip.model.vo;
 
 public class Schedule {
 	private String tripinfoNo;
-	private String day;
+	private String days;
 	private String orders;
 	private String requiredHours;
 	private String transport;
@@ -13,10 +13,10 @@ public class Schedule {
 	}
 
 
-	public Schedule(String tripinfoNo, String day, String orders, String requiredHours, String transport) {
+	public Schedule(String tripinfoNo, String days, String orders, String requiredHours, String transport) {
 		super();
 		this.tripinfoNo = tripinfoNo;
-		this.day = day;
+		this.days = days;
 		this.orders = orders;
 		this.requiredHours = requiredHours;
 		this.transport = transport;
@@ -33,13 +33,13 @@ public class Schedule {
 	}
 
 
-	public String getDay() {
-		return day;
+	public String getDays() {
+		return days;
 	}
 
 
-	public void setDay(String day) {
-		this.day = day;
+	public void setDays(String days) {
+		this.days = days;
 	}
 
 
@@ -75,9 +75,12 @@ public class Schedule {
 
 	@Override
 	public String toString() {
-		return "Schedule [tripinfoNo=" + tripinfoNo + ", day=" + day + ", orders=" + orders + ", requiredHours="
+		return "Schedule [tripinfoNo=" + tripinfoNo + ", days=" + days + ", orders=" + orders + ", requiredHours="
 				+ requiredHours + ", transport=" + transport + "]";
 	}
+
+
+	
 	
 	
 }

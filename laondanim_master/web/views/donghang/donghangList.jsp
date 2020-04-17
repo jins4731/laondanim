@@ -32,7 +32,45 @@
 	String keyword = (String)request.getAttribute(CommonKey.KEYWORD);
 	int totalRowNum = (int)request.getAttribute(CommonKey.TOTAL_ROWCOUNT);
 %>
-
+	
+<style>
+	*{
+		font-family: NanumSquare;
+		font-size: 17px;
+	}
+	/* 카테고리 제목 폰트 */
+	@font-face { font-family: 'Cafe24Danjunghae'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Danjunghae.woff') format('woff'); font-weight: normal; font-style: normal; }
+	/* 본문 폰트 */
+	@font-face { font-family: 'S-CoreDream-4Regular'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff'); font-weight: normal; font-style: normal; }
+	.laonTitleFont{
+		font-family: Cafe24Danjunghae;
+		font-size: 35px;
+		color: #595959;
+	}
+	.laonBodyFont{
+		font-family: NanumSquare;
+		font-size: 22px;
+		color: #595959;
+	}
+	.ldBtn{
+	    border-radius: 20px;
+	    background-color: white;
+	    border: 2px solid #00abbf;
+	    color: #00abbf;
+	    padding: 6px 15px 6px 15px;
+	}  
+	.ldBtn:hover,.ldBtn:active {
+	    color: white;
+	    background-color: #00abbf;
+	}   
+	.ldBtnSubmit{
+	    border-radius: 20px;
+	    background-color: #00abbf;
+	    border: 2px solid #00abbf;
+	    color: white;
+	    padding: 6px 15px 6px 15px;   
+	}  
+</style>
    	<div style="height: 170px;"></div>
     <section class="d-flex flex-row justify-content-center">
         <div style="width: 1366px;" class="pt-5 pb-5">
@@ -52,7 +90,7 @@
                 	value=""
                 <%}%>/>
                 <button id="inputKeywordBtn">
-                	<img src="<%=request.getContextPath()%>/image/inactiveSearch_icon.png" alt="searchIcon" id="searchIcon"/>
+                	<img src="<%=request.getContextPath()%>/images/inactiveSearch_icon.png" alt="searchIcon" id="searchIcon"/>
                 </button>
             </div>
         </div>
@@ -73,7 +111,7 @@
                 color: white;
                 padding-left: 20px;
                 -webkit-appearance: none;
-                background-image: url('<%=request.getContextPath()%>/image/down_icon.png');
+                background-image: url('<%=request.getContextPath()%>/images/down_icon.png');
                 background-repeat: no-repeat;
                 background-position: right center;
                 background: ;
@@ -96,19 +134,19 @@
             }
             #searchDIV button:focus{
                 outline: none;
-            }            
+            }         
         </style>
        	<!-- 검색 아이콘 스크립트 -->
         <script>
 				
 			$("#keyword").focus(()=>{
 				$("#searchIcon").fadeOut(200, ()=>{
-					$("#searchIcon").attr('src','<%=request.getContextPath()%>/image/search_icon.png').fadeIn(300);
+					$("#searchIcon").attr('src','<%=request.getContextPath()%>/images/search_icon.png').fadeIn(300);
 				})
 			});
 			$("#keyword").focusout(()=>{
 				$("#searchIcon").fadeOut(200, ()=>{
-					$("#searchIcon").attr('src','<%=request.getContextPath()%>/image/inactiveSearch_icon.png').fadeIn(300);
+					$("#searchIcon").attr('src','<%=request.getContextPath()%>/images/inactiveSearch_icon.png').fadeIn(300);
 				})
 			});
         </script>
@@ -116,10 +154,10 @@
         <!-- 작성 -->
         <div class="d-flex justify-content-center">
             <div class="d-flex justify-content-end align-items-end" style="width: 1140px;">
-                <button class="btn btn-lg btn-outline-secondary d-flex align-items-end justify-content-center mt-3 mb-3" 
+                <button class="btn btn-lg d-flex align-items-end justify-content-center mt-3 mb-3" 
                         onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangWrite.do?userNo=<%=loginUser.getNo()%>')" id="dhWriteBtn">
                     <p class="m-0">동행찾기 작성</p>                    
-                    <img src="<%=request.getContextPath()%>/image/write_icon.png" class="ml-2 w-25">
+                    <img src="<%=request.getContextPath()%>/images/write_icon.png" class="ml-2 w-25">
                 </button>            
             </div>
         </div>
@@ -197,6 +235,15 @@
 	
 	        .hdTagBox:hover{
 	        }
+	        
+	        .lockIcon{
+		         position: absolute; 
+		         width: 30px;
+		         filter: drop-shadow(0px 0px 3px #000);
+	         }
+	         input[type=password]:focus {
+			    outline: none;
+			 }
 	    </style>
         <!-- 동행 데이터 목록 / 카드-->        
         <div class="container mt-5 mb-5 bg-white justify-content-center" style="height:760px; width: 1140px;">
@@ -206,9 +253,13 @@
 					for(DonghangJoinUserPicture dh : topList){				
 				%>
                 <div class="col h-100 p-0 mr-2">
+                <%if(dh.getPublicEnabled().equals("Y")){ %>
+                    <div class="card m-0" style="height: 100%;" 
+                    onclick="fn_pwInput(<%=dh.getPw()%>, <%=loginUser.getNo()%>,<%=dh.getNo()%>);">
+                <%}else{ %>
                     <div class="card m-0" style="height: 100%;" 
                     onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo=<%=loginUser.getNo()%>&no=<%=dh.getNo()%>');">
-
+				<%} %>
                         <!--헤더-->
                         <div class="card-header h-20 p-1 d-flex justify-content-between bg-white align-items-center border-0" style="height: 9%;">
                             <span class="ml-1"><%=dh.getEnded().equals('Y')?"모집마감":"모집중"%></span>
@@ -216,7 +267,7 @@
                         </div>
 
                         <!--바디(이미지)-->
-                        <div class="card-body h-50 w-100 p-0 border-0" style="height: 50%;">
+                        <div class="card-body h-50 w-100 p-0 border-0" style="height: 50%; position: relative;">
                             <div class="hdTagBox">
                                 <ul class="hdTag">
                                 <%if(!dh.getTag().isEmpty()){
@@ -225,8 +276,11 @@
                                     <li><a>#<%=tag%></a></li>
                                 <%} } %>
                                 </ul>
-                            </div>                        
-                            <img src="<%=request.getContextPath()%>/image/<%=dh.getImage()%>" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
+                            </div>           
+                            <%if(dh.getPublicEnabled().equals("Y")) {%>             
+                            <img src="<%=request.getContextPath()%>/images/lock_icon.png" class="mt-2 ml-1 lockIcon"/>
+                            <%} %>
+                            <img src="<%=request.getContextPath()%>/upload/donghang/<%=dh.getImage()%>" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
                         </div>
 
                         <!--푸터-->
@@ -244,7 +298,7 @@
                                 </p>
                                 <p class="m-0">
                                     <span>동행인원 : </span>
-                                    <%=dh.getRecruitPeopleNo()%> / <%=dh.getJoinPeopleNo()%>
+                                    <%=dh.getJoinPeopleNo()%> / <%=dh.getRecruitPeopleNo()%>
                                 </p>
                             </div>
                         </div>
@@ -265,9 +319,13 @@
 					for(DonghangJoinUserPicture dh : bottomList){				
 				%>
                 <div class="col h-100 p-0 mr-2">
+                <%if(dh.getPublicEnabled().equals("Y")){ %>
+                    <div class="card m-0" style="height: 100%;" 
+                    onclick="fn_pwInput(<%=dh.getPw()%>, <%=loginUser.getNo()%>,<%=dh.getNo()%>);">
+                <%}else{ %>
                     <div class="card m-0" style="height: 100%;" 
                     onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo=<%=loginUser.getNo()%>&no=<%=dh.getNo()%>');">
-
+				<%} %>
                         <!--헤더-->
                         <div class="card-header h-20 p-1 d-flex justify-content-between bg-white align-items-center border-0" style="height: 9%;">
                             <span class="ml-1"><%=dh.getEnded().equals('Y')?"모집마감":"모집중"%></span>
@@ -284,8 +342,11 @@
                                     <li><a>#<%=tag%></a></li>
                                 <%} } %>
                                 </ul>
-                            </div>                        
-                            <img src="<%=request.getContextPath()%>/image/<%=dh.getImage()%>" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
+                            </div>
+                            <%if(dh.getPublicEnabled().equals("Y")) {%>             
+                            <img src="<%=request.getContextPath()%>/images/lock_icon.png" class="mt-2 ml-1 lockIcon"/>
+                            <%} %>
+                            <img src="<%=request.getContextPath()%>/upload/donghang/<%=dh.getImage()%>" class="img-thumbnail p-0 h-100 rounded-0 border-0"/>
                         </div>
 
                         <!--푸터-->
@@ -303,7 +364,7 @@
                                 </p>
                                 <p class="m-0">
                                     <span>동행인원 : </span>
-                                    <%=dh.getRecruitPeopleNo()%> / <%=dh.getJoinPeopleNo()%>
+                                    <%=dh.getJoinPeopleNo()%> / <%=dh.getRecruitPeopleNo()%>
                                 </p>
                             </div>
                         </div>
@@ -364,8 +425,61 @@
         </div>
     </section>
     
-    
-    
+    <!-------------------------------------------------- 동행 비번입력 --------------------------------------------------------------------->
+    <!-- 닉네임 글자수 안내 모달 -->
+    <div class="modal" id="pwInputModal">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        
+            <!-- Modal Header -->
+            <div class="modal-header border-bottom-0">
+            <p class="mt-4 ml-5 laonBodyFont"><strong class="laonBodyFont">비공개 동행</strong>입니다.<br>비밀번호를 입력해주세요.</p>
+            
+            <button type="button" class="close modal-close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body d-flex">
+            	<div class="d-flex justify-content-center w-100">
+            		<input type="password" name="inputDhPw" id="inputDhPw" required="required"
+            			style="width: 360px; border-bottom: 2px soild #dadada; border-top: none; border-left: none; border-right: none;"/>
+            	</div>
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer border-top-0">
+            <button type="button" class="ldBtnSubmit modal-close mr-5" data-dismiss="modal" id="dhPwBtn">입력</button>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+    <!-- -------------------------------------------------------------------------------------------------------------------------------- -->    
+    <!-- -------------------------------------------------------------------------------------------------------------------------------- -->
+       <!-- 비번 오류 Modal -->
+    <div class="modal" id="pwErorrModal">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        
+            <!-- Modal Header -->
+            <div class="modal-header border-bottom-0">
+            <button type="button" class="close modal-close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body">
+            	<span class='ml-2'>&#x274C</span>비밀번호가 틀립니다. 다시 시도해주세요.
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer border-top-0">
+            <button type="button" class="ldBtnSubmit modal-close" data-dismiss="modal">Close</button>
+            </div>
+            
+        </div>
+        </div>
+    </div>    
+    <!-- -------------------------------------------------------------------------------------------------------------------------------- -->
     <!-- INPUT SCRIPT -->
     <script>
 		//셀렉트 옵션 값 받기
@@ -419,7 +533,30 @@
     		let nearSchedule = 'nearSchedule';
     		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
     	});
+    	//동행비번 모달 띄우기
+    	let dhPw;
+    	let luNo;
+    	let dhNo;
+    	let inputPw;
+    	function fn_pwInput(pw,uN,dN){
+    		//alert(pw);
+    		$("#pwInputModal").modal("show");
+    		dhPw = pw;
+    		luNo = uN;
+    		dhNo = dN;
+        	console.log(dhPw,luNo,dhNo);
+    	}
     	
+    	$("#dhPwBtn").click(()=>{
+    		inputPw = $("#inputDhPw").val();
+    		if(inputPw==dhPw){
+    			location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo='+luNo+'&no='+dhNo);
+    		}else{
+    			$("#pwErorrModal").modal("show");
+    		}
+    	});
+
+
     </script>
 
 <%@ include file="/views/common/footer.jsp"%> 

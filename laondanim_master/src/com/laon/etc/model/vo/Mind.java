@@ -1,7 +1,14 @@
 package com.laon.etc.model.vo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.laon.common.robot.LaonRobot;
+import com.oreilly.servlet.MultipartRequest;
+
 //찜목록 테이블
-public class Mind {
+public class Mind implements LaonRobot<Mind> {
 
  // 넘버 찜 기본키
  private int no;
@@ -150,4 +157,55 @@ public void setCancled(String cancled) {
      this.tripinfoNo = param.getTripinfoNo();
      this.cancled = param.getCancled();
  }
+
+
+
+
+
+
+
+
+@Override
+public List<Mind> rsProcess(List<Mind> list, ResultSet rs) throws SQLException {
+	while (rs.next()) {
+		Mind item =  new Mind();
+		item.setNo(rs.getInt("no"));
+		item.setUserNo(rs.getInt("user_no"));
+		item.setTripinfoNo(rs.getInt("tripinfo_no"));
+		item.setCancled(rs.getString("cancled"));
+		list.add(item);
+	}
+	return list;
+}
+
+
+
+
+
+
+
+
+@Override
+public Mind rsProcess(Mind item, ResultSet rs) throws SQLException {
+	while (rs.next()) {
+		item.setNo(rs.getInt("no"));
+		item.setUserNo(rs.getInt("user_no"));
+		item.setTripinfoNo(rs.getInt("tripinfo_no"));
+		item.setCancled(rs.getString("cancled"));
+	}
+	return item;
+}
+
+
+
+
+
+
+
+
+@Override
+public Mind mrProcess(Mind item, MultipartRequest mr, List<Picture> picList) {
+	// TODO Auto-generated method stub
+	return null;
+}
 }

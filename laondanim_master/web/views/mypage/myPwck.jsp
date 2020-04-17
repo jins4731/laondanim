@@ -7,19 +7,20 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
 
 <%@ include file="/views/common/header.jsp"%>
+<div style="height: 170px;"></div>
 <div class="container">
 	<div class="row">
 	   	<div class="col-4">
 			<%@ include file="/views/mypage/myPageAside.jsp" %>
 		</div>
 		<div class="col-8">
-			<section>
+			<section class="d-flex flex-column justify-content-center align-items-center">
 				<div id="myMenuBtn">
 					<button type="button" id="myCon" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageContent.do?userNo=<%=loginUser.getNo()%>')">내 컨텐츠</button>
 					<button type="button" id="myH" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageHeart.do?userNo=<%=loginUser.getNo()%>')">내 마음함</button>
 					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong.do?userNo=<%=loginUser.getNo()%>')">내 동행</button>
 				</div>
-				<div id="myPageView">
+				<div id="myPageView" class="w-100">
 					<div class="d-flex flex-column justify-content-center align-items-center">
 						<div class="d-flex flex-column justify-content-center align-items-center" id="pwCk" style="text-align:center;">
 							<div style="margin:5px;">

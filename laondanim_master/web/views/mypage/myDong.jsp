@@ -15,19 +15,20 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
 
 <%@ include file="/views/common/header.jsp"%>
+<div style="height: 170px;"></div>
 <div class="container">
 	<div class="row">
 	   	<div class="col-4">
 			<%@ include file="/views/mypage/myPageAside.jsp" %>
 		</div>
 		<div class="col-8">
-			<section>
+			<section class="d-flex flex-column justify-content-center align-items-center">
 				<div id="myMenuBtn">
 					<button type="button" id="myCon" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageContent.do?userNo=<%=loginUser.getNo()%>')">내 컨텐츠</button>
 					<button type="button" id="myH" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageHeart.do?userNo=<%=loginUser.getNo()%>')">내 마음함</button>
 					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong.do?userNo=<%=loginUser.getNo()%>')">내 동행</button>
 				</div>
-				<div id="myPageView">
+				<div id="myPageView" class="w-100">
 					<!-- 내 동행 -->
 					<div class="menu">
 						<div class="manuBar">
@@ -49,9 +50,10 @@
 							</div>
 						</div>
 						<!-- 게시글위치 -->
+						<%if(myDong.size()>0){%>
 						<table id="dhTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
-							<%for(MyDong d:myDong){ %>
+								<%for(MyDong d:myDong){ %>
 								<td class="p-1">
 				                    <div class="card" style="width: 155px; height: 275px;" >
 				                    	<div class="d-flex justify-content-between p-2" style="font-size:5px;">
@@ -114,6 +116,11 @@
 							</tr>
 							<%} %>
 						</table>
+						<%}else{  %>
+						<div style="text-align: center;">
+							<span>등록된 나의 동행이 없습니다.</span>
+						</div>
+						<%} %>
 					</div>
 					
 					<!-- 참여중인 동행 -->
@@ -137,9 +144,10 @@
 							</div>
 						</div>
 						<!-- 게시글위치 -->
+						<%if(oriJoinDong.size()>0){%>
 						<table id="dhTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
-							<%for(MyDong j:oriJoinDong){ %>
+								<%for(MyDong j:oriJoinDong){ %>
 								<td class="p-1">
 			                       	<div class="card" style="width: 155px; height: 290px;" >
 			                        	<div class="d-flex justify-content-between p-2" style="font-size:5px;">
@@ -164,7 +172,7 @@
 					                        		<%for(DonghangJoin dj:joinDong){ 
 					                        			if(j.getNo()==dj.getDonghangNo()){
 													    	if(dj.getConfirmed().equals("N")){ %>
-														    	<a class="dropdown-item" href="#">삭제</a>
+														    	<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myDongJoinRefusal.do?userNo=<%=loginUser.getNo()%>&dongJoinNo=<%=dj.getNo()%>">삭제</a>
 								                        	<%}else if(dj.getConfirmed().equals("Y")){ %>
 								                        		<a class="dropdown-item" href="#">채팅</a>
 														      	<a class="dropdown-item" href="#">동행 나가기</a>
@@ -212,6 +220,11 @@
 							</tr>
 							<%} %>
 						</table>
+						<% }else{ %>
+	                	<div style="text-align: center;">
+							<span>참여중인 동행이 없습니다.</span>
+						</div>
+		                <%} %>
 					</div>
 				</div>
 			</section>

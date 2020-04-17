@@ -2,19 +2,20 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="/views/common/header.jsp"%>
+<div style="height: 170px;"></div>
 <div class="container">
 	<div class="row">
 	   	<div class="col-4">
 			<%@ include file="/views/mypage/myPageAside.jsp" %>
 		</div>
 		<div class="col-8">
-			<section>
+			<section class="d-flex flex-column justify-content-center align-items-center">
 				<div id="myMenuBtn">
 					<button type="button" id="myCon" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageContent.do?userNo=<%=loginUser.getNo()%>')">내 컨텐츠</button>
 					<button type="button" id="myH" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageHeart.do?userNo=<%=loginUser.getNo()%>')">내 마음함</button>
 					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong.do?userNo=<%=loginUser.getNo()%>')">내 동행</button>
 				</div>
-				<div id="myPageView">
+				<div id="myPageView" class="w-100">
 				    <div class="d-flex flex-column align-items-center justify-content-center">
 				        <div class="p-5">
 				            <h2>정보 수정</h2>
@@ -115,49 +116,79 @@
 				                    <div class="form-group">
 				                    	<select name="likeArea" class="form-control" id="likeAreaSelect" required>
 				                          <option value="" disabled selected>관심지역 선택</option>
-				                          <option>서울</option>
-				                          <option>부산</option>
-				                          <option>대구</option>
-				                          <option>인천</option>
-				                          <option>광주</option>
-				                          <option>대전</option>
-				                          <option>울산</option>
-				                          <option>세종</option>
-				                          <option>경기</option>
-				                          <option>강원</option>
-				                          <option>충청북도</option>
-				                          <option>충청남도</option>
-				                          <option>전라북도</option>
-				                          <option>전라남도</option>
-				                          <option>경상북도</option>
-				                          <option>경상남도</option>
-				                          <option>제주도</option>
+				                          <option value="서울">서울</option>
+				                          <option value="부산">부산</option>
+				                          <option value="대구">대구</option>
+				                          <option value="인천">인천</option>
+				                          <option value="광주">광주</option>
+				                          <option value="대전">대전</option>
+				                          <option value="울산">울산</option>
+				                          <option value="세종">세종</option>
+				                          <option value="경기">경기</option>
+				                          <option value="강원">강원</option>
+				                          <option value="충청북도">충청북도</option>
+				                          <option value="충청남도">충청남도</option>
+				                          <option value="전라북도">전라북도</option>
+				                          <option value="전라남도">전라남도</option>
+				                          <option value="경상북도">경상북도</option>
+				                          <option value="경상남도">경상남도</option>
+				                          <option value="제주도">제주도</option>
 				                        </select>                                    
 				                    </div>
 				                    <input type="hidden" id="likeArea" name="likeArea">
 				                </div>
+				                
+				                <%
+				                	String[] tags=up.getTag().split(",");
+				                %>
 				                <script>
-				                console.log(document.getElementById("likeArea").value);
+				                $(function () {
+				                	$('#likeArea option[value=<%=tags[0]%>]').attr('selected', 'selected');
+				                });
 				                </script>
-				
+				                <%
+				                	String[] checkTag=new String[15];
+				                	if(tags!=null){
+				                		for(String t:tags){
+				                			switch(t){
+				                				case "혼자여행":checkTag[0]="checked";break;
+				                				case "가족여행":checkTag[1]="checked";break;
+				                				case "우정여행":checkTag[2]="checked";break;
+				                				case "커플여행":checkTag[3]="checked";break;
+				                				case "맛집투어":checkTag[4]="checked";break;
+				                				case "카페투어":checkTag[5]="checked";break;
+				                				case "관광지_탐방":checkTag[6]="checked";break;
+				                				case "힐링":checkTag[7]="checked";break;
+				                				case "축제":checkTag[8]="checked";break;
+				                				case "인생샷":checkTag[9]="checked";break;
+				                				case "숨은_명소":checkTag[10]="checked";break;
+				                				case "액티비티":checkTag[11]="checked";break;
+				                				case "당일치기":checkTag[12]="checked";break;
+				                				case "주말여행":checkTag[13]="checked";break;
+				                				case "캠핑":checkTag[14]="checked";break;
+				                			}
+				                		}
+				                	}
+				                %>
+				                
 				                <div class="form-group d-flex flex-column flex-wrap justify-content-center" style="width: 400px;">
 				                    <p class="mb-2 ml-2 align-items-start">관심태그를 <strong>클릭</strong>해주세요. (최대 5개)</p>
 				                    <div class="checkbox border text-center p-2 rounded-lg">
-				                        <input type="checkbox" name="likeTag" id="cb1" value="혼자여행"><label for="cb1">#혼자여행</label>
-				                        <input type="checkbox" name="likeTag" id="cb2" value="가족여행"><label for="cb2">#가족여행</label>
-				                        <input type="checkbox" name="likeTag" id="cb3" value="우정여행"><label for="cb3">#우정여행</label>
-				                        <input type="checkbox" name="likeTag" id="cb4" value="커플여행"><label for="cb4">#커플여행</label>
-				                        <input type="checkbox" name="likeTag" id="cb5" value="맛집투어"><label for="cb5">#맛집투어</label>
-				                        <input type="checkbox" name="likeTag" id="cb6" value="카페투어"><label for="cb6">#카페투어</label>
-				                        <input type="checkbox" name="likeTag" id="cb7" value="관광지_탐방"><label for="cb7">#관광지_탐방</label>
-				                        <input type="checkbox" name="likeTag" id="cb8" value="힐링"><label for="cb8">#힐링</label>
-				                        <input type="checkbox" name="likeTag" id="cb9" value="축제"><label for="cb9">#축제</label>
-				                        <input type="checkbox" name="likeTag" id="cb10" value="인생샷"><label for="cb10">#인생샷</label>
-				                        <input type="checkbox" name="likeTag" id="cb11" value="숨은_명소"><label for="cb11">#숨은_명소</label>
-				                        <input type="checkbox" name="likeTag" id="cb12" value="액티비티"><label for="cb12">#액티비티</label>
-				                        <input type="checkbox" name="likeTag" id="cb13" value="당일치기"><label for="cb13">#당일치기</label>
-				                        <input type="checkbox" name="likeTag" id="cb14" value="주말여행"><label for="cb14">#주말여행</label>
-				                        <input type="checkbox" name="likeTag" id="cb15" value="캠핑"><label for="cb15">#캠핑</label>
+				                        <input type="checkbox" name="likeTag" id="cb1" value="혼자여행" <%=checkTag[0] %>><label for="cb1">#혼자여행</label>
+				                        <input type="checkbox" name="likeTag" id="cb2" value="가족여행" <%=checkTag[1] %>><label for="cb2">#가족여행</label>
+				                        <input type="checkbox" name="likeTag" id="cb3" value="우정여행" <%=checkTag[2] %>><label for="cb3">#우정여행</label>
+				                        <input type="checkbox" name="likeTag" id="cb4" value="커플여행" <%=checkTag[3] %>><label for="cb4">#커플여행</label>
+				                        <input type="checkbox" name="likeTag" id="cb5" value="맛집투어" <%=checkTag[4] %>><label for="cb5">#맛집투어</label>
+				                        <input type="checkbox" name="likeTag" id="cb6" value="카페투어" <%=checkTag[5] %>><label for="cb6">#카페투어</label>
+				                        <input type="checkbox" name="likeTag" id="cb7" value="관광지_탐방" <%=checkTag[6] %>><label for="cb7">#관광지_탐방</label>
+				                        <input type="checkbox" name="likeTag" id="cb8" value="힐링" <%=checkTag[7] %>><label for="cb8">#힐링</label>
+				                        <input type="checkbox" name="likeTag" id="cb9" value="축제" <%=checkTag[8] %>><label for="cb9">#축제</label>
+				                        <input type="checkbox" name="likeTag" id="cb10" value="인생샷" <%=checkTag[9] %>><label for="cb10">#인생샷</label>
+				                        <input type="checkbox" name="likeTag" id="cb11" value="숨은_명소" <%=checkTag[10] %>><label for="cb11">#숨은_명소</label>
+				                        <input type="checkbox" name="likeTag" id="cb12" value="액티비티" <%=checkTag[11] %>><label for="cb12">#액티비티</label>
+				                        <input type="checkbox" name="likeTag" id="cb13" value="당일치기" <%=checkTag[12] %>><label for="cb13">#당일치기</label>
+				                        <input type="checkbox" name="likeTag" id="cb14" value="주말여행" <%=checkTag[13] %>><label for="cb14">#주말여행</label>
+				                        <input type="checkbox" name="likeTag" id="cb15" value="캠핑" <%=checkTag[14] %>><label for="cb15">#캠핑</label>
 				                    </div>
 				                </div>
 				                <input type="submit" class="btn btn-primary btn-block mt-5 mb-4" value="정보수정">

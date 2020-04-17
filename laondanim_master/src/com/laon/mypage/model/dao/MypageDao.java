@@ -35,7 +35,7 @@ public class MypageDao {
 		}
 	}
 	
-	//�α��� ���� ������ ����
+	//로그인 유저 프로필 정보
 	public UserProfile selectUserNo(Connection conn, int no) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -70,7 +70,7 @@ public class MypageDao {
 		return up;
 	}
 	
-	//�������������� �� �н����� üũ
+	//정보수정페이지 전 패스워드 체크
 	public boolean selectPwck(Connection conn,int userNo,String pw){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -94,7 +94,7 @@ public class MypageDao {
 		return flag;
 	}
 	
-	//��������
+	//정보수정
 	public int updateUserInfo(Connection conn,User u) {
 		PreparedStatement pstmt=null;
 		int result=0;
@@ -117,7 +117,7 @@ public class MypageDao {
 		return result;
 	}
 	
-	//�������� ������ ����
+	//정보수정 프로필 사진
 	public int updateUserProfile(Connection conn,Picture p) {
 		PreparedStatement pstmt=null;
 		int result=0;
@@ -136,7 +136,7 @@ public class MypageDao {
 		return result;
 	}
 	
-	//�� ������ �ֽű� 4��
+	//내 컨텐츠 최신글 4개
 	public List<TripMyCon> selectMyTrip(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -165,7 +165,7 @@ public class MypageDao {
 		return list;
 	}
 	
-	//�� ������ �������� ��� ����Ʈ
+	//내 컨텐츠 상세페이지 모든 리스트
 	public List<TripMyCon> selectMyTripAll(Connection conn,int userNo,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -196,7 +196,7 @@ public class MypageDao {
 		return list;
 	}
 	
-	//�� ������ ���ƿ� ����
+	//내 컨텐츠 좋아요 개수
 	public List selectMyTripLike(Connection conn,int userNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -223,7 +223,7 @@ public class MypageDao {
 		return like;
 	}
 	
-	//�� ������ �� ����
+	//내 컨텐츠 총 개수
 	public int selectMyTripCount(Connection conn,int userNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -244,8 +244,8 @@ public class MypageDao {
 		return result;
 	}
 	
-	//�� �Խñ� ����Ʈ
-	public List<Board> selectMyBoard(Connection conn,int start,int end){
+	//내 게시글 리스트
+	public List<Board> selectMyBoard(Connection conn,int userNo,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<Board> list=new ArrayList<Board>();
@@ -253,8 +253,9 @@ public class MypageDao {
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				Board b=new Board();
@@ -273,14 +274,15 @@ public class MypageDao {
 		return list;
 	}
 	
-	//�� �Խñ� �� ����
-	public int selectMyBoardCount(Connection conn) {
+	//내 게시글 총 개수
+	public int selectMyBoardCount(Connection conn,int userNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = prop.getProperty("selectMyBoardCount");
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
 			rs = pstmt.executeQuery();
 			rs.next();
 			result = rs.getInt(1);
@@ -293,7 +295,7 @@ public class MypageDao {
 		return result;
 	}
 	
-	//�� ���� �ֽű� 4��
+	//내 동행 최신글 4개
 	public List<MyDong> selectMyDong(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -327,7 +329,7 @@ public class MypageDao {
 		return list;
 	}
 	
-	//�� ���� �������� ��� ����Ʈ
+	//내 동행 상세페이지 모든 리스트
 	public List<MyDong> selectMyDHAll(Connection conn,int userNo,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -363,7 +365,7 @@ public class MypageDao {
 		return list;
 	}
 	
-	//�� ���� �� ����
+	//내 동행 총 개수
 	public int selectMyDongCount(Connection conn,int userNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -384,7 +386,7 @@ public class MypageDao {
 		return result;
 	}
 	
-	//�������� ��ȸ
+	//참여동행 조회
 	public List<DonghangJoin> selectJoin(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -416,7 +418,7 @@ public class MypageDao {
 		return list;
 	}
 	
-	//�������� �������� ���� ����Ʈ �ֽű� 4��
+	//참여동행 기준으로 동행 리스트 최신글 4개
 	public List<MyDong> selectOriJoin(Connection conn, List<DonghangJoin> jd){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -454,7 +456,7 @@ public class MypageDao {
 		return list;
 	}
 	
-	//�������� �������� �������� �� ������ ��� ����Ʈ
+	//참여동행 기준으로 참여동행 상세 페이지 모든 리스트
 	public List<MyDong> selectOriJoinAll(Connection conn, List<DonghangJoin> jd,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -494,7 +496,7 @@ public class MypageDao {
 		return list;
 	}
 	
-	//�������� ����Ʈ�� ���� �ۼ��� �г���
+	//참여동행 리스트의 원글 작성자 닉네임
 	public List<UserProfile> selectUserNick(Connection conn, List<MyDong> ojd){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -522,7 +524,7 @@ public class MypageDao {
 		return userNick;
 	}
 	
-	//�������� �� ����
+	//참여동행 총 개수
 	public int selectMyJDCount(Connection conn,int userNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -543,7 +545,7 @@ public class MypageDao {
 		return result;
 	}
 	
-	//���� ���ƿ��� ����� �ѹ�
+	//내가 좋아요한 여행기 넘버
 	public List<Like> selectTripLike(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -571,7 +573,7 @@ public class MypageDao {
 		return likeT;
 	}
 	
-	//���� ���ƿ��� ����� ����Ʈ
+	//내가 좋아요한 여행기 리스트
 	public List<TripMyCon> selectTripList(Connection conn,List<Like> likeT){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -603,7 +605,7 @@ public class MypageDao {
 		return tripList;
 	}
 	
-	//���� ���ƿ��� ����� ����Ʈ ��ü
+	//내가 좋아요한 여행기 리스트 전체
 	public List<TripMyCon> selectTripListAll(Connection conn,List<Like> likeT,int start,int end){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -637,7 +639,7 @@ public class MypageDao {
 		return tripList;
 	}
 	
-	//���� ���ƿ��� ����� �ۼ��� �г���
+	//내가 좋아요한 여행기 작성자 닉네임
 	public List<UserProfile> selectTripUserNick(Connection conn,List<TripMyCon> tl){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -665,7 +667,7 @@ public class MypageDao {
 		return userNick;
 	}
 	
-	//���� ���ƿ��� ����� �� ����
+	//내가 좋아요한 여행기 총 개수
 	public int selectLikeTripCount(Connection conn,int userNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -686,7 +688,7 @@ public class MypageDao {
 		return result;
 	}
 	
-	//���� ���� �������� �ѹ�
+	//내가 찜한 여행정보 넘버
 	public List<Mind> selectMind(Connection conn,int userNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -714,7 +716,7 @@ public class MypageDao {
 		return mind;
 	}
 	
-	//���� ���� �������� ����Ʈ
+	//내가 찜한 여행정보 리스트
 	public List<TripinfoMyMind> selectMindList(Connection conn,List<Mind> mind){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -741,6 +743,24 @@ public class MypageDao {
 			close(pstmt);
 		}
 		return mindList;
+	}
+	
+	//참여 동행 거절 삭제
+	public int dongJoinRefusal(Connection conn,int no) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("dongJoinRefusal");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 }

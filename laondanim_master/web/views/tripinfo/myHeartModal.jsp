@@ -15,8 +15,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
 <style>
 .swiper-slide {
 	text-align: center;
@@ -172,13 +172,15 @@
 									<div id="collapseTwo" class="collapse" data-parent="#accordion">
 										
 								
-								<div class="swiper-container">
+							<div class="swiper-container">
 								<div class="swiper-wrapper">
-									<%for(Picture p : hotelPictureList){ %>
+									<%for(Picture p : hotelPictureList){
+										if(p.getImage().contains("1")){
+										%>
 								<div class="swiper-slide">
-									<div>
-										<div>
-											<img src="<%=request.getContextPath()%><%=p.getImage() %>" alt="..." width="150px" height="150px">
+									<div class="daasf">
+										<div class="dsa">
+											<img src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=p.getImage() %>" alt="..." width="150px" height="150px">
 										</div>	
 										<input type="hidden" class="tripinfoNo" value="<%=p.getTripinfoNo()%>">
 										<input type="hidden" class="tripinfoNo" value="<%=loginUser==null?"":loginUser.getNo()%>">
@@ -189,7 +191,8 @@
 										</div>
 									</div>
 								</div>
-									<%} %>
+									<%} 
+									}%>
 								</div>
 
 								<!-- <!— 네비게이션 —> -->
@@ -198,8 +201,8 @@
 								<div class="swiper-button-prev"></div>
 								<!-- <!— 이전 버튼 —> -->
 							</div>
-										</div>
-									</div>
+						</div>
+					</div>
 								
 								<div class="card">
 									<div class="card-header collapsed card-link"
@@ -212,11 +215,12 @@
 										
 											<div class="swiper-container">
 								<div class="swiper-wrapper">
-									<%for(Picture p : hotspotPictureList){ %>
+									<%for(Picture p : hotspotPictureList){
+										if(p.getImage().contains("1")){%>
 								<div class="swiper-slide">
 									<div>
 										<div>
-											<img src="<%=request.getContextPath()%><%=p.getImage() %>" alt="..." width="150px" height="150px">
+											<img src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=p.getImage() %>" alt="..." width="150px" height="150px">
 										</div>
 										<input type="hidden" class="tripinfoNo" value="<%=p.getTripinfoNo()%>">
 										<input type="hidden" class="tripinfoNo" value="<%=loginUser==null?"":loginUser.getNo()%>">
@@ -227,7 +231,8 @@
 										</div>
 									</div>
 								</div>
-									<%} %>
+									<%}
+										}%>
 								</div>
 
 								<!-- <!— 네비게이션 —> -->
@@ -250,7 +255,7 @@
 </body>
 <script>
 
-$(function(){
+<%-- $(function(){
 	
 	$(".mind-delete-btn").click(function(e){
 		
@@ -274,7 +279,7 @@ $(function(){
 		})
 	})
 
-})
+}) --%>
 
 
 

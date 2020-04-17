@@ -14,19 +14,20 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
 <%@ include file="/views/common/header.jsp"%>
+<div style="height: 170px;"></div>
 <div class="container">
 	<div class="row">
 	   	<div class="col-4">
 			<%@ include file="/views/mypage/myPageAside.jsp" %>
 		</div>
 		<div class="col-8">
-			<section>
+			<section class="d-flex flex-column justify-content-center align-items-center">
 				<div id="myMenuBtn">
 					<button type="button" id="myCon" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageContent.do?userNo=<%=loginUser.getNo()%>')">내 컨텐츠</button>
 					<button type="button" id="myH" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageHeart.do?userNo=<%=loginUser.getNo()%>')">내 마음함</button>
 					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong.do?userNo=<%=loginUser.getNo()%>')">내 동행</button>
 				</div>
-				<div id="myPageView">
+				<div id="myPageView" class="w-100">
 					<!-- 다님길 -->
 					<div class="menu">
 						<div class="manuBar">
@@ -48,9 +49,10 @@
 							</div>
 						</div>
 						<!-- 게시글위치 -->
+						<%if(tripList.size()>0){%>
 						<table id="ltTbl">
 							<tr class="d-flex flex-wrap justify-content-center">
-							<%for(TripMyCon t:tripList){ %>
+								<%for(TripMyCon t:tripList){ %>
 								<td class="p-1">
 									<div class="card" style="width: 155px; height: 250px;" >
 										<div class="d-flex justify-content-between p-2" style="font-size:5px;">
@@ -88,6 +90,11 @@
 							</tr>
 							<%} %>
 						</table>
+						<%}else{  %>
+						<div style="text-align: center;">
+							<span>관심있는 여행기가 없습니다.</span>
+						</div>
+						<%} %>
 					</div>
 					
 					<%List<TripinfoMyMind> restaurant=new ArrayList<TripinfoMyMind>();
@@ -111,7 +118,7 @@
 					} %>
 					
 					<!-- 맛집 -->
-					<div class="menu">
+					<div class="menu" style="padding-top:20px;">
 						<div class="manuBar">
 							<div>
 								<span>맛집</span>
@@ -125,11 +132,12 @@
 					<!-- 닫힘 내용 -->
 					<div>
 						<!-- 정보 -->
-						<div id="myDNInfo">
+						<div id="myResInfo">
 							<div style="height:45px;">
 								<span>총 <%=resCount %>개의 ♥ 맛집</span>
 							</div>
 						</div>
+						<%if(restaurant.size()>0){ %>
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
 							<%for(TripinfoMyMind res:restaurant){ %>
@@ -141,10 +149,15 @@
 							<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
 							<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
 						</div>
+						<%}else{ %>
+							<div style="text-align: center">
+								<span>찜한 맛집이 없습니다.</span>
+							</div>
+						<%} %>
 					</div>
 					
 					<!-- 숙소 -->
-					<div class="menu">
+					<div class="menu" style="padding-top:20px;">
 						<div class="manuBar">
 							<div>
 								<span>숙소</span>
@@ -158,11 +171,12 @@
 					<!-- 닫힘 내용 -->
 					<div>
 						<!-- 정보 -->
-						<div id="myDNInfo">
+						<div id="myLodInfo">
 							<div style="height:45px;">
 								<span>총 <%=lodCount %>개의 ♥ 숙소</span>
 							</div>
 						</div>
+						<%if(lodging.size()>0){ %>
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
 							<%for(TripinfoMyMind lod:lodging){ %>
@@ -174,10 +188,15 @@
 							<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
 							<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
 						</div>
+						<%}else{ %>
+							<div style="text-align: center">
+								<span>찜한 숙소가 없습니다.</span>
+							</div>
+						<%} %>
 					</div>
 					
 					<!-- 명소 -->
-					<div class="menu">
+					<div class="menu" style="padding-top:20px;">
 						<div class="manuBar">
 							<div>
 								<span>명소</span>
@@ -191,11 +210,12 @@
 					<!-- 닫힘 내용 -->
 					<div>
 						<!-- 정보 -->
-						<div id="myDNInfo">
+						<div id="myAttInfo">
 							<div style="height:45px;">
 								<span>총 <%=attCount %>개의 ♥ 명소</span>
 							</div>
 						</div>
+						<%if(attraction.size()>0){ %>
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
 							<%for(TripinfoMyMind att:attraction){ %>
@@ -207,6 +227,11 @@
 							<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
 							<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
 						</div>
+						<%}else{ %>
+							<div style="text-align: center">
+								<span>찜한 명소가 없습니다.</span>
+							</div>
+						<%} %>
 					</div>
 				</div>
 			</section>
@@ -230,7 +255,7 @@
         /* border:1px solid green; */
     }
     
-    #myLTInfo,.manuBar{
+    #myLTInfo,#myResInfo,#myLodInfo,#myAttInfo,.manuBar{
     	display:flex;
     	justify-content: space-between;
     	margin-left: 40px;

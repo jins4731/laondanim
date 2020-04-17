@@ -33,7 +33,16 @@
             <div class="d-flex flex-row justify-content-between align-items-center" style="width: 828px; height: 100px;">
                 <div class="d-flex flex-row justify-content-center align-items-center" style="width: 480px;">
                     <!--글쓴이 프사 넣기-->
-                    <img src="<%=userImage%>" alt="" style="width: 50px; height: 50px;">
+                    <%	String dhUserP = "";
+                    	for(UserProfile up : joinList){
+                    	if(up.getNo()==dh.getNo()) dhUserP = up.getImage();                    
+                    }%>
+                    <%if(dhUserP.equals("null")){ %>
+                    <img src="<%=request.getContextPath()%>/images/profile_icon.png" alt="" style="width: 50px; height: 50px;">
+                    <%} else{%>
+                        <!-- 얘 수정 --> 
+              	 	<img src="<%=request.getContextPath()%>/images/profile_icon.png" alt="" style="width: 50px; height: 50px;">
+                    <%} %>
 
                     <div class="d-flex flex-column pl-1" style="width: 380px;">
                         <div class="d-flex flex-row align-items-center">
@@ -46,16 +55,16 @@
                             		모집종료
                            		</div>
                             <%}%>
-                            <p class="m-0"><%=dh.getTitle()%></p>
+                            <p class="m-0" style="font-size:18px;"><%=dh.getTitle()%></p>
 
                         </div>
                         <p class="m-0"><%=dh.getNickName()%></p>
                     </div>
 
-                    <img src="icon/menu-vertical_icon.png" alt="메뉴" style="width: 20px; height: 20px;">
+                    <img src="<%=request.getContextPath()%>/images/menu-vertical_icon.png" alt="메뉴" style="width: 20px; height: 20px;">
                 </div>
                 <div>
-            	    <%if(dh.getTripNo() < 0) {%>
+            	    <%if(dh.getTripNo() > 0) {%>
                     <button id="danimLinkBtn" type="button" class="ldBtn">
                     	다님일정 보기 <strong class="ml-1">&#9002;</strong>
                     </button>
@@ -108,7 +117,11 @@
             <!-- 이미지 + 정보 줄 -->
             <div class="d-flex justify-content-center align-items-center" style="width: 1000px; height: 350px;">
                 <div style="width: 480px; height: 270px; position: relative;" class="border d-flex justify-content-center align-items-center mr-5">
-                    <img style="width: 100%; height: 100%;" src="img/1920x1080_img.jpg">
+                <%if(dh.getImage().equals("null")){ %>
+                	<img style="width: 100%; height: 100%;" src="<%=request.getContextPath()%>/images/defaultImage.jpg">
+                <%}else{%>
+                    <img style="width: 100%; height: 100%;" src="<%=request.getContextPath()%>/upload/donghang/<%=dh.getImage()%>">
+                <%}%>    
                 </div>
 
 
@@ -160,7 +173,7 @@
             <div class="d-flex flex-column align-items-center" style="width: 828px;">
                 <div class="d-flex justify-content-between align-items-center" style="width: 95%;">
                     <p class="m-0">현재 참여 동행인</p>
-                    <img src="icon/expand-arrow.png" style="width:17px;" id="joinMemberBtn"
+                    <img src="<%=request.getContextPath()%>/images/expand-arrow.png" style="width:17px;" id="joinMemberBtn"
                     type="button" data-toggle="collapse" data-target="#detailText" aria-expanded="true" aria-controls="detailText">
                 </div>
                 <hr class="mt-2 mb-1" style="width: 828px; border-bottom: 2px solid #dadada;">
@@ -172,7 +185,7 @@
                     	  for(UserProfile up : joinList){
                     %>             
                         <div class="d-flex justify-content-center align-items-center m-2">
-                            <img src="<%=up.getImage()%>" alt="프로필사진" style="width: 40px; height: 40px;">
+                            <img src="<%=request.getContextPath()%>/images/profile_icon.png" alt="프로필사진" style="width: 40px; height: 40px;">
                             <p class="m-0"><%=up.getNickName()%></p>
                         </div>
                     <%}} %>  

@@ -33,7 +33,7 @@
 	color: #595959;
 }
 td > label{
-	font-family: NanumSquare;
+	/* font-family: NanumSquare; */
 	font-weight: 600px;
 	color: #595959;
 }

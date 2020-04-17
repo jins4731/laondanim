@@ -72,13 +72,13 @@
 												    </button>
 												    <div class="dropdown-menu">
 												    <%if(d.getEnded().equals("N")){ %>
-						                        		<a class="dropdown-item" href="#">신청서 수신함</a>
+						                        		<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">신청서 수신함</a>
 						                        		<a class="dropdown-item" href="#">채팅</a>
 												      	<a class="dropdown-item" href="#">모집 마감</a>
 												     	<a class="dropdown-item" href="#">동행 수정</a>
 												     	<a class="dropdown-item" href="#">동행 삭제</a>
 						                        	<%}else{ %>
-												    	<a class="dropdown-item" href="#">신청서 수신함</a>
+												    	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">신청서 수신함</a>
 												    	<a class="dropdown-item" href="#">채팅</a>
 												     	<a class="dropdown-item" href="#">동행 수정</a>
 												     	<a class="dropdown-item" href="#">동행 삭제</a>

@@ -141,7 +141,7 @@
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
 							<%for(TripinfoMyMind res:restaurant){ %>
-								<div class="swiper-slide"><img class="card-img" src="<%=request.getContextPath()%>/views/picture/profile/<%=res.getImage()%>"></div>
+								<div class="swiper-slide"><img class="card-img" src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=res.getImage()%>"></div>
 							<%} %>
 							</div>
 						
@@ -180,7 +180,7 @@
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
 							<%for(TripinfoMyMind lod:lodging){ %>
-								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/profile/<%=lod.getImage()%>"></div>
+								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=lod.getImage()%>"></div>
 							<%} %>
 							</div>
 						
@@ -219,7 +219,7 @@
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
 							<%for(TripinfoMyMind att:attraction){ %>
-								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/profile/<%=att.getImage()%>"></div>
+								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=att.getImage()%>"></div>
 							<%} %>
 							</div>
 						
@@ -281,6 +281,7 @@
 	}
 	.swiper-slide img {
 		width:150px; /* 이미지 사이즈 */
+		height:150px;
 		max-width:100%; /* 지우면 안됨 이미지 여러장일때 꼭 필요함 */
 	}
 </style>

@@ -107,6 +107,21 @@ private UserDao userDao = new UserDao();
 			tripinfoNoList.add(mind.getTripinfoNo());
 		}
 		List<Tripinfo> tripinfoList = tripDao.selectTripinfoWhereNoIn(conn,tripinfoNoList);
+		tripinfoNoList = new ArrayList();
+		for (Tripinfo tripinfo : tripinfoList) {
+			tripinfoNoList.add(tripinfo.getNo());
+		}
+		List<Picture> picList = etcDao.selectPictureWhereNoIn(conn, tripinfoNoList, "tripinfo_no");
+		for (Tripinfo tripinfo : tripinfoList) {
+			
+			List<Picture> list = new ArrayList();
+			for (Picture picture : picList) {
+				if(tripinfo.getNo() == picture.getTripinfoNo()) {
+					list.add(picture);
+				}
+			}
+			tripinfo.setPictureList(list);
+		}
 		close(conn);
 		return tripinfoList;
 	}

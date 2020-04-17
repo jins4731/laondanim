@@ -33,8 +33,10 @@
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mdb.min.css">
     <script src="<%=request.getContextPath() %>/js/mdb.min.js"></script>
-    <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40b8b885a553f3222dde4e5effec0d3e"></script>
+    <!-- <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40b8b885a553f3222dde4e5effec0d3e"></script> -->
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b&libraries=services"></script>
+						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b&libraries=LIBRARY"></script>	
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="<%=request.getContextPath() %>/js/lodash.js"></script>
     <style>
@@ -69,29 +71,29 @@
         }
 
         section {
-            border: 2px solid green;
+            /* border: 2px solid green; */
             box-sizing: border-box;
         }
 
         section div {
-            border: 1px solid black;
+            /* border: 1px solid black; */
             box-sizing: border-box;
         }
 
         footer {
-            border: 2px solid blue;
+            /* border: 2px solid blue; */
             box-sizing: border-box;
 
             height: 70px;
         }
 
         #titleContainer div {
-            border: 1px solid black;
+            /* border: 1px solid black; */
             box-sizing: border-box;
         }
 
         #tripinfoContainer div {
-            border: 1px solid black;
+           /*  border: 1px solid black; */
             box-sizing: border-box;
         }
 
@@ -113,6 +115,83 @@
             width: 100%;
             height: 100%;
         }
+        .ldBtnC{
+            border-radius: 20px;
+            background-color: white;
+            border: 2px solid #00abbf;
+            color: #00abbf;
+            width: 120px;
+            margin-right: 15px;
+            padding: 6px 15px 6px 15px;
+        }  
+        .ldBtnC:hover,.ldBtnC:active {
+            color: white;
+            background-color: #00abbf;
+        } 
+        .ldBtn{
+            border-radius: 20px;
+            background-color: white;
+            border: 2px solid #00abbf;
+            color: #00abbf;
+            padding: 6px 15px 6px 15px;
+        }  
+        .ldBtn:hover,.ldBtn:active {
+            color: white;
+            background-color: #00abbf;
+        }    
+        .ldBtnInactive{
+            border-radius: 20px;
+            background-color: white;
+            border: 2px solid #dadada;
+            color: #dadada;
+            padding: 6px 15px 6px 15px;
+        }   
+        .ldBtnInactive:hover,.ldBtnInactive:active {
+            color: white;
+            background-color: #dadada;
+        }                 
+        .rotateBtn{
+            transform: rotate(180deg);
+        }   
+		.ldBtnDelet{		
+            border-radius: 20px;
+            background-color: white;
+            border: 2px solid #d60047;
+            color: #d60047;
+            padding: 6px 15px 6px 15px;
+		}
+		.ldBtnDelet:hover,.ldBtnDelet:active{	
+            color: white;
+            background-color: #d60047;
+		}   
+		.dropdown-menu{
+			text-align: center;
+		}   
+		.dropdown-item{
+			color: #00abbf;
+		}
+		.laonBodyFont{
+			font-family: NanumSquare;
+			font-size: 22px;
+			color: #595959;
+		}
+		.input{
+			border: 0;
+		}
+		.dayBtn{
+            border-radius: 20px;
+            background-color: #00abbf;
+            border: 2px solid #00abbf;
+            color: white;
+            width: 120px;
+            margin-right: 15px;
+            padding: 6px 15px 6px 15px;
+		}
+		#dayPlusBt{
+            border: 2px solid #00abbf;
+            color: #00abbf;
+            font-weight: 900;
+		}
     </style>
 </head>
 
@@ -121,11 +200,11 @@
 
 
     <section class="container-fluid">
-        <div id="titleContainer" class="row justify-content-center">
-            <div class="col-3">
+        <div id="titleContainer" class="row justify-content-center mb-5">
+            <div class="col-4">
                 <div class="row dropdown justify-content-center">
                     <button type="button" id="category" name="category"
-                        class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">일정</button>
+                        class="ldBtn dropdown-toggle mb-5" data-toggle="dropdown" style="font-weight: 600; width: 150px;">일정</button>
                     <div class="dropdown-menu">
                         <a id="courseDropBt" href="#" class="dropdown-item">일정</a>
                         <a id="reviewDropBt" href="#" class="dropdown-item">후기</a>
@@ -133,7 +212,7 @@
                 </div>
 
                 <div class="row form-group mb-1">
-                    <input type="text" id="title" class="form-control border-top-0 border-left-0 border-right-0 "
+                    <input type="text" id="title" class="form-control border-top-0 border-left-0 border-right-0 laonBodyFont text-center"
                         name="userName" placeholder="여행기 제목을 입력해주세요." required>
                 </div>
 
@@ -152,15 +231,15 @@
 
 
         <div id="tripinfoContainer">
-            <div class="border-bottom text-dark">
-                <span>여행정보</span>
+            <div class="border-bottom text-dark pb-2 pl-2">
+                <span class="laonBodyFont">여행정보</span>
             </div>
 
             <div class="col">
                 <div class="row p-5">
                     <div class="col">
 
-                        <div class="row form-group mb-0 ">
+                        <div class="row form-group mb-3 ">
                             <span class="col-3 pt-1 font-weight-bold">여행지역</span>
                             <input class="col-6" type="text" id="travleLocale"
                                 class="form-control border-top-0 border-left-0 border-right-0 " name="title" 
@@ -174,7 +253,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="row form-group mb-0">
+                        <div class="row form-group mb-3">
                             <span class="col-3 pt-1 font-weight-bold">여행유형</span>
                             <input class="col-6" type="text" id="travleType" required
                                 class="form-control border-top-0 border-left-0 border-right-0 " name="travleType"
@@ -197,12 +276,12 @@
 
 
 
-        <div id="courseContainer">
-            <div class="row mx-1">
-                <button id="matzipBt" onclick="matzipBt()" class="btn btn-grey">맛집</button>
-                <button id="myoungsoBt" onclick="myoungsoBt()" class="btn btn-grey">명소</button>
-                <button id="sooksoBt" onclick="sooksoBt()" class="btn btn-grey">숙소</button>
-                <button id="myBt" onclick="myBt()" class="btn btn-grey">마이</button>
+        <div id="courseContainer" class="mt-5">
+            <div class="row mx-1 mb-2">
+                <button id="matzipBt" onclick="matzipBt()" class="ldBtnC">맛집</button>
+                <button id="myoungsoBt" onclick="myoungsoBt()" class="ldBtnC">명소</button>
+                <button id="sooksoBt" onclick="sooksoBt()" class="ldBtnC">숙소</button>
+                <button id="myBt" onclick="myBt()" class="ldBtnC">마이</button>
             </div>
             <div class="row mx-1" style="height: 200px;">
 
@@ -243,7 +322,7 @@
                         <div id="matzipItem<%=i %>" name="matzipItem" class="d-inline-block view zoom"
                            
                             style="height: 170px; width: 170px;position: relative;">
-                            <img id="matzipImg<%=i %>" name="matzipImg" class="d-block " data-no="<%=no%>" data-category="<%=category %>"
+                            <img id="matzipImg<%=i %>" onclick="itemBt(event)" name="matzipImg" class="d-block " data-no="<%=no%>" data-category="<%=category %>"
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
@@ -273,7 +352,7 @@
 						%>
 
                         <div id="myoungsoItem<%=i %>" name="myoungsoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
-                                <img id="myoungsoImg<%=i %>" name="myoungsoImg" class="d-block" data-no="<%=no%>"
+                                <img id="myoungsoImg<%=i %>"  onclick="itemBt(event)" name="myoungsoImg" class="d-block" data-no="<%=no%>"
                                     data-category="<%=category %>" data-tag="<%=tag %>" data-name="<%=name %>"
                                     data-address="<%=address %>" data-businessHours="<%=businessHours %>"
                                     data-tel="<%=tel %>" data-homepage="<%=homepage %>" data-naver="<%=naver %>"
@@ -305,7 +384,7 @@
 						%>
 
                         <div id="sooksoItem<%=i %>" name="sooksoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
-                            <img id="sooksoImg<%=i %>" name="sooksoImg" class="d-block" data-no="<%=no%>" data-category="<%=category %>"
+                            <img id="sooksoImg<%=i %>" onclick="itemBt(event)" name="sooksoImg" class="d-block" data-no="<%=no%>" data-category="<%=category %>"
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
@@ -344,12 +423,12 @@
 
 
             <!-- 일차 추가 -->
-            <div class="row mx-1" style="height: 50px;">
-                <div id="firstDay" class="d-flex bg-primary rounded-pill justify-content-center align-items-center"
-                    style="height: 100%;width: 60px;cursor: pointer;" data-save="1" onclick="dayBt(event)">
+            <div class="row mx-1 mb-4" style="height: 50px;">
+                <div id="firstDay" class="d-flex dayBtn rounded-pill justify-content-center align-items-center"
+                    style="height: 100%; cursor: pointer;" data-save="1" onclick="dayBt(event)">
                     <span class="" style="width: auto;height: auto;" data-save="1">1일차</span>
                 </div>
-                <div class=" d-flex ml-2 bg-success rounded-pill justify-content-center align-items-center font-weight-bold"
+                <div class=" d-flex ml-2 rounded-pill justify-content-center align-items-center font-weight-bold"
                     style="height: auto;width: 60px;cursor: pointer;" id="dayPlusBt">
                     +
                 </div>
@@ -357,6 +436,7 @@
 
 
             <!-- 스케줄 추가 -->
+            
             <div id="dayContainer" class="col p-0 mx-1">
 
                 <div id="day1" name="day" data-save="1" class="row mx-1" id="schduleContainer">
@@ -600,6 +680,65 @@
            console.log("dayBt")
         }
 
+        
+        
+        
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+        mapOption = {
+            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+
+    // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+    function itemBt(event) {
+        console.log("itemBt")
+        console.log("nodeName : " + $.nodeName(event.target, "img"));
+        var target = event.target;
+        if ($.nodeName(event.target, "img")) {
+
+        } else {
+            // target = $(event.target).parent()[0];
+        }
+
+
+        var search = target.dataset.address;
+        var name = target.dataset.name;
+        console.log("search : " + search);
+
+
+        // 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new kakao.maps.services.Geocoder();
+
+
+        // 주소로 좌표를 검색합니다
+        geocoder.addressSearch(search, function (result, status) {
+
+            // 정상적으로 검색이 완료됐으면 
+            if (status === kakao.maps.services.Status.OK) {
+
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                // 결과값으로 받은 위치를 마커로 표시합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+
+                // 인포윈도우로 장소에 대한 설명을 표시합니다
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: '<div style="width:150px;text-align:center;padding:6px 0;">' + name + '</div>'
+                });
+                infowindow.open(map, marker);
+
+                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                map.setCenter(coords);
+            }
+        });
+    }
+    
+    
         function dayDelBt(e) {
             console.log("dayDelBt");
             $("[name='day']")

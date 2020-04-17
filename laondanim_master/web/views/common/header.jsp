@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="com.laon.user.model.vo.User" %>	
+<%@page import="com.laon.user.model.vo.UserProfile" %>	
 <%
 	User loginUser=(User)session.getAttribute("loginUser");
+	UserProfile userProfile=(UserProfile)session.getAttribute("userProfile");
+	System.out.println("^^^로긴 :"+userProfile);
 %>
 	
 <!DOCTYPE html>
@@ -136,7 +139,7 @@ header li>a {
 					<ul class="main-nav d-flex p-0 m-0 justify-content-center align-items-center">
 						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/trip/tripListView.do?first=first">여행기</a></li>
 						<!-- 여행정보 링크 추가 정호 -->
-						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?1:loginUser.getNo()%>">여행정보</a></li>
+						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?1:loginUser.getNo()%>&first=first">여행정보</a></li>
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">커뮤니티</a>
 							<div class="dropdown-menu">
@@ -165,7 +168,12 @@ header li>a {
 						<!-- null 이 아닐경우  마이페이지/로그아웃 출력, -->
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> 
-							<img src="<%=request.getContextPath()%>/icon/profile_icon.png" width="50px" height="50px">
+						<%if(userProfile.getImage()==null){ %>
+							<img src="<%=request.getContextPath()%>/images/profile_icon.png" width="50px" height="50px">
+						<%} else{ %>
+							<img src="<%=request.getContextPath()%>/views/picture/profile/<%=userProfile.getImage()%>" width="50px" height="50px"
+								style="border-radius:25px;">
+						<%}%>
 						</a>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myPageContent.do?userNo=<%=loginUser.getNo()%>">마이페이지</a>  
@@ -176,7 +184,12 @@ header li>a {
 						<!-- 아이디가 admin일경우 관리자 페이지 출력 -->
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> 
-							<img src="<%=request.getContextPath()%>/icon/profile_icon.png" width="50px" height="50px">
+						<%if(userProfile.getImage()==null){ %>
+							<img src="<%=request.getContextPath()%>/images/profile_icon.png" width="50px" height="50px">
+						<%} else{ %>
+							<img src="<%=request.getContextPath()%>/views/picture/profile/<%=userProfile.getImage()%>" width="50px" height="50px"
+								style="border-radius:25px;">
+						<%}%>
 						</a>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="<%=request.getContextPath()%>/admin/adminView.do">관리자페이지</a> 

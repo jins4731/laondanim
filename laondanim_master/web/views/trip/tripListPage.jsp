@@ -229,7 +229,7 @@
             </div>
             
                 <div class="col-2 d-flex flex-row my-auto">
-                    <button class="btn btn-lg btn-outline-secondary border-0" style="text-decoration: underline;" onclick="location.replace('<%=request.getContextPath()%>/trip/tripInsertView.do')">다님길 작성 <i class="fas fa-edit fa-2x"></i></button> <!--클릭 했을 때 작성 서블릿으로-->
+                    <button class="btn btn-lg btn-outline-secondary border-0" style="text-decoration: underline;" onclick="location.replace('<%=request.getContextPath()%>/trip/tripInsertView.do?no=<%=loginUser.getNo()%>')">다님길 작성 <i class="fas fa-edit fa-2x"></i></button> <!--클릭 했을 때 작성 서블릿으로-->
                     
                 </div>
            </div>
@@ -311,9 +311,16 @@
                             
                             <span class="mr-1"><%=i<count?list.get(i).getWriteDate():"" %></span>
                         </div>
-                       
+                       <%
+                       	int no = 0;
+                       if(i<count){
+                    	   no=list.get(i).getNo();
+                    	   System.out.println("과연 no는 ? ");
+                    	   System.out.println(no);
+                       }
+                       %>
                         <div class="card-body h-50 w-100 p-0 border-0">
-                            <div class="hdTagBox">
+                            <div class="hdTagBox" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=i<count?list.get(i).getNo():""%>')">
                                  <ul class="hdTag">                            
                                    <%if(i<count&&list.get(i).getTag()!=null){
                                    String[] tagArr = list.get(i).getTag().split(",");   
@@ -463,7 +470,7 @@
                         </div>
                         
                         <div class="card-body h-50 w-100 p-0 border-0">
-                           <div class="hdTagBox">
+                           <div class="hdTagBox" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=i-5<count?list.get(i).getNo():""%>')">
                                 <ul class="hdTag">                            
                                    <%if(i-5<count&&list.get(i).getTag()!=null){
                                    String[] tagArr = list.get(i).getTag().split(",");   

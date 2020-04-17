@@ -21,8 +21,8 @@
 	//검색 태그 값
    	String keyword = (String)request.getAttribute("keyword");
    	
-
-	
+	String first = (String)request.getAttribute("first");
+	first = first!=null?first:"";
 %>
 <style>
 #myHeart {
@@ -46,13 +46,14 @@
 <%
 	int userNo = loginUser.getNo();
 %>
-	<section>
+<div style="height: 170px"></div>
+	<section class="d-flex flex-column justify-content-center h-100">
 		<div class="container">
 			<!-- 필터 버튼 눌렀을 때 데이터 처리 -->
 			<input type="hidden" value="<%=type==null?"상호명":type %>" id="type"/> <!-- type 저장 input 태그 -->
      		<input type="hidden" value="<%=keyword %>" id="keyword"/>
      		<input type="hidden" id="userNo" value="<%=loginUser==null?"":userNo%>"/>
-     		
+     		  		
 			<script>
 				//선택 type 드랍 다운 선택 시 서블릿 요청 필터 처리 
 				$(function(){
@@ -257,19 +258,19 @@
 	           <div class="row justify-content-between" >
 	                <div class="d-flex flex-row">
 		                <div class="col category">              		        		
-							<button type="button" id="cafe-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>')">
+							<button type="button" id="cafe-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
 								맛집
 							</button>
 						</div>
 						
 						<div class="col category">
-							<button type="button" id="room-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="숙소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>')">
+							<button type="button" id="room-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="숙소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
 								숙소
 							</button>
 						</div>
 							
 						<div class="col category">
-							<button type="button" id="attraction-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="명소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>')">
+							<button type="button" id="attraction-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="명소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
 								명소
 							</button>							
 						</div>					
@@ -320,7 +321,7 @@
 			</div> --%> 
 			
 			<!--여행 정보 리스트-->
-				 <div class="container mt-3 justify-content-center" style="height:640px;">
+				 <div class="container mt-3 justify-content-center mb-5" style="height:640px;">
 	            <div class="row mb-2 h-50 row1">
 	            <%
 	            int size = list.size();
@@ -720,11 +721,11 @@
 				<div class="modal-dialog modal-xl">
 					<div class="modal-content">
 
-`	<style>
+<!-- 	<style>
 	div{
 		border:1px solid black;
 	}
-	</style>
+	</style> -->
 						<!--------------------------------------------상세페에지 해더------------------------------------------>
 						<div class="modal-header tripinfo-header pb-0">
 							<div class="tripinfo-title d-flex d-block">

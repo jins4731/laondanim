@@ -29,6 +29,15 @@
         <h2>관리자 게시판</h2>
         <hr class="boder w-100">
     </div>
+<div class="d-flex pr-2">
+
+	<div class="ml-2 mr-5">
+		<h4>카테고리</h4>
+		<hr/>
+		<a href="<%=request.getContextPath()%>/admin/adminView.do">신고 리스트 관리</a>
+		<br/>
+		<a href="<%=request.getContextPath()%>/admin/tripInfo.do">여행정보 등록</a>
+	</div>
 
     <table class="table table-bordered" style="width:1000px">
         <tr>
@@ -57,6 +66,7 @@
 		<% } %>
 
     </table>
+</div>    
     <div class="text-center">
        <%=request.getAttribute("pageBar") %>
 	</div>
@@ -71,15 +81,6 @@ $(function(){
 		
 		
 	})
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	//이용자를 정지시키는 버튼

@@ -803,6 +803,43 @@ public class TripInfoDao {
 		return result;
 	}
 
+	//tag 
+	//by 승연
 	
+	public ArrayList<TripInfo2> selectTagList(Connection conn, String category){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectTagList");
+		TripInfo2 t = null;
+		ArrayList<TripInfo2> infoList = new ArrayList<TripInfo2>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				t = new TripInfo2();
+				t.setTripinfoNo(rs.getInt("NO"));
+				t.setTripinfoCategory(rs.getString("CATEGORY"));
+				t.setTripinfoTag(rs.getString("TAG"));
+				t.setTripinfoName(rs.getString("NAME"));
+				t.setTripinfoAddress(rs.getString("ADDRESS"));
+				t.setTripinfotime(rs.getString("BUSINESS_HOURS"));
+				t.setTripinfoNumber(rs.getString("TEL"));
+				t.setTripinfoHomePage(rs.getString("HOMEPAGE"));
+				t.setTripinfoNaver(rs.getString("NAVER"));
+				t.setTripinfoSns(rs.getString("SNS"));
+				
+				infoList.add(t);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return infoList;
+	}
 	
 }// Ŭ����

@@ -12,6 +12,10 @@ import com.laon.trip.model.service.TripService2;
 import com.laon.trip.model.vo.TagCount;
 import com.laon.trip.model.vo.TagCountComparator;
 import com.laon.trip.model.vo.Trip2;
+import com.laon.tripinfo.model.service.TripInfoService;
+import com.laon.tripinfo.model.vo.InfoTagCount;
+import com.laon.tripinfo.model.vo.InfoTagCountComparator;
+import com.laon.tripinfo.model.vo.TripInfo2;
 
 public class TagFilter {
 
@@ -153,4 +157,72 @@ public class TagFilter {
 		return countList;
 	}
 	
+		public ArrayList<InfoTagCount> infoTagCountList(String userTag, String category){
+		
+		//userTag = userTag.replaceAll(" ", "");
+		System.out.println("로그인한 유저 tag : " + userTag);
+		
+		ArrayList<TripInfo2> tagList = new TripInfoService().selectTagList(category);	//여행정보 row 다 가져오기 
+				
+		String[] userTagArr = userTag.split(",");	//로그인한 유저의 tag String을 배열로 쪼개기
+		
+		ArrayList<InfoTagCount> infoTagCountList = new ArrayList<InfoTagCount>();	//
+		
+		int cnt = 0;
+		
+		InfoTagCount tagCount = null;
+		
+		//모든 여행기 정보(tagList) 의 tag String을 tag String 배열로 바꿔주고 새로운 tagCount vo에 저장 하고 리스트 생성
+		for(TripInfo2 t : tagList) {	
+			int tripNo = t.getTripinfoNo();
+			
+			String stringTag = t.getTripinfoTag();
+			
+			tagCount = new InfoTagCount();
+			
+			tagCount.setNo(t.getTripinfoNo());
+			tagCount.setCategory(t.getTripinfoCategory());
+			tagCount.setTag(t.getTripinfoTag().split(","));
+			tagCount.setName(t.getTripinfoName());
+			tagCount.setAddress(t.getTripinfoAddress());
+			tagCount.setBusinessHours(t.getTripinfotime());
+			tagCount.setTel(t.getTripinfoNumber());
+			tagCount.setHomepage(t.getTripinfoHomePage());
+			tagCount.setNaver(t.getTripinfoNaver());
+			tagCount.setSNS(t.getTripinfoSns());
+			
+			infoTagCountList.add(tagCount);
+		}
+		
+		for(InfoTagCount t : infoTagCountList) {	//Tag ��ġ�� ī��Ʈ ����
+			for(String u : userTagArr) {
+				if(Arrays.asList(t.getTag()).contains(u)) {	//�迭�� �� ���� Ȯ��
+					t.setTagCount(t.getTagCount()+1);
+				}
+				if(t.getAddress().contains(u)) {
+					t.setTagCount(t.getTagCount()+1);
+				}
+			}
+		}
+		
+		//���� �������̽� Ŭ���� ��ü ����
+		InfoTagCountComparator tcc = new InfoTagCountComparator();
+		
+		System.out.println("====정렬 전====");
+		
+		for(InfoTagCount t : infoTagCountList) {
+			System.out.println(t);
+		}
+		
+//		//����
+		Collections.sort(infoTagCountList, tcc);
+//		
+	System.out.println("====정렬 후====");
+		
+		for(InfoTagCount t : infoTagCountList) {
+			System.out.println(t);
+		}
+		
+		return infoTagCountList;
+	}
 }

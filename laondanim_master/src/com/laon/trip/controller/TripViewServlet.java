@@ -44,7 +44,7 @@ public class TripViewServlet extends HttpServlet {
 		String no = request.getParameter("no");
 		
 		
-		Trip trip = new TripService().selectTripViewAllData("1");
+		Trip trip = new TripService().selectTripViewAllData(no);
 		
 		
 		System.out.println("여행기 : " + trip); // trip

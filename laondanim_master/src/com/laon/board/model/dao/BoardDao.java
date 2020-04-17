@@ -374,6 +374,7 @@ public class BoardDao {
 		String sql=prop.getProperty("deleteComment");
 	try{pstmt=conn.prepareStatement(sql);
 		pstmt.setInt(1, commentNo);
+		pstmt.setInt(2, commentNo);
 		result=pstmt.executeUpdate();
 	}catch(SQLException e) {
 		e.printStackTrace();
@@ -404,7 +405,9 @@ public class BoardDao {
 		PreparedStatement pstmt=null;
 		int result=0;
 		String sql=prop.getProperty("insertReport");
+		System.out.println("신고sql="+sql);
 	try{pstmt=conn.prepareStatement(sql);
+	System.out.println(re.getUserNo()+":"+re.getBoardNo()+":"+re.getReportContent());
 		pstmt.setInt(1, re.getUserNo());
 		pstmt.setInt(2, re.getBoardNo());
 		pstmt.setString(3, re.getReportContent());

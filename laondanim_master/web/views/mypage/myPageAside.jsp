@@ -66,7 +66,7 @@
 				<strong>TIP!</strong>
 			</div>
 			<div>
-				<span>팁자리 ㅇㅇ</span>
+				<span></span>
 			</div>
 		</div>
 	</div>
@@ -120,3 +120,16 @@
 	}
 }
 </style>
+
+<script>
+	var tips=new Array();
+	tips[0]="팁팁팁팁팁팁팁팁팁팁팁팁팁팁1";
+	tips[1]="팁팁팁팁팁팁팁팁팁팁팁팁팁팁2";
+	tips[2]="팁팁팁팁팁팁팁팁팁팁팁팁팁팁3";
+	tips[3]="팁팁팁팁팁팁팁팁팁팁팁팁팁팁4";
+	
+	$(function(){
+		var rn=Math.round(Math.random()*3);
+		$(".tip div:last-child").html(tips[rn]);
+	});
+</script>

@@ -229,7 +229,7 @@
             </div>
             
                 <div class="col-2 d-flex flex-row my-auto">
-                    <button class="btn btn-lg btn-outline-secondary border-0" style="text-decoration: underline;" onclick="location.replace('<%=request.getContextPath()%>/trip/tripInsertView.do')">다님길 작성 <i class="fas fa-edit fa-2x"></i></button> <!--클릭 했을 때 작성 서블릿으로-->
+                    <button class="btn btn-lg btn-outline-secondary border-0" style="text-decoration: underline;" onclick="location.replace('<%=request.getContextPath()%>/trip/tripInsertView.do?no=<%=loginUser.getNo()%>')">다님길 작성 <i class="fas fa-edit fa-2x"></i></button> <!--클릭 했을 때 작성 서블릿으로-->
                     
                 </div>
            </div>

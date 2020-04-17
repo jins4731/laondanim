@@ -720,11 +720,7 @@
 				<div class="modal-dialog modal-xl">
 					<div class="modal-content">
 
-`	<style>
-	div{
-		border:1px solid black;
-	}
-	</style>
+`	
 						<!--------------------------------------------상세페에지 해더------------------------------------------>
 						<div class="modal-header tripinfo-header pb-0">
 							<div class="tripinfo-title d-flex d-block">

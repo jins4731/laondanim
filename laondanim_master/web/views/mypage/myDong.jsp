@@ -72,12 +72,12 @@
 												    </button>
 												    <div class="dropdown-menu">
 												    <%if(d.getEnded().equals("N")){ %>
-						                        		<a class="dropdown-item" href="#">신청서 수신함</a>
+												    	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">신청서 수신함</a>
 												      	<a class="dropdown-item" href="#">모집 마감</a>
 												     	<a class="dropdown-item" href="#">동행 수정</a>
 												     	<a class="dropdown-item" href="#">동행 삭제</a>
 						                        	<%}else{ %>
-												    	<a class="dropdown-item" href="#">신청서 수신함</a>
+						                        		<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">신청서 수신함</a>
 												     	<a class="dropdown-item" href="#">동행 수정</a>
 												     	<a class="dropdown-item" href="#">동행 삭제</a>
 						                        	<%} %>
@@ -172,7 +172,6 @@
 													    	if(dj.getConfirmed().equals("N")){ %>
 														    	<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myDongJoinRefusal.do?userNo=<%=loginUser.getNo()%>&dongJoinNo=<%=dj.getNo()%>">삭제</a>
 								                        	<%}else if(dj.getConfirmed().equals("Y")){ %>
-								                        		<a class="dropdown-item" href="#">채팅</a>
 														      	<a class="dropdown-item" href="#">동행 나가기</a>
 								                        	<%}else{ %>
 								                        		<a class="dropdown-item" href="#">보낸 신청서 보기</a>

@@ -71,11 +71,13 @@ public class TripInfoMainServlet extends HttpServlet {
 			
 		List<Mind> heartCount = new TripInfoService().heartCount(list);
 		
+		
+		
 		//TripInfoPicture list로 picture list 가져오기
 		ArrayList<Picture> pictureList = new TripInfoService().selectPicture((ArrayList<TripInfoPicture>)list);
 		
 		//TripInfoPicture list로 tripinfo_comment list 가져오기
-		ArrayList<TripInfoComment> tripInfoCommentList = new TripInfoService().selectComment(list);
+		List<TripInfoComment> commentList = new TripInfoService().selectComment();
 		
 		int totalDate=new TripInfoService().selectCountTripInfo(category,type,keyword);
 		int totalPage=(int)Math.ceil((double)totalDate/numPerPage);
@@ -128,7 +130,9 @@ public class TripInfoMainServlet extends HttpServlet {
 		
 		request.setAttribute("pictureList", pictureList);
 		
-		request.setAttribute("tripInfoCommentList", tripInfoCommentList);
+		
+		
+		request.setAttribute("commentList",commentList);
 		request.getRequestDispatcher("/views/tripinfo/tripinfoMain.jsp").forward(request, response);
 		
 		

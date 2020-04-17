@@ -134,13 +134,13 @@
 
                 <div class="row form-group mb-1">
                     <input type="text" id="title" class="form-control border-top-0 border-left-0 border-right-0 "
-                        name="userName" placeholder="여행기 제목을 입력해주세요.">
+                        name="userName" placeholder="여행기 제목을 입력해주세요." required>
                 </div>
 
                 <div class="row align-items-center justify-content-end">
                     <label for="publicEnabled" class="mb-1">공개</label>
                     <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="publicEnabledId" name="publicEnabled">
+                        <input type="checkbox" class="custom-control-input" id="publicEnabledId" name="publicEnabled" required>
                         <label for="publicEnabledId" class="custom-control-label"></label>
                     </div>
                 </div>
@@ -164,11 +164,11 @@
                             <span class="col-3 pt-1 font-weight-bold">여행지역</span>
                             <input class="col-6" type="text" id="travleLocale"
                                 class="form-control border-top-0 border-left-0 border-right-0 " name="title" 
-                                placeholder="여행지역을 입력해주세요.">
+                                placeholder="여행지역을 입력해주세요." required>
                         </div>
                         <div class="row form-group mb-0">
                             <span class="col-3 pt-1 font-weight-bold">인원 수</span>
-                            <input class="col-6" type="number" id="peopleNum"
+                            <input class="col-6" type="number" id="peopleNum" required
                                 class="form-control border-top-0 border-left-0 border-right-0 " name="peopleNum"
                                 id="peopleNum" placeholder="인원수를 입력해주세요." autocomplete="off" min=0>
                         </div>
@@ -176,16 +176,16 @@
                     <div class="col">
                         <div class="row form-group mb-0">
                             <span class="col-3 pt-1 font-weight-bold">여행유형</span>
-                            <input class="col-6" type="text" id="travleType"
+                            <input class="col-6" type="text" id="travleType" required
                                 class="form-control border-top-0 border-left-0 border-right-0 " name="travleType"
                                 id="travleType" placeholder="여행유형을 입력해주세요.">
                         </div>
                         <div class="row form-group mb-0">
                             <span class="col-3 pt-1 font-weight-bold">여행일</span>
-                            <input class="col-3 p-0" type="text"
+                            <input class="col-3 p-0" type="text" required
                                 class="form-control border-top-0 border-left-0 border-right-0 " data-date="datePicker"
                                 name="travleStartDate" id="travleStartDateId" placeholder="여행시작일 입력">
-                            <input class="col-3 p-0" type="text"
+                            <input class="col-3 p-0" type="text" required
                                 class="form-control border-top-0 border-left-0 border-right-0 " data-date="datePicker"
                                 name="travleEndDate" id="travleEndDateId" placeholder="여행종료일 입력">
                         </div>
@@ -250,8 +250,8 @@
                                 src="<%=request.getContextPath()+"/upload/"+image %>"
                                 draggable="true" ondragstart="dragstart(event)" alt=""
                                 style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
-                            <div class="mask flex-center rgba-black-strong"
-                                style="width: 100%;height: 30px;z-index: 1;">
+                            <div class="mask flex-center rgba-black-strong text-nowrap"
+                                style="width: 100%;height: 30px;z-index: 1;overflow: hidden;">
                                 <p class="white-text"><%=name%></p>
                             </div>
                         </div>
@@ -281,8 +281,8 @@
                                     src="<%=request.getContextPath()+"/upload/"+image %>"
                                     draggable="true" ondragstart="dragstart(event)" alt=""
                                     style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
-                                <div class="mask flex-center rgba-black-strong"
-                                    style="width: 100%;height: 30px;z-index: 1;">
+                                <div class="mask flex-center rgba-black-strong text-nowrap"
+                                    style="width: 100%;height: 30px;z-index: 1;overflow: hidden;">
                                     <p class="white-text"><%=name%></p>
                                 </div>
                         </div>
@@ -312,8 +312,8 @@
                                 src="<%=request.getContextPath()+"/upload/"+image %>"
                                 draggable="true" ondragstart="dragstart(event)" alt=""
                                 style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
-                            <div class="mask flex-center rgba-black-strong"
-                                style="width: 100%;height: 30px;z-index: 1;">
+                            <div class="mask flex-center rgba-black-strong text-nowrap"
+                                style="width: 100%;height: 30px;z-index: 1;overflow: hidden;">
                                 <p class="white-text"><%=name%></p>
                             </div>
                         </div>
@@ -415,7 +415,7 @@
                             <img src="<%=request.getContextPath() %>/picture/trip/plus.png" alt=""
                                 style="object-fit: contain;width: 100%;height: 100%;">
                             <input type="file" id="image" name="image" multiple accept="image/jpg,image/png"
-                                style="width: 100%;height: 100%;position: absolute;" form="tripForm">
+                                style="width: 100%;height: 100%;position: absolute;" form="tripForm" required>
                         </div>
 
 
@@ -443,7 +443,7 @@
             <div class="row mx-2" style="height: 100px;">
                 <div class="d-flex flex-wrap" style="height: 30px;">
                     <div>
-                        <input id="tag" name="tag" type="text" class="border-0" style="width: auto;">
+                        <input id="tag" name="tag" type="text" class="border-0" style="width: auto;" required>
 
                     </div>
                 </div>

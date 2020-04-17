@@ -37,7 +37,7 @@
 
 	// 스케줄 관련 여행정보
 	Map<Integer, Tripinfo> tripinfoMap = new HashMap();
-	// ㅅ케줄 관련 여행정보 사진
+	// 스케줄 관련 여행정보 사진
 	Map<Integer, List<Picture>> pictureListMap = new HashMap();
 	for (int i = 0; i < tripSchedulList.size(); i++) {
 		TripSchedule schedule = tripSchedulList.get(i);
@@ -287,55 +287,287 @@ footer {
 
 
 			<div id="courseContainer">
-				<div class="row dropdown justify-content-center">
-					<button class="d-block btn dropdown-toggle" onclick="dayBt()"
-						data-toggle="dropdown"><%=dayList.get(0)%>일차
-					</button>
-					<div class="dropdown-menu">
+                <div class="row dropdown justify-content-center">
+                    <button class="d-block btn dropdown-toggle" id="dayBt" data-save="1"
+                        data-toggle="dropdown"><%=dayList.get(0) %>일차</button>
+                    <div class="dropdown-menu">
+                        <%for(int i = 0 ;i< dayList.size();i++){ %>
+                        <a href="#" onclick="dayBt(event)" data-save="<%=(i+1)%>" class="dropdown-item"><%=dayList.get(i) %>일차</a>
+                        <%} %>
+                    </div>
+                </div>
 
-						<%
-							for (int i = 0; i < dayList.size(); i++) {
+            <div class="row">
+                <div class="col">
+
+                </div>
+                <div id="dayContainer" class="col-11">
+                   
+                   
+                   <%for(int i=0;i<dayMap.size();i++){
+                		List<TripSchedule> list = dayMap.get(i);
+                		
+                	%>
+                		<%if(i==0){ %>
+                		<div id="day<%=""+(i+1) %>" name="day" class="row">
+                		<%}else{ %>
+                		<div id="day<%=""+(i+1) %>" name="day" class="row d-none">
+						<%} %>	
+						<%for(int k=0;k<list.size();k++){
+							TripSchedule schdule = list.get(k);
+							Tripinfo info = tripinfoMap.get(schdule.getTripinfoNo());
+							String image = info.getPictureList().get(0).getImage();
+							
 						%>
-						<a href="javascript:void(0)" class="dropdown-item"><%=dayList.get(i)%>일차</a>
-						<%
-							}
-						%>
+							<%if(k == 0){%>
 
-					</div>
-				</div>
+								<div name="schduleStart" class="col text-center p-2 " style="height: 100px; position: relative;">
+									<div class="w-100 h-100 text-center view overlay zoom ">
+										<img src="<%=request.getContextPath()%>/picture/trip/icon/start.png" width="120px" height="100%"
+											class="d-inline-block rounded-lg py-1">
+									</div>
+								</div>
 
 
 
-				<div class="row">
-
-					<div class="col"></div>
-
-					<div id="dayContainer" class="col-11">
-
+								<div name="schdule" onclick="scheduleItemBt()"
+								data-address="<%=info.getAddress()%>" class="col-2 text-center p-2"
+								style="height: 100px;">
+								<div class="w-100 h-100 text-center view overlay zoom ">
+									<img src="<%=request.getContextPath() %>>/upload/<%=image%>" width="120px" height="100%"
+										class="d-inline-block rounded-lg py-1 shadow">
+									<div class="mx-auto mask flex-center rgba-black-strong text-nowrap"
+										style="width: 73%;height: 100%;z-index: 1;overflow: hidden;">
+										<p class="white-text"><%=info.getName()%></p>
+									</div>
+								</div>
+								<div class="col "
+									style="position: absolute; top: 25px; left: -40px; width: 80px; height: 50px">
+									<img class="" src="<%=request.getContextPath() %>/picture/trip/icon/<%=schdule.getTransport()%>.png" width="40px" height="25px" alt="">
+									<span><%=schdule.getRequiredHours()%></span>
+								</div>
+							</div>
+							<%}else{%>
+								<div name="schdule" onclick="scheduleItemBt()"
+								data-address="<%=info.getAddress()%>" class="col-2 text-center p-2"
+								style="height: 100px;">
+								<div class="w-100 h-100 text-center view overlay zoom ">
+									<img src="<%=request.getContextPath() %>>/upload/<%=image%>" width="120px" height="100%"
+										class="d-inline-block rounded-lg py-1 shadow">
+									<div class="mx-auto mask flex-center rgba-black-strong text-nowrap"
+										style="width: 73%;height: 100%;z-index: 1;overflow: hidden;">
+										<p class="white-text"><%=info.getName()%></p>
+									</div>
+								</div>
+								<div class="col "
+									style="position: absolute; top: 25px; left: -40px; width: 80px; height: 50px">
+									<img class="" src="<%=request.getContextPath() %>/picture/trip/icon/<%=schdule.getTransport()%>.png" width="40px" height="25px" alt="">
+									<span><%=schdule.getRequiredHours()%></span>
+								</div>
+							</div>
+							<%}%>
 							
 
+							<%} %>
+							
+							<div name="schduleEnd" onclick="scheduleItemBt()" class="col-2 text-center p-2 order-1"
+								style="height: 100px;">
+								<div class="w-100 h-100 text-center view overlay zoom ">
+									<img src="<%=request.getContextPath()%>/picture/trip/icon/home.png" width="120px" height="100%"
+										class="d-inline-block rounded-lg py-1">
+								</div>
+							</div>
+                   		</div>
+                   
+                   <%} %>
+                   
+                   
+                   
+                   <%--  <div id="day1_1" class="row">
+                    
+                    
+                        <div name="day1_1_1" onclick="scheduleItemBt()" data-save="1" class="col text-center p-2 "
+                            style="height: 100px;position: relative;">
+                            <div class="w-100 h-100 text-center view overlay zoom ">
+                                <img src="<%=request.getContextPath() %>/picture/trip/icon/start.png" width="120px"
+                                    height="100%" class="d-inline-block rounded-lg py-1">
+                            </div>
+                            <div class="col " style="position: absolute;top:25px;left: 155px;width: 80px;height:50px">
+                                <img class="" src="<%=request.getContextPath() %>/picture/trip/icon/airplane.png"
+                                    width="40px" height="25px" alt="">
+                                <span>30분</span>
+                            </div>
+                        </div>
+
+                        <div name="day1_1_2" onclick="scheduleItemBt()" data-save="2" class="col text-center p-2"
+                            style="height: 100px;">
+                            <div class="w-100 h-100 text-center view overlay zoom ">
+                                <img src="<%=request.getContextPath() %>/picture/trip/image/01.jpg" width="120px"
+                                    height="100%" class="d-inline-block rounded-lg py-1 shadow">
+                            </div>
+                            <div class="col " style="position: absolute;top:25px;left: 155px;width: 80px;height:50px">
+                                <img class="walk" src="<%=request.getContextPath() %>/picture/trip/icon/walk.png"
+                                    width="40px" height="25px" alt="">
+                                <span>20분</span>
+                            </div>
+                        </div>
+
+                        <div name="day1_1_3" onclick="scheduleItemBt()" data-save="2" class="col text-center p-2"
+                            style="height: 100px;">
+                            <div class="w-100 h-100 text-center view overlay zoom ">
+                                <img src="<%=request.getContextPath() %>/picture/trip/image/02.jpg" width="120px"
+                                    height="100%" class="d-inline-block rounded-lg py-1 shadow">
+                            </div>
+                            <div class="col " style="position: absolute;top:25px;left: 155px;width: 80px;height:50px">
+                                <img class="" src="<%=request.getContextPath() %>/picture/trip/icon/train.png"
+                                    width="40px" height="25px" alt="">
+                                <span>1시간30분</span>
+                            </div>
+                        </div>
+
+                        <div name="day1_1_4" onclick="scheduleItemBt()" data-save="2" class="col text-center p-2"
+                            style="height: 100px;">
+                            <div class="w-100 h-100 text-center view overlay zoom ">
+                                <img src="<%=request.getContextPath() %>/picture/trip/image/03.jpg" width="120px"
+                                    height="100%" class="d-inline-block rounded-lg py-1 shadow">
+                            </div>
+                            <div class="col " style="position: absolute;top:25px;left: 155px;width: 80px;height:50px">
+                                <img class="" src="<%=request.getContextPath() %>/picture/trip/icon/subway.png"
+                                    width="40px" height="25px" alt="">
+                                <span>56분</span>
+                            </div>
+                        </div>
+
+                        <div name="day1_1_5" onclick="scheduleItemBt()" data-save="2" class="col text-center  p-2"
+                            style="height: 100px;">
+                            <div class="w-100 h-100 text-center view overlay zoom ">
+                                <img src="<%=request.getContextPath() %>/picture/trip/image/04.jpg" width="120px"
+                                    height="100%" class="d-inline-block rounded-lg py-1 shadow">
+                            </div>
+                            <div class="col " style="position: absolute;top:25px;left: 155px;width: 80px;height:50px">
+                                <img class="" src="<%=request.getContextPath() %>/picture/trip/icon/bus.png"
+                                    width="40px" height="25px" alt="">
+                                <span>2시간</span>
+                            </div>
+                        </div>
+
+                        <div name="day1_1_6" onclick="scheduleItemBt()" data-save="2" class="col text-center  p-2"
+                            style="height: 100px;">
+                            <div class="w-100 h-100 text-center view overlay zoom ">
+                                <img src="<%=request.getContextPath() %>/picture/trip/image/05.jpg" width="120px"
+                                    height="100%" class="d-inline-block rounded-lg py-1 shadow">
+                            </div>
+                            <div class="col " style="position: absolute;top:25px;left: 155px;width: 80px;height:50px">
+                                <img class="walk" src="<%=request.getContextPath() %>/picture/trip/icon/walk.png"
+                                    width="40px" height="25px" alt="">
+                                <span>30분</span>
+                            </div>
+                        </div>
+                    </div>
 
 
 
-						<!-- div id="dayContainer" class="col-11"  -->
-					</div>
+                    <div class="row">
 
-					<div class="col"></div>
+                        <div name="day1_2_1" onclick="scheduleItemBt()" data-save="8"
+                            class="col text-center p-2 order-6" style="height: 100px;">
+                            <div class="w-100 h-100 text-center view overlay zoom ">
+                                <img src="<%=request.getContextPath() %>/picture/trip/image/10.jpg" width="120px"
+                                    height="100%" class="d-inline-block rounded-lg py-1">
+                            </div>
+                            <div class="col " style="position: absolute;top:25px;left: -40px;width: 80px;height:50px">
+                                <img class="filp" src="<%=request.getContextPath() %>/picture/trip/icon/airplane.png"
+                                    width="40px" height="25px" alt="">
+                                <span>33분</span>
+                            </div>
+
+                            <div class="col " style="position: absolute;top:0px;left: 155px;width: 80px;height:50px">
+                                <img class="walk" src="<%=request.getContextPath() %>/picture/trip/icon/arrow1.png"
+                                    width="40px" height="25px" alt="">
+                            </div>
+                        </div>
+
+                        <div name="day1_2_2" onclick="scheduleItemBt()" data-save="2"
+                            class="col text-center p-2 order-5" style="height: 100px;">
+                            <div class="w-100 h-100 text-center view overlay zoom ">
+                                <img src="<%=request.getContextPath() %>/picture/trip/image/06.jpg" width="120px"
+                                    height="100%" class="d-inline-block rounded-lg py-1 shadow">
+                            </div>
+                            <div class="col " style="position: absolute;top:25px;left: -40px;width: 80px;height:50px">
+                                <img class="filp" src="<%=request.getContextPath() %>/picture/trip/icon/train.png"
+                                    width="40px" height="25px" alt="">
+                                <span>50분</span>
+                            </div>
+                        </div>
+
+                        <div name="day1_2_3" onclick="scheduleItemBt()" data-save="2"
+                            class="col text-center p-2 order-4" style="height: 100px;">
+                            <div class="w-100 h-100 text-center view overlay zoom ">
+                                <img src="<%=request.getContextPath() %>/picture/trip/image/07.jpg" width="120px"
+                                    height="100%" class="d-inline-block rounded-lg py-1 shadow">
+                            </div>
+                            <div class="col " style="position: absolute;top:25px;left: -40px;width: 80px;height:50px">
+                                <img class="filp" src="<%=request.getContextPath() %>/picture/trip/icon/bus.png"
+                                    width="40px" height="25px" alt="">
+                                <span>1시간10분</span>
+                            </div>
+                        </div>
+
+                        <div name="day1_2_4" onclick="scheduleItemBt()" data-save="2"
+                            class="col text-center p-2 order-3" style="height: 100px;">
+                            <div class="w-100 h-100 text-center view overlay zoom ">
+                                <img src="<%=request.getContextPath() %>/picture/trip/image/08.jpg" width="120px"
+                                    height="100%" class="d-inline-block rounded-lg py-1 shadow">
+                            </div>
+                            <div class="col " style="position: absolute;top:25px;left: -40px;width: 80px;height:50px">
+                                <img class="filp" src="<%=request.getContextPath() %>/picture/trip/icon/subway.png"
+                                    width="40px" height="25px" alt="">
+                                <span>40분</span>
+                            </div>
+                        </div>
+
+                        <div name="day1_2_5" onclick="scheduleItemBt()" data-save="2"
+                            class="col text-center p-2 order-2" style="height: 100px;">
+                            <div class="w-100 h-100 text-center view overlay zoom ">
+                                <img src="<%=request.getContextPath() %>/picture/trip/image/09.jpg" width="120px"
+                                    height="100%" class="d-inline-block rounded-lg py-1 shadow">
+                            </div>
+                            <div class="col " style="position: absolute;top:25px;left: -40px;width: 80px;height:50px">
+                                <img class="" src="<%=request.getContextPath() %>/picture/trip/icon/walk.png"
+                                    width="40px" height="25px" alt="">
+                                <span>58분</span>
+                            </div>
+                        </div>
+
+                        <div name="day1_2_6" onclick="scheduleItemBt()" data-save="2"
+                            class="col text-center p-2 order-1" style="height: 100px;">
+                            <div class="w-100 h-100 text-center view overlay zoom ">
+                                <img src="<%=request.getContextPath() %>/picture/trip/icon/home.png" width="120px"
+                                    height="100%" class="d-inline-block rounded-lg py-1">
+                            </div>
+                        </div>
+
+                   
+                    </div> <!-- row --> --%>
+
+                   
+                </div> <!-- dayContainer -->
 
 
-					<!-- div class="row" -->
-				</div>
+
+                <div class="col">
+
+                </div>
 
 
 
+            </div>
 
-				<div class="col p-4">
-					<div id="map" style="height: 450px;"></div>
-				</div>
+			 <div class="col p-4">
+                    <div id="map" style="height:450px;"></div>
+                </div>
 
-
-				<!-- div id="courseContainer" -->
-			</div>
+        </div>
 
 
 
@@ -443,8 +675,16 @@ footer {
 			console.log("singoBt");
 		}
 
-		function dayBt() {
+		function dayBt(event) {
 			console.log("dayBt")
+			$("#dayBt").html($(event.target).html());
+			$("#dayBt")[0].dataset.save = $(event.target)[0].dataset.save;
+			for(let i=0;i<$("[name='day']").length;i++){
+				$($("[name='day']")[i]).addClass("d-none");
+			}
+			$($("[name='day']")[($("#dayBt")[0].dataset.save)-1]).removeClass("d-none");
+			
+			
 		}
 
 		function scheduleItemBt() {

@@ -147,9 +147,9 @@ private UserDao userDao = new UserDao();
 			for (int i = 0; i < scheduleResult.length; i++) {
 				System.out.println("scheduleResult[i] : " + scheduleResult[i]);
 				if(scheduleResult[i] >= 0 || scheduleResult[i] == -2) {
-					
+					isGood = true;
 				}else {
-					isGood = false;
+					
 				}
 			}
 			if(isGood) {

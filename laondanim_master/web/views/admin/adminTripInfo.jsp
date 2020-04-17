@@ -21,21 +21,25 @@ table{
 	
 	}
 </style>
-<div style="height: 170px;"></div> 
+<div style='height: 170px;'></div>
 <section class="d-flex flex-column justify-content-center align-items-center">
-<aside>
 
-<div>
-<h4>관리자 페이지</h4>
-<hr/>
-<a href="">신고 리스트 관리</a>
-<br/>
-<a href="">여행정보 등록</a>
-</div>
+ <hr/>
+    <div class="admin-header d-flex flex-column justify-content-center align-items-center">
+        <h2>관리자 게시판</h2>
+        <hr class="boder w-100">
+    </div>
+<div class="d-flex pr-2">
 
-</aside>
-<div>
-<form action="" post="" method="post" enctype="multipart/form-data">
+	<div class="ml-2 mr-5">
+	<h4>카테고리</h4>
+	<hr/>
+	<a href="<%=request.getContextPath()%>/admin/adminView.do">신고 리스트 관리</a>
+	<br/>
+	<a href="<%=request.getContextPath()%>/admin/tripInfo.do">여행정보 등록</a>
+	</div>
+
+<form action="" post="" method="post" enctype="multipart/form-data" >
 <table class="table table-bordered" style="width:1000px">
 	<tr>
 		<td colspan="2">
@@ -73,18 +77,19 @@ table{
 	</tr>
 	<tr>
 		<td>
-			사진 첨부
+			사진 첨부(최대 3개)
 		</td>
 		<td>
-			<input type="file" name="upfile">
+			<input type="file" name="upfile" multiple>
+			
 		</td>
 	<tr>
 		<td>
 			주소입력
 		</td>
 		<td>
-			<input type="text"  class="form-control" name="tripAddress">
-			<button class="btn btn-primary" >주소 찾기</button>
+			<input type="text" id="userAddr" name="userAddr" class="form-control" placeholder="Enter Addr" required="true" readonly="true"/>
+			<button class="btn btn-primary" onclick="goPopup();" >주소 찾기</button>
 		</td>
 		
 	</tr>
@@ -138,7 +143,19 @@ table{
 </form>
 </div>
 </section>
+<script>
+function goPopup(){
+	// 주소검색을 수행할 팝업 페이지를 호출
+	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출.
+	var pop = window.open("<%=request.getContextPath()%>/popup/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
+	
+}
 
+function jusoCallBack(roadFullAddr){
+		// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.	
+		document.form.userAddr.value = roadFullAddr;		
+}
+</script>
 
 
 

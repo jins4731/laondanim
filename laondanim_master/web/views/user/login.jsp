@@ -398,7 +398,7 @@ td > label{
             
             location.href="<%=request.getContextPath()%>/user/alterPw.do?userId="+userId;
             }
-         });   
+         );   
       
       
    

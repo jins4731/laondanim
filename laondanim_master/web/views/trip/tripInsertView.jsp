@@ -69,29 +69,29 @@
         }
 
         section {
-            border: 2px solid green;
+            /* border: 2px solid green; */
             box-sizing: border-box;
         }
 
         section div {
-            border: 1px solid black;
+            /* border: 1px solid black; */
             box-sizing: border-box;
         }
 
         footer {
-            border: 2px solid blue;
+            /* border: 2px solid blue; */
             box-sizing: border-box;
 
             height: 70px;
         }
 
         #titleContainer div {
-            border: 1px solid black;
+            /* border: 1px solid black; */
             box-sizing: border-box;
         }
 
         #tripinfoContainer div {
-            border: 1px solid black;
+           /*  border: 1px solid black; */
             box-sizing: border-box;
         }
 
@@ -113,6 +113,83 @@
             width: 100%;
             height: 100%;
         }
+        .ldBtnC{
+            border-radius: 20px;
+            background-color: white;
+            border: 2px solid #00abbf;
+            color: #00abbf;
+            width: 120px;
+            margin-right: 15px;
+            padding: 6px 15px 6px 15px;
+        }  
+        .ldBtnC:hover,.ldBtnC:active {
+            color: white;
+            background-color: #00abbf;
+        } 
+        .ldBtn{
+            border-radius: 20px;
+            background-color: white;
+            border: 2px solid #00abbf;
+            color: #00abbf;
+            padding: 6px 15px 6px 15px;
+        }  
+        .ldBtn:hover,.ldBtn:active {
+            color: white;
+            background-color: #00abbf;
+        }    
+        .ldBtnInactive{
+            border-radius: 20px;
+            background-color: white;
+            border: 2px solid #dadada;
+            color: #dadada;
+            padding: 6px 15px 6px 15px;
+        }   
+        .ldBtnInactive:hover,.ldBtnInactive:active {
+            color: white;
+            background-color: #dadada;
+        }                 
+        .rotateBtn{
+            transform: rotate(180deg);
+        }   
+		.ldBtnDelet{		
+            border-radius: 20px;
+            background-color: white;
+            border: 2px solid #d60047;
+            color: #d60047;
+            padding: 6px 15px 6px 15px;
+		}
+		.ldBtnDelet:hover,.ldBtnDelet:active{	
+            color: white;
+            background-color: #d60047;
+		}   
+		.dropdown-menu{
+			text-align: center;
+		}   
+		.dropdown-item{
+			color: #00abbf;
+		}
+		.laonBodyFont{
+			font-family: NanumSquare;
+			font-size: 22px;
+			color: #595959;
+		}
+		.input{
+			border: 0;
+		}
+		.dayBtn{
+            border-radius: 20px;
+            background-color: #00abbf;
+            border: 2px solid #00abbf;
+            color: white;
+            width: 120px;
+            margin-right: 15px;
+            padding: 6px 15px 6px 15px;
+		}
+		#dayPlusBt{
+            border: 2px solid #00abbf;
+            color: #00abbf;
+            font-weight: 900;
+		}
     </style>
 </head>
 
@@ -121,11 +198,11 @@
 
 
     <section class="container-fluid">
-        <div id="titleContainer" class="row justify-content-center">
-            <div class="col-3">
+        <div id="titleContainer" class="row justify-content-center mb-5">
+            <div class="col-4">
                 <div class="row dropdown justify-content-center">
                     <button type="button" id="category" name="category"
-                        class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">일정</button>
+                        class="ldBtn dropdown-toggle mb-5" data-toggle="dropdown" style="font-weight: 600; width: 150px;">일정</button>
                     <div class="dropdown-menu">
                         <a id="courseDropBt" href="#" class="dropdown-item">일정</a>
                         <a id="reviewDropBt" href="#" class="dropdown-item">후기</a>
@@ -133,7 +210,7 @@
                 </div>
 
                 <div class="row form-group mb-1">
-                    <input type="text" id="title" class="form-control border-top-0 border-left-0 border-right-0 "
+                    <input type="text" id="title" class="form-control border-top-0 border-left-0 border-right-0 laonBodyFont text-center"
                         name="userName" placeholder="여행기 제목을 입력해주세요." required>
                 </div>
 
@@ -152,15 +229,15 @@
 
 
         <div id="tripinfoContainer">
-            <div class="border-bottom text-dark">
-                <span>여행정보</span>
+            <div class="border-bottom text-dark pb-2 pl-2">
+                <span class="laonBodyFont">여행정보</span>
             </div>
 
             <div class="col">
                 <div class="row p-5">
                     <div class="col">
 
-                        <div class="row form-group mb-0 ">
+                        <div class="row form-group mb-3 ">
                             <span class="col-3 pt-1 font-weight-bold">여행지역</span>
                             <input class="col-6" type="text" id="travleLocale"
                                 class="form-control border-top-0 border-left-0 border-right-0 " name="title" 
@@ -174,7 +251,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="row form-group mb-0">
+                        <div class="row form-group mb-3">
                             <span class="col-3 pt-1 font-weight-bold">여행유형</span>
                             <input class="col-6" type="text" id="travleType" required
                                 class="form-control border-top-0 border-left-0 border-right-0 " name="travleType"
@@ -197,12 +274,12 @@
 
 
 
-        <div id="courseContainer">
-            <div class="row mx-1">
-                <button id="matzipBt" onclick="matzipBt()" class="btn btn-grey">맛집</button>
-                <button id="myoungsoBt" onclick="myoungsoBt()" class="btn btn-grey">명소</button>
-                <button id="sooksoBt" onclick="sooksoBt()" class="btn btn-grey">숙소</button>
-                <button id="myBt" onclick="myBt()" class="btn btn-grey">마이</button>
+        <div id="courseContainer" class="mt-5">
+            <div class="row mx-1 mb-2">
+                <button id="matzipBt" onclick="matzipBt()" class="ldBtnC">맛집</button>
+                <button id="myoungsoBt" onclick="myoungsoBt()" class="ldBtnC">명소</button>
+                <button id="sooksoBt" onclick="sooksoBt()" class="ldBtnC">숙소</button>
+                <button id="myBt" onclick="myBt()" class="ldBtnC">마이</button>
             </div>
             <div class="row mx-1" style="height: 200px;">
 
@@ -344,12 +421,12 @@
 
 
             <!-- 일차 추가 -->
-            <div class="row mx-1" style="height: 50px;">
-                <div id="firstDay" class="d-flex bg-primary rounded-pill justify-content-center align-items-center"
-                    style="height: 100%;width: 60px;cursor: pointer;" data-save="1" onclick="dayBt(event)">
+            <div class="row mx-1 mb-4" style="height: 50px;">
+                <div id="firstDay" class="d-flex dayBtn rounded-pill justify-content-center align-items-center"
+                    style="height: 100%; cursor: pointer;" data-save="1" onclick="dayBt(event)">
                     <span class="" style="width: auto;height: auto;" data-save="1">1일차</span>
                 </div>
-                <div class=" d-flex ml-2 bg-success rounded-pill justify-content-center align-items-center font-weight-bold"
+                <div class=" d-flex ml-2 rounded-pill justify-content-center align-items-center font-weight-bold"
                     style="height: auto;width: 60px;cursor: pointer;" id="dayPlusBt">
                     +
                 </div>
@@ -357,6 +434,7 @@
 
 
             <!-- 스케줄 추가 -->
+            
             <div id="dayContainer" class="col p-0 mx-1">
 
                 <div id="day1" name="day" data-save="1" class="row mx-1" id="schduleContainer">

@@ -92,10 +92,16 @@ $(function(){
     //전송버튼 클릭이벤트
     $("#savebutton").click(function(){
     	var selector=$("#board-selector").val();
+    	var tag=$("#boardTag").val();
+    	if(!tag.includes("#")){
+            alert("태그앞에 #을 입력해주세요");
+           	return false;
+    	}
     	if(selector=="all"){
     		alert("글 유형을 선택하세요");
     		return false;
     	}
+    	
         //id가 smarteditor인 textarea에 에디터에서 대입
         editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
         $("#smarteditor").val().replace(/[<][^>]*[>]/g, "");

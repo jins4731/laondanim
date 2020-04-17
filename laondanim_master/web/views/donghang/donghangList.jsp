@@ -253,7 +253,7 @@
 					for(DonghangJoinUserPicture dh : topList){				
 				%>
                 <div class="col h-100 p-0 mr-2">
-                <%if(dh.getPublicEnabled().equals("Y")&&dh.getUserNo()!=loginUser.getNo()){ %>
+                <%if(dh.getPublicEnabled().equals("Y")&&(dh.getPublicEnabled().equals("Y")&&dh.getUserNo()!=loginUser.getNo())){ %>
                     <div class="card m-0" style="height: 100%;" 
                     onclick="fn_pwInput(<%=dh.getPw()%>, <%=loginUser.getNo()%>,<%=dh.getNo()%>);">
                 <%}else{ %>

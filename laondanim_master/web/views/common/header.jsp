@@ -68,7 +68,6 @@ section {
 	display:flex;
 	justify-content: center;
     padding:20px;
-
 }
 
 footer {
@@ -105,7 +104,7 @@ header li>a {
 	/* border:1px solid black;*/
 	
 	padding-left: 30px;
-	font-size: 20px;
+	font-size: 27px;
 	text-decoration: none;
 	font-family: NanumSquare;
 }

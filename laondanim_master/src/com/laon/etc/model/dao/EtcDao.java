@@ -16,6 +16,7 @@ import com.laon.common.PropPath;
 import com.laon.common.robot.LaonRobot;
 import com.laon.donghang.model.vo.Donghang;
 import com.laon.etc.model.vo.Like;
+import com.laon.etc.model.vo.Mind;
 import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.vo.Trip;
 import com.laon.tripinfo.model.vo.Tripinfo;
@@ -34,6 +35,7 @@ public class EtcDao {
 	private String selectPictureTripNo = "selectPictureTripNo";
 	private String selectPictureTripinfoNo = "selectPictureTripinfoNo";
 	private String selectPictureDonghangNo = "selectPictureTripDonghangNo";
+	private String selectMindListUserNo = "selectMindListUserNo";
 	
 	
 	
@@ -176,6 +178,26 @@ public class EtcDao {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			list = rsProcess(rs, new ArrayList<Picture>(),new Picture());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+
+
+	public List<Mind> selectMindListUserNo(Connection conn, String userNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty(selectMindListUserNo);
+		List<Mind> list = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(userNo));
+			rs = pstmt.executeQuery();
+			list = rsProcess(rs, new ArrayList<Mind>(),new Mind());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

@@ -1,17 +1,20 @@
 package com.laon.trip.model.service;
 
-import static com.laon.common.template.JDBCTemplate.close;
+import static com.laon.common.template.JDBCTemplate.*;
 import static com.laon.common.template.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import com.laon.common.CommonKey;
 import com.laon.etc.model.dao.EtcDao;
+import com.laon.etc.model.vo.Mind;
 import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.dao.TripDao;
 import com.laon.trip.model.vo.Trip;
+import com.laon.trip.model.vo.TripData;
 import com.laon.trip.model.vo.TripSchedule;
 import com.laon.tripinfo.model.vo.Tripinfo;
 import com.laon.user.model.dao.UserDao;
@@ -93,6 +96,71 @@ private UserDao userDao = new UserDao();
 		List<Tripinfo> list = tripDao.selectTripinfoWhereNoIn(conn, tripinfoNoList);
 		close(conn);
 		return list;
+	}
+
+	public List<Tripinfo> selectZzimList(String userNo) {
+		// TODO Auto-generated method stub
+		Connection conn = getConnection();
+		List<Mind> mindList = etcDao.selectMindListUserNo(conn,userNo);
+		List<Integer> tripinfoNoList = new ArrayList();
+		for (Mind mind : mindList) {
+			tripinfoNoList.add(mind.getTripinfoNo());
+		}
+		List<Tripinfo> tripinfoList = tripDao.selectTripinfoWhereNoIn(conn,tripinfoNoList);
+		close(conn);
+		return tripinfoList;
+	}
+
+	public List<Tripinfo> selectTripinfoList() {
+		Connection conn = getConnection();
+		List<Tripinfo> tripinfoList = tripDao.selectTripinfoList(conn);
+		List<Integer> tripinfoNoList = new ArrayList();
+		for (Tripinfo tripinfo : tripinfoList) {
+			tripinfoNoList.add(tripinfo.getNo());
+		}
+		List<Picture> picList = etcDao.selectPictureWhereNoIn(conn, tripinfoNoList, "tripinfo_no");
+		for (Tripinfo tripinfo : tripinfoList) {
+			
+			List<Picture> list = new ArrayList();
+			for (Picture picture : picList) {
+				if(tripinfo.getNo() == picture.getTripinfoNo()) {
+					list.add(picture);
+				}
+			}
+			tripinfo.setPictureList(list);
+		}
+		
+		close(conn);
+		return tripinfoList;
+	}
+
+	public boolean insertTrip(TripData data) {
+		// TODO Auto-generated method stub
+		Connection conn = getConnection();
+		int result = tripDao.insertTrip(conn,data);
+		int scheduleResult[] = {};
+		boolean isGood = false;
+		if(result>0) {
+			int tripNo = tripDao.selectTripLastSeq(conn);
+			scheduleResult = tripDao.insertTripSchedule(conn,data,1);
+			
+			for (int i = 0; i < scheduleResult.length; i++) {
+				System.out.println("scheduleResult[i] : " + scheduleResult[i]);
+				if(scheduleResult[i] >= 0 || scheduleResult[i] == -2) {
+					isGood = true;
+				}else {
+					
+				}
+			}
+			if(isGood) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+		}
+		
+		
+		return isGood;
 	}
 	
 }

@@ -3,11 +3,51 @@
 
 <%@ include file="/views/common/header.jsp"%>
 <div style="height: 160px"></div>
+
+	
+<style>
+	*{
+		font-family: NanumSquare;
+		font-size: 17px;
+	}
+	/* 카테고리 제목 폰트 */
+	@font-face { font-family: 'Cafe24Danjunghae'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Danjunghae.woff') format('woff'); font-weight: normal; font-style: normal; }
+	/* 본문 폰트 */
+	@font-face { font-family: 'S-CoreDream-4Regular'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff'); font-weight: normal; font-style: normal; }
+	.laonTitleFont{
+		font-family: Cafe24Danjunghae;
+		font-size: 35px;
+		color: #595959;
+	}
+	.laonBodyFont{
+		font-family: NanumSquare;
+		font-size: 22px;
+		color: #595959;
+	}
+	.ldBtn{
+	    border-radius: 20px;
+	    background-color: white;
+	    border: 2px solid #00abbf;
+	    color: #00abbf;
+	    padding: 6px 15px 6px 15px;
+	}  
+	.ldBtn:hover,.ldBtn:active {
+	    color: white;
+	    background-color: #00abbf;
+	}   
+	.ldBtnSubmit{
+	    border-radius: 20px;
+	    background-color: #00abbf;
+	    border: 2px solid #00abbf;
+	    color: white;
+	    padding: 6px 15px 6px 15px;   
+	}  
+</style>
 <section>
     <div class="d-flex flex-column align-items-center justify-content-center">
         <!-- 회원가입 -->
         <div class="p-5">
-            <h2>회원가입</h2>
+            <h2 class="laonTitleFont">회원가입</h2>
         </div>
 
         <div class="">
@@ -15,7 +55,8 @@
             <form id="아이디정하기"
                 action="<%=request.getContextPath()%>/user/enrollEnd.do"
                 method="post"
-                onsubmit="return fn_checkEnd();">
+                onsubmit="return fn_checkEnd();"
+                class="d-flex flex-column justify-content-center align-items-center">
 
                 <table class="" style="width: 400px; height: 580px;">
                     <tr>
@@ -25,7 +66,7 @@
                     <tr>
                         <th></th>
                         <td class="d-flex justify-content-end">                                    
-                            <button type="button" class="btn btn-primary" onclick="fn_duplicateId();">중복확인</button>
+                            <button type="button" class="ldBtn" onclick="fn_duplicateId();">중복확인</button>
                         </td>
                     </tr>
                     <tr>
@@ -68,7 +109,7 @@
                     <tr>
                         <th></th>
                         <td class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-primary" onclick="fn_duplicateNickName();">중복확인</button>
+                            <button type="button" class="ldBtn" onclick="fn_duplicateNickName();">중복확인</button>
                         </td>
                     </tr>
                     <tr>
@@ -111,7 +152,7 @@
                         <tr>
                             <th></th>
                             <td class="d-flex justify-content-end pt-2 pb-3">                                        
-                                <button type="button" class="btn btn-primary btn-sm" id="mailBtn" onclick="fn_enrollEmailAut();">인증번호 발송</button>
+                                <button type="button" class="ldBtn btn-sm" id="mailBtn" onclick="fn_enrollEmailAut();">인증번호 발송</button>
                             </td>
                         </tr>
                     </table>
@@ -133,7 +174,7 @@
                             <tr>
                                 <th></th>
                                 <td class="d-flex justify-content-end pt-2 pb-2">
-                                    <input type="button" class="btn btn-primary btn-sm" id="autCodeCheckBtn" onclick="fn_autCodeCheck()" value="본인인증 확인">
+                                    <input type="button" class="ldBtn btn-sm" id="autCodeCheckBtn" onclick="fn_autCodeCheck()" value="본인인증 확인">
                                 </td>
                             </tr>
                         </div>
@@ -194,7 +235,7 @@
                 </div>
 
 
-                <input type="submit" class="btn btn-primary btn-block mt-5 mb-4" value="회원가입">
+                <input type="submit" class="ldBtnSubmit btn-block mt-5 mb-4 w-50" value="회원가입">
                 
             </form>
 
@@ -223,7 +264,7 @@
             
             <!-- Modal footer -->
             <div class="modal-footer border-top-0">
-            <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+            <button type="button" class="ldBtnSubmit modal-close" data-dismiss="modal">Close</button>
             </div>
             
         </div>
@@ -250,7 +291,7 @@
             
             <!-- Modal footer -->
             <div class="modal-footer border-top-0">
-            <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+            <button type="button" class="ldBtnSubmit modal-close" data-dismiss="modal">Close</button>
             </div>
             
         </div>
@@ -277,7 +318,7 @@
             
             <!-- Modal footer -->
             <div class="modal-footer border-top-0">
-            <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+            <button type="button" class="ldBtnSubmit modal-close" data-dismiss="modal">Close</button>
             </div>
             
         </div>
@@ -304,7 +345,7 @@
             
             <!-- Modal footer -->
             <div class="modal-footer border-top-0">
-            <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+            <button type="button" class="ldBtnSubmit modal-close" data-dismiss="modal">Close</button>
             </div>
             
         </div>
@@ -331,7 +372,7 @@
             
             <!-- Modal footer -->
             <div class="modal-footer border-top-0">
-            <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+            <button type="button" class="ldBtnSubmit modal-close" data-dismiss="modal">Close</button>
             </div>
             
         </div>
@@ -358,7 +399,7 @@
             
             <!-- Modal footer -->
             <div class="modal-footer border-top-0">
-            <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+            <button type="button" class="ldBtnSubmit modal-close" data-dismiss="modal">Close</button>
             </div>
             
         </div>
@@ -383,7 +424,7 @@
             
             <!-- Modal footer -->
             <div class="modal-footer border-top-0">
-            <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+            <button type="button" class="ldBtnSubmit modal-close" data-dismiss="modal">Close</button>
             </div>
             
         </div>

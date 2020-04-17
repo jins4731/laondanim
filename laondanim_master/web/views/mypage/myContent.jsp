@@ -123,7 +123,7 @@
 						</div>
 						<hr>
 					</div>
-					<form action="<%=request.getContextPath()%>/mypage/myBoardDel.do" method="get">
+					<%-- <form action="<%=request.getContextPath()%>/mypage/myBoardDel.do" method="get"> --%>
 					<!-- 닫힘 내용 -->
 					<div>
 						<!-- 정보 -->
@@ -137,7 +137,7 @@
 							</div>
 							<div id="bdCk2">
 								<label><input type="checkbox" id="bdAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn" type="submit" onclick="return fn_boardDel();">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
+								<button class="btn" type="button" onclick="return fn_boardDel();">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
 								<button class="btn" id="bdEndBtn">돌아가기</button>
 							</div>
 							<%} %>
@@ -185,7 +185,7 @@
 							</div>
 						</div>
 					</div>
-				</form>
+				<!-- </form> -->
 				</div>
 			</section>
 		</div>

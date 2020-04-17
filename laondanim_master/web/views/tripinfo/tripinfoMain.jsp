@@ -25,6 +25,45 @@
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 <%@ include file="/views/common/header.jsp"%>
+
+<style>
+	.ldBtn{
+	    border-radius: 20px;
+	    background-color: white;
+	    border: 2px solid #00abbf;
+	    color: #00abbf;
+	    padding: 6px 15px 6px 15px;
+	}  
+	.ldBtn:hover,.ldBtn:active {
+	    color: white;
+	    background-color: #00abbf;
+	}   
+	.ldBtdC{
+	    border-radius: 20px;
+	    background-color: white;
+	    border: 2px solid #00abbf;
+	    color: #00abbf;
+	    padding: 6px 45px 6px 45px;
+	}  
+	.ldBtdC:hover,.ldBtnC:active {
+	    color: white;
+	    background-color: #00abbf;
+	}   	
+	.ldBtnSubmit{
+	    border-radius: 20px;
+	    background-color: #00abbf;
+	    border: 2px solid #00abbf;
+	    color: white;
+	    padding: 6px 15px 6px 15px;   
+	} 
+	#myHeart{
+		position: -webkit-sticky;
+	  	position: sticky;
+	  	top: 0;
+	  	z-index:1;
+  	}
+</style>
+
 <body>
 <%
 	int userNo = loginUser.getNo();
@@ -164,7 +203,7 @@
 	                <div class="col-8 border border-secondary rounded d-flex flex-row justify-content-between p-0">
 	                    <div class="d-flex flex-row">
 	                        <div class="dropdown">
-		 						<button class="btn btn-light dropdown-toggle border border-secondary rounded mr-3" type="button" id="type-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		 						<button class="ldBtn dropdown-toggle border border-secondary rounded mr-3" type="button" id="type-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		   							상호명
 		 						</button>
 		 						
@@ -180,7 +219,7 @@
 						
 	                    
 	                    <button id="cancel" class="btn btn-light border-0 ml-auto" onclick="searchCancel()">&times;</button>
-	                   	<input type="button" id="search-btn" class="btn btn-primary" value="검색"/>	        
+	                   	<input type="button" id="search-btn" class="ldBtn" value="검색"/>	        
 	                </div>
 	            </div>
         	</div>
@@ -207,11 +246,11 @@
 			</div> -->
 			
 			<!--------------------------------------------------찜목록 버튼---------------------------------------------------->
-			<div class="my-heart">
+<!-- 			<div class="my-heart"> -->
 				<button type="button" class="btn" id="myHeart" >
 					<img src="<%=request.getContextPath()%>/views/picture/icon/heart2.jpg" width="70px" height="70px">
 				</button>
-			</div>	
+<!-- 			</div> -->	
 					
 			<script>
 				//찜목록(하트) 클릭시 모달창 띄우기
@@ -241,19 +280,19 @@
 	           <div class="row justify-content-between" >
 	                <div class="d-flex flex-row">
 		                <div class="col category">              		        		
-							<button type="button" id="cafe-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>')">
+							<button type="button" id="cafe-button" class="ldBtdC" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>')">
 								맛집
 							</button>
 						</div>
 						
 						<div class="col category">
-							<button type="button" id="room-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="숙소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>')">
+							<button type="button" id="room-button" class="ldBtdC" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="숙소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>')">
 								숙소
 							</button>
 						</div>
 							
 						<div class="col category">
-							<button type="button" id="attraction-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="명소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>')">
+							<button type="button" id="attraction-button" class="ldBtdC" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="명소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>')">
 								명소
 							</button>							
 						</div>					

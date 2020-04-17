@@ -475,7 +475,7 @@
 	        		}
 	       		 </script>
 	            </div>
-	
+				<!-- 풀을하자 -->
 	            <div class="row mb-2 h-50 row2">
 	            <%
 	           

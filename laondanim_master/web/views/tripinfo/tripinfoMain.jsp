@@ -1,3 +1,4 @@
+<%@page import="com.sun.mail.handlers.image_gif"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page
@@ -10,7 +11,7 @@
 	List<Picture> pictureList = (List)request.getAttribute("pictureList");
 	List<TripInfo2> tripInfoList = (List)request.getAttribute("tripInfoList");
 	List<Mind> mindList = (List)request.getAttribute("mindList");
-	ArrayList<TripInfoComment> commentList = (ArrayList)request.getAttribute("tripInfoCommentList");
+	List<TripInfoComment> commentList = (List)request.getAttribute("commentList");
 
 
 	//맛집 숙소 명소
@@ -23,7 +24,23 @@
 
 	
 %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
+<style>
+#myHeart {
+	position: fixed;
+	right: 50%;
+	margin-right: -700px;
+	margin-top: 300px;
+	text-align: center;
+}
+.carousel, .slide {
+	width: 600px;
+	height: 300px;
+} 
+
+
+</style>
+<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
 <%@ include file="/views/common/header.jsp"%>
 <body>
 <%
@@ -204,7 +221,37 @@
 					</div>
 				</div>
 			</div> -->
-			
+			<script>
+    var swiper = new Swiper('.swiper-container', {
+      slidesPerView: 5,
+      spaceBetween: 30,
+      slidesPerGroup: 5,
+      loop: true,
+      loopFillGroupWithBlank: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+  </script>
+  <style>
+.swiper-slide {
+		text-align:center;
+		display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
+		align-items:center; /* 위아래 기준 중앙정렬 */
+		justify-content:center; /* 좌우 기준 중앙정렬 */
+		height:180px;
+	}
+	.swiper-slide img {
+		width:150px; /* 이미지 사이즈 */
+		max-width:100%; /* 지우면 안됨 이미지 여러장일때 꼭 필요함 */
+	}
+</style>
+  
 			<!--------------------------------------------------찜목록 버튼---------------------------------------------------->
 			<div class="my-heart">
 				<button type="button" class="btn" id="myHeart" >
@@ -759,7 +806,7 @@
 						</div>
 
 						<!-----------------------------------------상세페이지 바디---------------------------------------------->
-						<div class="modal-body d-flex">
+						<div class="modal-body d-flex" >
 							<div id="demo" class="carousel slide " data-ride="carousel">
 
 								<!-- Indicators -->
@@ -770,20 +817,35 @@
 								</ul>
 
 								<!-----------------------------------슬라이드 사진-------------------------------------------->					
-									<%
+									<div class="carousel-inner">
 									
-										for(Picture p : pictureList){ 
-											if(p.getTripinfoNo()==tp.getTripinfoNo()){
-									%>
-									<div class="carousel-inner justify-content-center align-items-center">										
-											<img
-												src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=p.getImage()%>"
-												alt="" class="img-thumbnail" height="235">										
-									</div>	
 									<%
+											String[] image = new String [3];
+											int i=0;
+									
+											for(Picture p : pictureList){
+												if(p.getTripinfoNo()==tp.getTripinfoNo()){
+													
+														
+													image[i] = p.getImage();
+													i++;
+													
+												}
 											}
-										}
 									%>								
+									
+										<div class="carousel-item active" style="width:600px; height:300px">
+											<img src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=image[0]%>" alt="" class="img-thumbnail" width="100%" height="100%">																
+										</div>
+										<div class="carousel-item"style="width:600px; height:300px">
+											<img src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=image[1]%>" alt="" class="img-thumbnail" width="100%" height="100%">																
+										</div>
+										<div class="carousel-item"style="width:600px; height:300px">
+											<img src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=image[2]%>" alt="" class="img-thumbnail" width="100%" height="100%">																
+										</div>
+									</div>	
+									
+									
 								
 
 								<!-- 왼쪽 오른쪽 -->
@@ -843,102 +905,48 @@
 									<div class="tripinfo-comment-title" style="height: 30px;">
 										<span>한줄평</span>
 									</div>
-									<input type="hidden" value="<%=loginUser.getNickName() %>" id="nick"/>
-									<div>
-										<button id="left"><</button>
-									</div>
+									<%-- <input type="hidden" value="<%=loginUser.getNickName() %>" id="nick"/> --%>
+						
 									<div class="tripinfo-comment-list">
-										<table>
+										<table class="tripinfo-comment-table">
 										<%
-											//comment list가 없다
-											int replyNo = 1;
-											for(TripInfoComment tfc : commentList){										 												
-												if(tp.getTripinfoNo() == tfc.getTripinfoTbNo()){
+										for(TripInfoComment tc : commentList) { 
+											if(tc.getTripinfoTbNo()==tp.getTripinfoNo()) {
 										%>		
-											<tr id="reply-<%=replyNo%>" class=<%=replyNo>5?"d-none":""%>>
-												<td><%=loginUser.getNickName()%></td>
-												<td><%=tfc.getContent()%></td>
-												<td><%=tfc.getWriteDate()%></td>
+											<tr class="comment-tr">
+												<td style="width:70px;"><span><%=loginUser==null?"":loginUser.getName()%></span></td>
+												<td style="width:450px;"><span><%=tc.getContent()%></span></td>
+												<td style="width:100px;"><span><%=tc.getWriteDate()%></span></td>
+												<td style="width:50px;" class="comment-menu"><a href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">...</a></td>
 											</tr>				
 										<%
-											replyNo++;
+											
 												}
 											}	
 										%>
 										
 										</table>
 									</div>
-									<div>
-										<button id="right"><</button>
-									</div>
-									<script>
-										$(function(){
-											$("#left").click(function(){
-												var tr = $("tr");
-												
-												for(var i=0; i<<%=replyNo%>; i++){
-													var t = $(this).next().find("tr").eq(i);
-													console.log(t);
-													var none = t.attr("class");
-													if(none=="d-none") {
-														var firstNum = i;
-														break;
-													}
-												}
-												
-												console.log(i);
-												
-												if(i-5>0){
-													for(var i=firstNum; i<firstNum+5; i++){
-														$(this).next().find("tr").eq(i).attr("class","");
-													}
-													for(var i=firstNum-5; i<firstNum; i++){
-														$(this).next().find("tr").eq(i).attr("class","d-none");
-													}
-												}												
-											});
-											
-											$("#right").click(function(){
-												var tr = $("tr");
-												
-												for(var i=0; i<<%=replyNo%>; i++){
-													var t = $(this).next().find("tr").eq(i);
-													console.log(t);
-													var none = t.attr("class");
-													if(none=="d-none") {
-														var firstNum = i;
-														break;
-													}
-												}
-												
-												console.log(i);
-												
-												if(i+5<<%=replyNo%>){
-													for(var i=firstNum; i<firstNum+5; i++){
-														$(this).next().find("tr").eq(i).attr("class","");
-													}
-													for(var i=firstNum+5; i<firstNum+10; i++){
-														$(this).next().find("tr").eq(i).attr("class","d-none");
-													}
-												}												
-											});
-										})
-									</script>
-									<%
-										int bct=1;
-									%>
-									<div class="tripinfo-comment-input" id="comment-container">
+									<style>
+										.comment-menu{
+											display:none;
+										}
+										.comment-tr:hover .comment-menu{
+											display:inline;
+										}
+									</style>
+									
+								<div class="tripinfo-comment-input" id="comment-container">
 										<div class="comment-editor">									
 											<input type="hidden"  value="<%=tp.getTripinfoNo()%>"/>
 											<input type="hidden" value="<%=loginUser==null?"":loginUser.getNo()%>"/>
-											<input type="text"  placeholder="최대  20 글자" maxlength="20"/>
-											<button type="button" id="btn<%=cnt2%>-insert">등록</button>
+											<input type="hidden" value="<%=loginUser==null?"":loginUser.getNickName()%>"/>
+											<input type="text"  placeholder="최대  30 글자" maxlength="30"/>
+											<button type="button" class="btn-insert">등록</button>
 										</div>
-									</div>
-									<%
-										bct++;
-									%>
 								</div>
+									
+							</div>
 								 
 								</div>
 							</div>
@@ -946,302 +954,61 @@
 						</div>
 					</div>
 				</div>
-				<script>
-				//1
-					$(document).on("click", "#btn1-insert",function(event){
-						console.log("클릭");
-						console.log(event.target);
-						$.ajax({
-							url : "<%=request.getContextPath()%>/tripinfo/insertComment.do",
-							dataType:"json",
-							type:"post",
-							data : {
-								//tripinfoNo : 1
-								//userNo : 101
-								//content:입력한 내용
-								
-								tripinfoNo :$(this).parent().find("input").eq(0).val(),
-								userNo : $(this).parent().find("input").eq(1).val(),
-								content :  $(this).parent().find("input").eq(2).val()
-								
-							},
-							
-							success :data=>{
-								var nick = $("#nick").val();
-								
-								let tr = $("<tr>").append($("<td>").html(nick)).append($("<td>").html(data["content"]));
-								
-								for(var i=0; i<<%=replyNo%>; i++){
-									var t = $(this).next().find("tr").eq(i);
-									console.log(t);
-									var none = t.attr("class");
-									if(none=="d-none") {
-										var firstNum = i;
-										break;
-									}
-								}
-								
-								tr.attr("id", "reply-<%=replyNo%>");
-								if(firstNum+1<=<%=replyNo%> && firstnum+1>=<%=replyNo%>)tr.attr("class", "d-none");
-								
-								var table = $("table").append(tr);
-							}
-						});
-					});
-				//2
-				$(document).on("click", "#btn2-insert",function(event){
-						console.log("클릭");
-						console.log(event.target);
-						$.ajax({
-							url : "<%=request.getContextPath()%>/tripinfo/insertComment.do",
-							dataType:"json",
-							type:"post",
-							data : {
-								//tripinfoNo : 1
-								//userNo : 101
-								//content:입력한 내용
-								
-								tripinfoNo :$(this).parent().find("input").eq(0).val(),
-								userNo : $(this).parent().find("input").eq(1).val(),
-								content :  $(this).parent().find("input").eq(2).val()
-								
-							},
-							
-							success :data=>{
-								var nick = $("#nick").val();
-								let tr = $("<tr>").append($("<td>").html(nick)).append($("<td>").html(data["content"]));
-								
-								var table = $("table").append(tr);
-							}
-						});
-					});
-				//3
-				$(document).on("click", "#btn3-insert",function(event){
-						console.log("클릭");
-						console.log(event.target);
-						$.ajax({
-							url : "<%=request.getContextPath()%>/tripinfo/insertComment.do",
-							dataType:"json",
-							type:"post",
-							data : {
-								//tripinfoNo : 1
-								//userNo : 101
-								//content:입력한 내용
-								
-								tripinfoNo :$(this).parent().find("input").eq(0).val(),
-								userNo : $(this).parent().find("input").eq(1).val(),
-								content :  $(this).parent().find("input").eq(2).val()
-								
-							},
-							
-							success :data=>{
-								var nick = $("#nick").val();
-								let tr = $("<tr>").append($("<td>").html(nick)).append($("<td>").html(data["content"]));
-								
-								var table = $("table").append(tr);
-							}
-						});
-					});
-				//4
-				$(document).on("click", "#btn4-insert",function(event){
-						console.log("클릭");
-						console.log(event.target);
-						$.ajax({
-							url : "<%=request.getContextPath()%>/tripinfo/insertComment.do",
-							dataType:"json",
-							type:"post",
-							data : {
-								//tripinfoNo : 1
-								//userNo : 101
-								//content:입력한 내용
-								
-								tripinfoNo :$(this).parent().find("input").eq(0).val(),
-								userNo : $(this).parent().find("input").eq(1).val(),
-								content :  $(this).parent().find("input").eq(2).val()
-								
-							},
-							
-							success :data=>{
-								var nick = $("#nick").val();
-								let tr = $("<tr>").append($("<td>").html(nick)).append($("<td>").html(data["content"]));
-								
-								var table = $("table").append(tr);
-							}
-						});
-					});
-				//5
-				$(document).on("click", "#btn5-insert",function(event){
-						console.log("클릭");
-						console.log(event.target);
-						$.ajax({
-							url : "<%=request.getContextPath()%>/tripinfo/insertComment.do",
-							dataType:"json",
-							type:"post",
-							data : {
-								//tripinfoNo : 1
-								//userNo : 101
-								//content:입력한 내용
-								
-								tripinfoNo :$(this).parent().find("input").eq(0).val(),
-								userNo : $(this).parent().find("input").eq(1).val(),
-								content :  $(this).parent().find("input").eq(2).val()
-								
-							},
-							
-							success :data=>{
-								var nick = $("#nick").val();
-								let tr = $("<tr>").append($("<td>").html(nick)).append($("<td>").html(data["content"]));
-								
-								var table = $("table").append(tr);
-							}
-						});
-					});
-				//6
-				$(document).on("click", "#btn6-insert",function(event){
-						console.log("클릭");
-						console.log(event.target);
-						$.ajax({
-							url : "<%=request.getContextPath()%>/tripinfo/insertComment.do",
-							dataType:"json",
-							type:"post",
-							data : {
-								//tripinfoNo : 1
-								//userNo : 101
-								//content:입력한 내용
-								
-								tripinfoNo :$(this).parent().find("input").eq(0).val(),
-								userNo : $(this).parent().find("input").eq(1).val(),
-								content :  $(this).parent().find("input").eq(2).val()
-								
-							},
-							
-							success :data=>{
-								var nick = $("#nick").val();
-								let tr = $("<tr>").append($("<td>").html(nick)).append($("<td>").html(data["content"]));
-								
-								var table = $("table").append(tr);
-							}
-						});
-					});
-				//7
-				$(document).on("click", "#btn7-insert",function(event){
-						console.log("클릭");
-						console.log(event.target);
-						$.ajax({
-							url : "<%=request.getContextPath()%>/tripinfo/insertComment.do",
-							dataType:"json",
-							type:"post",
-							data : {
-								//tripinfoNo : 1
-								//userNo : 101
-								//content:입력한 내용
-								
-								tripinfoNo :$(this).parent().find("input").eq(0).val(),
-								userNo : $(this).parent().find("input").eq(1).val(),
-								content :  $(this).parent().find("input").eq(2).val()
-								
-							},
-							
-							success :data=>{
-								var nick = $("#nick").val();
-								let tr = $("<tr>").append($("<td>").html(nick)).append($("<td>").html(data["content"]));
-								
-								var table = $("table").append(tr);
-							}
-						});
-					});
-				//8
-				$(document).on("click", "#btn8-insert",function(event){
-						console.log("클릭");
-						console.log(event.target);
-						$.ajax({
-							url : "<%=request.getContextPath()%>/tripinfo/insertComment.do",
-							dataType:"json",
-							type:"post",
-							data : {
-								//tripinfoNo : 1
-								//userNo : 101
-								//content:입력한 내용
-								
-								tripinfoNo :$(this).parent().find("input").eq(0).val(),
-								userNo : $(this).parent().find("input").eq(1).val(),
-								content :  $(this).parent().find("input").eq(2).val()
-								
-							},
-							
-							success :data=>{
-								var nick = $("#nick").val();
-								let tr = $("<tr>").append($("<td>").html(nick)).append($("<td>").html(data["content"]));
-								
-								var table = $("table").append(tr);
-							}
-						});
-					});
-				//9
-				$(document).on("click", "#btn9-insert",function(event){
-						console.log("클릭");
-						console.log(event.target);
-						$.ajax({
-							url : "<%=request.getContextPath()%>/tripinfo/insertComment.do",
-							dataType:"json",
-							type:"post",
-							data : {
-								//tripinfoNo : 1
-								//userNo : 101
-								//content:입력한 내용
-								
-								tripinfoNo :$(this).parent().find("input").eq(0).val(),
-								userNo : $(this).parent().find("input").eq(1).val(),
-								content :  $(this).parent().find("input").eq(2).val()
-								
-							},
-							
-							success :data=>{
-								var nick = $("#nick").val();
-								let tr = $("<tr>").append($("<td>").html(nick)).append($("<td>").html(data["content"]));
-								
-								var table = $("table").append(tr);
-							}
-						});
-					});
-				//10
-				$(document).on("click", "#btn10-insert",function(event){
-						console.log("클릭");
-						console.log(event.target);
-						$.ajax({
-							url : "<%=request.getContextPath()%>/tripinfo/insertComment.do",
-							dataType:"json",
-							type:"post",
-							data : {
-								//tripinfoNo : 1
-								//userNo : 101
-								//content:입력한 내용
-								
-								tripinfoNo :$(this).parent().find("input").eq(0).val(),
-								userNo : $(this).parent().find("input").eq(1).val(),
-								content :  $(this).parent().find("input").eq(2).val()
-								
-							},
-							
-							success :data=>{
-								var nick = $("#nick").val();
-								let tr = $("<tr>").append($("<td>").html(nick)).append($("<td>").html(data["content"]));
-								
-								var table = $("table").append(tr);
-							}
-						});
-					});
 				
-						
-					
-				
-				</script>
 				<%
 				
 					cnt2++;
 			
 					}
 				%>
+				
+				<script> 
+				$(function(){
+					$(".btn-insert").click(function(e){
+						$.ajax({
+							url : "<%=request.getContextPath()%>/tripinfo/insertComment.do",
+							dataType:"json",
+							type:"post",
+							data : {
+								//tripinfoNo : 1
+								//userNo : 101
+								//content:입력한 내용
+								
+								tripinfoNo :$(this).parent().find("input").eq(0).val(),
+								userNo : $(this).parent().find("input").eq(1).val(),
+								nickName : $(this).parent().find("input").eq(2).val(),	
+								content :  $(this).parent().find("input").eq(3).val()
+								
+							},
+							
+							success :data=>{
+								console.log(data);
+								//let table=$("<table>");
+								let tr=$("<tr class='comment-tr'>").append($("<td style='width:70px;'>").html(data["nickName"]))
+										.append($("<td style='width:450px;'>").html(data["content"]))
+										.append($("<td style='width:100px;'>").html("2020-04-17"))
+										.append($("<td style='width:50px;'class='comment-menu'>").html("..."));
+								//table.append(tr);
+								console.log(tr);
+								$(".tripinfo-comment-table").append(tr);
+							},
+							
+							error:(r,e,m)=>{ 
+								console.log(r);
+								console.log(m);
+							}
+						})
+					})
+				})
+				
+	
+				
+					//팝 오버 
+					$(document).ready(function(){
+ 					 $('[data-toggle="popover"]').popover();   
+					});
+
+				</script>
 				
 				<script>
 							//-----------------------------------------------지도 api----------------------------------------------------

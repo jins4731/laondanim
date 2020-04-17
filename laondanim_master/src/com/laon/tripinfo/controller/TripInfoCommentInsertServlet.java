@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 
 import com.laon.tripinfo.model.service.TripInfoService;
 import com.laon.tripinfo.model.vo.TripInfoComment;
+import com.laon.user.model.vo.User;
 
 /**
  * Servlet implementation class TripInfoCommentInsertServlet
@@ -34,21 +35,34 @@ public class TripInfoCommentInsertServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String content = request.getParameter("content");
+		String nickName = request.getParameter("nickName");
 		int userNo = Integer.parseInt(request.getParameter("userNo"));
 		int tripinfoNo = Integer.parseInt(request.getParameter("tripinfoNo"));
 		
 		System.out.println("content : " + content);
 		System.out.println("userNo : " + userNo);
 		System.out.println("tripinfoNo : " + tripinfoNo);
+		
+		User u = new User(userNo,null,null,null,null,nickName,null,null,null,null,null);
+		
+		
 						
 		TripInfoComment tc = new TripInfoComment(0,tripinfoNo,userNo,null,content,'N');
+		
 		int result = new TripInfoService().insertComment(tc);
+		
+		//TripInfoComment tc2 = new TripInfoService().selectComment2(); 
+		//System.out.println("서블릿에서 롸이트데이트:"+tc2.getWriteDate());
+		
+		
 		System.out.println(result);
 		if(result>0) {
 			JSONObject jo=new JSONObject();
 			jo.put("content", tc.getContent());
 			jo.put("userNo", tc.getUserTbNo());
 			jo.put("tripinfoNo", tc.getUserTbNo());
+			jo.put("nickName",u.getNickName());
+			//jo.put("writeDate",tc2.getWriteDate());
 		
 			response.getWriter().print(jo);
 		}

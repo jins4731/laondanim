@@ -29,6 +29,17 @@
         <h2>관리자 게시판</h2>
         <hr class="boder w-100">
     </div>
+<aside>
+
+	<div>
+	<h4>관리자 페이지</h4>
+	<hr/>
+	<a href="">신고 리스트 관리</a>
+	<br/>
+	<a href="">여행정보 등록</a>
+</div>
+
+</aside>
 
     <table class="table table-bordered" style="width:1000px">
         <tr>
@@ -71,15 +82,6 @@ $(function(){
 		
 		
 	})
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	//이용자를 정지시키는 버튼

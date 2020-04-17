@@ -27,7 +27,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- Latest compiled and minified CSS -->
+    
+    
+<!-- 지워도 되는거 -->
+<!-- 지워도 되는거 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
 <!-- jQuery library -->
@@ -44,12 +47,18 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <!-- 폰트 적용 -->
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<!-- 지워도 되는거 -->
+<!-- 지워도 되는거 -->
 
 
 
 
 
 
+
+
+<!-- 지우면 안되는거 -->
+<!-- 지우면 안되는거 -->
 <!-- 달력 -->
 <script src="<%=request.getContextPath() %>/js/bootstrap-datepicker.min.js"></script>
     <script src="<%=request.getContextPath() %>/js/bootstrap-datepicker.ko.min.js"></script>
@@ -58,14 +67,16 @@
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mdb.min.css">
 <script src="<%=request.getContextPath() %>/js/mdb.min.js"></script>
 <!-- 지도 -->
-<script type="text/javascript"
-       src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b&libraries=services"></script>
-   <script type="text/javascript"
-       src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b&libraries=LIBRARY"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40b8b885a553f3222dde4e5effec0d3e&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40b8b885a553f3222dde4e5effec0d3e"></script>
 
 <!-- 기타 -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="<%=request.getContextPath() %>/js/lodash.js"></script>
+<!-- 지우면 안되는거 -->
+<!-- 지우면 안되는거 -->
+
+
     <style>
         @media screen and (min-width: 576px) {
             .container-fluid {
@@ -268,19 +279,26 @@
 
                         <div class="row form-group mb-3 ">
                             <span class="col-3 pt-1 font-weight-bold">여행지역</span>
-                            <div class="dropdown col-6">
-				                   <button class="btn btn-light dropdown-toggle border border-secondary rounded mr-3" type="button" id="plan-review" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				                        전체여행기
-				                   </button>
-				                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				                     <a class="dropdown-item" href="#">전체 여행기</a>
-				                     <a class="dropdown-item" href="#">여행 일정</a>
-				                     <a class="dropdown-item" href="#">여행 후기</a>
-				                  </div>
-              				 </div>   
-                            <!-- <input class="col-6" type="text" id="travleLocale"
-                                class="form-control border-top-0 border-left-0 border-right-0 " name="title" 
-                                placeholder="여행지역을 입력해주세요." required> -->
+                            <select class="col-6 d-inline-block form-control" id="travleLocale" required>
+                                <option value="" disabled selected>여행지역 선택</option>
+                                <option>서울</option>
+                                <option>부산</option>
+                                <option>대구</option>
+                                <option>인천</option>
+                                <option>광주</option>
+                                <option>대전</option>
+                                <option>울산</option>
+                                <option>세종</option>
+                                <option>경기</option>
+                                <option>강원</option>
+                                <option>충청북도</option>
+                                <option>충청남도</option>
+                                <option>전라북도</option>
+                                <option>전라남도</option>
+                                <option>경상북도</option>
+                                <option>경상남도</option>
+                                <option>제주도</option>
+                              </select>        
                         </div>
                         <div class="row form-group mb-0">
                             <span class="col-3 pt-1 font-weight-bold">인원 수</span>
@@ -292,9 +310,13 @@
                     <div class="col">
                         <div class="row form-group mb-3">
                             <span class="col-3 pt-1 font-weight-bold">여행유형</span>
-                            <input class="col-6" type="text" id="travleType" required
-                                class="form-control border-top-0 border-left-0 border-right-0 " name="travleType"
-                                id="travleType" placeholder="여행유형을 입력해주세요.">
+                            <select class="col-6 d-inline-block form-control" id="travleType" required>
+                                <option value="" disabled selected>여행유형 선택</option>
+                                <option>혼자여행</option>
+                                <option>가족여행</option>
+                                <option>우정여행</option>
+                                <option>커플여행</option>
+                              </select>    
                         </div>
                         <div class="row form-group mb-0">
                             <span class="col-3 pt-1 font-weight-bold">여행일</span>
@@ -318,7 +340,7 @@
                 <button id="matzipBt" onclick="matzipBt()" class="ldBtnC">맛집</button>
                 <button id="myoungsoBt" onclick="myoungsoBt()" class="ldBtnC">명소</button>
                 <button id="sooksoBt" onclick="sooksoBt()" class="ldBtnC">숙소</button>
-                <button id="myBt" onclick="myBt()" class="ldBtnC">마이</button>
+                
             </div>
             <div class="row mx-1" style="height: 200px;">
 
@@ -904,6 +926,10 @@
         $(":checkbox").change(function () {
             tag = "";
             var cnt = 5;
+            if($("#publicEnabledId").is(":checked")){
+                cnt = 6;
+            }
+            
 
             // 셀렉트박스의 값과 체크박스중 체크된 갯수가 같을때, 다른 체크박스들을 disable 처리
             if (cnt == $(":checkbox:checked").length) {
@@ -915,9 +941,9 @@
             }
 
             for(let i=0;i<$(":checkbox:checked").length;i++){
-                str += $($(":checkbox:checked")[i]).val()+",";
+                tag += $($(":checkbox:checked")[i]).val()+",";
             }
-
+            console.log("tag : " + tag);
 
         });
 
@@ -1054,7 +1080,18 @@
 
         $("#submitBt").on("click", function () {
             console.log("submitBt");
-           
+         
+            //캘린더 체크
+            var startDate = Number($("#travleStartDateId").val().split("-").join(""));
+            var endDate = Number($("#travleEndDateId").val().split("-").join(""));
+            console.log(startDate);
+            console.log(endDate);
+            if(startDate > endDate){
+                alert("여행일을 다시 확인해 주세요.");
+                return false;
+            }
+
+
             //관심사 태그 체크박스 하나 이상 확인
             if ($("input[type=checkbox][name=likeTag]:checked").length == 0) {
                 alert("관심 태그 항목을 하나 이상 체크해 주세요.");
@@ -1079,7 +1116,10 @@
                     var requiredTime = $($($("[name='day']")[i]).find("input")[k]).val();
                     var transport = $($($("[name='day']")[i]).find("button")[k]).html();
                     var schduleData = $($("[name='day']")[i]).find("img")[k].dataset;
-
+                    console.log("requiredTime : "+requiredTime);
+                    if(requiredTime == ""){
+                        alert("이동 소요시간을 입력해주세요.");
+                    }
                     var schedule = {
                     tripinfoNo: schduleData.no,
                     days: dayData.save,
@@ -1112,7 +1152,7 @@
             var _travleType = $("#travleType").val();
             var _travleStartDate = $("#travleStartDateId").val();
             var _travleEndDate = $("#travleEndDateId").val();
-            var isEnabled = $("#publicEnabledId").is(":checked") == ture ? 'y' : 'n';
+            var isEnabled = $("#publicEnabledId").is(":checked") == true ? 'y' : 'n';
             var _publicEnabled = isEnabled;
 
 

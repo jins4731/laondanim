@@ -13,7 +13,6 @@
 <%@page import="com.laon.common.CommonKey"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%
 	Object oTrip = request.getAttribute(CommonKey.TRIP_ITEM);
 	Trip trip = null;
@@ -67,8 +66,6 @@
 	System.out.println(pictureListMap);
 	System.out.println(dayMap);
 %>
-
-
 <!DOCTYPE html>
 <html>
 
@@ -76,22 +73,36 @@
 <head>
 	<meta charset="UTF-8">
 	<title>여행기</title>
+	
+	
+	
+	<!-- 지워도 되는거 -->
+	<!-- 지워도 되는거 -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<!-- 지워도 되는거 -->
+	<!-- 지워도 되는거 -->
 
+
+
+
+
+
+	<!-- 지우면 안되는거 -->
+	<!-- 지우면 안되는거 -->
     <script src="<%=request.getContextPath() %>/js/bootstrap-datepicker.min.js"></script>
     <script src="<%=request.getContextPath() %>/js/bootstrap-datepicker.ko.min.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mdb.min.css">
     <script src="<%=request.getContextPath() %>/js/mdb.min.js"></script>
-    <!-- <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40b8b885a553f3222dde4e5effec0d3e"></script> -->
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b&libraries=services"></script>
-						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=603e034a0a0fb8c413b7624a370dd29b&libraries=LIBRARY"></script>	
+ <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40b8b885a553f3222dde4e5effec0d3e&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40b8b885a553f3222dde4e5effec0d3e"></script>	
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="<%=request.getContextPath() %>/js/lodash.js"></script>
+    <!-- 지우면 안되는거 -->
+    <!-- 지우면 안되는거 -->
 	<style>
 		@media screen and (min-width: 576px) {
 			.container-fluid {
@@ -117,50 +128,18 @@
 			}
 		}
 
-		header {
-			border: 2px solid red;
-			box-sizing: border-box;
-			height: 150px;
-		}
 
-		section {
-			border: 2px solid green;
-			box-sizing: border-box;
-		}
 
-		footer {
-			border: 2px solid blue;
-			box-sizing: border-box;
-			height: 70px;
-		}
 
 		#head {
-			/* height: 200px; */
-			/* background-color: aquamarine; */
-			/* background-image: url(./image/mesut-kaya-eOcyhe5-9sQ-unsplash.jpg); */
+			height: 230px;
+			background-color: rgba(53, 171, 191, 0.5);
+			background-image: url(<%=request.getContextPath()%>/upload/<%=tripPicList.get(0).getImage()%>);
 			background-size: cover;
 			background-position: center center;
 		}
 
-		#head div {
-			/* border: 1px solid black;
-                box-sizing: border-box; */
-			/* background-color: beige; */
-
-		}
-
-		#body {
-			/* height: 500px; */
-			/* background-color: thistle; */
-
-		}
-
-		#body div {
-			/* border: 1px solid black;
-                box-sizing: border-box; */
-			/* background-color: beige; */
-
-		}
+	
 
 		.filp {
 			transform: rotate(90deg);
@@ -185,7 +164,9 @@
 		.carousel-inner img {
 			width: 100%;
 			height: 100%;
+			object-fit: contain;
 		}
+		
 	</style>
 </head>
 
@@ -320,7 +301,7 @@
 						%>
 								<%if(k == 0){%>
 
-								<div name="schduleStart" class="col text-center p-2 "
+								<div name="schduleStart" class="col-2 text-center p-2 "
 									style="height: 100px; position: relative;">
 									<div class="w-100 h-100 text-center view overlay zoom ">
 										<img src="<%=request.getContextPath()%>/picture/trip/icon/start.png"
@@ -414,7 +395,7 @@
 					<div class="row p-5">
 
 
-						<div id="reviewImage" class="col p-0 carousel slide rounded-sm" data-ride="carousel">
+						<div id="reviewImage" class="col p-0 carousel slide rounded-sm bg-dark" data-ride="carousel">
 
 							<!-- 인티케이터 -->
 							<ul class="carousel-indicators">
@@ -428,14 +409,16 @@
 
 
 
-									<div class="carousel-inner">
+									<div class="carousel-inner d-inline-flex align-items-center"
+									style="width:100%;height:500px;position: relative;">
 
 										<%
 								for (int i = 0; i < tripPicList.size(); i++) {
 							%>
 										<!-- 1번 아이템 -->
-										<div class="carousel-item active">
-											<img src="https://health.chosun.com/site/data/img_dir/2018/10/09/2018100901198_0.jpg" alt="Los angeles">
+										<div class="carousel-item <%if (i == 0) {%>active<%}%>" style="width:100%;height:500px;"">
+											<img src="<%=request.getContextPath()%>/upload/<%=tripPicList.get(i).getImage()%>" alt=""
+											style="width: 100%;height: 100%;object-fit: contain;">
 											<!-- <div class="carousel-caption">
 	<h3>Los Angeles</h3>
 	<p>우리가 보낸 최고의 시간</p>
@@ -478,14 +461,6 @@
 	<script>
 		$(function () {
 			console.log("onLoad");
-			$("#head").css("background-image",
-				"url(./image/mesut-kaya-eOcyhe5-9sQ-unsplash.jpg)");
-
-
-
-
-
-
 		});
 
 		function courseTypeBt() {
@@ -603,6 +578,8 @@
 		Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a
 			href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
 	</div>
+
+	
 </body>
 
 </html>

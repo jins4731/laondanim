@@ -901,6 +901,7 @@ public class MypageDao {
 		return result;
 	}
 	
+	//좋아요 취소
 	public int likeTripCancled(Connection conn, int userNo, int likeNo) {
 		PreparedStatement pstmt=null;
 		int result=0;
@@ -910,6 +911,24 @@ public class MypageDao {
 			pstmt=conn.prepareStatement(sql);				
 			pstmt.setInt(1, likeNo);
 			pstmt.setInt(2, userNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	//나의 동행 모집 마감
+	public int myDongDeadline(Connection conn,int dongNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("myDongDeadline");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, dongNo);
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

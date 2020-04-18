@@ -383,4 +383,18 @@ public class MypageService {
 		return result;
 	}
 	
+	//나의 동행 모집 마감
+	public int myDongDeadline(int dongNo) {
+		Connection conn=getConnection();
+		int result=dao.myDongDeadline(conn,dongNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
 }

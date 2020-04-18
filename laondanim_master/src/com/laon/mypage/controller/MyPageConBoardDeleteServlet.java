@@ -14,13 +14,13 @@ import com.laon.mypage.model.service.MypageService;
  * Servlet implementation class MyPageConBoardDelete
  */
 @WebServlet("/mypage/myBoardDel.do")
-public class MyPageConBoardDelete extends HttpServlet {
+public class MyPageConBoardDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageConBoardDelete() {
+    public MyPageConBoardDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

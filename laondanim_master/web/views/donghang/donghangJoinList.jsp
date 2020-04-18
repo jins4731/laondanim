@@ -261,6 +261,7 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
                 </div>
                 <div class="modal-footer d-flex justify-content-center border-top-0">
                     <input type="hidden" name="confirmedValue" id="confirmedValue">
+                    <input type="hidden" name="joinTbNo" id="joinTbNo" value="<%=j.getNo()%>">
                     <button id="rejectBtn" type="button" class="ldBtnDelet mb-3 mr-3" data-dismiss="modal">거절</button>
                     <button id="acceptBtn" type="button" class="ldBtn mb-3 ml-3" data-dismiss="modal">수락</button>
                 </div>
@@ -288,7 +289,7 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
             
             <!-- Modal footer -->
             <div class="modal-footer border-top-0">
-            <button type="button" class="ldBtnSubmit modal-close" data-dismiss="modal">Close</button>
+            <button type="button" class="ldBtnSubmit modal-close" data-dismiss="modal" id="reloadBtn">Close</button>
             </div>
             
         </div>
@@ -519,6 +520,7 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
         $("#acceptBtn").click(()=>{
         	$("#confirmedValue").val("Y");
         	let confirmedValue = $("#confirmedValue").val();
+        	let joinTbNo = $("#joinTbNo").val();
         	
     		let xhr = new XMLHttpRequest();
     		
@@ -534,7 +536,7 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
 			}
 			//전송에 대한 설정 : open()함수
 			
-			xhr.open("get","<%=request.getContextPath()%>/donghang/confirmedAccept.do?confirmedValue="+confirmedValue+"&no="+<%=no%>);
+			xhr.open("get","<%=request.getContextPath()%>/donghang/confirmedAccept.do?confirmedValue="+confirmedValue+"&joinNo="+joinTbNo+"&no="+<%=no%>);
 			
 			//전송! : send()
 			xhr.send();		
@@ -543,8 +545,48 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
            setTimeout(()=>{
                 $("#confirmedResultModal").modal("show");
            }, 600)
-
+   	    
         });
+        
+        $("#reloadBtn").click(()=>{
+        	location.reload();
+        });
+        
+      //수락 Ajax
+        $("#rejectBtn").click(()=>{
+        	$("#confirmedValue").val("N");
+        	let confirmedValue = $("#confirmedValue").val();
+        	let joinTbNo = $("#joinTbNo").val();
+        	
+    		let xhr = new XMLHttpRequest();
+    		
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4){
+					if(xhr.status == 200){						
+						//xhr객체의 responseText에 데이터를 저장
+						$("#confirmedResult").html(xhr.responseText);
+					} else if(xhr.status == 404){
+						alert("404 error")
+					}
+				}
+			}
+			//전송에 대한 설정 : open()함수
+			
+			xhr.open("get","<%=request.getContextPath()%>/donghang/confirmedReject.do?confirmedValue="+confirmedValue+"&joinNo="+joinTbNo+"&no="+<%=no%>);
+			
+			//전송! : send()
+			xhr.send();		
+			
+
+           setTimeout(()=>{
+                $("#confirmedResultModal").modal("show");
+           }, 600);
+   	    
+        });
+        
+        $("#reloadBtn").click(()=>{
+        	location.reload();
+        });        
     </script>
 
 

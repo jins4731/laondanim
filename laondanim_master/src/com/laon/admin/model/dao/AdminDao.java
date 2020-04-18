@@ -14,6 +14,8 @@ import java.util.Properties;
 
 
 import com.laon.admin.model.vo.Reports;
+import com.laon.tripinfo.model.vo.Picture;
+import com.laon.tripinfo.model.vo.Tripinfo;
 
 public class AdminDao {
 	
@@ -90,6 +92,69 @@ public class AdminDao {
 	
 	
 	
+	}
+
+	public int insertTripInfo(Tripinfo ti, Connection conn) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("insertTripInfo");
+	try{pstmt=conn.prepareStatement(sql);
+		pstmt.setString(1, ti.getCategory());
+		pstmt.setString(2, ti.getTag());
+		pstmt.setString(3, ti.getName());
+		pstmt.setString(4, ti.getAddress());
+		pstmt.setString(5, ti.getBusinessHours());
+		pstmt.setString(6, ti.getTel());
+		pstmt.setString(7, ti.getHomepage());
+		pstmt.setString(8, ti.getNaver());
+		pstmt.setString(9, ti.getSns());
+		result=pstmt.executeUpdate();
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(pstmt);
+	}return result;
+		
+	
+	}
+
+	public int searchTripInfoNo(Connection conn, String name, String tel) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int no=0;
+		String sql=prop.getProperty("searchTripInfo");
+	try{pstmt=conn.prepareStatement(sql);
+		pstmt.setString(1, name);
+		pstmt.setString(2, tel);
+		rs=pstmt.executeQuery();
+		if(rs.next());
+		no=rs.getInt(1);
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(rs);
+		close(pstmt);
+	}
+		return no;
+	}
+
+	public int insertPicture(Picture p, Connection conn) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("insertPicture");
+		System.out.println("dao출력:"+p.getTripinfoNo());
+	try{pstmt=conn.prepareStatement(sql);
+		pstmt.setInt(1, p.getTripinfoNo());
+		System.out.println(p.getTripinfoNo());
+		pstmt.setString(2, p.getImage());
+		result=pstmt.executeUpdate();
+		
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(pstmt);
+	}return result;
+		
 	}
 	
 	

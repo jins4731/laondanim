@@ -15,7 +15,14 @@
 	List<Like> likeList = (List<Like>)request.getAttribute(CommonKey.LIKE_LIST);
 	
 	DonghangJoinUserPicture dh = (DonghangJoinUserPicture)request.getAttribute(CommonKey.DONGHANG_ITEM);
-		
+	System.out.println("_______________-------------+++++++++++++++");
+	System.out.println("업데이트 jsp"+dh);
+	for(Like l : likeList){
+		System.out.println("업데이트 jsp like : "+l);
+	}
+	for(TripMyCon tm : tripList){
+		System.out.println("업데이트 jsp tm : "+tm);
+	}
 %>
 
 <%@ include file="/views/common/header.jsp"%>
@@ -77,12 +84,13 @@
                                 </select>                                    
                             </div>
                             <input type="hidden" id="travelLocal" name="travelLocal">
-                        </div>
+                        <!-- </div> -->
                         </td>
                     </tr>
                     <tr>
                         <td class="p-0 pt-2">동행인원수</td>
                     </tr>
+                    <tr>
                     <td class="p-0 border-bottom d-flex align-items-center">
                         <div id="minus" class="ml-3"></div>
                         <input type="number" class="form-control w-50 text-center border-0" value="1" placeholder="동행(모집) 인원" name="recruitPeopleNo" id="recruitPeopleNo" 
@@ -153,8 +161,8 @@
                 <div class="d-flex flex-column justify-content-center align-items-center" style="height: 150px; border: 1px solid white;">
                     <button type="button" id="danimLinkBtn" class="ldBtn mb-3" data-toggle="modal" data-target="#myModal">다님일정 연결하기</button>
                     <div id="danimTitleBox"><strong class="mr-3">연결된 다님일정</strong>
-                    	<!--<span id="danimTitle"><%=((Integer)dh.getTripNo()!=null)?tripList.get(dh.getTripNo()).getTitle():""%></span>-->
-			<span id="danimTitle"></span>
+                    	<!--<span id="danimTitle"><!%=((Integer)dh.getTripNo()!=null)?tripList.get(dh.getTripNo()).getTitle():""%></span>-->
+					<span id="danimTitle"></span>
                     </div>
                 </div>
 
@@ -208,7 +216,9 @@
                                 class="d-flex align-items-center justify-content-start">
                                 
                                     <ul style="zoom: 0.8; list-style: none; position: absolute; left: 0;" id="danimList" class="d-flex align-items-center p-0">
-											<%for(int i=0; i<tripList.size(); i++) {%>
+											<%if(tripList.size()>1 && dh.getTripNo()>0){
+												for(int i=0; i<tripList.size(); i++) {%>
+											
                                             <label>
                                             <li class="pr-1">
                                             	<input type="checkbox" name="selectTrip" id="<%=tripList.get(i).getNo()%>" value="<%=tripList.get(i).getNo()%>"
@@ -237,7 +247,8 @@
                                                 </div>
                                             </li>
                                             </label>
-                                            <%} %>             
+                                            <%	}
+											}%>             
                                     </ul>
                                 
                                 
@@ -260,7 +271,7 @@
                     </div>
                 </div>
             </div>
-
+ 
 
             <!--사진&정보 스타일-->
             <style>

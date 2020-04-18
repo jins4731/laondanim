@@ -49,6 +49,17 @@ public class DonghangUpdateServlet extends HttpServlet {
 		request.setAttribute(CommonKey.DONGHANG_ITEM, donghangItem);
 		request.setAttribute(CommonKey.TRIP_LIST, list);
 		request.setAttribute(CommonKey.LIKE_LIST, likeList);	
+		
+		System.out.println("_______________-------------+++++++++++++++");
+		System.out.println("업데이트 서블릿 donghangItem :"+donghangItem);
+		System.out.println("like list size :"+likeList.size());
+		System.out.println("trip list size :"+list.size());
+		for(Like l : likeList){
+			System.out.println("업데이트 서블릿 like : "+l);
+		}
+		for(TripMyCon tm : list){
+			System.out.println("업데이트 서블릿 tm : "+tm);
+		}
 
 		
 		request.getRequestDispatcher("/views/donghang/donghangUpdate.jsp").forward(request, response);

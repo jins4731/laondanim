@@ -130,5 +130,12 @@ public class UserProfile {
 	public void setImage(String image) {
 		this.image = image;
 	}
+
+	@Override
+	public String toString() {
+		return "UserProfile [no=" + no + ", createdDate=" + createdDate + ", userId=" + userId + ", password="
+				+ password + ", name=" + name + ", nickName=" + nickName + ", birthday=" + birthday + ", gender="
+				+ gender + ", phone=" + phone + ", email=" + email + ", tag=" + tag + ", image=" + image + "]";
+	}
     
 }

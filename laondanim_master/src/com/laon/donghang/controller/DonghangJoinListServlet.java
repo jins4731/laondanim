@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.laon.common.CommonKey;
 import com.laon.donghang.model.service.DonghangService;
 import com.laon.donghang.model.vo.DonghangJoinDonghangJoinTb;
+import com.laon.user.model.vo.User;
 import com.laon.user.model.vo.UserProfile;
 
 /**
@@ -40,17 +41,20 @@ public class DonghangJoinListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//로그인 유저 no받기
 		int userNo = Integer.parseInt(request.getParameter("userNo"));
+		
+		//유저가 클릭한 동행no받기
+		int no = Integer.parseInt(request.getParameter("no"));
 
 		//유저가 만든 동행의 참여목록을 가져오기
-		List<DonghangJoinDonghangJoinTb> joinList = new DonghangService().selectDonghangJoinList(userNo);
+		List<DonghangJoinDonghangJoinTb> joinList = new DonghangService().selectDonghangJoinList(userNo, no);
 		
 		//유저 목록 가져오기
 		List<UserProfile> userList =  new DonghangService().selectUserProfileAll();
-		
+
 		//페이징		
 		int currentPage = getCurrentPage(request);
 		int pagePerRow = 8;		
-		int totalRowCount = new DonghangService().selectJoinCount(userNo);
+		int totalRowCount = new DonghangService().selectJoinCount(userNo, no);
 		String pageBar = getPageBar(totalRowCount, currentPage, pagePerRow, request, "/donghang/donghangJoinlist.do?userNo=");
 		
 		
@@ -58,6 +62,7 @@ public class DonghangJoinListServlet extends HttpServlet {
 		request.setAttribute(CommonKey.PAGE_BAR, pageBar);
 		request.setAttribute(CommonKey.USER_LIST, userList);
 		request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount);
+		request.setAttribute("no", no);
 		request.getRequestDispatcher("/views/donghang/donghangJoinList.jsp").forward(request, response);
 	}
 

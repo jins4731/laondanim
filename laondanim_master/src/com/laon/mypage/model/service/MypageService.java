@@ -342,9 +342,9 @@ public class MypageService {
 	}
 	
 	//좋아요 취소
-	public int myMindCancled(int mindNo) {
+	public int myMindCancled(int mindNo,int userNo) {
 		Connection conn=getConnection();
-		int result=dao.myMindCancled(conn,mindNo);
+		int result=dao.myMindCancled(conn,mindNo,userNo);
 		if(result>0) {
 			commit(conn);
 		}else {

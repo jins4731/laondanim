@@ -861,7 +861,7 @@ public class MypageDao {
 		return result;
 	}
 	
-	public int myMindCancled(Connection conn, int mindNo) {
+	public int myMindCancled(Connection conn, int mindNo,int userNo) {
 		PreparedStatement pstmt=null;
 		int result=0;
 		String sql=prop.getProperty("myMindCancled");
@@ -869,6 +869,7 @@ public class MypageDao {
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, mindNo);
+			pstmt.setInt(2, userNo);
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

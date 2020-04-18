@@ -31,7 +31,7 @@ public class MyPageMindCancledServlet extends HttpServlet {
 		int userNo=Integer.parseInt(request.getParameter("userNo"));
 		int mindNo=Integer.parseInt(request.getParameter("mindNo"));
 		
-		int result=new MypageService().myMindCancled(mindNo);
+		int result=new MypageService().myMindCancled(mindNo,userNo);
 		
 		System.out.println("result"+result);
 		response.getWriter().print(result);

@@ -199,6 +199,8 @@ public class TripDao {
 		
 		if(first.equals("first")) {
 			for(int i=(cPage-1)*perPage; i<cPage*perPage; i++) {
+				if(i<tripTagCountList.size()) {
+				
 				t = new Trip2();
 				
 				t.setNo(tripTagCountList.get(i).getNo());
@@ -216,6 +218,8 @@ public class TripDao {
 				t.setDeleted(tripTagCountList.get(i).getDeleted());
 				
 				list.add(t);
+				
+				}
 			}
 			
 			return list;

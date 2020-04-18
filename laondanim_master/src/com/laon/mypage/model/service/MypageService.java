@@ -6,6 +6,7 @@ import static com.laon.common.template.JDBCTemplate.getConnection;
 import static com.laon.common.template.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.laon.board.model.vo.Board;
@@ -195,7 +196,17 @@ public class MypageService {
 	//���� ���ƿ��� ����� ����Ʈ
 	public List<TripMyCon> selectTripList(List<Like> likeT){
 		Connection conn=getConnection();
-		List<TripMyCon> tripList=dao.selectTripList(conn,likeT);
+		List<TripMyCon> list=dao.selectTripList(conn,likeT);
+		List<TripMyCon> tripList=new ArrayList<TripMyCon>();
+		
+		int cnt=0;
+		for(TripMyCon t:list) {
+			tripList.add(t);
+			cnt++;
+			if(cnt==4) {
+				break;
+			}
+		}
 		close(conn);
 		
 		return tripList;

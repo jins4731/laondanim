@@ -72,13 +72,13 @@
 												    </button>
 												    <div class="dropdown-menu">
 												    <%if(d.getEnded().equals("N")){ %>
-												    	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">신청서 수신함</a>
+												    	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?filter=ALL&userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">신청서 수신함</a>
 												      	<a class="dropdown-item" data-toggle="modal" data-target="#myDongDeadline" >모집 마감</a>
 												      	<!-- href="#" onclick="return confirm('동행 모집을 마감하시겠습니까?');" -->
 												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangUpdate.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">동행 수정</a>
 												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongDel.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo() %>">동행 삭제</a>
 						                        	<%}else{ %>
-						                        		<a class="dropdown-item" href="#">신청서 수신함</a>
+						                        		<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?filter=ALL&userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">신청서 수신함</a>
 												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">동행 수정</a>
 												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongDel.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo() %>">동행 삭제</a>
 						                        	<%} %>
@@ -175,7 +175,7 @@
 								                        	<%}else if(dj.getConfirmed().equals("Y")){ %>
 														      	<a class="dropdown-item" href="#">동행 나가기</a>
 								                        	<%}else{ %>
-								                        		<a class="dropdown-item" href="#">보낸 신청서 보기</a>
+								                        		<a class="dropdown-item" href="#">해당 동행 보러가기</a>
 														      	<a class="dropdown-item" href="#">참여 신청 취소</a>
 						                        	<%} } }%>
 						                        	</div>

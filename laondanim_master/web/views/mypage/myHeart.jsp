@@ -80,7 +80,7 @@
 										</div>
 									</div>
 								</td>
-							<%} %>
+								<%} %>
 							</tr>
 							<%if(tripList.size()==4){ %>
 							<tr>
@@ -123,9 +123,7 @@
 							<div>
 								<span>맛집</span>
 							</div>
-							<div>
-								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
-							</div>
+							<div><img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png"></div>
 						</div>
 						<hr>
 					</div>
@@ -141,7 +139,12 @@
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
 							<%for(TripinfoMyMind res:restaurant){ %>
-								<div class="swiper-slide"><img class="card-img" src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=res.getImage()%>"></div>
+								<div class="swiper-slide">
+									<div class="broken">
+										<img id="<%=res.getNo() %>" style="width:30px;height:30px;" src="<%=request.getContextPath() %>/images/brokenHeart.png">
+									</div>
+									<img class="card-img" src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=res.getImage()%>">
+								</div>
 							<%} %>
 							</div>
 						
@@ -293,11 +296,21 @@
 		align-items:center; /* 위아래 기준 중앙정렬 */
 		justify-content:center; /* 좌우 기준 중앙정렬 */
 		height:180px;
+		position:relative;
 	}
 	.swiper-slide img {
 		width:150px; /* 이미지 사이즈 */
 		height:150px;
 		max-width:100%; /* 지우면 안됨 이미지 여러장일때 꼭 필요함 */
+	}
+	
+	.broken{
+		position:absolute;
+		visibility: hidden;
+	}
+	
+	.swiper-slide:hover .broken{
+		visibility: visible;
 	}
 </style>
 

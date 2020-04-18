@@ -46,10 +46,10 @@ public class DonghangReportServlet extends HttpServlet {
 		String msg="";
 		String loc="";
 		if(result>0) { 
-			 msg="신고가 접수되었습니다"; loc="donghang/donghangView.do?loginUserNo="+loginUserNo+"&no="+donghangNo;
+			 msg="신고가 접수되었습니다"; loc="/donghang/donghangView.do?loginUserNo="+loginUserNo+"&no="+donghangNo;
 		  
 		}else { 
-			 msg="신고 신청실패(알수없는 오류)"; loc="donghang/donghangView.do?loginUserNo="+loginUserNo+"&no="+donghangNo; 
+			 msg="신고 신청실패(알수없는 오류)"; loc="/donghang/donghangView.do?loginUserNo="+loginUserNo+"&no="+donghangNo; 
 			 }
 		  
 		 request.setAttribute("msg", msg); 

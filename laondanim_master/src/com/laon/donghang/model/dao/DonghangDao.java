@@ -775,11 +775,19 @@ public class DonghangDao {
 		return list;
 	}
 
-	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(Connection conn, int loginUserNo, int no) {
+	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(Connection conn, int loginUserNo, int no, String filter) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = prop.getProperty("selectDonghangJoinList");
+		String sql = "";
 		List<DonghangJoinDonghangJoinTb> list = new ArrayList();
+		
+		if(filter.equals("ALL")) {
+			sql = prop.getProperty("selectDonghangJoinList");
+		}else if(filter.equals("J")) {
+			sql = prop.getProperty("selectDonghangJoinListConfirmedJ");
+		}else if(filter.equals("Y")) {
+			sql = prop.getProperty("selectDonghangJoinListConfirmedY");
+		}
 		
 		try {
 			pstmt = conn.prepareStatement(sql);		
@@ -998,7 +1006,7 @@ public class DonghangDao {
 		return userList;
 	}
 
-	public int joinComfirmedUpdate(Connection conn, String confirmedValue, int no) {
+	public int joinComfirmedUpdate(Connection conn, String confirmedValue, int joinNo, int dhNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("joinComfirmedUpdate");
@@ -1006,7 +1014,8 @@ public class DonghangDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, confirmedValue);
-			pstmt.setInt(2, no);
+			pstmt.setInt(2, joinNo);
+			pstmt.setInt(3, dhNo);
 			result = pstmt.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -1016,4 +1025,27 @@ public class DonghangDao {
 		
 		return result;
 	}
+
+	public int donghangJoinPlus(Connection conn, int dhNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("donghangJoinPlus");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dhNo);
+			
+			result = pstmt.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+
+
 }

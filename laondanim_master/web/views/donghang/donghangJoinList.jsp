@@ -28,13 +28,13 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
    	<div style="height: 170px;"></div>
     
 <section class="d-flex flex-row justify-content-center">
-        <div style="width: 1366px;" class="border pt-5 pb-5 d-flex flex-column align-items-center justify-content-center">
-            <div class="p-5">
+        <div style="width: 1366px;" class="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center">
+            <div class="p-5 laonTitleFont">
                 	동행 신청 수신함
             </div>
 
             <!-- 총 컨텐츠 수 & 필터 -->
-            <div class="d-flex justify-content-between align-items-center pl-2 pr-2 mt-3 mb-3" style="width: 1140px;">
+            <div class="d-flex justify-content-between align-items-center pl-2 pr-2 mt-3 mb-5" style="width: 1140px;">
                 <p class="mb-0" style="margin-left: 15px;">총 <%=totalRowCount%>건의 참여신청이 있습니다.</p>
                 <div class="dropdown" style="margin-right: 15px;">
                     <button class="joinFilterBtn  dropdown-toggle" type="button" id="joinFilterBtn" 
@@ -46,45 +46,42 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
                       <a id="ALL" class="dropdown-item" onclick="fn_joinFilterBtn_change(this);">전체</a>
                       <a id="J" class="dropdown-item" onclick="fn_joinFilterBtn_change(this);" >대기 중</a>
                       <a id="Y" class="dropdown-item" onclick="fn_joinFilterBtn_change(this);">수락</a>
-                      <a id="N" class="dropdown-item" onclick="fn_joinFilterBtn_change(this);">거절</a>
                     </div>
                 </div>
             </div>
 
-            <!------ 삭제메뉴 ------>
+<%--             <!------ 삭제메뉴 ------>
             <div class="d-flex justify-content-end mt-3 mb-5"  style="width: 1140px;">
                 <button type="button" id="deleteBtn" style="margin-right: 15px; height: 30px;">
-                    선택삭제
+                    	선택삭제
                 </button>
                 <div id="hiddenDeleteBtns" style="height: 30px;">
                     <button type="button" style="margin-right: 15px;" onclick="fn_checkAll();">
-                        전체선택
+                        	전체선택
                     </button>
                     <button type="button" style="margin-right: 15px;" onclick="fn_checkFalseAll();">
-                        선택해제
+                        	선택해제
                     </button>
                     <button type="button" style="margin-right: 15px;">
-                        삭제 <span><img src="<%=request.getContextPath()%>/image/trash_icon.png"></span>
+                        	삭제 <span><img src="<%=request.getContextPath()%>/images/trash_icon.png"></span>
                     </button>
                     <button type="button" style="margin-right: 15px;" onclick="fn_deleteBtnsClose();">
                         <img src="icon/deleteBack_icon.png">
                     </button>
                 </div>
-            </div>
+            </div> --%>
 
 
 
 
             <!-- 신청 목록가져오기 -->
-            <div class="d-flex flex-wrap justify-content-start" style="width: 1140px;"> <!-- 목록상자 -->
+            <div class="d-flex flex-wrap justify-content-start mt-3" style="width: 1140px;"> <!-- 목록상자 -->
 	
 				<%for(DonghangJoinDonghangJoinTb j : joinList){ 
 					String id="";
 					String nick="";
 					String uImg="";
 					for(UserProfile u : userList){
-						System.out.println("왜일까? 유저넘버"+j.getUserNo());
-						System.out.println("왜일까? 유저리스트"+u);
 						if(u.getNo()==j.getUserNo()) id = u.getUserId();
 						if(u.getNo()==j.getUserNo()) nick = u.getNickName();
 						if(u.getNo()==j.getUserNo()) uImg = u.getImage();
@@ -98,6 +95,7 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
                     <div class="joinListCard d-flex flex-column justify-content-between" onclick="fn_joinItemModal_open(this);" id="1">
                         <div class="d-flex justify-content-between align-items-center" style="height: 25px;">
                             <div class="d-flex align-items-center">
+                            
                             <%if(j.getConfirmed().equals("J")){ %>
                                 <div class="confirmedJbox mr-1 ml-1" style="line-height:14px;">
                                     	대기중
@@ -106,26 +104,23 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
                                 <div class="confirmedYbox mr-1 ml-1" style="line-height:14px;">
                                     	수락함
                                 </div>                            
-                            <%} else if(j.getConfirmed().equals("N")){%>     
-                                <div class="confirmedNbox mr-1 ml-1" style="line-height:14px;">
-                                    	거절함
-                                </div>                                                        
-                            <%}%>                                
+                            <%} %>     
+                                                          
                             </div>
 
-                            <div class="dropdown">
+<%-- 개별삭제 기능 생략됨             <div class="dropdown">
                                 <button class="dropdown-toggle verticalDot pl-3 pr-1" type="button" id="soloDelete" 
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="<%=request.getContextPath()%>/image/menu-vertical_icon.png" alt="">
+                                    <img src="<%=request.getContextPath()%>/images/menu-vertical_icon.png" alt="">
                                 </button>
                                 <div class="dropdown-menu text-center" aria-labelledby="soloDelete" style="width: 140px;">
-                                    <a class="dropdown-item" onclick="fn_joinItem_soloDelete(this);">
+                                    <a class="dropdown-item" onclick="fn_joinItem_soloDelete(<%=j.getNo()%>,<%=j.getDhNo()%>);">
                                         <span class="d-flex justify-content-center align-items-center">
-                                            <span>삭제하기</span> <img src="icon/trash_icon.png" style="width: 20px; height: 20px;" class="ml-3">
+                                            <span>삭제하기</span><img src="<%=request.getContextPath()%>/images/trash_icon.png" style="width: 20px; height: 20px;" class="ml-3">
                                         </span>
                                     </a>
                                 </div>
-                            </div>                               
+                            </div>  --%>                              
                         </div>
                         <div class="align-self-center titleBox">
                             	<%=j.getContent()%>
@@ -144,10 +139,11 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
 				<%} %>
             </div> <!-- 목록상자 끝 -->
 
-
+			<%if(totalRowCount>8){ %>
 			<div class="d-flex justify-content-center align-items-center m-3" style="height: 80px;">
 				<%=pageBar%>
 			</div>
+			<%} %>
 
         </div>
     </section>
@@ -259,11 +255,18 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
                         </div> 
                     </div>
                 </div>
+                <%if(j.getConfirmed().equals("J")){ %>
                 <div class="modal-footer d-flex justify-content-center border-top-0">
                     <input type="hidden" name="confirmedValue" id="confirmedValue">
+                    <input type="hidden" name="joinTbNo" id="joinTbNo" value="<%=j.getNo()%>">
                     <button id="rejectBtn" type="button" class="ldBtnDelet mb-3 mr-3" data-dismiss="modal">거절</button>
                     <button id="acceptBtn" type="button" class="ldBtn mb-3 ml-3" data-dismiss="modal">수락</button>
                 </div>
+                <%} else if(j.getConfirmed().equals("Y")){ %>
+                <div class="modal-footer d-flex justify-content-center border-top-0">
+                    <button type="button" class="ldBtn mb-3 ml-3" data-dismiss="modal">닫기</button>
+                </div>
+                <%} %>
             </div>
         </div>
     </div>
@@ -288,7 +291,7 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
             
             <!-- Modal footer -->
             <div class="modal-footer border-top-0">
-            <button type="button" class="ldBtnSubmit modal-close" data-dismiss="modal">Close</button>
+            <button type="button" class="ldBtnSubmit modal-close" data-dismiss="modal" id="reloadBtn">Close</button>
             </div>
             
         </div>
@@ -300,6 +303,15 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
 
     <!-----------------------------------------------------------------------------------------   스타일 시작   ---->
     <style>
+	/* 카테고리 제목 폰트 */
+	@font-face { font-family: 'Cafe24Danjunghae'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Danjunghae.woff') format('woff'); font-weight: normal; font-style: normal; }
+	/* 본문 폰트 */
+	@font-face { font-family: 'S-CoreDream-4Regular'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff'); font-weight: normal; font-style: normal; }
+		.laonTitleFont{
+			font-family: Cafe24Danjunghae;
+			font-size: 35px;
+			color: #595959;
+		}    
         .confirmedJbox{
             width: 45px;
             height: 17px;
@@ -512,6 +524,8 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
             $("#joinFilterBtn").text($(e).text());
             $("#confirmedFilter").val($(e).attr("id"));
             console.log($("#confirmedFilter").val());
+            
+            location.replace('<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=no%>&filter='+$("#confirmedFilter").val());
         }
         //두번클릭 고치기 도전
 		
@@ -519,6 +533,7 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
         $("#acceptBtn").click(()=>{
         	$("#confirmedValue").val("Y");
         	let confirmedValue = $("#confirmedValue").val();
+        	let joinTbNo = $("#joinTbNo").val();
         	
     		let xhr = new XMLHttpRequest();
     		
@@ -534,7 +549,7 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
 			}
 			//전송에 대한 설정 : open()함수
 			
-			xhr.open("get","<%=request.getContextPath()%>/donghang/confirmedAccept.do?confirmedValue="+confirmedValue+"&no="+<%=no%>);
+			xhr.open("get","<%=request.getContextPath()%>/donghang/confirmedAccept.do?confirmedValue="+confirmedValue+"&joinNo="+joinTbNo+"&no="+<%=no%>);
 			
 			//전송! : send()
 			xhr.send();		
@@ -543,10 +558,50 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
            setTimeout(()=>{
                 $("#confirmedResultModal").modal("show");
            }, 600)
-
+   	    
         });
-    </script>
+        
+        $("#reloadBtn").click(()=>{
+        	location.reload();
+        });
+        
+      //수락 Ajax
+        $("#rejectBtn").click(()=>{
+        	$("#confirmedValue").val("N");
+        	let confirmedValue = $("#confirmedValue").val();
+        	let joinTbNo = $("#joinTbNo").val();
+        	
+    		let xhr = new XMLHttpRequest();
+    		
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4){
+					if(xhr.status == 200){						
+						//xhr객체의 responseText에 데이터를 저장
+						$("#confirmedResult").html(xhr.responseText);
+					} else if(xhr.status == 404){
+						alert("404 error")
+					}
+				}
+			}
+			//전송에 대한 설정 : open()함수
+			
+			xhr.open("get","<%=request.getContextPath()%>/donghang/confirmedReject.do?confirmedValue="+confirmedValue+"&joinNo="+joinTbNo+"&no="+<%=no%>);
+			
+			//전송! : send()
+			xhr.send();		
+			
 
+           setTimeout(()=>{
+                $("#confirmedResultModal").modal("show");
+           }, 600);
+   	    
+        });
+        
+        $("#reloadBtn").click(()=>{
+        	location.reload();
+        });        
+        
+    </script>
 
     <!-----------------------------------------------------------------------------------------   스크립트 끝   ---->  	
    	

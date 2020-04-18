@@ -48,6 +48,7 @@ public class TripService2 {
 	public ArrayList<Picture> selectPicture(ArrayList<Trip2> list){
 		Connection conn = getConnection();
 		ArrayList<Picture> pictureList = dao.selectPicture(conn, list);
+		close(conn);
 		return pictureList;
 	}
 	
@@ -55,6 +56,7 @@ public class TripService2 {
 	public ArrayList<Like> selectLikeCount(ArrayList<Trip2> list){
 		Connection conn = getConnection();
 		ArrayList<Like> likeCountList = dao.selectLikeCount(conn, list);
+		close(conn);
 		return likeCountList;
 	}
 	
@@ -62,6 +64,7 @@ public class TripService2 {
 	public ArrayList<Like> selectLike(int loginNo){
 		Connection conn = getConnection();
 		ArrayList<Like> likeList = dao.selectLike(conn, loginNo);
+		close(conn);
 		return likeList;
 	}
 	
@@ -69,6 +72,7 @@ public class TripService2 {
 	public ArrayList<User> selectUser(ArrayList<Trip2> list){
 		Connection conn = getConnection();
 		ArrayList<User> userList = dao.selectUser(conn, list);
+		close(conn);
 		return userList;
 	}
 	
@@ -93,7 +97,7 @@ public class TripService2 {
 		
 		if(result>0)commit(conn);
 		else rollback(conn);
-		
+		close(conn);
 		return result;
 	}
 	

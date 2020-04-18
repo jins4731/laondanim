@@ -57,6 +57,7 @@
                     <option value="searchKeyword">태그 검색</option>                    
                 </select>
                 <input type="text" name="keyword" class="pl-2"  list="data" id="search" value=""/>
+                
                 <button id="btn-search">
                 	<img src="<%=request.getContextPath()%>/images/inactiveSearch_icon.png" alt="searchIcon" id="searchIcon"/>
                 </button>
@@ -137,15 +138,19 @@
                if(key!='null') $("#search").val(key);
                //검색 버튼 클릭했을 때 검색한 값 쿼리스트링으로 전송
                $("#btn-search").click(function(){      
-                   var keyword = $("#search").val();                   
-                    location.replace('<%=request.getContextPath()%>/trip/tripListView.do?keyword='+keyword);
-                });
+                   var keyword = $("#search").val();
+                   location.replace('<%=request.getContextPath()%>/trip/tripListView.do?keyword='+keyword);
+                    
+               });
                
                //여행 category 드랍 다운 선택 시 서블릿 요청 필터 처리 
                $("#plan-review").siblings("div").children().each(function(i,v){
                     $(this).click(function(){
                         var category = $(this).html();
-                        var keyword = $("#keyword").val();
+                        //var keyword = $("#keyword").val();
+                        var keyword = $("#search").val();
+                        console.log("몬데");
+                        console.log(keyword);
                         $("#plan-review").html(category);
                         location.replace('<%=request.getContextPath()%>/trip/tripListView.do?category='+category+'&keyword='+keyword);
                     })
@@ -156,7 +161,9 @@
                     $(this).click(function(){
                        var lo = $(this).html();
                         console.log(lo);
-                       var keyword = $("#keyword").val();
+                       //var keyword = $("#keyword").val();
+                       var keyword = $("#search").val();
+                       
                         var category = $("#category").val();
                         $("#lo").html(lo);
                         location.replace('<%=request.getContextPath()%>/trip/tripListView.do?category='+category+'&keyword='+keyword+'&lo='+lo);
@@ -175,7 +182,8 @@
                 
                 //최근순 버튼 클릭 시 정렬 최근순으로 정렬
                 $("#recent").click(function(){
-                   var keyword = $("#keyword").val();
+                   //var keyword = $("#keyword").val();
+                   var keyword = $("#search").val();
                     var category = $("#category").val();
                     var lo = $("#location").val();
                    var recent = 'recent';
@@ -185,7 +193,8 @@
                 
                 //좋아요 순 버튼 클릭시 정렬 많은 순으로 정렬
                 $("#like").click(function(){
-                   var keyword = $("#keyword").val();
+                   //var keyword = $("#keyword").val();
+                   var keyword = $("#search").val();
                     var category = $("#category").val();
                     var lo = $("#location").val();
                     var recent ='null';

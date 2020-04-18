@@ -32,7 +32,7 @@
 					<div class="menu">
 						<div class="manuBar">
 							<div>
-								<span>다님길</span>
+								<span>여행기</span>
 							</div>
 							<div>
 								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
@@ -45,7 +45,7 @@
 						<!-- 정보 -->
 						<div id="myLTInfo">
 							<div style="height:45px;">
-								<span>총 <%=likeTripCount %>개의 ♥ 다님길</span>
+								<span>총 <%=likeTripCount %>개의 ♥ 여행기</span>
 							</div>
 						</div>
 						<!-- 게시글위치 -->
@@ -266,10 +266,25 @@
 		text-align:center;
 	}
 	
+	#myMenuBtn>#myH{
+		color: white;
+    	background-color: #00abbf;
+	}
+	
 	#myMenuBtn>button{	
 		width:150px;
 		margin: 20px;
     	border-radius: 100px;
+    	border-radius: 20px;
+	    background-color: white;
+	    border: 2px solid #00abbf;
+	    color: #00abbf;
+	    padding: 6px 15px 6px 15px;
+	}
+	
+	#myMenuBtn>button:hover{
+		color: white;
+    	background-color: #00abbf;
 	}
 	
 	.swiper-slide {

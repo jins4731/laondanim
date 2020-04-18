@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 import com.laon.common.PropPath;
 import com.laon.common.robot.LaonRobot;
@@ -816,5 +817,106 @@ public class TripDao {
 		}
 		return result;
 	} 
+	
+	public ArrayList<TripSchedule> selectSchedule(Connection conn, int no){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectSchedule");
+		int result = 0;
+		ArrayList<TripSchedule> scheduleList = new ArrayList<TripSchedule>();
+		TripSchedule s = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			 
+			while(rs.next()) {
+				s = new TripSchedule();
+				s.setNo(rs.getInt("NO"));
+				s.setTripNo(rs.getInt("TRIP_NO"));
+				s.setTripinfoNo(rs.getInt("TRIPINFO_NO"));
+				s.setDay(rs.getInt("DAY"));
+				s.setOrders(rs.getInt("ORDERS"));
+				s.setRequiredHours(rs.getString("REQUIRED_HOURS"));
+				s.setTransport(rs.getString("TRANSPORT"));
+				
+				scheduleList.add(s);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return scheduleList;
+	}
+	
+	public ArrayList<Trip2> selectTripList(Connection conn, ArrayList<TripSchedule> scheduleList){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectTripList");
+		
+		Trip2 t = null;
+		ArrayList<Trip2> tripList = new ArrayList<Trip2>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+		
+			int cnt = 0;
 
+			for(TripSchedule ts : scheduleList) {
+				pstmt.setInt(1, ts.getTripNo());
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					t = new Trip2();
+					t.setNo(rs.getInt("NO"));
+					t.setUserTbNo(rs.getInt("USER_NO"));
+					t.setCategory(rs.getString("CATEGORY"));
+					t.setWriteDate(rs.getDate("WRITE_DATE"));
+					t.setTag(rs.getString("TAG"));
+					t.setTitle(rs.getString("TITLE"));
+					t.setContent(rs.getString("CONTENT"));
+					t.setTripLocate(rs.getString("TRAVLE_LOCALE"));
+					t.setPeopleNum(rs.getInt("PEOPLE_NUM"));
+					t.setTripType(rs.getString("TRAVLE_TYPE"));
+					t.setStartDate(rs.getDate("TRAVLE_START_DATE"));
+					t.setEndDate(rs.getDate("TRAVLE_END_DATE"));
+					t.setDeleted(rs.getString("DELETED").charAt(0));
+					
+					int tNo[] = new int[tripList.size()];
+					for(Trip2 t2 : tripList) {
+						int cnt1 = 0;
+						tNo[cnt1] = t2.getNo();
+						cnt1++;
+					}
+					
+					for(int i=0; i<tNo.length; i++) {
+						System.out.println(tNo[i]);
+					}
+					
+					boolean flag = false;
+					for(int i=0; i<tNo.length; i++) {
+						if(tNo[i] == t.getNo()) {
+							flag = true;
+							break;
+						}	
+					}
+					
+					if(!flag) {
+						tripList.add(t);
+					}
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return tripList;
+	}
 }

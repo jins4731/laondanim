@@ -44,7 +44,7 @@
 <%
 	int userNo = loginUser.getNo();
 %>
-<div style="height: 170px"></div>
+<div style="height: 300px"></div>
 	<section class="d-flex flex-column justify-content-center h-100">
 		<div class="container">
 			<!-- 필터 버튼 눌렀을 때 데이터 처리 -->
@@ -84,32 +84,6 @@
 		            	location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%=category%>&type='+type+'&keyword='+keyword);
 					})  
 					
-					//게시물의 찜 클릭시
-					<%-- $(".ck").click(function(e){
-      				$.ajax({
-      					url:"<%=request.getContextPath()%>/trip/tripCheckLike.do",
-      					data:{tripNo : $(this).parent().find("input").val()},
-      					success:function(data){
-      						//data : result 값
-      						console.log("data : " + data);
-      						if(data>0){
-      							let src = $(e.target).parent().find("img").attr("src");
-      							console.log("src = " + src);
-      							console.log(e.target);
-      							if(src == "<%=request.getContextPath()%>/views/picture/trip/likeChecked.png"){
-      								$(e.target).attr("src", "<%=request.getContextPath()%>/views/picture/trip/likeUnchecked.png");
-      								let minus = $(e.target).parent().parent().next().text().trim();
-      								$(e.target).parent().parent().next().text(parseInt(minus)-1);
-      							}else{
-      								$(e.target).attr("src", "<%=request.getContextPath()%>/views/picture/trip/likeChecked.png");
-      								let plus = $(e.target).parent().parent().next().text().trim();
-      								$(e.target).parent().parent().next().text(parseInt(plus)+1);
-      							}
-      							console.log("html : " + $(e.target).parent().parent().next().text());     							
-      						}				
-      					}
-      				});
-      			}) --%>
       			
       				//게시물의 찜 클릭 시
 					$(".ck").click(function(e){
@@ -276,17 +250,6 @@
 	           </div>
 	        </div>
 			<!-----------------------------------------------카테고리 버튼---------------------------------------------------->
-			<%-- <div class="category">
-				<button type="button" id="cafe-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>')">
-					맛집
-				</button>
-				<button type="button" id="room-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="숙소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>')">
-					숙소
-				</button>
-				<button type="button" id="attraction-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="명소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>')">
-					명소
-				</button>
-			</div> --%>
 			
 			<!-- 전체 목록 개수 / 필터 -->			
 			<div class="container mt-4">
@@ -303,20 +266,6 @@
 	            </div>
 	        </div>
         
-		<%-- 	<!------------------------------------------------여행정보 카운팅---------------------------------------------------->
-			<div class="box001 d-flex" style="justify-content: space-between;">
-				<div class="msg001">
-					<span>총 <%=request.getAttribute("totalData")%>건의 여행정보가 있습니다.
-					</span>
-				</div>
-				
-				<!-------------------------------------------------여행정보 정렬---------------------------------------------------->
-				<div class="array">
-					<button id="mind-btn" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%=category%>&mind=mind')">
-						<span>마음 순</span>
-					</button>
-				</div>
-			</div> --%> 
 			
 			<!--여행 정보 리스트-->
 				 <div class="container mt-3 justify-content-center mb-5" style="height:640px;">
@@ -599,94 +548,7 @@
 	        </div> 
         
 			<!------------------------------------------------여행정보 리스트---------------------------------------------------->
-			<%-- <div class="tripinfoList">
-				<div class="tripinfo-card-list d-flex flex-wrap"
-					style="height: 700px;">
-					<%
-					int cnt=1;
-						for (TripInfoPicture tp : list) {
-						
-					%>
-					
-					<div class="card"
-						style="width: 221px; height: 350px; border-radius: 25px;">
-						<div class="tripinfo-card-title d-flex"
-							style="justify-content: center;">
-							<span><%=tp.getTripinfoName()%></span>
-						</div>
-						
-						<div class="img-wrapper" data-toggle="modal"
-							data-target="#myModal<%=cnt%>">
-							<%
-								cnt++;
-							%>
-							<img src="<%=request.getContextPath()%><%=tp.getImage() %>"
-								class="card-img-top" alt="..." width="250px" height="250px">
-							<div class="darkness"></div>
-							<div class="tag-plus">
-								<span><%=tp.getTripinfoTag()%></span>
-							</div>
-						</div>
-						<div class="card-body justify-content-between d-flex">
-
-							<div class="tripinfo-card-location">
-								<span class="location-info"><%=tp.getTripinfoAddress().indexOf("도") < 4 && tp.getTripinfoAddress().indexOf("도") != -1
-						? tp.getTripinfoAddress().substring(tp.getTripinfoAddress().indexOf("도") + 1,
-								tp.getTripinfoAddress().indexOf(" ", tp.getTripinfoAddress().indexOf("도") + 2))
-						: tp.getTripinfoAddress().substring(0, tp.getTripinfoAddress().indexOf(" "))%><span>
-							</div>
-							<div class="tripinfo-card-heart d-flex">
-								<div class="tripinfo-card-heartNo d-flex">
-								
-									<input type="hidden" id="mind-tripinfono" value="<%=tp.getTripinfoNo()%>"/>
-									<input type="hidden" class='mind-category' name="mind-category" id="mind-category"								
-									value="<%=request.getParameter("category") == null ? "" : request.getParameter("category")%>" />
-									
-									<%
-									String cancled="";
-									for(Mind m : mindList){
-										if(userNo==m.getUserNo()){
-											if(m.getTripinfoNo()==tp.getTripinfoNo()){
-												
-												cancled=m.getCancled();
-											}
-										}
-									}
-									System.out.println("이건?" + tp.getTripinfoNo());
-									System.out.println("cancled = " + cancled);
-									%>
-									
-									<button type="button"class="card-heart-button btn">
-									<%if(cancled.equals("Y")){ %>
-									<img class="card-heart-up"
-												src="<%=request.getContextPath()%>/views/picture/icon/heart2.jpg"
-												width="30px" height="30px">
-									<%}else{ %>
-									<img class="card-heart-up"
-												src="<%=request.getContextPath()%>/views/picture/icon/heart1.jpg"
-												width="30px" height="30px">
-									<%} %>	
-												</button>
-									
-									<div class="heartCount">
-									<%for(Mind m : heartCount) { %>
-										<%if(tp.getTripinfoNo()==m.getTripinfoNo()){  %>
-										<span><%=m.getCount()%></span>
-										
-										<%}
-										} %>
-										
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-					
-					<%
-					
-						}
-					%> --%>
+			
 					 
 					
 					
@@ -737,12 +599,14 @@
 							
 							<div class="box002 d-flex">					
 								<div class="danimgil">
-									<button class="btn btn-primary" >관련 다님길 연결</button>
+									<button class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/trip/tripListView.do?infoNo=<%=tp.getTripinfoNo()%>')">관련 여행기 연결</button>
 								</div>
-								
+							
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 							</div>
 						</div>
+						
+						
 						
 						<div class="pl-3">
 							<span><%=tp.getTripinfoAddress()%></span>
@@ -767,7 +631,7 @@
 							</div> --%>
 						</div>
 
-						<!-----------------------------------------상세페이지 바디---------------------------------------------->
+				<!-----------------------------------------상세페이지 바디---------------------------------------------->
 						<div class="modal-body d-flex" >
 							<div id="demo" class="carousel slide " data-ride="carousel">
 
@@ -778,7 +642,7 @@
 									<li data-target="#demo" data-slide-to="2"></li>
 								</ul>
 
-								<!-----------------------------------슬라이드 사진-------------------------------------------->					
+					<!-----------------------------------슬라이드 사진-------------------------------------------->					
 									<div class="carousel-inner">
 									
 									<%
@@ -834,7 +698,7 @@
 									<input type="hidden" value="<%=tp.getTripinfoName()%>" id="name<%=cnt2%>"/>
 								</div>
 								<hr>
-								<!----------------------------------------------여행정보 링크-------------------------------------------->
+				<!----------------------------------------------여행정보 링크-------------------------------------------->
 								<div class="tripinfo-link d-flex" style="margin:30px;">
 									<div style="margin:30px;">
 										<a href="<%=tp.getTripinfoNaver()%>"> <img
@@ -854,7 +718,7 @@
 								</div>
 							</div>
 						</div>
-						<!-----------------------------------------------상세페이지 풋터----------------------------------------->
+			<!-----------------------------------------------상세페이지 풋터----------------------------------------->
 						<div class="modal-footer">
 							<div class="d-flex" style="width: 100%;">
 								<div class="tripinfo-map" id="test<%=cnt2%>"
@@ -928,8 +792,10 @@
 			
 					}
 				%>
-				
-				<script> 
+	</section>
+	<div style="height: 150px"></div>
+	<script> 
+	   /* ---------------------------------------------댓글등록------------------------------------------------ */
 				$(function(){
 					$(".btn-insert").click(function(e){
 						$.ajax({
@@ -970,15 +836,8 @@
 				
 	
 				
-					//팝 오버 
-					$(document).ready(function(){
- 					 $('[data-toggle="popover"]').popover();   
-					});
-
-				</script>
-				
-				<script>
-							//-----------------------------------------------지도 api----------------------------------------------------
+					
+//-----------------------------------------------지도 api-------------------------------------------------------
 							//1
 								$("#myModal1").on('shown.bs.modal', function(){									
 									var search = document.getElementById("address1").value;
@@ -1411,12 +1270,5 @@
 									    } 
 									});
 								});			
-						</script>
-				
-			
-	</section>
-
-
-
-
+	</script>
 	<%@ include file="/views/common/footer.jsp"%>

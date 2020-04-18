@@ -274,4 +274,46 @@ public class MypageService {
 		return result;
 	}
 	
+	//내 게시글 삭제
+	public int myBoardDelete(int[] boardNo) {
+		Connection conn=getConnection();
+		int result=dao.myBoardDelete(conn,boardNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	//내 여행기 다중삭제
+	public int myConTripDelete(int[] tripNo) {
+		Connection conn=getConnection();
+		int result=dao.myConTripDelete(conn,tripNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	//내 동행 다중삭제
+	public int myDongMultiDelete(int[] myDongNo) {
+		Connection conn=getConnection();
+		int result=dao.myDongMultiDelete(conn,myDongNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
 }

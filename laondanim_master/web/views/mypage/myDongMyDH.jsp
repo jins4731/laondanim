@@ -99,7 +99,7 @@
 												<%} %>
 											</div>
 					                        <div class="d-flex flex-column justify-content-center p-2" style="font-size:7px;">
-					                        	<p class="mb-0"><%=d.getTitle() %></p>
+					                        	<p class="mb-0 tover"><%=d.getTitle() %></p>
 					                       		<ul class="p-0 m-0">
 					                            	<li class="tover">동행지역 : <span><%=d.getTravleLocale() %></span></li>
 					                            	<li>기간 : <span><%=d.getTravleStartDate() %></span><br>

@@ -68,7 +68,7 @@
 			                           </div>
 			                           <div class="d-flex card-body p-2">
 			                           		<div style="width:150px;font-size:12px;">
-												<p class="mb-0"><%=t.getTitle() %></p>
+												<p class="mb-0 tover"><%=t.getTitle() %></p>
 												<%String nick="";
 												for(UserProfile u:userNick){ 
 													if(t.getUserTbNo()==u.getNo()){
@@ -285,7 +285,7 @@
         text-decoration: none;
         color:black;
         list-style:none;
-       	border:1px solid green;
+       	/* border:1px solid green; */
     }
     
     #myLTInfo,#myResInfo,#myLodInfo,#myAttInfo,.manuBar{
@@ -370,6 +370,12 @@
 	
 	.likeClick:hover .ori{
 		visibility: hidden;
+	}
+	
+	.tover{
+		white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 	}
 </style>
 

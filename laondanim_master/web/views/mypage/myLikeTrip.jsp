@@ -80,7 +80,7 @@
 				                           </div>
 				                           <div class="d-flex card-body p-2">
 				                           		<div style="width:150px;font-size:12px;">
-													<p class="mb-0"><%=t.getTitle() %></p>
+													<p class="mb-0 tover"><%=t.getTitle() %></p>
 													<%String nick="";
 													for(UserProfile u:userNick){ 
 														if(t.getUserTbNo()==u.getNo()){
@@ -157,6 +157,12 @@
 	#myMenuBtn>button:hover{
 		color: white;
     	background-color: #00abbf;
+	}
+	
+	.tover{
+		white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 	}
 </style>
 

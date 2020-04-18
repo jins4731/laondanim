@@ -85,7 +85,7 @@
 			                           </div>
 			                           <div class="d-flex card-body p-2">
 			                           		<div style="width:150px;font-size:12px;">
-												<p class="mb-0"><%=t.getTitle() %></p>
+												<p class="mb-0 tover"><%=t.getTitle() %></p>
 												<%for(Like l:tripLike){%>
 												<%if(t.getNo()==l.getNo()) {%>
 													<span><%=l.getLikeCount() %></span>
@@ -165,7 +165,7 @@
 											<%=b.getCategory() %>
 										</td>
 										<td>
-											<a href="<%=request.getContextPath()%>/board/boardView.do?no=<%=b.getNo()%>"><%=b.getTitle() %></a>
+											<a class="tover" href="<%=request.getContextPath()%>/board/boardView.do?no=<%=b.getNo()%>"><%=b.getTitle() %></a>
 										</td>
 										<td style="width:150px;">
 											<%=b.getWriteDate() %>
@@ -244,6 +244,12 @@
 	#myMenuBtn>button:hover{
 		color: white;
     	background-color: #00abbf;
+	}
+	
+	.tover{
+		white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 	}
 </style>
 

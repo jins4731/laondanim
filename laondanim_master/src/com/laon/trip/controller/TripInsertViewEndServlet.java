@@ -51,7 +51,7 @@ public class TripInsertViewEndServlet extends HttpServlet {
 		}
 		
 		
-		TripData data = MultiPartFormTemplate.mulitPartProcess(request, response, "/upload/", new TripData());
+		TripData data = MultiPartFormTemplate.mulitPartProcess(request, response, "/views/picture/trip/", new TripData());
 		boolean isGood = new TripService().insertTrip(data);
 		
 		

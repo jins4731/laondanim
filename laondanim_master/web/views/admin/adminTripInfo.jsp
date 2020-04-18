@@ -31,6 +31,11 @@ function jusoCallBack(roadFullAddr){
 	$("#userAddr").val(roadFullAddr);
 }
 
+$("#cancelSubmit").click(function(){
+	location.replace="/admin/tripInfo.do";
+	
+});
+
 </script>
 <div style='height: 170px;'></div>
 <section class="d-flex flex-column justify-content-center align-items-center">
@@ -87,13 +92,24 @@ function jusoCallBack(roadFullAddr){
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td rowspan="3">
 			사진 첨부(최대 3개)
 		</td>
 		<td>
-			<input type="file" name="upfile" id="upfile" multiple>
+			<input type="file" name="upFile" id="upfile">
 			
 		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="file" name="upFile2" id="upfile">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="file" name="upFile3" id="upfile">
+		</td>
+	</tr>
 	<tr>
 		<td>
 			주소입력
@@ -148,7 +164,7 @@ function jusoCallBack(roadFullAddr){
 	</tr>
 	<tr>
 		<td colspan="2">
-		<button  class="btn btn-warning">등록 취소</button>
+		<button  class="btn btn-warning" id="cancelSubmit">등록 취소</button>
 		<button type="submit" class="btn btn-primary" >여행기 등록</button>
 		</td>
 	</tr>
@@ -157,25 +173,7 @@ function jusoCallBack(roadFullAddr){
 
 </div>
 </section>
-<%-- <script>
-$("#tripInfoEnd").click(function(){
-	var category=$("#trip-selector").val();
-	var tag=$("#tripTag").val();
-	var title=$("#tripTitle").val();
-	var upFile=$("#upfile").val();
-	var address=$("#userAddr").val();
-	var businessHour=$("#businessHour").val();
-	var tel=$("#tripTel").val();
-	var homePage=$("#homePage").val();
-	var naverLink=$("#naverLink").val();
-	var sns=$("#snsLink").val();
-	
-	location.href="<%=request.getContextPath()%>/admin/tripInfoEnd.do?category="+category+"&tag="+tag+"&title="+title+"&upFile="+upFile+"&address="+address+"&businessHour="+businessHour+"&tel="+tel+"&homePage="+homePage+"&naverLink="+naverLink+"&sns="+sns;
-	
-	
-});
 
-</script> --%>
 
 
 

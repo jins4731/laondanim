@@ -34,7 +34,7 @@
         <input type="hidden" value="aa" id="rl" />
         
         <!-- 검색창 -->
-        <div class="container mb-5 mt-4">
+        <!-- <div class="container mb-5 mt-4">
             <div class="row justify-content-center">
                 <div class="col-7 border border-secondary rounded d-flex flex-row justify-content-between p-0">
                     <div class="d-flex flex-row mr-2 dd">
@@ -47,8 +47,63 @@
                     </div>
                 </div>
             </div>
+        </div> -->
+		
+		 <!--검색창-->
+        <div class="d-flex justify-content-center align-items-center">
+            <div id="searchDIV" class="d-flex justify-content-center align-items-center m-5">
+                <select class="form-control border-0 rounded-0" name="searchFilter" id="searchFilter">
+                    <!-- <option value="">전체 검색</option> -->
+                    <option value="searchKeyword">태그 검색</option>                    
+                </select>
+                <input type="text" name="keyword" class="pl-2"  list="data" id="search" value=""/>
+                <button id="btn-search">
+                	<img src="<%=request.getContextPath()%>/images/inactiveSearch_icon.png" alt="searchIcon" id="searchIcon"/>
+                </button>
+            </div>
         </div>
-
+        <!--검색창 스타일-->
+        <style>
+            #searchDIV{
+                height: 45px;
+                width: 450px;
+                border: 3px solid #00abbf;
+                background-color: #00abbf;
+                border-radius: 30px;
+                overflow: hidden;
+            }
+            #searchDIV select{
+                width: 33%;
+                height: 100%;
+                background-color: #00abbf;
+                color: white;
+                padding-left: 20px;
+                -webkit-appearance: none;
+                background-image: url('<%=request.getContextPath()%>/images/down_icon.png');
+                background-repeat: no-repeat;
+                background-position: right center;
+                background: ;
+            }
+            #searchDIV input[type="text"]{
+                width: 57%;
+                height: 100%;
+                border: none;
+            }
+            #searchDIV input[type="text"]:focus{
+                outline: none;
+            }
+            #searchDIV button{
+            	width: 10%;
+            	height: 100%;
+            	padding: 0px;
+            	margin: 0px;
+            	border: none;
+            	background: white;
+            }
+            #searchDIV button:focus{
+                outline: none;
+            }         
+        </style>
           <script>
             $(function(){   
                $("#search").keyup(function(){
@@ -171,6 +226,7 @@
                 $("#cancel").click(function(){
                     console.log($("#search").val());
                     $("#search").val("");
+                    $("#keyword").val("null");
                 });
             }
          
@@ -209,9 +265,9 @@
             </div>               
                   
                <div class="col-3  d-flex flex-row my-auto">              
-                     <div class="dropdown">
+               <div class="dropdown">
                    <button class="btn btn-light dropdown-toggle border border-secondary rounded mr-3" type="button" id="lo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        선택 지역별
+                        	선택 지역별
                    </button>
                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">선택 지역별</a>
@@ -226,12 +282,28 @@
                   </div>
                </div>
                 </div>
+                
+               
+             
+             
             </div>
             
-                <div class="col-2 d-flex flex-row my-auto">
-                    <button class="btn btn-lg btn-outline-secondary border-0" style="text-decoration: underline;" onclick="location.replace('<%=request.getContextPath()%>/trip/tripInsertView.do?no=<%=loginUser.getNo()%>')">다님길 작성 <i class="fas fa-edit fa-2x"></i></button> <!--클릭 했을 때 작성 서블릿으로-->
-                    
-                </div>
+            <div class="col-2 d-flex flex-row my-auto">
+                 <button id="tWriteBtn" style="display:inline" class="d-flex align-items-end justify-content-center mt-3 mb-3 btn btn-lg" style="text-decoration: underline;" onclick="location.replace('<%=request.getContextPath()%>/trip/tripInsertView.do?no=<%=loginUser.getNo()%>')">                   
+                 	 <p class="m-0">여행기 작성</p> 
+                 	 <img src="<%=request.getContextPath()%>/images/write_icon.png" class="ml-2 w-25">
+                 </button>                                                               
+             </div>
+          		<style>
+            #tWriteBtn{
+                width: 500px;
+                border-radius: 0px;
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                border-bottom: 3px solid #595959;
+            }
+        </style>
            </div>
         </div>
 

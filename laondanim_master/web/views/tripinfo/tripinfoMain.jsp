@@ -746,12 +746,14 @@
 								
 							<div class="box002 d-flex">					
 								<div class="danimgil">
-									<button class="btn btn-primary">관련 다님길 연결</button>
+									<button class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/trip/tripListView.do?infoNo=<%=tp.getTripinfoNo()%>')">관련 여행기 연결</button>
 								</div>
 								
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 							</div>
 						</div>
+						
+						
 						
 						<div class="pl-3">
 							<span><%=tp.getTripinfoAddress()%></span>

@@ -18,6 +18,7 @@ import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.service.TripService2;
 import com.laon.trip.model.vo.TagCount;
 import com.laon.trip.model.vo.Trip2;
+import com.laon.trip.model.vo.TripSchedule;
 import com.laon.user.model.vo.User;
 /**
  * Servlet implementation class TripListServlet
@@ -40,6 +41,10 @@ public class TripListViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//ó�� ����� Ŭ������ ��
+		String infoNo = request.getParameter("infoNo");
+		infoNo = infoNo==null?"null":infoNo;
+		System.out.println("서블릿에서 infoNo의 값은 ? " + infoNo);
+		
 		String first = request.getParameter("first");
 		first=first==null?"null":first;
 		System.out.println("list에서 first : " + first);
@@ -78,7 +83,24 @@ public class TripListViewServlet extends HttpServlet {
 		ArrayList<User> userList = null;
 		ArrayList<Like> likeList = null;
 		ArrayList<TagCount> tripTagCountList = null;
-			
+		//스케쥴 리스트 가져오기
+		ArrayList<TripSchedule> scheduleList = null;
+		ArrayList<Trip2> tripList = null;	//스케쥴 리스트와 일치하는 여행기 리스트
+		//스케쥴 리스트와 일치하는 여행기 가져오기
+		if(!infoNo.equals("null")) {
+			int no = Integer.parseInt(infoNo);
+			scheduleList = new TripService2().selectSchedule(no);
+			System.out.println("============schedule============");
+			for(TripSchedule ts : scheduleList) {
+				System.out.println(ts);
+			}
+			tripList = new TripService2().selectTripList(scheduleList);
+			System.out.println("===========tripList=============");
+			for(Trip2 t : tripList) {
+				System.out.println(t);
+			}			
+		}
+		
 		//�α��ε� ���� no ��������
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("loginUser");
@@ -92,7 +114,17 @@ public class TripListViewServlet extends HttpServlet {
 		//총 데이터 수
 		totalItemCount = new TripService2().selectTripCount(lo, category, keyword);
 		
-		list = new TripService2().selectTripPage(cPage, perPage, lo, category, keyword, recent, like, tripTagCountList, first);
+		if(infoNo.equals("null")) {
+			list = new TripService2().selectTripPage(cPage, perPage, lo, category, keyword, recent, like, tripTagCountList, first);
+		}else {
+			System.out.println("여기 찍히냐");
+			ArrayList<Trip2> sortList = new ArrayList<Trip2>(); 
+			for(int i=(cPage-1)*perPage; i<cPage*perPage; i++) {
+				sortList.add(tripList.get(i));
+			}
+			list = sortList;
+		}
+		
 		for(Trip2 t : list) {
 			System.out.println("servlet 에서 list" +t );
 		}

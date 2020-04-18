@@ -69,16 +69,14 @@ public class AdminTripInfoEndServlet extends HttpServlet {
 			Picture p=new Picture(0,0,0,0,no,mr.getFilesystemName("upFile"));
 			System.out.println("파일이름:"+mr.getFilesystemName("upFile"));
 			int result1=new AdminService().insertPicture(p);
-			
-				if(mr.getFilesystemName("upFile2")!=null||mr.getFilesystemName("upFile2")!=" ") {
-					Picture p2=new Picture(0,0,0,0,no,mr.getFilesystemName("upFile2"));
-					int result2=new AdminService().insertPicture(p2);
-				}
-				if(mr.getFilesystemName("upFile3")!=null||mr.getFilesystemName("upFile3")!=" ") {
-					Picture p3=new Picture(0,0,0,0,no,mr.getFilesystemName("upFile3"));
-					int result3=new AdminService().insertPicture(p3);
-				}
-			
+			/*
+			 * if(mr.getFilesystemName("upFile2")!=null||mr.getFilesystemName("upFile2")!
+			 * =" ") { Picture p2=new Picture(0,0,0,0,no,mr.getFilesystemName("upFile2"));
+			 * int result2=new AdminService().insertPicture(p2); }
+			 * if(mr.getFilesystemName("upFile3")!=null||mr.getFilesystemName("upFile3")!
+			 * =" ") { Picture p3=new Picture(0,0,0,0,no,mr.getFilesystemName("upFile3"));
+			 * int result3=new AdminService().insertPicture(p3); }
+			 */
 			
 			
 			if(result1>0) {

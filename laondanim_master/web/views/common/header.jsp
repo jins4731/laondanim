@@ -5,7 +5,6 @@
 <%
 	User loginUser=(User)session.getAttribute("loginUser");
 	UserProfile userProfile=(UserProfile)session.getAttribute("userProfile");
-	System.out.println("^^^로긴 :"+userProfile);
 %>
 	
 <!DOCTYPE html>
@@ -162,9 +161,7 @@ header li>a {
 						
 						<%
 						if(loginUser!=null){
-						System.out.println("헤더에서 출력:");
-						System.out.println(loginUser);	
-						System.out.println(loginUser.getUserId());
+						
 						}
 						if(loginUser==null){ %>
 						<!-- 세션의 멤버 값을 가져와서 null 일경우 로그인 페이지로 이동-->
@@ -178,7 +175,7 @@ header li>a {
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> 
 						<%if(userProfile.getImage()==null){ %>
 							<img src="<%=request.getContextPath()%>/images/profile_icon.png" width="50px" height="50px">
-						<%} else{ %>
+						<%}else{ %>
 							<img src="<%=request.getContextPath()%>/views/picture/profile/<%=userProfile.getImage()%>" width="50px" height="50px"
 								style="border-radius:25px;">
 						<%}%>
@@ -192,7 +189,10 @@ header li>a {
 						<!-- 아이디가 admin일경우 관리자 페이지 출력 -->
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> 
-						<%if(userProfile.getImage()==null){ %>
+						<%
+						
+						if(userProfile.getImage()==null){ %>
+						
 							<img src="<%=request.getContextPath()%>/images/profile_icon.png" width="50px" height="50px">
 						<%} else{ %>
 							<img src="<%=request.getContextPath()%>/views/picture/profile/<%=userProfile.getImage()%>" width="50px" height="50px"

@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.laon.admin.model.vo.Reports;
 import com.laon.donghang.model.dao.DonghangDao;
 import com.laon.donghang.model.vo.Donghang;
 import com.laon.donghang.model.vo.DonghangJoin;
@@ -72,7 +73,7 @@ public class DonghangService {
 			}
 			
 		}
-		
+		close(conn);
 		return donghangItem;
 	}
 
@@ -93,6 +94,7 @@ public class DonghangService {
 	public List<Like> selectLike(List<TripMyCon> list) {
 		Connection conn = getConnection();
 		List<Like> likeList = dao.selectLike(conn, list);
+		close(conn);
 		return likeList;
 	}
 
@@ -252,6 +254,16 @@ public class DonghangService {
 		
 		return result;
 	}
+	
+	public int insertReport(Reports re) {
+		Connection conn=getConnection();
+		int result=dao.insertReport(conn,re);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
 
 
 

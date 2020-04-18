@@ -39,10 +39,6 @@ public class TripInfoCommentInsertServlet extends HttpServlet {
 		int userNo = Integer.parseInt(request.getParameter("userNo"));
 		int tripinfoNo = Integer.parseInt(request.getParameter("tripinfoNo"));
 		
-		System.out.println("content : " + content);
-		System.out.println("userNo : " + userNo);
-		System.out.println("tripinfoNo : " + tripinfoNo);
-		
 		User u = new User(userNo,null,null,null,null,nickName,null,null,null,null,null);
 		
 		

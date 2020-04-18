@@ -46,7 +46,7 @@ public class BoardMainViewServlet extends HttpServlet {
 			cPage=1;
 		}
 		
-		int numPerPage=5;
+		int numPerPage=8;
 		///전체 게시판글을 불러오는 로직
 		String category="null";
 		String searchDetail="null";

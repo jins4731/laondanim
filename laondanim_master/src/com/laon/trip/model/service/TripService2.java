@@ -84,7 +84,6 @@ public class TripService2 {
 		int result = 0;
 		
 		cancled = dao.selectLikeCancled(conn, tripNo, userNo);
-		System.out.println("service ���� cancled : " + cancled);
 		
 		if(cancled.equals("")) {
 			result = dao.insertLike(conn, tripNo, userNo);

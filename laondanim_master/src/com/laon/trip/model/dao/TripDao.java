@@ -161,7 +161,7 @@ public class TripDao {
 		}
 		sql = sql.substring(0, sql.length()-1);
 		sql += ")";
-		System.out.println(sql);
+		
 		List<Tripinfo> list = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -195,10 +195,11 @@ public class TripDao {
 		int check = 0;			   
 		ArrayList<Trip2> list = new ArrayList<Trip2>();
 		Trip2 t = null;
-		System.out.println("변화전 : " + sql);
 		
 		if(first.equals("first")) {
 			for(int i=(cPage-1)*perPage; i<cPage*perPage; i++) {
+				if(i<tripTagCountList.size()) {
+				
 				t = new Trip2();
 				
 				t.setNo(tripTagCountList.get(i).getNo());
@@ -216,6 +217,8 @@ public class TripDao {
 				t.setDeleted(tripTagCountList.get(i).getDeleted());
 				
 				list.add(t);
+				
+				}
 			}
 			
 			return list;
@@ -287,12 +290,12 @@ public class TripDao {
 				      indexs[i] =  matcher.start();
 				      i++;
 				   }
-				   System.out.println("변화후"+sql);
+
 				   int targetIndex = indexs[1];
 				   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+4, sql.length());
 	
 			}
-			System.out.println("변화 후:" + sql);
+			
 			try {
 				
 				pstmt = conn.prepareStatement(sql);
@@ -351,8 +354,7 @@ public class TripDao {
 		
 		String sql = prop.getProperty("selectTripCount2");
 		//SELECT COUNT(*) FROM TRIP_TB WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ?
-		System.out.println("dao에서 데이터 량 출력 변화 전 : " + sql);
-		System.out.println("dao에서 lo 값 : " + lo); 
+		
 		if(category.equals("null") || category.equals("전체 여행기")) {
 			sql =sql.replaceFirst("=", "!=");
 		}
@@ -362,7 +364,7 @@ public class TripDao {
 		if(keyword.equals("null")) {			
 			sql = sql.replaceFirst("LIKE", "!=");
 		}
-		System.out.println("dao에서 데이터 량 출력 변화 후 : " + sql);
+		
 		int count = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -739,8 +741,8 @@ public class TripDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, Integer.parseInt(data.getUserNo()));
-			pstmt.setInt(1, 1);
+			pstmt.setInt(1, Integer.parseInt(data.getUserNo()));
+//			pstmt.setInt(1, 1);
 			pstmt.setString(2, data.getCategory());
 			pstmt.setString(3, data.getTag());
 			pstmt.setString(4, data.getTitle());
@@ -750,8 +752,8 @@ public class TripDao {
 			pstmt.setString(8, data.getTravleTyp());
 			pstmt.setDate(9, Date.valueOf(data.getTravleStartDate()));
 			pstmt.setDate(10, Date.valueOf(data.getTravleEndDate()));
-//			pstmt.setString(11, data.getPublicEnabled());
-			pstmt.setString(11, "y");
+			pstmt.setString(11, data.getPublicEnabled());
+//			pstmt.setString(11, "y");
 			pstmt.setString(12, data.getDeleted());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -767,7 +769,7 @@ public class TripDao {
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty(insertTripSchedule);
 		int result[] = null;
-		System.out.println("tripNo : " + tripNo);
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			for(int i=0;i<data2.getScheduleData().length;i++) {

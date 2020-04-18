@@ -28,37 +28,19 @@
 			</div>
 		</div>
 		
-		<!-- 알람 -->
-		<%-- <div id="alram" data-toggle="modal" data-target="#myModal">
-			<label>
-				<img src="<%=request.getContextPath() %>/images/alram.png">
-				<span>? 개의 알림이 있습니다.</span>
-			</label>
-		</div> --%>
+		<div style="height:30px;"></div>
 		
-		<!-- <div class="modal fade" id="myModal">
-		    <div class="modal-dialog modal-lg">
-		      <div class="modal-content">
-		      
-		        Modal Header
-		        <div class="modal-header">
-		          <h4 class="modal-title">알림</h4>
-		          <button type="button" class="close" data-dismiss="modal">&times;</button>
-		        </div>
-		        
-		        Modal body
-		        <div class="modal-body">
-		          <table class="table">
-		          	<tr>
-		          		<td>카테고리</td>
-		          		<td>내용</td>
-		          		<td>삭제</td>
-		          	</tr>
-		          </table>
-		        </div>
-		      </div>
-		    </div>
-		</div> -->
+		<!-- 가입일수 -->
+		<div class="joinDays">
+			<div>
+				<%=up.getNickName() %>님!
+			</div>
+			<div>
+				라온다님과 함께한지 ㅇㅇ일 ♥
+			</div>
+		</div>
+		
+		<div style="height:30px;"></div>
 		
 		<!-- 팁 -->
 		<div class="alert alert-info tip">
@@ -83,6 +65,7 @@
         text-decoration: none;
         color:black;
         list-style:none;
+        /* border:1px solid green; */
     }
 
 	#myProfile{
@@ -90,7 +73,7 @@
 	}
 	
 	#myProfile>div:first-child{
-		flex:8;
+		flex:10;
 	}
 	
 	#myProfile>div:last-child{
@@ -98,7 +81,6 @@
 	}
 	
 	#myProfile>div:last-child>button{
-		margin: 20px;
     	border-radius: 100px;
     	border-radius: 20px;
 	    background-color: white;
@@ -112,8 +94,11 @@
     	background-color: #00abbf;
 	}
 	
-	#alram{
-		margin:20px;
+	.joinDays{
+		margin-left:40px;
+		margin-right:20px;
+		margin-top:20px;
+		margin-bottom:20px;
 	}
 	
 	.tip{
@@ -130,21 +115,24 @@
 		height:100px;
 		justify-content:center;
 		align-items: center;
-		
-		
 	}
 }
 </style>
 
 <script>
 	var tips=new Array();
-	tips[0]="팁팁팁팁팁팁팁팁팁팁팁팁팁팁1";
-	tips[1]="팁팁팁팁팁팁팁팁팁팁팁팁팁팁2";
-	tips[2]="팁팁팁팁팁팁팁팁팁팁팁팁팁팁3";
-	tips[3]="팁팁팁팁팁팁팁팁팁팁팁팁팁팁4";
+	tips[0]="코로나 확산 방지를 위해<br> 사회적 거리두기에 참여해주세요!";
+	tips[1]="원래 잘됐는데.......";
+	tips[2]="암호화는 무슨..<br> - 진승연";
+	tips[3]="모달창 쓰지 맙시다<br> -현정호";
+	tips[4]="또 나야...?<br> -현정호";
+	tips[5]="또 너야!<br> -진승연";
+	tips[6]="집<br> -정세현";
+	tips[7]="에러나신분이요<br> -유병승";
+	tips[8]="카드 꼭 찍으세요!<br> -유병승";
 	
 	$(function(){
-		var rn=Math.round(Math.random()*3);
+		var rn=Math.round(Math.random()*8);
 		$(".tip div:last-child").html(tips[rn]);
 	});
 </script>

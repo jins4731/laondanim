@@ -8,10 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.laon.etc.model.vo.Picture;
 import com.laon.mypage.model.service.MypageService;
 import com.laon.user.model.vo.User;
+import com.laon.user.model.vo.UserProfile;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -65,11 +67,32 @@ public class MyPageInfoUpdateEndServlet extends HttpServlet {
 		User u = new User(userNo, null, null, password, null, nickName, null, null, phone, email, tag);
 		Picture p = new Picture(0,0,0,0,userNo,nPro);
 		
+		UserProfile up = new UserProfile();
+		up.setNo(u.getNo());
+		up.setCreatedDate(u.getCreatedDate());
+		up.setUserId(u.getUserId());
+		up.setPassword(u.getPassword());
+		up.setName(u.getName());
+		up.setNickName(u.getNickName());
+		up.setBirthday(u.getBirthday());
+		up.setGender(u.getGender());
+		up.setPhone(u.getPhone());
+		up.setEmail(u.getEmail());
+		up.setTag(u.getTag());
+		up.setImage(p.getImage());
+		
+		System.out.println("정보수정 서블릿");
+		System.out.println(u);
+		System.out.println(p);
+		
 		int result=new MypageService().updateUserProfile(u,p);
 		
 		String msg="";
 		String loc="";
 		if(result>0) {
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("userProfile", up);
 			msg="회원 정보 수정이 완료되었습니다.";
 			loc="/myPage/myPageContent.do?userNo="+userNo;
 		}else {

@@ -49,7 +49,7 @@ public class AdminTripInfoEndServlet extends HttpServlet {
 		
 		//db에 저장할 값을 받아오기
 		Tripinfo ti=new Tripinfo(0,mr.getParameter("trip-selector"),mr.getParameter("tripTag"),mr.getParameter("tripTitle"),
-				mr.getParameter("userAddr"),mr.getParameter("businessHours"),mr.getParameter("tripTel"),mr.getParameter("homePage"),
+				mr.getParameter("userAddr"),mr.getParameter("businessHour"),mr.getParameter("tripTel"),mr.getParameter("homePage"),
 				mr.getParameter("naverLink"),mr.getParameter("snsLink"));
 		System.out.println(ti);
 		int result=new AdminService().insertTripInfo(ti);
@@ -69,14 +69,16 @@ public class AdminTripInfoEndServlet extends HttpServlet {
 			Picture p=new Picture(0,0,0,0,no,mr.getFilesystemName("upFile"));
 			System.out.println("파일이름:"+mr.getFilesystemName("upFile"));
 			int result1=new AdminService().insertPicture(p);
-			/*
-			 * if(mr.getFilesystemName("upFile2")!=null||mr.getFilesystemName("upFile2")!
-			 * =" ") { Picture p2=new Picture(0,0,0,0,no,mr.getFilesystemName("upFile2"));
-			 * int result2=new AdminService().insertPicture(p2); }
-			 * if(mr.getFilesystemName("upFile3")!=null||mr.getFilesystemName("upFile3")!
-			 * =" ") { Picture p3=new Picture(0,0,0,0,no,mr.getFilesystemName("upFile3"));
-			 * int result3=new AdminService().insertPicture(p3); }
-			 */
+			
+			 if(mr.getFilesystemName("upFile2")!=null||mr.getFilesystemName("upFile2")!=" ") { 
+				 Picture p2=new Picture(0,0,0,0,no,mr.getFilesystemName("upFile2"));
+				 System.out.println(p2);
+			 int result2=new AdminService().insertPicture(p2); }
+			 if(mr.getFilesystemName("upFile3")!=null||mr.getFilesystemName("upFile3")!=" ") { 
+				 Picture p3=new Picture(0,0,0,0,no,mr.getFilesystemName("upFile3"));
+				 System.out.println(p3);
+			 int result3=new AdminService().insertPicture(p3); }
+			 
 			
 			
 			if(result1>0) {

@@ -15,14 +15,7 @@
 	List<Like> likeList = (List<Like>)request.getAttribute(CommonKey.LIKE_LIST);
 	
 	DonghangJoinUserPicture dh = (DonghangJoinUserPicture)request.getAttribute(CommonKey.DONGHANG_ITEM);
-	System.out.println("_______________-------------+++++++++++++++");
-	System.out.println("업데이트 jsp"+dh);
-	for(Like l : likeList){
-		System.out.println("업데이트 jsp like : "+l);
-	}
-	for(TripMyCon tm : tripList){
-		System.out.println("업데이트 jsp tm : "+tm);
-	}
+
 %>
 
 <%@ include file="/views/common/header.jsp"%>
@@ -43,17 +36,16 @@
             <div class="d-flex justify-content-center align-items-center" style="width: 1000px; height: 350px;">
                 <div style="width: 480px; height: 270px; position: relative;" class="border d-flex justify-content-center align-items-center mr-5">
                     <!--사진 넣는 버튼-->
-                    <input type="file" id="file" name="imageFile" accept="image/*" onchange="changeValue(this)"/>
+                    <input type="hidden" id="oriFile" name="oriImageFile" accept="image/*" value="<%=dh.getImage()%>"/>
+                    <input type="file" id="newFile" name="newImageFile" accept="image/*"/>
                     <button type="button" id="btnFileUplaod" style="width: 50px; height: 50px; border-radius: 25px; position: absolute; background-color: rgba(0, 0, 0, 0.746); color: white; display: flex;
                     justify-content: center; align-items: center; font-size: 25px;" class="border-0">
                         <p style="height: 50px;" class="m-0 pt-1">+</p>
                     </button>
-                    <img id="preview" style="width: 100%; height: 100%;" src="/uload/image/<%=dh.getImage()%>">
+                    <img id="preview" style="width: 100%; height: 100%;" src="<%=request.getContextPath()%>/upload/donghang/<%=dh.getImage()%>">
+                    <img id="oriFileView" style="width: 100%; height: 100%;" src="<%=request.getContextPath()%>/upload/donghang/<%=dh.getImage()%>">
                 </div>
 
-				<script>
-					console.log("<%=dh.getTravleLocale()%>");
-				</script>
 
                 <table class="p-0" style="width: 300px; height: 250px;">
                     <tr>
@@ -266,7 +258,7 @@
                     
                         <!-- Modal footer -->
                         <div class="modal-footer border-top-0">
-                            <button type="button" class="ldBtn" data-dismiss="modal">Close</button>
+                            <button type="button" class="ldBtn" data-dismiss="modal">선택</button>
                         </div>
                     </div>
                 </div>
@@ -325,9 +317,12 @@
                     align-items: center;
                     cursor: pointer;
                 }  
-                input[name="imageFile"]{    
+                input[name="oriImageFile"]{    
                     display:none;
                 }
+                input[name="newImageFile"]{    
+                    display:none;
+                }                
             </style>     
                
             <script>
@@ -370,15 +365,12 @@
                 $(function () {
                     $('#btnFileUplaod').click(function (e) {
                         e.preventDefault();
-                        $('#file').click();
+                        $('#newFile').click();
                     });
                 });
 
-                function changeValue(obj){
-                    alert(obj.value);
-                }   
-
                 /* 2) 미리보기 fn*/
+				$("#preview").hide();
                 function readInputFile(input) {
                     if(input.files && input.files[0]) {
                         var reader = new FileReader();
@@ -389,13 +381,15 @@
                     }
                 }
             
-                $("#file").on('change', function(){
+                $("#newFile").on('change', function(){
                     readInputFile(this);
+                    $("#oriFileView").hide();
+                    $("#preview").show();  				
                 });               
                 
                 
                 /* trip일정 선택해서 넣어주기 */
-                $("#")
+
 
             </script>    
 
@@ -468,16 +462,19 @@
                     $("#back").css("visibility","visible");
                 });
 
-                /*리스트에 체크된 값을 히든인풋에 넣어주기*/                
-/*                 $('button[data-dismiss="modal"]').click(()=>{
-                    alert($('input[name="selectTrip"]:checked').val()); */
-                    let no = $('input[name="selectTrip"]:checked').val();
+                /*리스트에 체크된 값을 히든인풋에 넣어주기*/              
+                let no = $('input[name="selectTrip"]:checked').val();
+                $("#selectTripNo").val(no);
+
+                /*체크된 값이 바뀔 때 다시 저장해 주기*/
+                $('input[name="selectTrip"]').change(()=>{
+                	no = $('input[name="selectTrip"]:checked').val();
                     $("#selectTripNo").val(no);
-                    console.log( $("#selectTripNo").val());
-/*                 }); */
+                })
+
    
-                let liNo = $('input[name="selectTrip"]:checked').val();
-                let str = "#ck"+liNo;
+/*                 let liNo = $('input[name="selectTrip"]:checked').val();
+                let str = "#ck"+liNo; */
                 /* 체크박스 개수 제한 */
                 function doOpenCheck(chk){
                 var obj = document.getElementsByName("selectTrip");

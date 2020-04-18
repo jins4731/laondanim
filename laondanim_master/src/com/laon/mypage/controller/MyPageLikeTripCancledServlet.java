@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.laon.mypage.model.service.MypageService;
 
 /**
- * Servlet implementation class MyPageDongMyDHDeleteServlet
+ * Servlet implementation class MyPageLikeTripCancledServlet
  */
-@WebServlet("/mypage/myDongDel.do")
-public class MyPageDongMyDHDeleteServlet extends HttpServlet {
+@WebServlet("/mypage/myLikeTripCancled.do")
+public class MyPageLikeTripCancledServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageDongMyDHDeleteServlet() {
+    public MyPageLikeTripCancledServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,18 +29,18 @@ public class MyPageDongMyDHDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int userNo=Integer.parseInt(request.getParameter("userNo"));
-		int myDongNo=Integer.parseInt(request.getParameter("no"));
+		int likeNo=Integer.parseInt(request.getParameter("likeNo"));
 		
-		int result=new MypageService().myDongDelete(myDongNo);
+		int result=new MypageService().likeTripCancled(userNo,likeNo);
 		
 		String msg="";
 		String loc="";
 		if(result>0) {
-			msg="나의 동행이 삭제되었습니다.";
-			loc="/myPage/myPageDong.do?userNo="+userNo;
+			msg="좋아요한 여행길이 취소 되었습니다.";
+			loc="/myPage/myPageHeart.do?userNo="+userNo;
 		}else {
-			msg="나의 동행 삭제에 실패했습니다.";
-			loc="/myPage/myPageDong.do?userNo="+userNo;
+			msg="좋아요한 여행길이 취소에 실패했습니다.";
+			loc="/myPage/myPageHeart.do?userNo="+userNo;
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc",loc);

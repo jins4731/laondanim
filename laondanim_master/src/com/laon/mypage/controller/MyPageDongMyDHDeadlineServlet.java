@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.laon.mypage.model.service.MypageService;
 
 /**
- * Servlet implementation class MyPageDongMyDHDeleteServlet
+ * Servlet implementation class MyPageDongMyDHDeadlineServlet
  */
-@WebServlet("/mypage/myDongDel.do")
-public class MyPageDongMyDHDeleteServlet extends HttpServlet {
+@WebServlet("/mypage/myDongDeadline.do")
+public class MyPageDongMyDHDeadlineServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageDongMyDHDeleteServlet() {
+    public MyPageDongMyDHDeadlineServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,17 +29,18 @@ public class MyPageDongMyDHDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int userNo=Integer.parseInt(request.getParameter("userNo"));
-		int myDongNo=Integer.parseInt(request.getParameter("no"));
+		int dongNo=Integer.parseInt(request.getParameter("no"));
+		String title=request.getParameter("title");
 		
-		int result=new MypageService().myDongDelete(myDongNo);
+		int result=new MypageService().myDongDeadline(dongNo);
 		
 		String msg="";
 		String loc="";
 		if(result>0) {
-			msg="나의 동행이 삭제되었습니다.";
+			msg="["+title+"] 동행 모집이 마감되었습니다.";
 			loc="/myPage/myPageDong.do?userNo="+userNo;
 		}else {
-			msg="나의 동행 삭제에 실패했습니다.";
+			msg="["+title+"] 동행 모집이 마감에 실패했습니다.";
 			loc="/myPage/myPageDong.do?userNo="+userNo;
 		}
 		request.setAttribute("msg", msg);

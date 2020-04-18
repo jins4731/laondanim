@@ -861,6 +861,7 @@ public class MypageDao {
 		return result;
 	}
 	
+	//찜 취소
 	public int myMindCancled(Connection conn, int mindNo,int userNo) {
 		PreparedStatement pstmt=null;
 		int result=0;
@@ -870,6 +871,64 @@ public class MypageDao {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, mindNo);
 			pstmt.setInt(2, userNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	//좋아요 다중 취소
+	public int likeTripMultiCancled(Connection conn,int userNo,int[] myLikeNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("likeTripCancled");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			for(int i=0; i<myLikeNo.length; i++) {				
+				pstmt.setInt(1, myLikeNo[i]);
+				pstmt.setInt(2, userNo);
+				result=pstmt.executeUpdate();
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	//좋아요 취소
+	public int likeTripCancled(Connection conn, int userNo, int likeNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("likeTripCancled");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);				
+			pstmt.setInt(1, likeNo);
+			pstmt.setInt(2, userNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	//나의 동행 모집 마감
+	public int myDongDeadline(Connection conn,int dongNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("myDongDeadline");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, dongNo);
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

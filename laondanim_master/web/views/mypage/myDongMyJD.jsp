@@ -100,7 +100,7 @@
 											<%} %>
 			                           </div>
 			                           <div class="d-flex flex-column justify-content-center card-body p-2" style="font-size:7px;">
-			                               <p class="mb-0"><%=j.getTitle() %></p>
+			                               <p class="mb-0 tover"><%=j.getTitle() %></p>
 			                               <%String nick="";
 			                               for(UserProfile un:userNick){ 
 			                            	   if(j.getUserNo()==un.getNo()){

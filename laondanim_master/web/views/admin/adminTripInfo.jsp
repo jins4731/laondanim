@@ -50,9 +50,9 @@ $("#cancelSubmit").click(function(){
 	<div class="ml-2 mr-5">
 	<h4>카테고리</h4>
 	<hr/>
-	<a href="<%=request.getContextPath()%>/admin/adminView.do">신고 리스트 관리</a>
+	<a href="<%=request.getContextPath()%>/admin/adminView.do"><h5>신고 리스트 관리</h5></a>
 	<br/>
-	<a href="<%=request.getContextPath()%>/admin/tripInfo.do">여행정보 등록</a>
+	<a href="<%=request.getContextPath()%>/admin/tripInfo.do"><h5>여행정보 등록</h5></a>
 	</div>
 
 <table class="table table-bordered" style="width:1000px">
@@ -80,7 +80,7 @@ $("#cancelSubmit").click(function(){
 			태그 입력
 		</td>
 		<td>
-			<input type="text" class="form-control"  name="tripTag" id="tripTag">
+			<input type="text" class="form-control"  name="tripTag" id="tripTag" placeholder="맛집탐방,힐링,">
 		</td>
 	</tr>
 	<tr>
@@ -93,21 +93,21 @@ $("#cancelSubmit").click(function(){
 	</tr>
 	<tr>
 		<td rowspan="3">
-			사진 첨부(최대 3개)
+			사진 첨부
 		</td>
 		<td>
-			<input type="file" name="upFile" id="upfile">
+			<input type="file" name="upFile" id="upFile">
 			
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<input type="file" name="upFile2" id="upfile">
+			<input type="file" name="upFile2" id="upFile2">
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<input type="file" name="upFile3" id="upfile">
+			<input type="file" name="upFile3" id="upFile3">
 		</td>
 	</tr>
 	<tr>
@@ -115,10 +115,11 @@ $("#cancelSubmit").click(function(){
 			주소입력
 		</td>
 		<td>
-			<!-- <form name="form" id="form" method="post"> -->
-			<input type="text" id="userAddr" name="userAddr" class="form-control" placeholder="Enter Addr" required="true" readonly="true"/>
+			<div class="d-flex justify-content-center align-items-center">
+			<input type="text" id="userAddr" name="userAddr" class="form-control" placeholder="Enter Addr" required="true" readonly="true"
+			style="width:550px;"/>
 			<button type="button" class="btn btn-primary" onclick="goPopup();" >주소 찾기</button>
-			<!-- </form> -->
+			</div>
 		</td>
 		
 	</tr>

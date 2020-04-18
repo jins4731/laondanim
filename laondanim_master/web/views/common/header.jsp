@@ -5,7 +5,6 @@
 <%
 	User loginUser=(User)session.getAttribute("loginUser");
 	UserProfile userProfile=(UserProfile)session.getAttribute("userProfile");
-	System.out.println("^^^로긴 :"+userProfile);
 %>
 	
 <!DOCTYPE html>
@@ -162,11 +161,7 @@ header li>a {
 						
 						<%
 						if(loginUser!=null){
-						System.out.println("헤더에서 출력:");
-						System.out.println(loginUser);	
-						System.out.println(loginUser.getUserId());
-						System.out.println("이미지 출력");
-						System.out.println(userProfile.getImage());
+						
 						}
 						if(loginUser==null){ %>
 						<!-- 세션의 멤버 값을 가져와서 null 일경우 로그인 페이지로 이동-->

@@ -37,8 +37,9 @@ public class DonghangJoinServlet extends HttpServlet {
 
 		DonghangJoin join = new DonghangJoin(0, userNo, donghangNo, content, "", "", "", "");
 		
+		//join_tb 업데이트
 		int result = new DonghangService().donghangJoin(join);
-		
+
 		if(result>0) {
 			response.getWriter().write("<h5><span>&#x1F64B</span>동행신청 완료되었습니다.</h5>");
 		}else {

@@ -775,15 +775,24 @@ public class DonghangDao {
 		return list;
 	}
 
-	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(Connection conn, int loginUserNo) {
+	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(Connection conn, int loginUserNo, int no, String filter) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = prop.getProperty("selectDonghangJoinList");
+		String sql = "";
 		List<DonghangJoinDonghangJoinTb> list = new ArrayList();
+		
+		if(filter.equals("ALL")) {
+			sql = prop.getProperty("selectDonghangJoinList");
+		}else if(filter.equals("J")) {
+			sql = prop.getProperty("selectDonghangJoinListConfirmedJ");
+		}else if(filter.equals("Y")) {
+			sql = prop.getProperty("selectDonghangJoinListConfirmedY");
+		}
 		
 		try {
 			pstmt = conn.prepareStatement(sql);		
 			pstmt.setInt(1, loginUserNo);
+			pstmt.setInt(2, no);
 			
 			rs = pstmt.executeQuery();
 			
@@ -827,13 +836,18 @@ public class DonghangDao {
 			while(rs.next()) {
 				UserProfile up = new UserProfile();
 				
-				up.setImage(rs.getString("IMAGE"));
-				up.setUserId(rs.getString("USER_ID"));
-				up.setNickName(rs.getString("NICK_NAME"));
-				up.setPhone(rs.getString("PHONE"));
-				up.setGender(rs.getString("GENDER"));
-				up.setBirthday(rs.getDate("BIRTHDAY"));
-				up.setName(rs.getString("NAME"));
+				up.setNo(rs.getInt("no"));
+				up.setCreatedDate(rs.getDate("created_date"));
+				up.setUserId(rs.getString("user_id"));
+				up.setPassword(rs.getString("password"));
+				up.setName(rs.getString("name"));
+				up.setNickName(rs.getString("nick_name"));
+				up.setBirthday(rs.getDate("birthday"));
+				up.setGender(rs.getString("gender"));
+				up.setPhone(rs.getString("phone"));
+				up.setEmail(rs.getString("email"));
+				up.setTag(rs.getString("tag"));
+				up.setImage(rs.getString("image"));
 								
 				list.add(up);
 			}			
@@ -846,7 +860,7 @@ public class DonghangDao {
 		return list;
 	}
 
-	public int selectJoinCount(Connection conn, int userNo) {
+	public int selectJoinCount(Connection conn, int userNo, int no) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = prop.getProperty("selectJoinCount");
@@ -854,6 +868,7 @@ public class DonghangDao {
 		try {
 			pstmt = conn.prepareStatement(sql);	
 			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, no);
 			rs = pstmt.executeQuery();
 			rs.next();
 			result = rs.getInt("CNT");
@@ -990,4 +1005,47 @@ public class DonghangDao {
 		
 		return userList;
 	}
+
+	public int joinComfirmedUpdate(Connection conn, String confirmedValue, int joinNo, int dhNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("joinComfirmedUpdate");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, confirmedValue);
+			pstmt.setInt(2, joinNo);
+			pstmt.setInt(3, dhNo);
+			result = pstmt.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int donghangJoinPlus(Connection conn, int dhNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("donghangJoinPlus");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dhNo);
+			
+			result = pstmt.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+
+
 }

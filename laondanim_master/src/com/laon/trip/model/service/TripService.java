@@ -187,7 +187,7 @@ private UserDao userDao = new UserDao();
 			}
 		}
 		
-		
+		close(conn);
 		return isGood;
 	}
 	

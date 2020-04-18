@@ -693,8 +693,9 @@
 								</div>
 								<hr>
 								<div class="tripinfo-address" >
-									<span>주소</span><br> <input class="test1234" id="address<%=cnt2%>"
-										type="text" value="<%=tp.getTripinfoAddress()%>" />
+									<span>주소</span><br> 
+									<span><%=tp.getTripinfoAddress()%></span>
+									<input type ="hidden" class="test1234" id="address<%=cnt2%>" value="<%=tp.getTripinfoAddress()%>">
 									<input type="hidden" value="<%=tp.getTripinfoName()%>" id="name<%=cnt2%>"/>
 								</div>
 								<hr>

@@ -322,6 +322,7 @@
 	$(".mind-delete-btn").click(function(e){
 		console.log($(this).parent().parent().siblings("input").eq(0).val());
 		 console.log($(this).parent().parent().siblings("input").eq(1).val());
+		 var divhide = $(this).parent().parent().parent().parent();
 		 $.ajax({
 			url:"<%=request.getContextPath()%>/tripinfo/deleteMind.do",
 			type:"get",
@@ -331,7 +332,10 @@
 				userNo : $(this).parent().parent().siblings("input").eq(1).val()		
 			},
 			success:function(data){
-				console.log(data);
+				console.log(data); 
+				divhide.addClass("d-none");
+				
+				
 			},
 			error:(r,e,m)=>{ 
 				console.log(r);

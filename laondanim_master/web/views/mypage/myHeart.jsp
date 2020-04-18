@@ -80,7 +80,7 @@
 										</div>
 									</div>
 								</td>
-							<%} %>
+								<%} %>
 							</tr>
 							<%if(tripList.size()==4){ %>
 							<tr>
@@ -123,9 +123,7 @@
 							<div>
 								<span>맛집</span>
 							</div>
-							<div>
-								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
-							</div>
+							<div><img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png"></div>
 						</div>
 						<hr>
 					</div>
@@ -141,10 +139,18 @@
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
 							<%for(TripinfoMyMind res:restaurant){ %>
-								<div class="swiper-slide"><img class="card-img" src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=res.getImage()%>"></div>
+								<div class="swiper-slide">
+									<div class="broken">
+										<button class="btn btn-resMind">
+											<img style="width:30px;height:30px;" src="<%=request.getContextPath() %>/images/brokenHeart.png">
+											<input type="hidden" value="<%=res.getNo() %>" class="mind">
+										</button>
+									</div>
+									<img class="card-img" src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=res.getImage()%>">
+								</div>
 							<%} %>
 							</div>
-						
+							
 							<!-- 네비게이션 -->
 							<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
 							<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
@@ -180,7 +186,15 @@
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
 							<%for(TripinfoMyMind lod:lodging){ %>
-								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=lod.getImage()%>"></div>
+								<div class="swiper-slide">
+									<div class="broken">
+										<button class="btn btn-lodMind">
+											<img style="width:30px;height:30px;" src="<%=request.getContextPath() %>/images/brokenHeart.png">
+											<input type="hidden" value="<%=lod.getNo() %>" class="mind">
+										</button>
+									</div>
+									<img src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=lod.getImage()%>">
+								</div>
 							<%} %>
 							</div>
 						
@@ -219,7 +233,15 @@
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
 							<%for(TripinfoMyMind att:attraction){ %>
-								<div class="swiper-slide"><img src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=att.getImage()%>"></div>
+								<div class="swiper-slide">
+									<div class="broken">
+										<button class="btn btn-attMind">
+											<img style="width:30px;height:30px;" src="<%=request.getContextPath() %>/images/brokenHeart.png">
+											<input type="hidden" value="<%=att.getNo() %>" class="mind">
+										</button>
+									</div>
+									<img src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=att.getImage()%>">
+								</div>
 							<%} %>
 							</div>
 						
@@ -293,11 +315,21 @@
 		align-items:center; /* 위아래 기준 중앙정렬 */
 		justify-content:center; /* 좌우 기준 중앙정렬 */
 		height:180px;
+		position:relative;
 	}
 	.swiper-slide img {
 		width:150px; /* 이미지 사이즈 */
 		height:150px;
 		max-width:100%; /* 지우면 안됨 이미지 여러장일때 꼭 필요함 */
+	}
+	
+	.broken{
+		position:absolute;
+		visibility: hidden;
+	}
+	
+	.swiper-slide:hover .broken{
+		visibility: visible;
 	}
 </style>
 
@@ -334,5 +366,65 @@
 			$(this).find(".imgDrop").stop().css({'transform': 'rotate(90deg)'},1000);
 			flag=true;
 		}
+	});
+	
+	/* 맛집 좋아요 취소 */
+	$(function(){
+		$(".btn-resMind").click(function(e){
+			$.ajax({
+				url:"<%=request.getContextPath()%>/mypage/myMindCancled.do",
+				data:{mindNo:$(this).find("input").val(),
+					userNo:<%=loginUser.getNo()%>},
+				success:function(data){
+					if(data>0){
+						$(this).parent().parent().addClass("d-none");
+						var oldRes=$("#myResInfo").find("span").html();
+						var newRes=parseInt(oldRes)-1;
+						$("#myResInfo").find("span").html(newRes);
+					}
+				}
+			});
+			location.reload();
+		});
+	});
+	
+	/* 	숙소 좋아요 취소 */
+	$(function(){
+		$(".btn-LodMind").click(function(e){
+			$.ajax({
+				url:"<%=request.getContextPath()%>/mypage/myMindCancled.do",
+				data:{mindNo:$(this).find("input").val(),
+					userNo:<%=loginUser.getNo()%>},
+				success:function(data){
+					if(data>0){
+						$(this).parent().parent().addClass("d-none");
+						var oldLod=$("#myLodInfo").find("span").html();
+						var newLod=parseInt(oldLod)-1;
+						$("#myLodInfo").find("span").html(newLod);
+					}
+				}
+			});
+			location.reload();
+		});
+	});
+	
+	/* 명소 좋아요 취소 */
+	$(function(){
+		$(".btn-attMind").click(function(e){
+			$.ajax({
+				url:"<%=request.getContextPath()%>/mypage/myMindCancled.do",
+				data:{mindNo:$(this).find("input").val(),
+					userNo:<%=loginUser.getNo()%>},
+				success:function(data){
+					if(data>0){
+						$(this).parent().parent().addClass("d-none");
+						var oldAtt=$("#myAttInfo").find("span").html();
+						var newAtt=parseInt(oldAtt)-1;
+						$("#myAttInfo").find("span").html(newAtt);
+					}
+				}
+			});
+			location.reload();
+		});
 	});
 </script>

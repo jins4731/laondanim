@@ -1,4 +1,4 @@
-6--package com.laon.trip.controller;
+package com.laon.trip.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;

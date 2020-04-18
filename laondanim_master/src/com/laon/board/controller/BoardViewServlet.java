@@ -36,7 +36,7 @@ public class BoardViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//�Խñ� ���� ����
 		//�Խñ� ��ȣ ������
-		int boardNo=Integer.parseInt(request.getParameter("boardNo"));
+		int boardNo=Integer.parseInt(request.getParameter("no"));
 		System.out.println("���Դ�?"+boardNo);
 		//��Ű�� ��ȸ�� ����. f5������ ��ȸ���� ��ӿö���
 		Cookie[] cookies=request.getCookies();

@@ -428,7 +428,7 @@
 	                           		} 
 	                           	
 	                           %>
-	                            
+	                           <!-- 풀을해보자 -->
 	                           <div class="d-flex flex-row justify-content-center align-items-center">
 	                                <div class="mr-2">
 	                                	<input type="hidden" value="<%=i<count?list.get(i).getTripinfoNo():""%>"/>

@@ -165,11 +165,11 @@
 						
 							
 						<div class="card">
-									<div class="card-header collapsed card-link"
+									<div class="card-header collapsed card-link mind-room"
 										data-toggle="collapse" href="#collapseTwo">
 										<h4>숙소</h4>
 									</div>
-									<div id="collapseTwo" class="collapse" data-parent="#accordion">
+									<div id="collapseTwo" class="collapse show" data-parent="#accordion">
 										
 								
 							<div class="swiper-container">
@@ -205,11 +205,11 @@
 					</div>
 								
 								<div class="card">
-									<div class="card-header collapsed card-link"
+									<div class="card-header collapsed card-link mind-hotspot"
 										data-toggle="collapse" href="#collapseThree">
 										<h4>명소</h4>
 									</div>
-									<div id="collapseThree" class="collapse"
+									<div id="collapseThree" class="collapse show"
 										data-parent="#accordion">
 										
 										
@@ -249,6 +249,20 @@
 					</div>
 				</div>
 				
+				
+				<script>
+					$(function(){
+						
+						var three=$("#collapseThree").hide();
+						var two =$("#collapseTwo").hide();
+						$(".mind-hotspot").click(function(e){
+							three.show();
+						})
+						$(".mind-room").click(function(e){
+							two.show();
+						})
+					})
+				</script>
 
 
 

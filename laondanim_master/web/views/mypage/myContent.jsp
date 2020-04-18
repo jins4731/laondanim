@@ -38,7 +38,7 @@
 					<div class="menu">
 						<div class="manuBar">
 							<div>
-								<span>내 다님길</span>
+								<span>내 여행기</span>
 							</div>
 							<div>
 								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
@@ -51,7 +51,7 @@
 						<!-- 정보 -->
 						<div id="myDNInfo">
 							<div style="height:45px;">
-								<span>총 <%=tripCount %>개의 다님길</span>
+								<span>총 <%=tripCount %>개의 여행기</span>
 							</div>
 						</div>
 						<!-- 게시글위치 -->
@@ -60,7 +60,7 @@
 							<tr class="d-flex flex-wrap justify-content-center">
 								<%for(TripMyCon t:trip){ %>
 								<td class="p-1">
-									<div class="card" style="width: 155px; height: 250px;" >
+									<div class="card" style="width: 155px; height: 250px;">
 										<div class="d-flex justify-content-between p-2" style="font-size:5px;">
 						    				<span><%=t.getCategory() %></span>
 						    				<span><%=t.getWriteDate() %></span>
@@ -78,9 +78,9 @@
 												</div>
 											</div>
 											<%if(t.getImage()==null){ %>
-												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=t.getNo()%>')">
 											<%}else{ %>
-												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
+												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage()%>" class="card-img" alt="..." width="155px" height="155px" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=t.getNo()%>')">
 											<%} %>
 			                           </div>
 			                           <div class="d-flex card-body p-2">
@@ -123,75 +123,77 @@
 						</div>
 						<hr>
 					</div>
-					<%-- <form action="<%=request.getContextPath()%>/mypage/myBoardDel.do" method="get"> --%>
-					<!-- 닫힘 내용 -->
-					<div>
-						<!-- 정보 -->
-						<div id="myBDInfo">
-							<div style="height:45px;">
-								<span>총 <%=boardCount %>개의 게시글</span>
-							</div>
-							<%if(board.size()>0){ %>
-							<div id="bdCk1">
-								<button class="btn">선택삭제</button>
-							</div>
-							<div id="bdCk2">
-								<label><input type="checkbox" id="bdAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn" type="button" onclick="return fn_boardDel();">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn" id="bdEndBtn">돌아가기</button>
-							</div>
-							<%} %>
-						</div>
-						<!-- 게시글위치 -->
+					<form action="<%=request.getContextPath()%>/mypage/myBoardDel.do" method="get">
+						<input type="hidden" value="<%=loginUser.getNo() %>" name="userNo" id="userNo">
+						<!-- 닫힘 내용 -->
 						<div>
-						<%if(board.size()>0){%>
-							<table id="bdTbl" class="table">
-								<tr>
-									<th style="width:50px;"></th>
-									<th>글종류</th>
-									<th>글제목</th>
-									<th>작성시간</th>
-									<th></th>
-								</tr>
-								<%for(Board b:board){ %>
-								<tr>
-									<td style="width:50px;">
-										<div class="bdCk3">
-											<input type="checkbox" class="bdCks" name="bdCks" value="<%=b.getNo()%>">
-										</div>
-									</td>
-									<td style="width:100px;">
-										<%=b.getCategory() %>
-									</td>
-									<td>
-										<a href="#"><%=b.getTitle() %></a>
-									</td>
-									<td style="width:150px;">
-										<%=b.getWriteDate() %>
-									</td>
-									<td style="width:100px;">
-										<button class="btn">수정</button>
-									</td>
-								</tr>
-							<%} %>
-							</table>
-							<%}else{  %>
-							<div style="text-align: center;">
-								<span>등록된 게시물이 없습니다.</span>
+							<!-- 정보 -->
+							<div id="myBDInfo">
+								<div style="height:45px;">
+									<span>총 <%=boardCount %>개의 게시글</span>
+								</div>
+								<%if(board.size()>0){ %>
+								<div id="bdCk1">
+									<button class="btn" type="button">선택삭제</button>
+								</div>
+								<div id="bdCk2">
+									<label><input type="checkbox" id="bdAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
+									<button class="btn" type="submit">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
+									<button class="btn" type="button" id="bdEndBtn">돌아가기</button>
+								</div>
+								<%} %>
 							</div>
-							<%} %>
-							<div class="d-flex justify-content-center">
-								<%=boardPasing %>
+							<!-- 게시글위치 -->
+							<div>
+							<%if(board.size()>0){%>
+								<table id="bdTbl" class="table">
+									<tr>
+										<th style="width:50px;"></th>
+										<th>글종류</th>
+										<th>글제목</th>
+										<th>작성시간</th>
+										<th></th>
+									</tr>
+									<%for(Board b:board){ %>
+									<tr>
+										<td style="width:50px;">
+											<div class="bdCk3">
+												<input type="checkbox" class="bdCks" name="bdCks" value="<%=b.getNo()%>">
+											</div>
+										</td>
+										<td style="width:100px;">
+											<%=b.getCategory() %>
+										</td>
+										<td>
+											<a href="<%=request.getContextPath()%>/board/boardView.do?no=<%=b.getNo()%>"><%=b.getTitle() %></a>
+										</td>
+										<td style="width:150px;">
+											<%=b.getWriteDate() %>
+										</td>
+										<td style="width:100px;">
+											<button class="btn" type="button" onclick="location.replace('<%=request.getContextPath()%>/board/alterBoard.do?boardNo=<%=b.getNo()%>')">수정</button>
+										</td>
+									</tr>
+								<%} %>
+								</table>
+								<%}else{  %>
+								<div style="text-align: center;">
+									<span>등록된 게시물이 없습니다.</span>
+								</div>
+								<%} %>
+								<div class="d-flex justify-content-center">
+									<%=boardPasing %>
+								</div>
 							</div>
 						</div>
-					</div>
-				<!-- </form> -->
+					</form>
 				</div>
 			</section>
 		</div>
 	</div>
 </div>
 <%@ include file="/views/common/footer.jsp"%>
+
 <style>
 	div.menu{
 		width:auto;
@@ -223,10 +225,25 @@
 		text-align:center;
 	}
 	
+	#myMenuBtn>#myCon{
+		color: white;
+    	background-color: #00abbf;
+	}
+	
 	#myMenuBtn>button{	
 		width:150px;
 		margin: 20px;
     	border-radius: 100px;
+    	border-radius: 20px;
+	    background-color: white;
+	    border: 2px solid #00abbf;
+	    color: #00abbf;
+	    padding: 6px 15px 6px 15px;
+	}
+	
+	#myMenuBtn>button:hover{
+		color: white;
+    	background-color: #00abbf;
 	}
 </style>
 
@@ -291,13 +308,5 @@
 			$(this).find(".imgDrop").stop().css({'transform': 'rotate(90deg)'},1000);
 			flag=true;
 		}
-	});
-	
-	$(function(){
-		function fn_boardDel(){
-			var boardCk=new Array();
-			boardCk.push($("#bdCks").val());
-		}
-		
 	});
 </script>

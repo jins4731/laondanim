@@ -23,7 +23,7 @@
 				
 				        <div class="">
 				
-				            <form id="myInfo" action="<%=request.getContextPath()%>/myPage/myInfoUpdateEnd.do" method="post" onsubmit="return fn_checkEnd();" enctype="multipart/form-data">
+				            <form id="myInfo" action="<%=request.getContextPath()%>/myPage/myInfoUpdateEnd.do" method="post" onsubmit="return fn_checkEnd();" enctype="multipart/form-data" class="d-flex flex-column justify-content-center align-items-center">
 				                <table class="" style="width: 400px; height: 580px;">
 				                	<input type="hidden" id="userNo" name="userNo" value="<%=up.getNo() %>">
 				                	<input type="hidden" id="cDate" name="cDate" value="<%=up.getCreatedDate() %>">
@@ -84,7 +84,7 @@
 				                    <tr>
 				                        <th></th>
 				                        <td class="d-flex justify-content-end">
-				                            <button type="button" class="btn btn-primary" onclick="fn_duplicateNickName();">중복확인</button>
+				                            <button type="button" class="ldBtn" onclick="fn_duplicateNickName();">중복확인</button>
 				                        </td>
 				                    </tr>
 				                    <tr>
@@ -191,7 +191,7 @@
 				                        <input type="checkbox" name="likeTag" id="cb15" value="캠핑" <%=checkTag[14] %>><label for="cb15">#캠핑</label>
 				                    </div>
 				                </div>
-				                <input type="submit" class="btn btn-primary btn-block mt-5 mb-4" value="정보수정">
+				                <input type="submit" class="ldBtnSubmit btn-block mt-5 mb-4 w-50" value="정보수정">
 				            </form>
 				        </div>
 				    </div>
@@ -204,6 +204,24 @@
 
 
 <style>
+	.ldBtn{
+		margin: 20px;
+    	border-radius: 100px;
+    	border-radius: 20px;
+	    background-color: white;
+	    border: 2px solid #00abbf;
+	    color: #00abbf;
+	    padding: 6px 15px 6px 15px;
+	}
+	
+	.ldBtnSubmit{
+		border-radius: 20px;
+	    background-color: #00abbf;
+	    border: 2px solid #00abbf;
+	    color: white;
+	    padding: 6px 15px 6px 15px;
+	}
+
 	#myMenuBtn{
 		text-align:center;
 	}
@@ -212,6 +230,16 @@
 		width:150px;
 		margin: 20px;
     	border-radius: 100px;
+    	border-radius: 20px;
+	    background-color: white;
+	    border: 2px solid #00abbf;
+	    color: #00abbf;
+	    padding: 6px 15px 6px 15px;
+	}
+	
+	#myMenuBtn>button:hover,.ldBtn:hover{
+		color: white;
+    	background-color: #00abbf;
 	}
 	
 	span#proImg{

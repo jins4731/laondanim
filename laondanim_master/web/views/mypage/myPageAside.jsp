@@ -22,31 +22,31 @@
 						<p class="card-text"><%=up.getNickName() %></p>
 					</div>
 					<div>
-						<button type="button" class="btn btn-info" style="border-radius: 100px;" onclick="location.replace('<%=request.getContextPath()%>/myPage/myInfoPwck.do?userNo=<%=up.getNo()%>')">정보수정</button>
+						<button type="button" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myInfoPwck.do?userNo=<%=up.getNo()%>')">정보수정</button>
 					</div>
 				</div>
 			</div>
 		</div>
 		
 		<!-- 알람 -->
-		<div id="alram" data-toggle="modal" data-target="#myModal">
+		<%-- <div id="alram" data-toggle="modal" data-target="#myModal">
 			<label>
 				<img src="<%=request.getContextPath() %>/images/alram.png">
 				<span>? 개의 알림이 있습니다.</span>
 			</label>
-		</div>
+		</div> --%>
 		
-		<div class="modal fade" id="myModal">
+		<!-- <div class="modal fade" id="myModal">
 		    <div class="modal-dialog modal-lg">
 		      <div class="modal-content">
 		      
-		        <!-- Modal Header -->
+		        Modal Header
 		        <div class="modal-header">
 		          <h4 class="modal-title">알림</h4>
 		          <button type="button" class="close" data-dismiss="modal">&times;</button>
 		        </div>
 		        
-		        <!-- Modal body -->
+		        Modal body
 		        <div class="modal-body">
 		          <table class="table">
 		          	<tr>
@@ -58,7 +58,7 @@
 		        </div>
 		      </div>
 		    </div>
-		</div>
+		</div> -->
 		
 		<!-- 팁 -->
 		<div class="alert alert-info tip">
@@ -95,6 +95,21 @@
 	
 	#myProfile>div:last-child{
 		margin-top: 15px;
+	}
+	
+	#myProfile>div:last-child>button{
+		margin: 20px;
+    	border-radius: 100px;
+    	border-radius: 20px;
+	    background-color: white;
+	    border: 2px solid #00abbf;
+	    color: #00abbf;
+	    padding: 6px 15px 6px 15px;
+	}
+	
+	#myProfile>div:last-child>button:hover{
+		color: white;
+    	background-color: #00abbf;
 	}
 	
 	#alram{

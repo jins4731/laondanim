@@ -73,21 +73,22 @@
 												    <div class="dropdown-menu">
 												    <%if(d.getEnded().equals("N")){ %>
 												    	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">신청서 수신함</a>
-												      	<a class="dropdown-item" href="fn_myDongDeadline">모집 마감</a>
-												     	<a class="dropdown-item" href="#">동행 수정</a>
-												     	<a class="dropdown-item" href="#">동행 삭제</a>
+												      	<a class="dropdown-item" id="myDongDeadline" data-toggle="modal" data-target="#myDongDeadline" value="<%=d.getNo()%>">모집 마감</a>
+												      	<!-- href="#" onclick="return confirm('동행 모집을 마감하시겠습니까?');" -->
+												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangUpdate.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">동행 수정</a>
+												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongDel.do?no=<%=d.getNo() %>">동행 삭제</a>
 						                        	<%}else{ %>
-						                        		<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">신청서 수신함</a>
-												     	<a class="dropdown-item" href="#">동행 수정</a>
-												     	<a class="dropdown-item" href="#">동행 삭제</a>
+						                        		<a class="dropdown-item" href="#">신청서 수신함</a>
+												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">동행 수정</a>
+												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangUpdate.do?userNo=<%=d.getNo() %>&fileName=<%=d.getImage()%>">동행 삭제</a>
 						                        	<%} %>
 												    </div>
 												</div>
 											</div>
 											<%if(d.getImage()==null){ %>
-												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px"  onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo=<%=loginUser.getNo() %>&no=<%=d.getNo()%>')">
 											<%}else{ %>
-												<img src="<%=request.getContextPath() %>/upload/donghang/<%=d.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
+												<img src="<%=request.getContextPath() %>/upload/donghang/<%=d.getImage()%>" class="card-img" alt="..." width="155px" height="155px" onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo=<%=loginUser.getNo() %>&no=<%=d.getNo()%>')">
 											<%} %>
 										</div>
 				                        <div class="d-flex flex-column justify-content-center p-2" style="font-size:7px;">
@@ -230,6 +231,29 @@
 </div>
 <%@ include file="/views/common/footer.jsp"%>
 
+<div class="modal" id="myDongDeadline">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header border-bottom-0">
+				<h4 class="modal-title">동행 모집 마감</h4>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div id="enrollEmailAut_result"></div>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer border-top-0">
+				<button type="button" class="ldBtnSubmit modal-close" data-dismiss="modal">Close</button>
+				<button type="button">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <style>
 	div.menu{
 		width:auto;
@@ -261,10 +285,25 @@
 		text-align:center;
 	}
 	
+	#myMenuBtn>#myDh{
+		color: white;
+    	background-color: #00abbf;
+	}
+	
 	#myMenuBtn>button{	
 		width:150px;
 		margin: 20px;
     	border-radius: 100px;
+    	border-radius: 20px;
+	    background-color: white;
+	    border: 2px solid #00abbf;
+	    color: #00abbf;
+	    padding: 6px 15px 6px 15px;
+	}
+	
+	#myMenuBtn>button:hover{
+		color: white;
+    	background-color: #00abbf;
 	}
 	
 	.tover{
@@ -291,7 +330,11 @@
 		}
 	});
 	
-	function fn_myDongDeadline(){
-		
-	}
+	/* $("myDongDeadline").on("shown.bs.modal', function(){
+		var no = $(this).val();
+	} */
+	
+	$(".modal-close").click(()=>{
+	    $("#myDongDeadline").hide();
+	});
 </script>

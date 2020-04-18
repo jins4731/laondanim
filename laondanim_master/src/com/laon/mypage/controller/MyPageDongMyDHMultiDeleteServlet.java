@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.laon.mypage.model.service.MypageService;
 
 /**
- * Servlet implementation class MyPageDongJoinRefusal
+ * Servlet implementation class MyPageMyDHDeleteServlet
  */
-@WebServlet("/myPage/myDongJoinRefusal.do")
-public class MyPageDongJoinRefusal extends HttpServlet {
+@WebServlet("/mypage/myDHDelete.do")
+public class MyPageDongMyDHMultiDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageDongJoinRefusal() {
+    public MyPageDongMyDHMultiDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,19 +29,21 @@ public class MyPageDongJoinRefusal extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int userNo=Integer.parseInt(request.getParameter("userNo"));
+		String[] myDongCk=request.getParameterValues("dhCks");
+		int[] myDongNo=new int[myDongCk.length];
+		for(int i=0; i<myDongCk.length; i++) {
+			myDongNo[i]=Integer.parseInt(myDongCk[i]);
+		}
 		
-		int dongJoinNo=Integer.parseInt(request.getParameter("dongJoinNo"));
-		
-		int result=new MypageService().dongJoinRefusal(dongJoinNo);
-		
+		int result=new MypageService().myDongMultiDelete(myDongNo);
 		String msg="";
 		String loc="";
 		if(result>0) {
-			msg="거절된 동행 삭제가 완료되었습니다.";
-			loc="/myPage/myPageContent.do?userNo="+userNo;
+			msg="나의 동행이 삭제되었습니다.";
+			loc="/myPage/myDongMyDH.do?userNo="+userNo;
 		}else {
-			msg="거절된 동행 삭제에 실패했습니다.";
-			loc="/myPage/myPageContent.do?userNo="+userNo;
+			msg="나의 동행 삭제에 실패했습니다.";
+			loc="/myPage/myDongMyDH.do?userNo="+userNo;
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc",loc);

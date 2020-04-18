@@ -60,6 +60,7 @@
             <td><%=re.getUserId() %></td>
             <td>커뮤니티 게시판</td>
             <td><%=re.getReportContent() %></td>
+            <!-- if 문으로 동행일때 연결 바꿔주기 -->
             <td><button class="ref-page btn btn-primary" value="<%=re.getBoardNo()%>">게시글보기</button></td>
             <td><button class="close-account btn btn-warning" value="<%=re.getUserNo()%>">이용정지</button></td>
         </tr>

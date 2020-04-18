@@ -61,14 +61,14 @@
 										</div>
 										<div>
 											<%if(t.getImage()==null){ %>
-												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=t.getNo()%>')">
 											<%}else{ %>
-												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
+												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage()%>" class="card-img" alt="..." width="155px" height="155px" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=t.getNo()%>')">
 											<%} %>
 			                           </div>
 			                           <div class="d-flex card-body p-2">
 			                           		<div style="width:150px;font-size:12px;">
-												<p class="mb-0"><%=t.getTitle() %></p>
+												<p class="mb-0 tover"><%=t.getTitle() %></p>
 												<%String nick="";
 												for(UserProfile u:userNick){ 
 													if(t.getUserTbNo()==u.getNo()){
@@ -76,6 +76,17 @@
 													}
 												}%>
 												<span><%=nick %></span>
+											</div>
+											<div class="likeClick">
+												<div class="likeCan">
+													<button class="myTripLike">
+														<%for(Like l:likeT){ 
+															if(l.getTripNo()==t.getNo()){%>
+																<img src="<%=request.getContextPath()%>/views/picture/trip/likeUnchecked.png" style="width:30px;height:30px;" onclick="location.replace('<%=request.getContextPath()%>/mypage/myLikeTripCancled.do?userNo=<%=loginUser.getNo()%>&likeNo=<%=l.getNo()%>')">
+														<%} }%>
+													</button>
+												</div>
+												<img class="ori" src="<%=request.getContextPath() %>/views/picture/trip/likeChecked.png" style="width:30px;height:30px;">
 											</div>
 										</div>
 									</div>
@@ -274,7 +285,7 @@
         text-decoration: none;
         color:black;
         list-style:none;
-        /* border:1px solid green; */
+       	/* border:1px solid green; */
     }
     
     #myLTInfo,#myResInfo,#myLodInfo,#myAttInfo,.manuBar{
@@ -330,6 +341,41 @@
 	
 	.swiper-slide:hover .broken{
 		visibility: visible;
+	}
+	
+	.card-body{
+		display:flex;
+	}
+	
+	.card-body:first-child {
+		flex:8;
+	}
+	
+	.card-body:last-child {
+		margin-top:10px;
+	}
+	
+	.likeClick{
+		position:relative;
+	}
+	
+	.likeCan{
+		position:absolute;
+		visibility: hidden;
+	}
+	
+	.likeClick:hover .likeCan{
+		visibility: visible;
+	}
+	
+	.likeClick:hover .ori{
+		visibility: hidden;
+	}
+	
+	.tover{
+		white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 	}
 </style>
 

@@ -297,7 +297,7 @@
              
             </div>
             
-            <div class="col-2 d-flex flex-row my-auto">
+            <div class="col-3 d-flex flex-row my-auto">
                  <button id="tWriteBtn" style="display:inline" class="d-flex align-items-end justify-content-center mt-3 mb-3 btn btn-lg" style="text-decoration: underline;" onclick="location.replace('<%=request.getContextPath()%>/trip/tripInsertView.do?no=<%=loginUser.getNo()%>')">                   
                  	 <p class="m-0">여행기 작성</p> 
                  	 <img src="<%=request.getContextPath()%>/images/write_icon.png" class="ml-2 w-25">

@@ -108,21 +108,31 @@ public class TripListViewServlet extends HttpServlet {
 		String userTag = user.getTag();
 		
 		//�α��ε� ���� no�� ��ġ�ϴ� �±׼��� ���� ���� ����� �Խù� ��������
-		tripTagCountList = new TagFilter().tagCountList(userTag);
-		
-		
-		//총 데이터 수
-		totalItemCount = new TripService2().selectTripCount(lo, category, keyword);
+		tripTagCountList = new TagFilter().tagCountList(userTag);	
 		
 		if(infoNo.equals("null")) {
+			totalItemCount = new TripService2().selectTripCount(lo, category, keyword);
 			list = new TripService2().selectTripPage(cPage, perPage, lo, category, keyword, recent, like, tripTagCountList, first);
 		}else {
 			System.out.println("여기 찍히냐");
+			
+			if(tripList.size()>0) {
+			
 			ArrayList<Trip2> sortList = new ArrayList<Trip2>(); 
 			for(int i=(cPage-1)*perPage; i<cPage*perPage; i++) {
-				sortList.add(tripList.get(i));
+				if(i<tripList.size())
+					sortList.add(tripList.get(i));
 			}
 			list = sortList;
+			
+			totalItemCount = list.size();
+		
+			}else {
+				request.setAttribute("msg", "관련된 여행기가 없습니다.");
+				request.setAttribute("loc", "/tripinfo/tripinfoMain?category=맛집");
+				
+				request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);;
+			}
 		}
 		
 		for(Trip2 t : list) {
@@ -141,7 +151,7 @@ public class TripListViewServlet extends HttpServlet {
 		likeList = new TripService2().selectLike(userNo);		
 		
 		//����¡ ó��
-		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/tripListView.do", totalItemCount, cPage, perPage, keyword, category, lo, recent, like, first); //�������� ��������
+		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/tripListView.do", totalItemCount, cPage, perPage, keyword, category, lo, recent, like, first, infoNo); //�������� ��������
 		
 		//������Ʈ�� ����
 		request.setAttribute("keyword", keyword);

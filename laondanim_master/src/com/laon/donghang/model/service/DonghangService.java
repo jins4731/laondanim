@@ -188,9 +188,9 @@ public class DonghangService {
 		return list;
 	}
 
-	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(int loginUserNo, int no) {
+	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(int loginUserNo, int no, String filter) {
 		Connection conn = getConnection();
-		List<DonghangJoinDonghangJoinTb> list = dao.selectDonghangJoinList(conn, loginUserNo, no);
+		List<DonghangJoinDonghangJoinTb> list = dao.selectDonghangJoinList(conn, loginUserNo, no, filter);
 		close(conn);
 		return list;
 	}
@@ -252,6 +252,7 @@ public class DonghangService {
 		
 		return result;
 	}
+
 
 
 }

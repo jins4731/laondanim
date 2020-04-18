@@ -46,7 +46,7 @@ public class AjaxDonghangJoinConfirmedRejectServlet extends HttpServlet {
 			response.getWriter().write(
 					"<span class='ml-2'>&#x274C</span>거절 실패하였습니다. 다시 시도해주세요.");
 		} else {
-			response.getWriter().write("<span class='ml-2'>&#x1F647</span>동행 거절하셨습니다.");
+			response.getWriter().write("<span class='ml-2'>&#x1F647</span>동행 거절하셨습니다.<br>거절된 신청서는 수신함에서 삭제됩니다.");
 		}
 		
 		

@@ -775,11 +775,19 @@ public class DonghangDao {
 		return list;
 	}
 
-	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(Connection conn, int loginUserNo, int no) {
+	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(Connection conn, int loginUserNo, int no, String filter) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = prop.getProperty("selectDonghangJoinList");
+		String sql = "";
 		List<DonghangJoinDonghangJoinTb> list = new ArrayList();
+		
+		if(filter.equals("ALL")) {
+			sql = prop.getProperty("selectDonghangJoinList");
+		}else if(filter.equals("J")) {
+			sql = prop.getProperty("selectDonghangJoinListConfirmedJ");
+		}else if(filter.equals("Y")) {
+			sql = prop.getProperty("selectDonghangJoinListConfirmedY");
+		}
 		
 		try {
 			pstmt = conn.prepareStatement(sql);		
@@ -1036,6 +1044,8 @@ public class DonghangDao {
 		
 		return result;
 	}
+
+
 
 
 }

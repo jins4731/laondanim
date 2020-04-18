@@ -188,9 +188,9 @@ public class DonghangService {
 		return list;
 	}
 
-	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(int loginUserNo, int no) {
+	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(int loginUserNo, int no, String filter) {
 		Connection conn = getConnection();
-		List<DonghangJoinDonghangJoinTb> list = dao.selectDonghangJoinList(conn, loginUserNo, no);
+		List<DonghangJoinDonghangJoinTb> list = dao.selectDonghangJoinList(conn, loginUserNo, no, filter);
 		close(conn);
 		return list;
 	}
@@ -231,9 +231,9 @@ public class DonghangService {
 		return userList;
 	}
 
-	public int joinComfirmedUpdate(String confirmedValue, int no) {
+	public int joinComfirmedUpdate(String confirmedValue, int joinNo, int dhNo) {
 		Connection conn = getConnection();
-		int result = dao.joinComfirmedUpdate(conn, confirmedValue, no);
+		int result = dao.joinComfirmedUpdate(conn, confirmedValue, joinNo, dhNo);
 		if(result>0) {
 			commit(conn);
 		} else rollback(conn);
@@ -241,4 +241,18 @@ public class DonghangService {
 		
 		return result;
 	}
+
+	public int donghangJoinPlus(int dhNo) {
+		Connection conn = getConnection();
+		int result = dao.donghangJoinPlus(conn, dhNo);
+		if(result>0) {
+			commit(conn);
+		} else rollback(conn);
+		close(conn);
+		
+		return result;
+	}
+
+
+
 }

@@ -109,43 +109,39 @@
 				                
 				                <div class="d-flex flex-column mt-5 mb-3 justify-content-center align-self-center text-center" style="width: 400px; height: auto;">
 				                    <p class="m-0 " style="font-weight: 600;">회원님의 여행 관심사를 알려주세요<span>&#x1F60A</span></p>                  
-				                </div>              
+				                </div>     
+				                
+				                <%
+				                	String[] tags=up.getTag().split(",");
+				                %>         
 				                
 				                <div class="form-group d-flex flex-column justify-content-center mt-4" style="width: 400px;">
 				                    <p class="mb-2 ml-2 align-items-start">관심지역을 <strong>선택</strong>해주세요.</p>
 				                    <div class="form-group">
 				                    	<select name="likeArea" class="form-control" id="likeAreaSelect" required>
-				                          <option value="" disabled selected>관심지역 선택</option>
-				                          <option value="서울">서울</option>
-				                          <option value="부산">부산</option>
-				                          <option value="대구">대구</option>
-				                          <option value="인천">인천</option>
-				                          <option value="광주">광주</option>
-				                          <option value="대전">대전</option>
-				                          <option value="울산">울산</option>
-				                          <option value="세종">세종</option>
-				                          <option value="경기">경기</option>
-				                          <option value="강원">강원</option>
-				                          <option value="충청북도">충청북도</option>
-				                          <option value="충청남도">충청남도</option>
-				                          <option value="전라북도">전라북도</option>
-				                          <option value="전라남도">전라남도</option>
-				                          <option value="경상북도">경상북도</option>
-				                          <option value="경상남도">경상남도</option>
-				                          <option value="제주도">제주도</option>
+				                          <option disabled selected>관심지역 선택</option>
+				                          <option value="서울" <%=tags[0].equals("서울")?"selected":""%>>서울</option>
+				                          <option value="부산" <%=tags[0].equals("부산")?"selected":""%>>부산</option>
+				                          <option value="대구" <%=tags[0].equals("대구")?"selected":""%>>대구</option>
+				                          <option value="인천" <%=tags[0].equals("인천")?"selected":""%>>인천</option>
+				                          <option value="광주" <%=tags[0].equals("광주")?"selected":""%>>광주</option>
+				                          <option value="대전" <%=tags[0].equals("대전")?"selected":""%>>대전</option>
+				                          <option value="울산" <%=tags[0].equals("울산")?"selected":""%>>울산</option>
+				                          <option value="세종" <%=tags[0].equals("세종")?"selected":""%>>세종</option>
+				                          <option value="경기" <%=tags[0].equals("경기")?"selected":""%>>경기</option>
+				                          <option value="강원" <%=tags[0].equals("강원")?"selected":""%>>강원</option>
+				                          <option value="충청북도" <%=tags[0].equals("충청북도")?"selected":""%>>충청북도</option>
+				                          <option value="충청남도" <%=tags[0].equals("충청남도")?"selected":""%>>충청남도</option>
+				                          <option value="전라북도" <%=tags[0].equals("전라북도")?"selected":""%>>전라북도</option>
+				                          <option value="전라남도" <%=tags[0].equals("전라남도")?"selected":""%>>전라남도</option>
+				                          <option value="경상북도" <%=tags[0].equals("경상북도")?"selected":""%>>경상북도</option>
+				                          <option value="경상남도" <%=tags[0].equals("경상남도")?"selected":""%>>경상남도</option>
+				                          <option value="제주도" <%=tags[0].equals("제주도")?"selected":""%>>제주도</option>
 				                        </select>                                    
 				                    </div>
 				                    <input type="hidden" id="likeArea" name="likeArea">
 				                </div>
 				                
-				                <%
-				                	String[] tags=up.getTag().split(",");
-				                %>
-				                <script>
-				                $(function () {
-				                	$('#likeArea option[value=<%=tags[0]%>]').attr('selected', 'selected');
-				                });
-				                </script>
 				                <%
 				                	String[] checkTag=new String[15];
 				                	if(tags!=null){

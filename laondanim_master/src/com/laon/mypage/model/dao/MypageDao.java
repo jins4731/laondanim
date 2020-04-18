@@ -1,6 +1,8 @@
 package com.laon.mypage.model.dao;
 
 import static com.laon.common.template.JDBCTemplate.close;
+import static com.laon.common.template.JDBCTemplate.commit;
+import static com.laon.common.template.JDBCTemplate.rollback;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -773,6 +775,26 @@ public class MypageDao {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, tripNo);
 			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	//내 게시글 삭제
+	public int myBoardDelete(Connection conn,int[] boardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("myBoardDelete");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			for(int i=0; i<boardNo.length; i++) {
+				pstmt.setInt(1, boardNo[i]);
+				result=pstmt.executeUpdate();
+			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {

@@ -428,7 +428,7 @@
 	                           		} 
 	                           	
 	                           %>
-	                            
+	                           <!-- 풀을해보자 -->
 	                           <div class="d-flex flex-row justify-content-center align-items-center">
 	                                <div class="mr-2">
 	                                	<input type="hidden" value="<%=i<count?list.get(i).getTripinfoNo():""%>"/>
@@ -476,7 +476,7 @@
 	        		}
 	       		 </script>
 	            </div>
-	
+				<!-- 풀을하자 -->
 	            <div class="row mb-2 h-50 row2">
 	            <%
 	           
@@ -851,10 +851,10 @@
 										src="<%=request.getContextPath()%>/views/picture/icon/naver(1).png"
 										alt="naver" width="30px" height="30px">
 									</a> <a href="<%=tp.getTripinfoHomePage()%>"> <img
-										src="<%=request.getContextPath()%>/views/picture/icon/naver(1).png"
+										src="<%=request.getContextPath()%>/views/picture/icon/homepage.png"
 										alt="naver" width="30px" height="30px">
 									</a> <a href="<%=tp.getTripinfoSns()%>"> <img
-										src="<%=request.getContextPath()%>/views/picture/icon/naver(1).png"
+										src="<%=request.getContextPath()%>/views/picture/icon/facebook.png"
 										alt="naver" width="30px" height="30px">
 									</a>
 								</div>

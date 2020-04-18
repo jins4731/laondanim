@@ -3,15 +3,7 @@
 <%@ include file="/views/common/header.jsp"%>
 <!-- 관리자가 여행정보 입력하는 로직 -->
 <!-- 만들 항목 -->
-<!-- 카테고리:맛집숙소명소 중에 select
-tag:선택
-name:장소명이나 축제명, 숙소명
-address:주소 입력
-운영시간 
-전화번호
-홈페이지
-네이버 링크
-sns -->
+<!-- 카테고리:맛집숙소명소 중에 select/tag:선택/name:장소명이나 축제명, 숙소명/address:주소 입력/운영시간 /전화번호/홈페이지/네이버 링크/sns -->
 <style>
 table{
 	text-align:center;
@@ -21,6 +13,25 @@ table{
 	
 	}
 </style>
+<script>
+
+function goPopup(){
+	// 주소검색을 수행할 팝업 페이지를 호출
+	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출.
+	var pop = window.open("<%=request.getContextPath()%>/popup/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
+	
+}
+
+function jusoCallBack(roadFullAddr){
+		// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.	
+	/* 	var userAddr=$("#userAddr").val() 
+		userAddr= roadFullAddr;	 */	
+		console.log(roadFullAddr);
+		console.log(typeof(roadFullAddr));
+	$("#userAddr").val(roadFullAddr);
+}
+
+</script>
 <div style='height: 170px;'></div>
 <section class="d-flex flex-column justify-content-center align-items-center">
 
@@ -88,8 +99,10 @@ table{
 			주소입력
 		</td>
 		<td>
+			<form name="form" id="form" method="post">
 			<input type="text" id="userAddr" name="userAddr" class="form-control" placeholder="Enter Addr" required="true" readonly="true"/>
 			<button class="btn btn-primary" onclick="goPopup();" >주소 찾기</button>
+			</form>
 		</td>
 		
 	</tr>
@@ -143,7 +156,7 @@ table{
 </form>
 </div>
 </section>
-<script>
+<%-- <script>
 function goPopup(){
 	// 주소검색을 수행할 팝업 페이지를 호출
 	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출.
@@ -155,7 +168,7 @@ function jusoCallBack(roadFullAddr){
 		// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.	
 		document.form.userAddr.value = roadFullAddr;		
 }
-</script>
+</script> --%>
 
 
 

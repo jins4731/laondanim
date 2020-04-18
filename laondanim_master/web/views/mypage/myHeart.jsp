@@ -32,7 +32,7 @@
 					<div class="menu">
 						<div class="manuBar">
 							<div>
-								<span>다님길</span>
+								<span>여행기</span>
 							</div>
 							<div>
 								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
@@ -45,7 +45,7 @@
 						<!-- 정보 -->
 						<div id="myLTInfo">
 							<div style="height:45px;">
-								<span>총 <%=likeTripCount %>개의 ♥ 다님길</span>
+								<span>총 <%=likeTripCount %>개의 ♥ 여행기</span>
 							</div>
 						</div>
 						<!-- 게시글위치 -->

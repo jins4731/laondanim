@@ -14,6 +14,7 @@ import java.util.Properties;
 
 
 import com.laon.admin.model.vo.Reports;
+import com.laon.admin.model.vo.ReportsJoinUser;
 import com.laon.tripinfo.model.vo.Picture;
 import com.laon.tripinfo.model.vo.Tripinfo;
 
@@ -30,28 +31,30 @@ public class AdminDao {
 		}
 	}
 
-	public List<Reports> selectReport(Connection conn,int cPage,int perPage) {
+	public List<ReportsJoinUser> selectReport(Connection conn,int cPage,int perPage) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		List<Reports> list=new ArrayList();
+		List<ReportsJoinUser> list=new ArrayList();
 		String sql=prop.getProperty("selectReport");
 	try{pstmt=conn.prepareStatement(sql);
 		pstmt.setInt(1, (cPage-1)*perPage+1);
 		pstmt.setInt(2,cPage*perPage);
 		rs=pstmt.executeQuery();
 		while(rs.next()) {
-		Reports re=new Reports();
+		ReportsJoinUser re=new ReportsJoinUser();
 		re.setNo(rs.getInt("no"));
 		re.setUserNo(rs.getInt("user_no"));
 		re.setDonghangNo(rs.getInt("donghang_no"));
 		re.setBoardNo(rs.getInt("board_no"));
 		re.setReportContent(rs.getString("report_content"));
 		re.setStatus(rs.getString("status"));
+		re.setUserId(rs.getString("user_id"));
 		list.add(re);
 			}
 	}catch(SQLException e) {
 		e.printStackTrace();
 	}finally {
+		close(rs);
 		close(pstmt);
 	}
 		

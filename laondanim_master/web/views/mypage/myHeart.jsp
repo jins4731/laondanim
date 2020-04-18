@@ -158,7 +158,7 @@
 										data:{mindNo:$(this).find("input").val(),
 											userNo:<%=loginUser.getNo()%>},
 										success:function(data){
-											
+											console.log(data);
 										}
 									});
 								});

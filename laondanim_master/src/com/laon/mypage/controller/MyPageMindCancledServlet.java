@@ -32,6 +32,9 @@ public class MyPageMindCancledServlet extends HttpServlet {
 		int mindNo=Integer.parseInt(request.getParameter("mindNo"));
 		
 		int result=new MypageService().myMindCancled(mindNo);
+		
+		System.out.println("result"+result);
+		response.getWriter().print(result);
 	}
 
 	/**

@@ -3,15 +3,7 @@
 <%@ include file="/views/common/header.jsp"%>
 <!-- 관리자가 여행정보 입력하는 로직 -->
 <!-- 만들 항목 -->
-<!-- 카테고리:맛집숙소명소 중에 select
-tag:선택
-name:장소명이나 축제명, 숙소명
-address:주소 입력
-운영시간 
-전화번호
-홈페이지
-네이버 링크
-sns -->
+<!-- 카테고리:맛집숙소명소 중에 select/tag:선택/name:장소명이나 축제명, 숙소명/address:주소 입력/운영시간 /전화번호/홈페이지/네이버 링크/sns -->
 <style>
 table{
 	text-align:center;

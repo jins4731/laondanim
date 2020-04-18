@@ -244,8 +244,8 @@
                     <button type="button" id="category" name="category"
                         class="ldBtn dropdown-toggle mb-5" data-toggle="dropdown" style="font-weight: 600; width: 150px;">일정</button>
                     <div class="dropdown-menu">
-                        <a id="courseDropBt" href="#" class="dropdown-item">일정</a>
-                        <a id="reviewDropBt" href="#" class="dropdown-item">후기</a>
+                        <a id="courseDropBt" href="#" class="dropdown-item">여행 일정</a>
+                        <a id="reviewDropBt" href="#" class="dropdown-item">여행 후기</a>
                     </div>
                 </div>
 

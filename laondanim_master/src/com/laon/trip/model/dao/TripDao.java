@@ -739,8 +739,8 @@ public class TripDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, Integer.parseInt(data.getUserNo()));
-			pstmt.setInt(1, 1);
+			pstmt.setInt(1, Integer.parseInt(data.getUserNo()));
+//			pstmt.setInt(1, 1);
 			pstmt.setString(2, data.getCategory());
 			pstmt.setString(3, data.getTag());
 			pstmt.setString(4, data.getTitle());
@@ -750,8 +750,8 @@ public class TripDao {
 			pstmt.setString(8, data.getTravleTyp());
 			pstmt.setDate(9, Date.valueOf(data.getTravleStartDate()));
 			pstmt.setDate(10, Date.valueOf(data.getTravleEndDate()));
-//			pstmt.setString(11, data.getPublicEnabled());
-			pstmt.setString(11, "y");
+			pstmt.setString(11, data.getPublicEnabled());
+//			pstmt.setString(11, "y");
 			pstmt.setString(12, data.getDeleted());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {

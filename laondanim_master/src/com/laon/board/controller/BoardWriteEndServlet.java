@@ -85,8 +85,8 @@ public class BoardWriteEndServlet extends HttpServlet {
 		//msg창을 이용해 result 분기처리 해주기 
 		if(result>0) {
 			
-			request.setAttribute("BoardJoinUser", b);
-			request.getRequestDispatcher("/views/board/boardView.jsp").forward(request, response);;
+			/* request.setAttribute("BoardJoinUser", b); */
+			request.getRequestDispatcher("/board/list.do").forward(request, response);;
 		}else {
 			request.setAttribute("msg", "게시글 등록에 실패하였습니다");
 			request.setAttribute("loc","/views/board/boardWrite.jsp");

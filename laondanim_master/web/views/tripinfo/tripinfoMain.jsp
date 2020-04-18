@@ -173,27 +173,7 @@
 	                </div>
 	            </div>
         	</div>
-			<!-- <div class="d-flex flex-row justify-content-center">
-                <div class="d-flex flex-row my-auto mr-5">              
-               		<div class="dropdown">
- 						<button class="btn btn-light dropdown-toggle border border-secondary rounded mr-3" type="button" id="type-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-   							상호명
- 						</button>
- 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-   							<a class="dropdown-item" href="#">상호명</a>
-   							<a class="dropdown-item" href="#">지역명</a>							
-							<a class="dropdown-item" href="#">태그명</a>
-						</div>
-						
-					</div>	
-					<div>
-						<input type="text" size="20" id="search"/>
-					</div>
-					<div>
-						<input type="button" id="search-btn" class="btn btn-primary" value="검색"/>						
-					</div>
-				</div>
-			</div> -->
+	
   
 			<!--------------------------------------------------찜목록 버튼---------------------------------------------------->
 			<div class="my-heart">
@@ -307,7 +287,21 @@
 	                            %><%=request.getContextPath()+"/views/picture/tripinfo/"+picture%>" class="img-thumbnail p-0 h-100 w-100 rounded-0 border-0" style="height:50%"/> 
 	                                          
 	                        </div>
+	                        
+	                       
+	                        
 	     <style>
+	     
+	      .modal-body{
+	     	position: relative;
+	     }
+	     
+	     .comment-hide{
+	     	 position: absolute;
+	     	 display:none;
+	     	
+	     	
+	     } 
 	              
 	           .card-body{
 	               position: relative;
@@ -557,7 +551,7 @@
 						
 					 
 				</div>
-			</div>
+			
 			
 			<!-------------------------------------------여행정보 리스트 페이징---------------------------------------------------->
 			<div class="tripinfo-page d-flex" style="justify-content: center;">
@@ -733,13 +727,13 @@
 						<!-- 카카오 맵 api 추가 정호-->		
 						
 				
-							<div class="tripinfo-comment" style="width:700px; height:350px; border:solid 1px red;">
+							<div class="tripinfo-comment" style="width:650px; height:350px; border:solid 1px red; margin-left:30px;">
 									<div class="tripinfo-comment-title" style="height: 30px;">
 										<span>한줄평</span>
 									</div>
 									
 						
-									<div class="tripinfo-comment-list">
+									<div class="tripinfo-comment-list" style="height:290px;">
 										<table class="tripinfo-comment-table">
 										<%
 										for(TripInfoComment tc : commentList) { 
@@ -749,7 +743,21 @@
 												<td style="width:70px;"><span><%=loginUser==null?"":loginUser.getNickName()%></span></td>
 												<td style="width:450px;"><span><%=tc.getContent()%></span></td>
 												<td style="width:100px;"><span><%=tc.getWriteDate()%></span></td>
-												<td style="width:50px;" class="comment-menu"><a href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">...</a></td>
+												<td style="width:50px;" class="comment-menu">
+													<button class="btn comment-hide-btn">
+														<img src="<%=request.getContextPath()%>/views/picture/icon/menuicon.png" alt="..." width="10px" height="10px">
+													</button>
+												</td>
+												<input type="hidden"  value="<%=tp.getTripinfoNo()%>"/>
+												<input type="hidden" value="<%=loginUser==null?"":loginUser.getNo()%>"/>
+												<input type="hidden"  value="<%=tc.getContent()%>"/>
+												
+												<td>
+													<div class="comment-hide" style="border:solid 1px red; width:160px;">
+														<button class="btn comment-delete">삭제하기</button>
+														<button class="btn comment-close">취소</button>
+													</div>
+												</td>
 											</tr>				
 										<%
 											
@@ -773,7 +781,8 @@
 											<input type="hidden"  value="<%=tp.getTripinfoNo()%>"/>
 											<input type="hidden" value="<%=loginUser==null?"":loginUser.getNo()%>"/>
 											<input type="hidden" value="<%=loginUser==null?"":loginUser.getNickName()%>"/>
-											<input type="text"  placeholder="최대  30 글자" maxlength="30"/>
+											
+											<input type="text"  placeholder="최대  30 글자" maxlength="30" style="width:500px;"/>
 											<button type="button" class="btn-insert">등록</button>
 										</div>
 								</div>
@@ -795,7 +804,48 @@
 				%>
 	</section>
 	<div style="height: 150px"></div>
+	
 	<script> 
+		$(function(){
+			$(".comment-hide-btn").click(function(e){
+				
+				$(this).parent().siblings().eq(6).children().show();
+			})
+			
+			$(".comment-close").click(function(e){
+				
+				$(this).parent().hide();
+			})
+			
+			$(".comment-delete").click(function(e){
+				
+				$(this).parent().hide();
+				
+				var commenthide=$(this).parent().parent().parent();
+				
+				$.ajax({
+					url : "<%=request.getContextPath()%>/tripinfo/deleteComment.do",
+					type:"get",
+					data: {
+						tripinfoNo : $(this).parent().parent().siblings("input").eq(0).val(),
+						userNo : $(this).parent().parent().siblings("input").eq(1).val(),
+						content1 : $(this).parent().parent().siblings("input").eq(2).val()
+					},
+					success:function(data){
+						console.log(data); 
+						commenthide.addClass("d-none");
+						
+						
+					},
+					error:(r,e,m)=>{ 
+						console.log(r);
+						console.log(m);
+						
+					}
+				})
+			})
+		})
+	
 	   /* ---------------------------------------------댓글등록------------------------------------------------ */
 				$(function(){
 					$(".btn-insert").click(function(e){
@@ -814,14 +864,22 @@
 								content :  $(this).parent().find("input").eq(3).val()
 								
 							},
-							
+						
 							success :data=>{
 								console.log(data);
 								//let table=$("<table>");
 								let tr=$("<tr class='comment-tr'>").append($("<td style='width:70px;'>").html(data["nickName"]))
 										.append($("<td style='width:450px;'>").html(data["content"]))
 										.append($("<td style='width:100px;'>").html("2020-04-17"))
-										.append($("<td style='width:50px;'class='comment-menu'>").html("..."));
+										.append($("<td style='width:50px;'class='comment-menu'>").append($("<button>").addClass("btn").addClass("comment-hide-btn").append($("<img>").attr({
+											"src" : "<%=request.getContextPath()%>/views/picture/icon/menuicon.png", 
+											"width" : "10px",
+											"height": "10px"
+                                        }))));
+							
+											
+										/* }))		
+										})); */
 								//table.append(tr);
 								console.log(tr);
 								$(".tripinfo-comment-table").append(tr);

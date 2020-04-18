@@ -193,4 +193,17 @@ public class TripInfoService {
 		return infoList;
 	}
 	
+	public int deleteComment(int tripinfoNo,int userNo,String content) {
+		Connection conn = getConnection();
+		int result = dao.deleteComment(conn,tripinfoNo,userNo,content);
+		if (result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	
+	
 }

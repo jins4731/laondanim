@@ -36,7 +36,7 @@
 				<%=up.getNickName() %>님!
 			</div>
 			<div>
-				라온다님과 함께한지 ㅇㅇ일 ♥
+				라온다님과 함께한지 <%=up.getJoinDays() %>일 ♥
 			</div>
 		</div>
 		

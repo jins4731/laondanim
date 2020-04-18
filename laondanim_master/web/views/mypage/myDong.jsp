@@ -184,9 +184,9 @@
 												</div>
 			                           		</div>
 			                           		<%if(j.getImage()==null){ %>
-												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px" onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo=<%=loginUser.getNo() %>&no=<%=j.getNo()%>')">
 											<%}else{ %>
-												<img src="<%=request.getContextPath() %>/upload/donghang/<%=j.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
+												<img src="<%=request.getContextPath() %>/upload/donghang/<%=j.getImage()%>" class="card-img" alt="..." width="155px" height="155px" onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo=<%=loginUser.getNo() %>&no=<%=j.getNo()%>')">
 											<%} %>
 			                           </div>
 			                           <div class="d-flex flex-column justify-content-center card-body p-2" style="font-size:7px;">
@@ -212,7 +212,7 @@
 			                   </td>
 			                <%} %>
 							</tr>
-							<%if(joinDong.size()==4){ %>
+							<%if(oriJoinDong.size()==4){ %>
 							<tr>
 								<td colspan="4" style="text-align: center;">
 									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myDongMyJD.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>

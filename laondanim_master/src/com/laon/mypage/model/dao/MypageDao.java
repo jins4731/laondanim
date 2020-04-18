@@ -63,6 +63,7 @@ public class MypageDao {
 				up.setEmail(rs.getString("email"));
 				up.setTag(rs.getString("tag"));
 				up.setImage(rs.getString("image"));
+				up.setJoinDays(rs.getInt("joindays"));
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();

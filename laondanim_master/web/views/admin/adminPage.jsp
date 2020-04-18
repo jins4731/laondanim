@@ -3,7 +3,7 @@
 <%@page import="java.util.List,com.laon.admin.model.vo.ReportsJoinUser" %>
 <%
 	List<ReportsJoinUser> list=(List)request.getAttribute("reports");
-
+	User loginUser=(User)session.getAttribute("loginUser");
 %>	
 	
 <%@ include file="/views/common/header.jsp"%>
@@ -61,9 +61,15 @@
             <td>커뮤니티 게시판</td>
             <td><%=re.getReportContent() %></td>
             <!-- if 문으로 동행일때 연결 바꿔주기 -->
+            <%if(re.getDonghangNo()=='null'){%>
             <td><button class="ref-page btn btn-primary" value="<%=re.getBoardNo()%>">게시글보기</button></td>
+            <%}else if(re.getBoardNo()=='null'){ %>
+            <td><button class="ref-page btn btn-primary" value="<%=re.getBoardNo()%>">게시글보기</button></td>
+            <%} %>
+            <input type="hidden" value="<%=loginUser.getNo() %>" id="loginUser">
             <td><button class="close-account btn btn-warning" value="<%=re.getUserNo()%>">이용정지</button></td>
         </tr>
+        
 		<% } %>
 
     </table>
@@ -78,8 +84,13 @@ $(function(){
 	//신고된 해당 게시글을 확인하는 버튼
 	$(".ref-page").click(function(){
 		var boardNo=$(this).val();
+		var donghangNo=$(this).val();
+		var loginUserNo=$("#loginUser").val();
+		if(boardNo!=null){
 		location.href="<%=request.getContextPath()%>/board/boardView.do?no="+boardNo;
-		
+		}else{
+		location.href="<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo="+loginUserNo+"&no="+donghangNo;	
+		}
 		
 	})
 	

@@ -45,6 +45,11 @@ public class TripInfoCommentInsertServlet extends HttpServlet {
 						
 		TripInfoComment tc = new TripInfoComment(0,tripinfoNo,userNo,null,content,'N');
 		
+		/*
+		 * TripInfoComment tc2 = new
+		 * TripInfoService().selectDeleteComment(tripinfoNo,userNo);
+		 */
+		
 		int result = new TripInfoService().insertComment(tc);
 		
 		//TripInfoComment tc2 = new TripInfoService().selectComment2(); 

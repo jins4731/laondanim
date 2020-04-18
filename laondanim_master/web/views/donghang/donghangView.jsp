@@ -19,11 +19,18 @@
 	List<UserProfile> joinList = (List)request.getAttribute(DonghangKey.JOIN_PEOPLE);
 	
 	//페이지이용하고 있는 로그인 유저의 프로필 사진
-	String loginUserImg = (String)request.getAttribute(UserKey.IMAGE);
+	UserProfile uProfile=(UserProfile)session.getAttribute("userProfile");
 	
 	//페이지이용하고 있는 로그인 유저의 동행 참여여부(테이블로 가져와서 안에서 처리)
 	DonghangJoin dji = (DonghangJoin)request.getAttribute(CommonKey.DONGHANG_JOIN_ITEM);
 	
+	//작성자 프사 저장
+	String dhWriterimg = "";
+	for(UserProfile u : joinList){
+		if(u.getNo()==dh.getUserNo()){
+			dhWriterimg = u.getImage();
+		}
+	}	
 %>
    	<div style="height: 170px;"></div>
     <section class="d-flex flex-column justify-content-center align-items-center">
@@ -41,17 +48,16 @@
                 </div>
                 <div class="d-flex flex-row justify-content-center align-items-center" style="width: 480px;">
                     <!--글쓴이 프사 넣기-->
-                    <%	String dhUserP = "";
-                    	for(UserProfile up : joinList){
-                    	if(up.getNo()==dh.getNo()) dhUserP = up.getImage();                    
-                    }%>
-                    <%if(dhUserP.equals("null")){ %>
-                    <img src="<%=request.getContextPath()%>/images/profile_icon.png" alt="" style="width: 50px; height: 50px;">
-                    <%} else{%>
-                        <!-- 얘 수정 --> 
-              	 	<img src="<%=request.getContextPath()%>/images/<%=dhUserP%>" alt="" style="width: 50px; height: 50px;">
-                    <%} %>
-
+					<%if(dh.getUserNo()!=loginUser.getNo()){ %>
+	                    <%if(dhWriterimg.equals("")){ %>
+	                    <img src="<%=request.getContextPath()%>/images/profile_icon.png" alt="" style="width: 50px; height: 50px;" class="profileImg">
+	                    <%} else{%>
+	                        <!-- 얘 수정 --> 
+	              	 	<img src="<%=request.getContextPath()%>/views/picture/profile/<%=dhWriterimg%>" alt="" style="width: 50px; height: 50px;" class="profileImg">
+	                    <%} %>
+					<%}else{ %>
+						<img src="<%=request.getContextPath()%>/views/picture/profile/<%=uProfile.getImage()%>" alt="프로필사진" style="width: 70px; height: 70px;" class="m-0 profileImg">
+					<%}%>
                     <div class="d-flex flex-column pl-1" style="width: 380px;">
                         <div class="d-flex flex-row align-items-center">
                             <% if(dh.getEnded().equals("N")){%>
@@ -196,7 +202,7 @@
                     	  for(UserProfile up : joinList){
                     %>             
                         <div class="d-flex justify-content-center align-items-center m-2">
-                            <img src="<%=request.getContextPath()%>/images/profile_icon.png" alt="프로필사진" style="width: 40px; height: 40px;">
+                            <img src="<%=request.getContextPath()%>/views/picture/profile/<%=up.getImage()%>" alt="프로필사진" style="width: 40px; height: 40px;" class="profileImg">
                             <p class="m-0"><%=up.getNickName()%></p>
                         </div>
                     <%}} %>  
@@ -253,7 +259,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-4" style="width: 650px; height: 160px;">
                             <div class="d-flex flex-column mr-4">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <img src="<%=loginUserImg%>" alt="프로필사진" style="width: 70px; height: 70px;" class="m-0">
+                                    <img src="<%=request.getContextPath()%>/views/picture/profile/<%=uProfile.getImage()%>" alt="프로필사진" style="width: 70px; height: 70px;" class="m-0 profileImg">
                                 </div>
                                 <p class="m-0"><%=loginUser.getUserId()%></p>
                                 <p class="m-0"><%=loginUser.getNickName()%></p>
@@ -342,6 +348,7 @@
 	        <form action="<%=request.getContextPath()%>/donghang/userReport.do" method="post">
 	        <input type="hidden" name="userNo" value="<%=dh.getUserNo()%>">
 	        <input type="hidden" name="donghangNo" value="<%=dh.getNo()%>">
+	        <input type="hidden" name="loginUserNo" value="<%=loginUser.getNo()%>">
 	        <input type="radio" name="report" id="report3" value="폭력적위협" checked>폭력적 위협<br>
 	        <input type="radio" name="report" id="report4" value="스팸및사기" checked>스팸 및 사기<br>
 	        <input type="radio" name="report" id="report5" value="사생활침해" checked>사생활 침해<br>
@@ -456,6 +463,9 @@
 		}
 		#reportBtn *{
 			cursor: pointer;		
+		}
+		.profileImg{
+			border-radius: 35px;
 		}
     </style> 
 

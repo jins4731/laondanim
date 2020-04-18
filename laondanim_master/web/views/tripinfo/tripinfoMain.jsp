@@ -148,12 +148,12 @@
 			</script>
 			
 			<!-- 검색창 -->
-			<div class="container mb-5 mt-4">
-	            <div class="row justify-content-center">
-	                <div class="col-8 border border-secondary rounded d-flex flex-row justify-content-between p-0">
+			<div class="mb-5 mt-4 d-flex justify-content-center">
+	            <div class="row" id="searchCon">
+	                <div class="col-8 d-flex flex-row justify-content-between p-0">
 	                    <div class="d-flex flex-row">
 	                        <div class="dropdown">
-		 						<button class="btn btn-light dropdown-toggle border border-secondary rounded mr-3" type="button" id="type-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		 						<button class="btn dropdown-toggle rounded mr-3" type="button" id="type-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="searchFilter">
 		   							상호명
 		 						</button>
 		 						
@@ -337,6 +337,29 @@
 	           }
 	   
 	           .hdTagBox:hover{
+	           }
+	           
+	           #searchCon{
+	                height: 45px;
+	                width: 450px;
+	                border: 3px solid #00abbf;
+	                background-color: #00abbf;
+	                border-radius: 30px;
+	                /* overflow: hidden; */
+	           }
+	           
+	           #searchFilter{
+	           		background: none;
+	           		border: 0px;
+	           }
+	           #searchCon .btn{
+	           		color: white;
+	           }
+	           #searchCon input[type="text"]{
+	           		width: 300px;
+	           }
+	           #searchCon #cancel{
+	           		color : #00abbf;
 	           }
 	       </style>
 	                        <div class="card-footer h-30 d-flex flex-column p-1 text-center bg-white">                                                  

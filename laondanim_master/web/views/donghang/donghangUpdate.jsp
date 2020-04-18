@@ -220,7 +220,7 @@
                                                         <span><%=tripList.get(i).getCategory()%></span>
                                                         <span><%=tripList.get(i).getWriteDate() %></span>
                                                     </div>
-                                                    <img src="<%=tripList.get(i).getImage()%>" class="card-img" alt="..." width="235px" height="235px">
+                                                    <img src="<%=request.getContextPath()%>/views/picture/trip/<%=tripList.get(i).getImage()%>" class="card-img" alt="..." width="235px" height="235px">
                                                     <div class="d-flex flex-column justify-content-center card-body p-2" style="line-height: 22px;">
                                                         <span><%=tripList.get(i).getTitle()%><span><br>
                                                         <span><%=loginUser.getNickName()%></span><br>

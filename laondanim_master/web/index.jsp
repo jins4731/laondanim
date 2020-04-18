@@ -9,8 +9,7 @@
 	@font-face { font-family: 'Cafe24Danjunghae'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Danjunghae.woff') format('woff'); font-weight: normal; font-style: normal; }
 	/* 본문 폰트 */
 	@font-face { font-family: 'S-CoreDream-4Regular'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff'); font-weight: normal; font-style: normal; }
-	
-			
+				
 	section > div {
 		font-family: 'Open Sans';
 		font-style: normal;
@@ -20,7 +19,6 @@
 		transform: translateY(-50%);
 		height: 100%;
 	}
-
 
 	/* span {
 		font-size: 4em;

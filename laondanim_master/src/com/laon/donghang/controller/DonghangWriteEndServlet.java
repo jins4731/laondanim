@@ -98,7 +98,7 @@ public class DonghangWriteEndServlet extends HttpServlet {
 		int tripNo = mr.getParameter("selectTripNo")==null||mr.getParameter("selectTripNo").equals("")?-1:Integer.parseInt(mr.getParameter("selectTripNo")); //null인 경우 무조건 -1로 설정
 		String content = mr.getParameter("content");
 		String tag = mr.getParameter("tag");
-		
+		System.out.println("롸이트엔드에서의 트립 넘버? : "+tripNo);
 		//vo저장
 		Donghang donghang = new Donghang(0, userNo, tripNo, null, 0, tag, title, content,
 				travleLocale, sqlTravelStartDate, sqlTravelEndDate, sqlRecruitStartDate, sqlRecruitEndDate,

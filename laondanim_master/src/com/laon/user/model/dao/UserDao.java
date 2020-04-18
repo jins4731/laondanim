@@ -197,6 +197,7 @@ public class UserDao {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
+			close(rs);
 			close(pstmt);
 		}
 		return flag;
@@ -222,6 +223,7 @@ public class UserDao {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
+			close(rs);
 			close(pstmt);
 		}
 		return flag;

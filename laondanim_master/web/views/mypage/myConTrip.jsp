@@ -21,7 +21,7 @@
 					<button type="button" id="myH" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageHeart.do?userNo=<%=loginUser.getNo()%>')">내 마음함</button>
 					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong.do?userNo=<%=loginUser.getNo()%>')">내 동행</button>
 				</div>
-				<div id="myPageView">
+				<div id="myPageView" class="w-100">
 					<div class="menu">
 						<div class="manuBar">
 							<div>
@@ -51,7 +51,7 @@
 								</div>
 							</div>
 							<!-- 게시글위치 -->
-							<table id="dnTbl" class="d-flex justify-content-center">
+							<table id="dnTbl" class="d-flex justify-content-start">
 								<input type="hidden" value="<%=loginUser.getNo() %>" name="userNo" id="userNo">
 								<tr class="d-flex flex-wrap">
 								<%for(TripMyCon t:trip){ %>

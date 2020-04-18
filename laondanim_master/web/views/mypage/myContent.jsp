@@ -57,7 +57,7 @@
 						<!-- 게시글위치 -->
 						<%if(trip.size()>0){ %>
 						<table id="dnTbl">
-							<tr class="d-flex flex-wrap justify-content-center">
+							<tr class="d-flex flex-wrap">
 								<%for(TripMyCon t:trip){ %>
 								<td class="p-1">
 									<div class="card" style="width: 155px; height: 250px;">
@@ -197,6 +197,10 @@
 <style>
 	div.menu{
 		width:auto;
+		cursor:pointer;
+	}
+	
+	img{
 		cursor:pointer;
 	}
 	

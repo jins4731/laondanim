@@ -157,10 +157,25 @@
 		text-align:center;
 	}
 	
+	#myMenuBtn>#myDh{
+		color: white;
+    	background-color: #00abbf;
+	}
+	
 	#myMenuBtn>button{	
 		width:150px;
 		margin: 20px;
     	border-radius: 100px;
+    	border-radius: 20px;
+	    background-color: white;
+	    border: 2px solid #00abbf;
+	    color: #00abbf;
+	    padding: 6px 15px 6px 15px;
+	}
+	
+	#myMenuBtn>button:hover{
+		color: white;
+    	background-color: #00abbf;
 	}
 	
 	.tover{

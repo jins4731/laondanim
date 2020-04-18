@@ -13,13 +13,13 @@ import com.laon.mypage.model.service.MypageService;
  * Servlet implementation class MyPageMyDHDeleteServlet
  */
 @WebServlet("/mypage/myDHDelete.do")
-public class MyPageMyDHMultiDeleteServlet extends HttpServlet {
+public class MyPageDongMyDHMultiDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageMyDHMultiDeleteServlet() {
+    public MyPageDongMyDHMultiDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

@@ -20,26 +20,29 @@
 					<button type="button" id="myH" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageHeart.do?userNo=<%=loginUser.getNo()%>')">내 마음함</button>
 					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong.do?userNo=<%=loginUser.getNo()%>')">내 동행</button>
 				</div>
-				<div id="myPageView" class="w-100">
-					<div class="d-flex flex-column justify-content-center align-items-center">
-						<div class="d-flex flex-column justify-content-center align-items-center" id="pwCk" style="text-align:center;">
-							<div style="margin:5px;">
-								<span>
-									정보 수정을 위한 확인이 필요합니다.
-								</span>
-							</div>
-							<div id="pwCkView" style="width:380px;height:40px;"></div>
-							<div style="margin:5px;">
-								<input type="password" name="pw" id="pw" placeholder="비밀번호 입력" class="d-flex text-center border-0 p-2" style="width:380px;">
-								<hr style="width:380px;">
-							</div>
-							
-							<div class=" align-self-end mr-2">
-								<button type="button" style="border-radius:100px;width:80px;" class="btn btn-info text-align" onclick="location.replace('<%=request.getContextPath()%>/myPage/myInfoUpdate.do?userNo=<%=loginUser.getNo()%>')">확인</button>
+				<form action="<%=request.getContextPath()%>/myPage/myInfoUpdate.do" method="get">
+					<input type="hidden" value="<%=loginUser.getNo() %>" name="userNo">
+					<div id="myPageView" class="w-100">
+						<div class="d-flex flex-column justify-content-center align-items-center">
+							<div class="d-flex flex-column justify-content-center align-items-center" id="pwCk" style="text-align:center;">
+								<div style="margin:5px;">
+									<span>
+										정보 수정을 위한 확인이 필요합니다.
+									</span>
+								</div>
+								<div id="pwCkView" style="width:380px;height:40px;"></div>
+								<div style="margin:5px;">
+									<input type="password" name="pw" id="pw" placeholder="비밀번호 입력" class="d-flex text-center border-0 p-2" style="width:380px;">
+									<hr style="width:380px;">
+								</div>
+								
+								<div class=" align-self-end mr-2">
+									<button type="submit" style="border-radius:100px;width:80px;" class="btn btn-info text-align">확인</button>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				</form>
 			</section>
 		</div>
 	</div>
@@ -59,6 +62,7 @@
     
     #pwCk{
     	padding-top: 200px;
+    	padding-bottom: 200px;
     }
     
     #myMenuBtn{
@@ -69,6 +73,16 @@
 		width:150px;
 		margin: 20px;
     	border-radius: 100px;
+    	border-radius: 20px;
+	    background-color: white;
+	    border: 2px solid #00abbf;
+	    color: #00abbf;
+	    padding: 6px 15px 6px 15px;
+	}
+	
+	#myMenuBtn>button:hover{
+		color: white;
+    	background-color: #00abbf;
 	}
 </style>
 

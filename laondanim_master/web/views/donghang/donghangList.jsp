@@ -509,7 +509,7 @@
     		let recent = 'recent';
     		let viewcount = 'null';
     		let nearSchedule = 'null';
-    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
+    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?searchFilter=' + searchFilter + '&keyword=' + keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
     	});
 	    //조회수 버튼
     	$("#inputViewCountBtn").click(()=>{
@@ -520,7 +520,7 @@
     		let recent = 'null';
     		let viewcount = 'viewcount';
     		let nearSchedule = 'null';
-    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
+    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?searchFilter=' + searchFilter + '&keyword=' + keyword +'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
     	});
     	//가까운일정순 버튼
     	$("#inputNearScheduleBtn").click(()=>{
@@ -531,7 +531,7 @@
     		let recent = 'null';
     		let viewcount = 'null';
     		let nearSchedule = 'nearSchedule';
-    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
+    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?searchFilter=' + searchFilter + '&keyword=' + keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
     	});
     	//동행비번 모달 띄우기
     	let dhPw;

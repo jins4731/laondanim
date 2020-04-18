@@ -18,6 +18,8 @@ import com.laon.donghang.model.vo.Donghang;
 import com.laon.etc.model.vo.Like;
 import com.laon.etc.model.vo.Mind;
 import com.laon.etc.model.vo.Picture;
+import com.laon.trip.model.vo.Day;
+import com.laon.trip.model.vo.Schedule;
 import com.laon.trip.model.vo.Trip;
 import com.laon.tripinfo.model.vo.Tripinfo;
 import com.laon.user.model.vo.User;
@@ -36,6 +38,9 @@ public class EtcDao {
 	private String selectPictureTripinfoNo = "selectPictureTripinfoNo";
 	private String selectPictureDonghangNo = "selectPictureTripDonghangNo";
 	private String selectMindListUserNo = "selectMindListUserNo";
+	
+	
+	private String insertPicture = "insertPicture";
 	
 	
 	
@@ -205,6 +210,31 @@ public class EtcDao {
 			close(pstmt);
 		}
 		return list;
+	}
+
+
+	public int[] insertPicture(Connection conn, int tripNo, List<Picture> pictureList) {
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty(insertPicture);
+		int result[] = null;
+		System.out.println("tripNo : " + tripNo);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			for(Picture pic :pictureList) {
+				System.out.println("tripNo : " + pic.getImage());
+				pstmt.setInt(1, tripNo);
+				pstmt.setString(2, pic.getImage());
+				pstmt.addBatch();
+			}
+			result = pstmt.executeBatch();
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 	

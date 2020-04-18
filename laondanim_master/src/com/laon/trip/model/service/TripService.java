@@ -154,10 +154,12 @@ private UserDao userDao = new UserDao();
 		Connection conn = getConnection();
 		int result = tripDao.insertTrip(conn,data);
 		int scheduleResult[] = {};
+		int pictureResult[] = {};
 		boolean isGood = false;
 		if(result>0) {
 			int tripNo = tripDao.selectTripLastSeq(conn);
-			scheduleResult = tripDao.insertTripSchedule(conn,data,1);
+			pictureResult = etcDao.insertPicture(conn,tripNo,data.getPictureList());
+			scheduleResult = tripDao.insertTripSchedule(conn,data,tripNo);
 			
 			for (int i = 0; i < scheduleResult.length; i++) {
 				System.out.println("scheduleResult[i] : " + scheduleResult[i]);
@@ -167,6 +169,17 @@ private UserDao userDao = new UserDao();
 					
 				}
 			}
+			if(isGood) {
+				for (int i = 0; i < pictureResult.length; i++) {
+					System.out.println("pictureResult[i] : " + pictureResult[i]);
+					if(pictureResult[i] >= 0 || pictureResult[i] == -2) {
+						isGood = true;
+					}else {
+						
+					}
+				}
+			}
+			
 			if(isGood) {
 				commit(conn);
 			}else {

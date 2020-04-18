@@ -316,4 +316,18 @@ public class MypageService {
 		return result;
 	}
 	
+	//내 동행 삭제
+	public int myDongDelete(int myDongNo) {
+		Connection conn=getConnection();
+		int result=dao.myDongDelete(conn,myDongNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
 }

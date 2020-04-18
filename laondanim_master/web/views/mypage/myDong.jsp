@@ -73,14 +73,14 @@
 												    <div class="dropdown-menu">
 												    <%if(d.getEnded().equals("N")){ %>
 												    	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">신청서 수신함</a>
-												      	<a class="dropdown-item" id="myDongDeadline" data-toggle="modal" data-target="#myDongDeadline" value="<%=d.getNo()%>">모집 마감</a>
+												      	<a class="dropdown-item" data-toggle="modal" data-target="#myDongDeadline" >모집 마감</a>
 												      	<!-- href="#" onclick="return confirm('동행 모집을 마감하시겠습니까?');" -->
 												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangUpdate.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">동행 수정</a>
-												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongDel.do?no=<%=d.getNo() %>">동행 삭제</a>
+												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongDel.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo() %>">동행 삭제</a>
 						                        	<%}else{ %>
 						                        		<a class="dropdown-item" href="#">신청서 수신함</a>
 												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">동행 수정</a>
-												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangUpdate.do?userNo=<%=d.getNo() %>&fileName=<%=d.getImage()%>">동행 삭제</a>
+												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongDel.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo() %>">동행 삭제</a>
 						                        	<%} %>
 												    </div>
 												</div>
@@ -329,10 +329,6 @@
 			flag=true;
 		}
 	});
-	
-	/* $("myDongDeadline").on("shown.bs.modal', function(){
-		var no = $(this).val();
-	} */
 	
 	$(".modal-close").click(()=>{
 	    $("#myDongDeadline").hide();

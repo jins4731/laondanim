@@ -827,7 +827,7 @@ public class MypageDao {
 	public int myDongMultiDelete(Connection conn,int[] myDongNo) {
 		PreparedStatement pstmt=null;
 		int result=0;
-		String sql=prop.getProperty("myDongMultiDelete");
+		String sql=prop.getProperty("myDongDelete");
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -835,6 +835,24 @@ public class MypageDao {
 				pstmt.setInt(1, myDongNo[i]);
 				result=pstmt.executeUpdate();
 			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	//내 동행 삭제
+	public int myDongDelete(Connection conn,int myDongNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("myDongDelete");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, myDongNo);
+			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {

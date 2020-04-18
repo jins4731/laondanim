@@ -52,6 +52,7 @@ public class MypageDao {
 			while(rs.next()) {
 				up=new UserProfile();
 				up.setNo(rs.getInt("no"));
+				up.setCreatedDate(rs.getDate("created_date"));
 				up.setUserId(rs.getString("user_id"));
 				up.setPassword(rs.getString("password"));
 				up.setName(rs.getString("name"));

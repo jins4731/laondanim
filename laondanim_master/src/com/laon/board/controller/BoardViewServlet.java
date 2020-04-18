@@ -36,7 +36,7 @@ public class BoardViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//�Խñ� ���� ����
 		//�Խñ� ��ȣ ������
-		int boardNo=Integer.parseInt(request.getParameter("no"));
+		int boardNo=Integer.parseInt(request.getParameter("boardNo"));
 		System.out.println("���Դ�?"+boardNo);
 		//��Ű�� ��ȸ�� ����. f5������ ��ȸ���� ��ӿö���
 		Cookie[] cookies=request.getCookies();
@@ -72,7 +72,7 @@ public class BoardViewServlet extends HttpServlet {
 		
 		if(b==null) { //�Խñ��� �������
 			
-			request.setAttribute("msg", "������ �Խù��� �������� �ʽ��ϴ�");
+			request.setAttribute("msg", "선택한 게시물이 없습니다");
 			request.setAttribute("loc", "/board/list.do");
 			request.getRequestDispatcher("/views/common/msg.jsp");
 			

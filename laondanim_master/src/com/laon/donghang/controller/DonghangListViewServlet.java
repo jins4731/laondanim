@@ -91,6 +91,7 @@ public class DonghangListViewServlet extends HttpServlet {
 //		}
 		
 		Donghang d = null;
+		System.out.println("사이즈 : " + tagCountList.size());
 		ArrayList<Donghang> donghangList = new ArrayList<Donghang>();
 		if(first.equals("first")) {
 			for(int i=(currentPage-1)*pagePerRow; i<(currentPage)*pagePerRow; i++) {
@@ -115,8 +116,14 @@ public class DonghangListViewServlet extends HttpServlet {
 				d.setRecruitPeopleNo(tagCountList.get(i).getRecruitPeopleNo());
 				d.setJoinPeopleNo(tagCountList.get(i).getJoinPeopleNo());
 				
-				donghangList.add(d);
+				if(d.getDeleted().equals("N"))
+					donghangList.add(d);
 				}
+			}
+			
+			System.out.println("=====동행=====");
+			for(Donghang d1 : donghangList) {
+				System.out.println(d1);
 			}
 			
 			ArrayList<Picture> pictureList = new DonghangService().selectPicture(donghangList);

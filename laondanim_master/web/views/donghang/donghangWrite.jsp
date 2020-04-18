@@ -198,7 +198,7 @@
                                                         <span><%=tripList.get(i).getCategory()%></span>
                                                         <span><%=tripList.get(i).getWriteDate() %></span>
                                                     </div>
-                                                    <img src="<%=tripList.get(i).getImage()%>" class="card-img" alt="..." width="235px" height="235px">
+                                                    <img src="<%=request.getContextPath()%>/views/picture/trip/<%=tripList.get(i).getImage()%>" class="card-img" alt="..." width="235px" height="235px">
                                                     <div class="d-flex flex-column justify-content-center card-body p-2" style="line-height: 22px;">
                                                         <span><%=tripList.get(i).getTitle()%><span><br>
                                                         <span><%=loginUser.getNickName()%></span><br>
@@ -223,10 +223,10 @@
                                 
                                     <div style="width: 766px; position: absolute;" class="d-flex flex-row justify-content-md-between">
                                         <button type="button" style="border:none; background: none;" id="back">
-                                            <img src="icon/img-left_icon.png" style="width: 50px;">
+                                            <img src="<%=request.getContextPath()%>/images/img-left_icon.png" style="width: 50px;">
                                         </button>
                                         <button type="button" style="border:none; background: none;" id="next">
-                                            <img src="icon/img-right_icon.png"style="width: 50px;">
+                                            <img src="<%=request.getContextPath()%>/images/img-right_icon.png"style="width: 50px;">
                                         </button>
                                     </div>
                             </div>

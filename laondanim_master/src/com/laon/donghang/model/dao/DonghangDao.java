@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.laon.admin.model.vo.Reports;
 import com.laon.common.PropPath; //<-com.laon.common.template.PropPath;로 되어있어 변경함
 import com.laon.donghang.model.vo.Donghang;
 import com.laon.donghang.model.vo.DonghangJoin;
@@ -1046,6 +1047,25 @@ public class DonghangDao {
 		return result;
 	}
 
+	public int insertReport(Connection conn, Reports re) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("insertReport");
+		
+	try{pstmt=conn.prepareStatement(sql);
+	
+		pstmt.setInt(1, re.getUserNo());
+		pstmt.setInt(2, re.getDonghangNo());
+		pstmt.setString(3, re.getReportContent());
+		result=pstmt.executeUpdate();
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(pstmt);
+	}return result;
+		
+
+	}
 
 
 

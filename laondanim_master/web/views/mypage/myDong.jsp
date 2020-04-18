@@ -163,17 +163,21 @@
 			                           	<div>
 			                           		<div style="position: absolute;">
 			                            		<div class="dropdown" style="position: relative;">
+			                            		<%for(DonghangJoin dj:joinDong){ 
+					                        		if(j.getNo()==dj.getDonghangNo()){
+													    if(!dj.getConfirmed().equals("Y")){ %>
 											    	<button type="button" class="btn" data-toggle="dropdown">
 											      		...
 											    	</button>
+											    	<%} } }%>
 					                        		<div class="dropdown-menu">
 					                        		<%for(DonghangJoin dj:joinDong){ 
 					                        			if(j.getNo()==dj.getDonghangNo()){
 													    	if(dj.getConfirmed().equals("N")){ %>
 														    	<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myDongJoinRefusal.do?userNo=<%=loginUser.getNo()%>&dongJoinNo=<%=dj.getNo()%>">삭제</a>
-								                        	<%}else if(dj.getConfirmed().equals("Y")){ %>
-														      	<a class="dropdown-item" href="#">동행 나가기</a>
-								                        	<%}else{ %>
+								                        	<%-- <%}else if(dj.getConfirmed().equals("Y")){ %>
+														      	<a class="dropdown-item" href="#">동행 나가기</a> --%>
+								                        	<%}else if(dj.getConfirmed().equals("J")){ %>
 														      	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongJoinCancle.do?userNo=<%=loginUser.getNo()%>&djNo=<%=dj.getNo()%>&title=<%=j.getTitle() %>" onclick="return confirm('[<%=j.getTitle() %>] 동행 참여 신청을 취소 하시겠습니까?');">참여 신청 취소</a>
 						                        	<%} } }%>
 						                        	</div>

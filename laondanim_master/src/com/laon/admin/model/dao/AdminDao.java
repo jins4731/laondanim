@@ -54,6 +54,7 @@ public class AdminDao {
 	}catch(SQLException e) {
 		e.printStackTrace();
 	}finally {
+		close(rs);
 		close(pstmt);
 	}
 		

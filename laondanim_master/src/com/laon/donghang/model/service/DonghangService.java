@@ -72,7 +72,7 @@ public class DonghangService {
 			}
 			
 		}
-		
+		close(conn);
 		return donghangItem;
 	}
 
@@ -93,6 +93,7 @@ public class DonghangService {
 	public List<Like> selectLike(List<TripMyCon> list) {
 		Connection conn = getConnection();
 		List<Like> likeList = dao.selectLike(conn, list);
+		close(conn);
 		return likeList;
 	}
 

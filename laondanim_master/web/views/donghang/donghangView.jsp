@@ -41,7 +41,7 @@
                     <img src="<%=request.getContextPath()%>/images/profile_icon.png" alt="" style="width: 50px; height: 50px;">
                     <%} else{%>
                         <!-- 얘 수정 --> 
-              	 	<img src="<%=request.getContextPath()%>/images/profile_icon.png" alt="" style="width: 50px; height: 50px;">
+              	 	<img src="<%=request.getContextPath()%>/images/<%=dhUserP%>" alt="" style="width: 50px; height: 50px;">
                     <%} %>
 
                     <div class="d-flex flex-column pl-1" style="width: 380px;">
@@ -65,12 +65,12 @@
                 </div>
                 <div>
             	    <%if(dh.getTripNo() > 0) {%>
-                    <button id="danimLinkBtn" type="button" class="ldBtn">
-                    	다님일정 보기 <strong class="ml-1">&#9002;</strong>
+                    <button id="danimLinkBtn" type="button" class="ldBtn" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=dh.getTripNo()%>')">
+                    	여행일정 보기 <strong class="ml-1">&#9002;</strong>
                     </button>
                     <%}else {%>
-                    <button id="danimLinkBtn" type="button" class="ldBtnInactive" onclick="alert('연결된 다님일정이 없습니다.');">
-                    	다님일정 보기 <strong class="ml-1">&#9002;</strong>
+                    <button id="danimLinkBtn" type="button" class="ldBtnInactive" onclick="alert('연결된 여행일정이 없습니다.');">
+                    	여행일정 보기 <strong class="ml-1">&#9002;</strong>
                     </button>                    	
                     <%}%>
 

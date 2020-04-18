@@ -39,12 +39,7 @@ public class DonghangWriteServlet extends HttpServlet {
 		List<TripMyCon> list = new DonghangService().selectMyTripList(no);
 		//LIKE LIST
 		List<Like> likeList = new DonghangService().selectLike(list);
-		for(TripMyCon t : list) {
-			System.out.println("trList ==== "+t);
-		}
-		for(Like l : likeList) {
-			System.out.println("LikeList ==== "+l);
-		}
+		
 		request.setAttribute(CommonKey.TRIP_LIST, list);
 		request.setAttribute(CommonKey.LIKE_LIST, likeList);
 		

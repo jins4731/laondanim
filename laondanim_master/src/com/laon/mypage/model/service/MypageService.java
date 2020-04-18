@@ -369,4 +369,18 @@ public class MypageService {
 		return result;
 	}
 	
+	//좋아요 취소
+	public int likeTripCancled(int userNo,int likeNo) {
+		Connection conn=getConnection();
+		int result=dao.likeTripCancled(conn,userNo,likeNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
 }

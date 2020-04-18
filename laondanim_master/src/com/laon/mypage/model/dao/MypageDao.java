@@ -884,7 +884,7 @@ public class MypageDao {
 	public int likeTripMultiCancled(Connection conn,int userNo,int[] myLikeNo) {
 		PreparedStatement pstmt=null;
 		int result=0;
-		String sql=prop.getProperty("likeTripMultiCancled");
+		String sql=prop.getProperty("likeTripCancled");
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -893,6 +893,24 @@ public class MypageDao {
 				pstmt.setInt(2, userNo);
 				result=pstmt.executeUpdate();
 			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int likeTripCancled(Connection conn, int userNo, int likeNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("likeTripCancled");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);				
+			pstmt.setInt(1, likeNo);
+			pstmt.setInt(2, userNo);
+			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {

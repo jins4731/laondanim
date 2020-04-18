@@ -20,8 +20,6 @@
        //지역 에 따른 분기  처리
        String lo = (String)request.getAttribute("lo");
        
-       System.out.println("jsp에서 category : " + category);
-       System.out.println("jsp에서 lo : " + lo);
      %>
           
     <div style="height: 170px;"></div>
@@ -396,8 +394,7 @@
                        	int no = 0;
                        if(i<count){
                     	   no=list.get(i).getNo();
-                    	   System.out.println("과연 no는 ? ");
-                    	   System.out.println(no);
+                    	   
                        }
                        %>
                         <div class="card-body h-50 w-100 p-0 border-0">

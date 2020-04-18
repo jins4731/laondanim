@@ -462,16 +462,19 @@
                     $("#back").css("visibility","visible");
                 });
 
-                /*리스트에 체크된 값을 히든인풋에 넣어주기*/                
-/*                 $('button[data-dismiss="modal"]').click(()=>{
-                    alert($('input[name="selectTrip"]:checked').val()); */
-                    let no = $('input[name="selectTrip"]:checked').val();
+                /*리스트에 체크된 값을 히든인풋에 넣어주기*/              
+                let no = $('input[name="selectTrip"]:checked').val();
+                $("#selectTripNo").val(no);
+
+                /*체크된 값이 바뀔 때 다시 저장해 주기*/
+                $('input[name="selectTrip"]').change(()=>{
+                	no = $('input[name="selectTrip"]:checked').val();
                     $("#selectTripNo").val(no);
-                    console.log( $("#selectTripNo").val());
-/*                 }); */
+                })
+
    
-                let liNo = $('input[name="selectTrip"]:checked').val();
-                let str = "#ck"+liNo;
+/*                 let liNo = $('input[name="selectTrip"]:checked').val();
+                let str = "#ck"+liNo; */
                 /* 체크박스 개수 제한 */
                 function doOpenCheck(chk){
                 var obj = document.getElementsByName("selectTrip");

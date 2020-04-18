@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="com.laon.user.model.vo.User" %>	
+<%@page import="com.laon.user.model.vo.UserProfile" %>	
 <%
 	User loginUser=(User)session.getAttribute("loginUser");
+	UserProfile userProfile=(UserProfile)session.getAttribute("userProfile");
+	System.out.println("^^^로긴 :"+userProfile);
 %>
 	
 <!DOCTYPE html>
@@ -27,6 +30,14 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <!-- 폰트 적용 -->
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+
+
+   
+   
+
+
+
 
 <title>라온다님 메인</title>
 	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css"> .nanumsquare { font-family: 'NanumSquare', sans-serif !important; }
@@ -165,7 +176,12 @@ header li>a {
 						<!-- null 이 아닐경우  마이페이지/로그아웃 출력, -->
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> 
-							<img src="<%=request.getContextPath()%>/icon/profile_icon.png" width="50px" height="50px">
+						<%if(userProfile.getImage()==null){ %>
+							<img src="<%=request.getContextPath()%>/images/profile_icon.png" width="50px" height="50px">
+						<%} else{ %>
+							<img src="<%=request.getContextPath()%>/views/picture/profile/<%=userProfile.getImage()%>" width="50px" height="50px"
+								style="border-radius:25px;">
+						<%}%>
 						</a>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myPageContent.do?userNo=<%=loginUser.getNo()%>">마이페이지</a>  
@@ -176,7 +192,12 @@ header li>a {
 						<!-- 아이디가 admin일경우 관리자 페이지 출력 -->
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> 
-							<img src="<%=request.getContextPath()%>/icon/profile_icon.png" width="50px" height="50px">
+						<%if(userProfile.getImage()==null){ %>
+							<img src="<%=request.getContextPath()%>/images/profile_icon.png" width="50px" height="50px">
+						<%} else{ %>
+							<img src="<%=request.getContextPath()%>/views/picture/profile/<%=userProfile.getImage()%>" width="50px" height="50px"
+								style="border-radius:25px;">
+						<%}%>
 						</a>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="<%=request.getContextPath()%>/admin/adminView.do">관리자페이지</a> 

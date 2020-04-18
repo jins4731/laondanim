@@ -46,7 +46,8 @@
 <%
 	int userNo = loginUser.getNo();
 %>
-	<section>
+<div style="height: 170px"></div>
+	<section class="d-flex flex-column justify-content-center h-100">
 		<div class="container">
 			<!-- 필터 버튼 눌렀을 때 데이터 처리 -->
 			<input type="hidden" value="<%=type==null?"상호명":type %>" id="type"/> <!-- type 저장 input 태그 -->
@@ -320,7 +321,7 @@
 			</div> --%> 
 			
 			<!--여행 정보 리스트-->
-				 <div class="container mt-3 justify-content-center" style="height:640px;">
+				 <div class="container mt-3 justify-content-center mb-5" style="height:640px;">
 	            <div class="row mb-2 h-50 row1">
 	            <%
 	            int size = list.size();
@@ -720,11 +721,11 @@
 				<div class="modal-dialog modal-xl">
 					<div class="modal-content">
 
-`	<style>
+<!-- 	<style>
 	div{
 		border:1px solid black;
 	}
-	</style>
+	</style> -->
 						<!--------------------------------------------상세페에지 해더------------------------------------------>
 						<div class="modal-header tripinfo-header pb-0">
 							<div class="tripinfo-title d-flex d-block">

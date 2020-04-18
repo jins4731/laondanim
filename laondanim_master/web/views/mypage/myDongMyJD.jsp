@@ -203,17 +203,17 @@
 	});
 	
 	$(function(){
-		$(".imgDrop").stop().css({"transform":"rotate(90deg)"});
+		$(".imgDrop").stop().css({"transform":"rotate(-90deg)"});
 	});
 	var flag=false;
 	$(".menu").click(function(){
 		if(flag){
 			$(this).next().slideDown();
-			$(this).find(".imgDrop").stop().css({'transform': 'rotate(90deg)'},1000);
+			$(this).find(".imgDrop").stop().css({'transform': 'rotate(-90deg)'},1000);
 			flag=false;
 		}else{
 			$(this).next().slideUp();
-			$(this).find(".imgDrop").stop().css({'transform': 'rotate(-90deg)'},1000);
+			$(this).find(".imgDrop").stop().css({'transform': 'rotate(90deg)'},1000);
 			flag=true;
 		}
 	});

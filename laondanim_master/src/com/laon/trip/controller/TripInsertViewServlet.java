@@ -34,11 +34,12 @@ public class TripInsertViewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("TripInsertViewServlet. doGet()");
-//		String userNo = request.getParameter(UserKey.NO);
-		String userNo = "1";
+		String userNo = request.getParameter(UserKey.NO);
+//		String userNo = "1";
+		System.out.println("userNo : " + userNo);
 		
-//		List<Tripinfo> list = new TripService().selectZzimList(userNo);
-		List<Tripinfo> list = new TripService().selectTripinfoList();
+		List<Tripinfo> list = new TripService().selectZzimList(userNo);
+//		List<Tripinfo> list = new TripService().selectTripinfoList();
 		List<Tripinfo> matzipList = new ArrayList();
 		List<Tripinfo> myoungsoList = new ArrayList();
 		List<Tripinfo> sooksoList = new ArrayList();
@@ -51,6 +52,10 @@ public class TripInsertViewServlet extends HttpServlet {
 				sooksoList.add(tripinfo);
 			}
 		}
+		
+		System.out.println("matzipList : " + matzipList);
+		System.out.println("myoungsoList : " + myoungsoList);
+		System.out.println("sooksoList : " + sooksoList);
 		
 		
 		request.setAttribute("userNo", userNo);

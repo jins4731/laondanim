@@ -34,10 +34,10 @@
 %>
 	
 <style>
-	*{
+/* 	*:not(:not([type="submit"])){
 		font-family: NanumSquare;
 		font-size: 17px;
-	}
+	} */
 	/* 카테고리 제목 폰트 */
 	@font-face { font-family: 'Cafe24Danjunghae'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Danjunghae.woff') format('woff'); font-weight: normal; font-style: normal; }
 	/* 본문 폰트 */
@@ -253,7 +253,7 @@
 					for(DonghangJoinUserPicture dh : topList){				
 				%>
                 <div class="col h-100 p-0 mr-2">
-                <%if(dh.getPublicEnabled().equals("Y")){ %>
+                <%if(dh.getPublicEnabled().equals("Y")&&(dh.getPublicEnabled().equals("Y")&&dh.getUserNo()!=loginUser.getNo())){ %>
                     <div class="card m-0" style="height: 100%;" 
                     onclick="fn_pwInput(<%=dh.getPw()%>, <%=loginUser.getNo()%>,<%=dh.getNo()%>);">
                 <%}else{ %>
@@ -509,7 +509,7 @@
     		let recent = 'recent';
     		let viewcount = 'null';
     		let nearSchedule = 'null';
-    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
+    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?searchFilter=' + searchFilter + '&keyword=' + keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
     	});
 	    //조회수 버튼
     	$("#inputViewCountBtn").click(()=>{
@@ -520,7 +520,7 @@
     		let recent = 'null';
     		let viewcount = 'viewcount';
     		let nearSchedule = 'null';
-    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
+    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?searchFilter=' + searchFilter + '&keyword=' + keyword +'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
     	});
     	//가까운일정순 버튼
     	$("#inputNearScheduleBtn").click(()=>{
@@ -531,7 +531,7 @@
     		let recent = 'null';
     		let viewcount = 'null';
     		let nearSchedule = 'nearSchedule';
-    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?keyword='+keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
+    		location.replace('<%=request.getContextPath()%>/donghang/donghangListView.do?searchFilter=' + searchFilter + '&keyword=' + keyword+'&recent='+recent+'&viewcount='+viewcount+'&nearSchedule='+nearSchedule);
     	});
     	//동행비번 모달 띄우기
     	let dhPw;

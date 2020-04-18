@@ -17,6 +17,7 @@ import com.laon.common.etc.MyFileRenamePolicy;
 import com.laon.common.robot.LaonRobot;
 import com.laon.etc.model.vo.Picture;
 import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 
 public class MultiPartFormTemplate {
@@ -49,7 +50,7 @@ public class MultiPartFormTemplate {
 		MultipartRequest mr;
 		List<Picture> pictureList = new ArrayList();
 		try {
-			mr = new MultipartRequest(request, saveDir, maxSize,encoding, new MyFileRenamePolicy());
+			mr = new MultipartRequest(request, saveDir, maxSize,encoding, new DefaultFileRenamePolicy());
 //			picture = picture.mrProcess(picture, mr, null);
 			item = robot.mrProcess(item, mr,pictureList);
 			

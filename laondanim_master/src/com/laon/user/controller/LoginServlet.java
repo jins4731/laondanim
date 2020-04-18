@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.laon.mypage.model.service.MypageService;
 import com.laon.user.model.service.UserService;
 import com.laon.user.model.vo.User;
+import com.laon.user.model.vo.UserProfile;
 
 /**
  * Servlet implementation class LoginServlet
@@ -48,6 +50,8 @@ public class LoginServlet extends HttpServlet {
 		System.out.println("유저번호:"+userNo);
 		int result=new UserService().searchReport(userNo);
 		System.out.println("리포트결과 있니:"+result);
+		//유저 프로필 담기
+		UserProfile up = new MypageService().selectUserNo(userNo);
 		//세션 만들어주기
 			if(u!=null&&result>0) {
 			
@@ -59,6 +63,8 @@ public class LoginServlet extends HttpServlet {
 			}else if(u!=null) {//로그인 성공했을떄
 				HttpSession session=request.getSession();
 				session.setAttribute("loginUser", u);
+				session.setAttribute("userProfile",up);
+
 			/* request.getRequestDispatcher("/").forward(request, response); */
 			//아이디 저장 위한 쿠키 설정
 				System.out.println(request.getParameter("saveId"));

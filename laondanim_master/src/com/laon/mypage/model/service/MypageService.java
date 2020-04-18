@@ -341,4 +341,18 @@ public class MypageService {
 		return result;
 	}
 	
+	//좋아요 취소
+	public int myMindCancled(int mindNo) {
+		Connection conn=getConnection();
+		int result=dao.myMindCancled(conn,mindNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
 }

@@ -861,4 +861,21 @@ public class MypageDao {
 		return result;
 	}
 	
+	public int myMindCancled(Connection conn, int mindNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("myMindCancled");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, mindNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 }

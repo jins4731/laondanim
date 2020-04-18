@@ -141,12 +141,30 @@
 							<%for(TripinfoMyMind res:restaurant){ %>
 								<div class="swiper-slide">
 									<div class="broken">
-										<img id="<%=res.getNo() %>" style="width:30px;height:30px;" src="<%=request.getContextPath() %>/images/brokenHeart.png">
+										<button class="btn btn-mind">
+											<img style="width:30px;height:30px;" src="<%=request.getContextPath() %>/images/brokenHeart.png">
+											<input type="hidden" value="<%=res.getNo() %>" class="mind">
+										</button>
 									</div>
 									<img class="card-img" src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=res.getImage()%>">
 								</div>
 							<%} %>
 							</div>
+							<script>
+							$(function(){
+								$(".btn-mind").click(function(e){
+									$.ajax({
+										url:"<%=request.getContextPath()%>/mypage/myMindCancled.do",
+										data:{mindNo:$(this).find("input").val(),
+											userNo:<%=loginUser.getNo()%>},
+										success:function(data){
+											
+										}
+									});
+								});
+							});
+								
+							</script>
 						
 							<!-- 네비게이션 -->
 							<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->

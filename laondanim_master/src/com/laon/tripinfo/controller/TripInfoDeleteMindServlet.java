@@ -37,7 +37,16 @@ public class TripInfoDeleteMindServlet extends HttpServlet {
 		System.out.println("서블릿에서 트립인포no"+tripinfoNo);
 		
 		
+		
+		
 		int result = new TripInfoService().deleteMind(tripinfoNo,userNo);
+		
+		System.out.println("너 모야 : " + result);
+		
+		
+		 response.setContentType("text/html;charset=utf=8");
+		 response.getWriter().print(result);
+		
 	}
 
 	/**

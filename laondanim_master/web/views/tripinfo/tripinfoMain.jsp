@@ -255,7 +255,7 @@
 			<div class="container mt-4">
 	            <div class="row justify-content-between">
 	                <div class="col-4 d-flex align-items-center">
-	                    <h6 class="display-6 mt-2">총 <%=request.getAttribute("totalData")%>건의 여행기가 있습니다.</h6>
+	                    <h6 class="display-6 mt-2">총 <%=request.getAttribute("totalData")%>건의 여행정보가 있습니다.</h6>
 	                </div>
 	
 	                <div class="col-3 d-flex justify-content-end">

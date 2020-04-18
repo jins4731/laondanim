@@ -997,4 +997,23 @@ public class DonghangDao {
 		
 		return userList;
 	}
+
+	public int joinComfirmedUpdate(Connection conn, String confirmedValue, int no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("joinComfirmedUpdate");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, confirmedValue);
+			pstmt.setInt(2, no);
+			result = pstmt.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 }

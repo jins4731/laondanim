@@ -22,7 +22,7 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
 	int totalRowCount = (int)request.getAttribute(CommonKey.TOTAL_ROWCOUNT);
 	
 	List<UserProfile> userList = (List<UserProfile>)request.getAttribute(CommonKey.USER_LIST);
-
+	int no = (int)request.getAttribute("no");
 %>
 
    	<div style="height: 170px;"></div>
@@ -254,13 +254,13 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
                         <div class="d-flex flex-column justify-content-end align-items-center" style="border: 1px solid white;">
                             <fieldset class="form-group m-0">
                                 <legend for="email-label" class="bg-white p-0 m-0 w-25 text-center">자기소개</legend>
-                                <textarea class="form-control p-2" cols="87" rows="4" disabled><%=j.getContent()%></textarea>                                
+                                <textarea class="form-control p-2 pt-3 pb-3" cols="87" rows="4" disabled><%=j.getContent()%></textarea>                                
                             </fieldset>
                         </div> 
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center border-top-0">
-                    <input type="hidden" name="confirmedValue" value="J">
+                    <input type="hidden" name="confirmedValue" id="confirmedValue">
                     <button id="rejectBtn" type="button" class="ldBtnDelet mb-3 mr-3" data-dismiss="modal">거절</button>
                     <button id="acceptBtn" type="button" class="ldBtn mb-3 ml-3" data-dismiss="modal">수락</button>
                 </div>
@@ -269,6 +269,32 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
     </div>
     <%} %>
     <!---------------------------------------------------------------------------------------------------- 참여신청 모달 ----------->
+
+
+    <!------------------------------------------------------------------------------------------------ 수락/거절 안내 모달 ----------->
+    <div class="modal" id="confirmedResultModal">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        
+            <!-- Modal Header -->
+            <div class="modal-header border-bottom-0">
+            <!-- <h4 class="modal-title">Modal Heading</h4> -->
+            <button type="button" class="close modal-close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body" id="confirmedResult">
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer border-top-0">
+            <button type="button" class="ldBtnSubmit modal-close" data-dismiss="modal">Close</button>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+    <!---------------------------------------------------------------------------------------------- 수락/거절 안내 모달 끝 --------->    
 
 
 
@@ -488,7 +514,37 @@ request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount); */
             console.log($("#confirmedFilter").val());
         }
         //두번클릭 고치기 도전
+		
+        //수락 Ajax
+        $("#acceptBtn").click(()=>{
+        	$("#confirmedValue").val("Y");
+        	let confirmedValue = $("#confirmedValue").val();
+        	
+    		let xhr = new XMLHttpRequest();
+    		
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4){
+					if(xhr.status == 200){						
+						//xhr객체의 responseText에 데이터를 저장
+						$("#confirmedResult").html(xhr.responseText);
+					} else if(xhr.status == 404){
+						alert("404 error")
+					}
+				}
+			}
+			//전송에 대한 설정 : open()함수
+			
+			xhr.open("get","<%=request.getContextPath()%>/donghang/confirmedAccept.do?confirmedValue="+confirmedValue+"&no="+<%=no%>);
+			
+			//전송! : send()
+			xhr.send();		
+			
 
+           setTimeout(()=>{
+                $("#confirmedResultModal").modal("show");
+           }, 600)
+
+        });
     </script>
 
 

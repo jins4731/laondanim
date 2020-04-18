@@ -230,4 +230,15 @@ public class DonghangService {
 		close(conn);
 		return userList;
 	}
+
+	public int joinComfirmedUpdate(String confirmedValue, int no) {
+		Connection conn = getConnection();
+		int result = dao.joinComfirmedUpdate(conn, confirmedValue, no);
+		if(result>0) {
+			commit(conn);
+		} else rollback(conn);
+		close(conn);
+		
+		return result;
+	}
 }

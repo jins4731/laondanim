@@ -62,6 +62,7 @@ public class DonghangJoinListServlet extends HttpServlet {
 		request.setAttribute(CommonKey.PAGE_BAR, pageBar);
 		request.setAttribute(CommonKey.USER_LIST, userList);
 		request.setAttribute(CommonKey.TOTAL_ROWCOUNT, totalRowCount);
+		request.setAttribute("no", no);
 		request.getRequestDispatcher("/views/donghang/donghangJoinList.jsp").forward(request, response);
 	}
 

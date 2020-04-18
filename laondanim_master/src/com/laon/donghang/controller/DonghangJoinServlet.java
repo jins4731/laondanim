@@ -39,7 +39,7 @@ public class DonghangJoinServlet extends HttpServlet {
 		
 		int result = new DonghangService().donghangJoin(join);
 		
-		if(result>0) {
+		if(result<0) {
 			response.getWriter().write("<h5><span>&#x1F64B</span>동행신청 완료되었습니다.</h5>");
 		}else {
 			response.getWriter().write("<h5><span>&#x1F630</span>동행 신청 실패...다시 시도해주세요!</h5>");

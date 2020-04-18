@@ -841,4 +841,28 @@ public class TripInfoDao {
 		return infoList;
 	}
 	
+	public int deleteComment(Connection conn,int tripinfoNo , int userNo,String content) {
+		
+		PreparedStatement pstmt = null;
+		System.out.println("dao에서 트립인포no"+tripinfoNo);
+		System.out.println("dao에서 유저no"+userNo);
+		System.out.println("dao에서 컨텐트"+content);
+
+		int result = 0;
+		String sql = prop.getProperty("deleteComment");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, content);
+
+			result = pstmt.executeUpdate();
+			
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 }// Ŭ����

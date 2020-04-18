@@ -835,13 +835,13 @@ public class TripDao {
 			 
 			while(rs.next()) {
 				s = new TripSchedule();
-				s.setNo(rs.getInt("NO"));
+				//s.setNo(rs.getInt("NO"));
 				s.setTripNo(rs.getInt("TRIP_NO"));
-				s.setTripinfoNo(rs.getInt("TRIPINFO_NO"));
-				s.setDay(rs.getInt("DAY"));
-				s.setOrders(rs.getInt("ORDERS"));
-				s.setRequiredHours(rs.getString("REQUIRED_HOURS"));
-				s.setTransport(rs.getString("TRANSPORT"));
+				//s.setTripinfoNo(rs.getInt("TRIPINFO_NO"));
+				//s.setDay(rs.getInt("DAY"));
+				//s.setOrders(rs.getInt("ORDERS"));
+				//s.setRequiredHours(rs.getString("REQUIRED_HOURS"));
+				//s.setTransport(rs.getString("TRANSPORT"));
 				
 				scheduleList.add(s);
 			}
@@ -885,29 +885,8 @@ public class TripDao {
 					t.setStartDate(rs.getDate("TRAVLE_START_DATE"));
 					t.setEndDate(rs.getDate("TRAVLE_END_DATE"));
 					t.setDeleted(rs.getString("DELETED").charAt(0));
-					
-					int tNo[] = new int[tripList.size()];
-					for(Trip2 t2 : tripList) {
-						int cnt1 = 0;
-						tNo[cnt1] = t2.getNo();
-						cnt1++;
-					}
-					
-					for(int i=0; i<tNo.length; i++) {
-						System.out.println(tNo[i]);
-					}
-					
-					boolean flag = false;
-					for(int i=0; i<tNo.length; i++) {
-						if(tNo[i] == t.getNo()) {
-							flag = true;
-							break;
-						}	
-					}
-					
-					if(!flag) {
-						tripList.add(t);
-					}
+										
+					tripList.add(t);
 				}
 			}
 		}catch(SQLException e) {

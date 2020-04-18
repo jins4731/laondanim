@@ -791,7 +791,7 @@
 									<div class="carousel-inner">
 									
 									<%
-											String[] image = new String [3];
+											String[] image = new String [pictureList.size()];
 											int i=0;
 									
 											for(Picture p : pictureList){

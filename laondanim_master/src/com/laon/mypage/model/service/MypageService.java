@@ -341,10 +341,66 @@ public class MypageService {
 		return result;
 	}
 	
-	//좋아요 취소
+	//찜 취소
 	public int myMindCancled(int mindNo,int userNo) {
 		Connection conn=getConnection();
 		int result=dao.myMindCancled(conn,mindNo,userNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	//좋아요 다중취소
+	public int likeTripMultiCancled(int userNo,int[] myLikeNo) {
+		Connection conn=getConnection();
+		int result=dao.likeTripMultiCancled(conn,userNo,myLikeNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	//좋아요 취소
+	public int likeTripCancled(int userNo,int likeNo) {
+		Connection conn=getConnection();
+		int result=dao.likeTripCancled(conn,userNo,likeNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	//나의 동행 모집 마감
+	public int myDongDeadline(int dongNo) {
+		Connection conn=getConnection();
+		int result=dao.myDongDeadline(conn,dongNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	//참여 동행 신청 취소
+	public int joinDongCancle(int userNo,int jdNo) {
+		Connection conn=getConnection();
+		int result=dao.joinDongCancle(conn,userNo,jdNo);
 		if(result>0) {
 			commit(conn);
 		}else {

@@ -102,10 +102,7 @@ public class TripInfoDao {
 	//============================
 	/* �������� ����Ʈ ��������  */
 	public List<TripInfoPicture> selectTripinfoList(Connection conn, int cPage,int numPerPage ,String category, String type, String keyword, String mind) {
-		System.out.println(category);
-		System.out.println(type);
-		System.out.println(keyword);
-		System.out.println(mind);
+		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<TripInfoPicture> list = new ArrayList();
@@ -113,7 +110,6 @@ public class TripInfoDao {
 		String sql = "";
 		sql = mind.equals("null")?prop.getProperty("selectTripInfoPage2"):prop.getProperty("sortMind");
 		
-		System.out.println("��ȭ�� " + sql);
 		//SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT TR.*, (SELECT COUNT(*) 
 		//FROM MIND_TB WHERE TR.NO=TRIPINFO_NO AND CANCLED='Y') AS CNT FROM TRIPINFO_TB TR 
 		//WHERE CATEGORY=? AND ADDRESS LIKE ? AND NAME LIKE ? AND TAG LIKE ?)A) 
@@ -210,7 +206,7 @@ public class TripInfoDao {
 			
 			}
 		}
-		System.out.println("변화 후 : " + sql);
+		
 			try {
 							
 				pstmt = conn.prepareStatement(sql);
@@ -449,11 +445,8 @@ public class TripInfoDao {
 			close(rs);
 			close(pstmt);
 		}
+
 		
-		System.out.println("dao���� ");
-		for(Mind m : userMindList) {
-			System.out.println(m);
-		}
 		return userMindList;
 	}
 
@@ -792,8 +785,7 @@ public class TripInfoDao {
 			pstmt.setInt(2, tripinfoNo);
 
 			result = pstmt.executeUpdate();
-			System.out.println("=====dao=====");
-			System.out.println(result);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

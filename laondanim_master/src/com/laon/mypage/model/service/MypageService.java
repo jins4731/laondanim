@@ -302,4 +302,18 @@ public class MypageService {
 		return result;
 	}
 	
+	//내 동행 다중삭제
+	public int myDongMultiDelete(int[] myDongNo) {
+		Connection conn=getConnection();
+		int result=dao.myDongMultiDelete(conn,myDongNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
 }

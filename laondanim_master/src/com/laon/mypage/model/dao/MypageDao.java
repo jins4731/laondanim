@@ -823,4 +823,24 @@ public class MypageDao {
 		return result;
 	}
 	
+	//내 동행 다중삭제
+	public int myDongMultiDelete(Connection conn,int[] myDongNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("myDongMultiDelete");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			for(int i=0; i<myDongNo.length; i++) {
+				pstmt.setInt(1, myDongNo[i]);
+				result=pstmt.executeUpdate();
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 }

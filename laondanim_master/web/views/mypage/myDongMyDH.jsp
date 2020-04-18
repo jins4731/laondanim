@@ -33,89 +33,92 @@
 						</div>
 						<hr>
 					</div>
-					<!-- 닫힘 내용 -->
-					<div>
-						<!-- 정보 -->
-						<div id="myDHInfo">
-							<div style="height:45px;">
-								<span>총 <%=myDHCount %>개의 동행</span>
+					<form action="<%=request.getContextPath() %>/mypage/myDHDelete.do" method="get">
+						<!-- 닫힘 내용 -->
+						<div>
+							<!-- 정보 -->
+							<div id="myDHInfo">
+								<div style="height:45px;">
+									<span>총 <%=myDHCount %>개의 동행</span>
+								</div>
+								<div id="dhCk1">
+									<button class="btn" type="button">선택삭제</button>
+								</div>
+								<div id="dhCk2">
+									<label><input type="checkbox" id="dhAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
+									<button class="btn" type="submit">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
+									<button class="btn" id="dhEndBtn" type="button">돌아가기</button>
+								</div>
 							</div>
-							<div id="dhCk1">
-								<button class="btn">선택삭제</button>
-							</div>
-							<div id="dhCk2">
-								<label><input type="checkbox" id="dhAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn" id="dhEndBtn">돌아가기</button>
-							</div>
-						</div>
-						<!-- 게시글위치 -->
-						<table id="dhTbl" class="d-flex justify-content-center">
-							<tr class="d-flex flex-wrap">
-							<%for(MyDong d:myDong){ %>
-								<td class="p-1">
-				                    <div class="dhCk3" style="margin:10px;">
-										<label style="width:130px;">
-											<input type="checkbox" class="dhCks">
-										</label>
-									</div>
-				                    <div class="card" style="width: 155px; height: 275px;" >
-				                    	<div class="d-flex justify-content-between p-2" style="font-size:5px;">
-				                    		<%if(d.getEnded().equals("N")){ %>
-				                        		<span>모집중</span>
-				                        	<%}else{ %>
-				                        		<span>모집종료</span>
-				                        	<%} %>
-				                            <span><%=d.getWriteDate() %></span>
-				                        </div>
-				                        <div>
-				                        	<div style="position: absolute;">
-												<div class="dropdown" style="position: relative;">
-													<button type="button" class="btn" data-toggle="dropdown">
-												    	...
-												    </button>
-												    <div class="dropdown-menu">
-												    <%if(d.getEnded().equals("N")){ %>
-						                        		<a class="dropdown-item" href="#">신청서 수신함</a>
-						                        		<a class="dropdown-item" href="#">채팅</a>
-												      	<a class="dropdown-item" href="#">모집 마감</a>
-												     	<a class="dropdown-item" href="#">동행 수정</a>
-												     	<a class="dropdown-item" href="#">동행 삭제</a>
-						                        	<%}else{ %>
-												    	<a class="dropdown-item" href="#">신청서 수신함</a>
-												    	<a class="dropdown-item" href="#">채팅</a>
-												     	<a class="dropdown-item" href="#">동행 수정</a>
-												     	<a class="dropdown-item" href="#">동행 삭제</a>
-						                        	<%} %>
-												    </div>
+							<!-- 게시글위치 -->
+							<table id="dhTbl" class="d-flex justify-content-center">
+								<input type="hidden" value="<%=loginUser.getNo() %>" name="userNo" id="userNo">
+								<tr class="d-flex flex-wrap">
+								<%for(MyDong d:myDong){ %>
+									<td class="p-1">
+					                    <div class="dhCk3" style="margin:10px;">
+											<label style="width:130px;">
+												<input type="checkbox" class="dhCks" name="dhCks" value="<%=d.getNo()%>">
+											</label>
+										</div>
+					                    <div class="card" style="width: 155px; height: 275px;" >
+					                    	<div class="d-flex justify-content-between p-2" style="font-size:5px;">
+					                    		<%if(d.getEnded().equals("N")){ %>
+					                        		<span>모집중</span>
+					                        	<%}else{ %>
+					                        		<span>모집종료</span>
+					                        	<%} %>
+					                            <span><%=d.getWriteDate() %></span>
+					                        </div>
+					                        <div>
+					                        	<div style="position: absolute;">
+													<div class="dropdown" style="position: relative;">
+														<button type="button" class="btn" data-toggle="dropdown">
+													    	...
+													    </button>
+													    <div class="dropdown-menu">
+													    <%if(d.getEnded().equals("N")){ %>
+							                        		<a class="dropdown-item" href="#">신청서 수신함</a>
+							                        		<a class="dropdown-item" href="#">채팅</a>
+													      	<a class="dropdown-item" href="#">모집 마감</a>
+													     	<a class="dropdown-item" href="#">동행 수정</a>
+													     	<a class="dropdown-item" href="#">동행 삭제</a>
+							                        	<%}else{ %>
+													    	<a class="dropdown-item" href="#">신청서 수신함</a>
+													    	<a class="dropdown-item" href="#">채팅</a>
+													     	<a class="dropdown-item" href="#">동행 수정</a>
+													     	<a class="dropdown-item" href="#">동행 삭제</a>
+							                        	<%} %>
+													    </div>
+													</div>
 												</div>
+												<%if(d.getImage()==null){ %>
+													<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+												<%}else{ %>
+													<img src="<%=request.getContextPath() %>/upload/donghang/<%=d.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
+												<%} %>
 											</div>
-											<%if(d.getImage()==null){ %>
-												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
-											<%}else{ %>
-												<img src="<%=request.getContextPath() %>/upload/donghang/<%=d.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
-											<%} %>
+					                        <div class="d-flex flex-column justify-content-center p-2" style="font-size:7px;">
+					                        	<p class="mb-0"><%=d.getTitle() %></p>
+					                       		<ul class="p-0 m-0">
+					                            	<li class="tover">동행지역 : <span><%=d.getTravleLocale() %></span></li>
+					                            	<li>기간 : <span><%=d.getTravleStartDate() %></span><br>
+					                            			<div style="text-align:right;">
+					                            			  <span> ~ <%=d.getTravleEndDate() %></span>
+					                            			</div>
+					                            	</li>
+					                            	<li>인원 : <span><%=d.getJoinPeopleNo() %> / <%=d.getRecruitPeopleNo() %></span></li>
+					                           	</ul>
+											</div>
 										</div>
-				                        <div class="d-flex flex-column justify-content-center p-2" style="font-size:7px;">
-				                        	<p class="mb-0"><%=d.getTitle() %></p>
-				                       		<ul class="p-0 m-0">
-				                            	<li class="tover">동행지역 : <span><%=d.getTravleLocale() %></span></li>
-				                            	<li>기간 : <span><%=d.getTravleStartDate() %></span><br>
-				                            			<div style="text-align:right;">
-				                            			  <span> ~ <%=d.getTravleEndDate() %></span>
-				                            			</div>
-				                            	</li>
-				                            	<li>인원 : <span><%=d.getJoinPeopleNo() %> / <%=d.getRecruitPeopleNo() %></span></li>
-				                           	</ul>
-										</div>
-									</div>
-								</td>
-							<%} %>
-							</tr>
-						</table>
-						<div class="d-flex justify-content-center">
-							<%=myDHPasing %>
+									</td>
+								<%} %>
+								</tr>
+							</table>
 						</div>
+					</form>
+					<div class="d-flex justify-content-center">
+						<%=myDHPasing %>
 					</div>
 				</div>
 			</section>

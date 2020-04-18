@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.laon.mypage.model.service.MypageService;
 
 /**
- * Servlet implementation class MyPageConTripDelete
+ * Servlet implementation class MyPageMyDHDeleteServlet
  */
-@WebServlet("/mypage/myConTripDel.do")
-public class MyPageConTripMultiDeleteServlet extends HttpServlet {
+@WebServlet("/mypage/myDHDelete.do")
+public class MyPageMyDHMultiDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageConTripMultiDeleteServlet() {
+    public MyPageMyDHMultiDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,22 +29,21 @@ public class MyPageConTripMultiDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int userNo=Integer.parseInt(request.getParameter("userNo"));
-		String[] tripCk=request.getParameterValues("dnCks");
-		int[] tripNo=new int[tripCk.length];
-		for(int i=0; i<tripCk.length; i++) {
-			tripNo[i]=Integer.parseInt(tripCk[i]);
+		String[] myDongCk=request.getParameterValues("dhCks");
+		int[] myDongNo=new int[myDongCk.length];
+		for(int i=0; i<myDongCk.length; i++) {
+			myDongNo[i]=Integer.parseInt(myDongCk[i]);
 		}
 		
-		int result=new MypageService().myConTripDelete(tripNo);
-		
+		int result=new MypageService().myDongMultiDelete(myDongNo);
 		String msg="";
 		String loc="";
 		if(result>0) {
-			msg="나의 여행기가 삭제되었습니다.";
-			loc="/myPage/myConTrip.do?userNo="+userNo;
+			msg="나의 동행이 삭제되었습니다.";
+			loc="/myPage/myDongMyDH.do?userNo="+userNo;
 		}else {
-			msg="나의 여행기 삭제에 실패했습니다.";
-			loc="/myPage/myConTrip.do?userNo="+userNo;
+			msg="나의 동행 삭제에 실패했습니다.";
+			loc="/myPage/myDongMyDH.do?userNo="+userNo;
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc",loc);

@@ -25,11 +25,11 @@
 					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong.do?userNo=<%=loginUser.getNo()%>')">내 동행</button>
 				</div>
 				<div id="myPageView" class="w-100">
-					<!-- 다님길 -->
+					<!-- 여행기 -->
 					<div class="menu">
 						<div class="manuBar">
 							<div>
-								<span>다님길</span>
+								<span>여행기</span>
 							</div>
 							<div>
 								<img class="imgDrop" src="<%=request.getContextPath() %>/images/drop.png">
@@ -37,62 +37,68 @@
 						</div>
 						<hr>
 					</div>
-					<!-- 닫힘 내용 -->
-					<div>
-						<!-- 정보 -->
-						<div id="myLTInfo">
-							<div style="height:45px;">
-								<span>총 <%=likeTripCount %>개의 ♥ 다님길</span>
+					<form action="<%=request.getContextPath() %>/mypage/myLikeMultiCancle.do" method="get">
+						<!-- 닫힘 내용 -->
+						<div>
+							<!-- 정보 -->
+							<div id="myLTInfo">
+								<div style="height:45px;">
+									<span>총 <%=likeTripCount %>개의 ♥ 여행기</span>
+								</div>
+								<div id="ltCk1">
+									<button class="btn" type="button">선택취소</button>
+								</div>
+								<div id="ltCk2">
+									<label><input type="checkbox" id="ltAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
+									<button class="btn" type="submit">좋아요 취소</button>&nbsp;&nbsp;|&nbsp;&nbsp;
+									<button class="btn" id="ltEndBtn" type="button">돌아가기</button>
+								</div>
 							</div>
-							<div id="ltCk1">
-								<button class="btn">선택삭제</button>
-							</div>
-							<div id="ltCk2">
-								<label><input type="checkbox" id="jDhAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn" id="ltEndBtn">돌아가기</button>
-							</div>
-						</div>
-						<!-- 게시글위치 -->
-						<table id="ltTbl">
-							<tr class="d-flex flex-wrap justify-content-center">
-							<%for(TripMyCon t:tripList){ %>
-								<td class="p-1">
-									<div class="ltCk3" style="margin:10px;">
-										<input type="checkbox" class="ltCks">
-									</div>
-									<div class="card" style="width: 155px; height: 250px;" >
-										<div class="d-flex justify-content-between p-2" style="font-size:5px;">
-						    				<span><%=t.getCategory() %></span>
-						    				<span><%=t.getWriteDate() %></span>
+							<!-- 게시글위치 -->
+							<table id="ltTbl">
+								<input type="hidden" value="<%=loginUser.getNo() %>" name="userNo" id="userNo">
+								<tr class="d-flex flex-wrap">
+								<%for(TripMyCon t:tripList){ %>
+									<td class="p-1">
+										<div class="ltCk3" style="margin:10px;">
+											<%for(Like l:likeT){ 
+												if(l.getTripNo()==t.getNo()){%>
+												<input type="checkbox" class="ltCks" name="ltCks" value="<%=l.getNo()%>">
+											<%} }%>
 										</div>
-										<div>
-											<%if(t.getImage()==null){ %>
-												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
-											<%}else{ %>
-												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
-											<%} %>
-			                           </div>
-			                           <div class="d-flex card-body p-2">
-			                           		<div style="width:150px;font-size:12px;">
-												<p class="mb-0"><%=t.getTitle() %></p>
-												<%String nick="";
-												for(UserProfile u:userNick){ 
-													if(t.getUserTbNo()==u.getNo()){
-														nick=u.getNickName();
-													}
-												}%>
-												<span><%=nick %></span>
+										<div class="card" style="width: 155px; height: 250px;" >
+											<div class="d-flex justify-content-between p-2" style="font-size:5px;">
+							    				<span><%=t.getCategory() %></span>
+							    				<span><%=t.getWriteDate() %></span>
+											</div>
+											<div>
+												<%if(t.getImage()==null){ %>
+													<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=t.getNo()%>')">
+												<%}else{ %>
+													<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage()%>" class="card-img" alt="..." width="155px" height="155px" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=t.getNo()%>')">
+												<%} %>
+				                           </div>
+				                           <div class="d-flex card-body p-2">
+				                           		<div style="width:150px;font-size:12px;">
+													<p class="mb-0"><%=t.getTitle() %></p>
+													<%String nick="";
+													for(UserProfile u:userNick){ 
+														if(t.getUserTbNo()==u.getNo()){
+															nick=u.getNickName();
+														}
+													}%>
+													<span><%=nick %></span>
+												</div>
 											</div>
 										</div>
-									</div>
-								</td>
-							<%} %>
-							</tr>
-						</table>
-						<div class="d-flex justify-content-center">
-							<%=myLTPasing %>
+									</td>
+								<%} %>
+								</tr>
+							</table>
 						</div>
+					</form>
+					<div class="d-flex justify-content-center">
+						<%=myLTPasing %>
 					</div>
 				</div>
 			</section>

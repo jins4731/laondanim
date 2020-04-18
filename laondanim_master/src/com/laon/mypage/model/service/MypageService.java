@@ -341,10 +341,24 @@ public class MypageService {
 		return result;
 	}
 	
-	//좋아요 취소
+	//찜 취소
 	public int myMindCancled(int mindNo,int userNo) {
 		Connection conn=getConnection();
 		int result=dao.myMindCancled(conn,mindNo,userNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	//좋아요 다중취소
+	public int likeTripMultiCancled(int userNo,int[] myLikeNo) {
+		Connection conn=getConnection();
+		int result=dao.likeTripMultiCancled(conn,userNo,myLikeNo);
 		if(result>0) {
 			commit(conn);
 		}else {

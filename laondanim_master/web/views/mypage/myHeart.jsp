@@ -61,9 +61,9 @@
 										</div>
 										<div>
 											<%if(t.getImage()==null){ %>
-												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=t.getNo()%>')">
 											<%}else{ %>
-												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
+												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=t.getImage()%>" class="card-img" alt="..." width="155px" height="155px" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=t.getNo()%>')">
 											<%} %>
 			                           </div>
 			                           <div class="d-flex card-body p-2">
@@ -274,7 +274,7 @@
         text-decoration: none;
         color:black;
         list-style:none;
-        /* border:1px solid green; */
+       	border:1px solid green;
     }
     
     #myLTInfo,#myResInfo,#myLodInfo,#myAttInfo,.manuBar{

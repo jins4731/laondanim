@@ -861,6 +861,7 @@ public class MypageDao {
 		return result;
 	}
 	
+	//찜 취소
 	public int myMindCancled(Connection conn, int mindNo,int userNo) {
 		PreparedStatement pstmt=null;
 		int result=0;
@@ -871,6 +872,27 @@ public class MypageDao {
 			pstmt.setInt(1, mindNo);
 			pstmt.setInt(2, userNo);
 			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	//좋아요 다중 취소
+	public int likeTripMultiCancled(Connection conn,int userNo,int[] myLikeNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("likeTripMultiCancled");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			for(int i=0; i<myLikeNo.length; i++) {				
+				pstmt.setInt(1, myLikeNo[i]);
+				pstmt.setInt(2, userNo);
+				result=pstmt.executeUpdate();
+			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {

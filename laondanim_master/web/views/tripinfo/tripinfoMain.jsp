@@ -36,8 +36,6 @@
 	width: 600px;
 	height: 300px;
 } 
-
-
 </style>
 <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
 	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
@@ -715,17 +713,10 @@
 				
 			%>
 			
-			
+			<!------------------------------------------상세페에지 모달시작------------------------------------------>
 			<div class="modal fade" id="myModal<%=cnt2%>">
-			
 				<div class="modal-dialog modal-xl">
 					<div class="modal-content">
-
-<!-- 	<style>
-	div{
-		border:1px solid black;
-	}
-	</style> -->
 						<!--------------------------------------------상세페에지 해더------------------------------------------>
 						<div class="modal-header tripinfo-header pb-0">
 							<div class="tripinfo-title d-flex d-block">
@@ -743,10 +734,10 @@
 									<%}
 									} %>								
 							</div>														
-								
+							
 							<div class="box002 d-flex">					
 								<div class="danimgil">
-									<button class="btn btn-primary">관련 다님길 연결</button>
+									<button class="btn btn-primary" >관련 다님길 연결</button>
 								</div>
 								
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -791,7 +782,7 @@
 									<div class="carousel-inner">
 									
 									<%
-											String[] image = new String [3];
+											String[] image = new String [pictureList.size()];
 											int i=0;
 									
 											for(Picture p : pictureList){
@@ -829,32 +820,37 @@
 							</div>
 							
 							<div class="cafe-information  " style="text-align: center;">
-								<div class="tripinfo-time">
+								<div class="tripinfo-time" >
 									<span>영업시간</span><br> <span><%=tp.getTripinfotime()%></span>
 								</div>
 								<hr>
-								<div class="tripinfo-phone">
+								<div class="tripinfo-phone" >
 									<span>전화번호</span><br> <span><%=tp.getTripinfoNumber()%></span>
 								</div>
 								<hr>
-								<div class="tripinfo-address">
+								<div class="tripinfo-address" >
 									<span>주소</span><br> <input class="test1234" id="address<%=cnt2%>"
 										type="text" value="<%=tp.getTripinfoAddress()%>" />
 									<input type="hidden" value="<%=tp.getTripinfoName()%>" id="name<%=cnt2%>"/>
 								</div>
 								<hr>
 								<!----------------------------------------------여행정보 링크-------------------------------------------->
-								<div class="tripinfo-link">
-									<a href="<%=tp.getTripinfoNaver()%>"> <img
+								<div class="tripinfo-link d-flex" style="margin:30px;">
+									<div style="margin:30px;">
+										<a href="<%=tp.getTripinfoNaver()%>"> <img
 										src="<%=request.getContextPath()%>/views/picture/icon/naver(1).png"
-										alt="naver" width="30px" height="30px">
-									</a> <a href="<%=tp.getTripinfoHomePage()%>"> <img
+										alt="naver" width="30px" height="30px"></a>
+									</div>
+									<div style="margin:30px;">
+										<a href="<%=tp.getTripinfoHomePage()%>"> <img
 										src="<%=request.getContextPath()%>/views/picture/icon/homepage.png"
-										alt="naver" width="30px" height="30px">
-									</a> <a href="<%=tp.getTripinfoSns()%>"> <img
+										alt="naver" width="30px" height="30px"></a>
+									</div>
+									<div style="margin:30px;">
+										<a href="<%=tp.getTripinfoSns()%>"> <img
 										src="<%=request.getContextPath()%>/views/picture/icon/facebook.png"
-										alt="naver" width="30px" height="30px">
-									</a>
+										alt="naver" width="30px" height="30px"></a>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -876,7 +872,7 @@
 									<div class="tripinfo-comment-title" style="height: 30px;">
 										<span>한줄평</span>
 									</div>
-									<%-- <input type="hidden" value="<%=loginUser.getNickName() %>" id="nick"/> --%>
+									
 						
 									<div class="tripinfo-comment-list">
 										<table class="tripinfo-comment-table">
@@ -885,7 +881,7 @@
 											if(tc.getTripinfoTbNo()==tp.getTripinfoNo()) {
 										%>		
 											<tr class="comment-tr">
-												<td style="width:70px;"><span><%=loginUser==null?"":loginUser.getName()%></span></td>
+												<td style="width:70px;"><span><%=loginUser==null?"":loginUser.getNickName()%></span></td>
 												<td style="width:450px;"><span><%=tc.getContent()%></span></td>
 												<td style="width:100px;"><span><%=tc.getWriteDate()%></span></td>
 												<td style="width:50px;" class="comment-menu"><a href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">...</a></td>

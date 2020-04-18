@@ -71,14 +71,11 @@
 						<div class="modal-header">
 							<h4 class="modal-title"><%=loginUser==null?1:loginUser.getNickName()%>님의 찜목록
 							</h4>
-							<!-- <button class="btn" onclick="$("#myModal").modal('hide')">X</button>
-							 -->
 							<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?1:loginUser.getNo()%>')">X</button>
-							<!-- <button id="mind-close" class="btn" data-dismiss="modal">&times;</button> -->
 						</div>
 						<!-----------------------------------------찜목록 바디---------------------------------------------->
 						<div class="modal-body">
-							<div id="accordion">
+							<div id="mind-accordion">
 							
 							<%
 							List<TripInfo2> foodList = new ArrayList<TripInfo2>();
@@ -121,13 +118,10 @@
 														
 							%>
 						<div class="card">
-							<div class="card-header card-link" data-toggle="collapse"
-										href="#collapseOne">
+							<div class="card-header">
 										<h4>맛집</h4>
 							</div>
-							<div id="collapseOne" class="collapse show"
-										data-parent="#accordion">
-							
+							<div id="collapseOne">
 								<div class="swiper-container">
 									<div class="swiper-wrapper">
 										<%for(Picture p : foodPictureList){
@@ -165,11 +159,10 @@
 						
 							
 						<div class="card">
-									<div class="card-header collapsed card-link mind-room"
-										data-toggle="collapse" href="#collapseTwo">
+									<div class="mind-room">
 										<h4>숙소</h4>
 									</div>
-									<div id="collapseTwo" class="collapse show" data-parent="#accordion">
+							<div id="collapseTwo" class="collapse show">
 										
 								
 							<div class="swiper-container">
@@ -250,19 +243,9 @@
 				</div>
 				
 				
-				<!-- <script>
-					$(function(){
-						
-						var three=$("#collapseThree").hide();
-						var two =$("#collapseTwo").hide();
-						$(".mind-hotspot").click(function(e){
-							three.show();
-						})
-						$(".mind-room").click(function(e){
-							two.show();
-						})
-					})
-				</script> -->
+				 <script>
+					
+				</script>
 
 
 
@@ -297,7 +280,7 @@
 
 
 
-<%-- $(function(){
+ <%-- $(function(){
 	
 	var userNo = $("#userNo").val();
 	
@@ -315,7 +298,7 @@
 			remote : '<%=request.getContextPath()%>/views/tripinfo/myHeartModal.jsp'
 		});	
 	});	
-}) --%>
+})  --%>
 </script>
 
 </html>

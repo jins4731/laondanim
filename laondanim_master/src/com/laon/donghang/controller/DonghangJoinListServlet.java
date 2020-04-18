@@ -47,7 +47,7 @@ public class DonghangJoinListServlet extends HttpServlet {
 		
 		//필터 값 받기
 		String filter = request.getParameter("filter");
-		System.out.println("dhdhdhhdhdhd hdhdhdhhd: "+filter);
+
 
 		//유저가 만든 동행의 참여목록을 가져오기
 		List<DonghangJoinDonghangJoinTb> joinList = new DonghangService().selectDonghangJoinList(userNo, no, filter);

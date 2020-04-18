@@ -471,7 +471,7 @@ public class DonghangDao {
 		ResultSet rs=null;
 		List<TripMyCon> list=new ArrayList<TripMyCon>();
 		String sql=prop.getProperty("selectMyTripList");
-		
+
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, no);
@@ -485,6 +485,7 @@ public class DonghangDao {
 				t.setImage(rs.getString("image"));
 				list.add(t);
 			}
+
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {

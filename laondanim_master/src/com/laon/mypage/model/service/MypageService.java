@@ -288,4 +288,18 @@ public class MypageService {
 		return result;
 	}
 	
+	//내 여행기 다중삭제
+	public int myConTripDelete(int[] tripNo) {
+		Connection conn=getConnection();
+		int result=dao.myConTripDelete(conn,tripNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
 }

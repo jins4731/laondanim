@@ -36,10 +36,10 @@ public class MyPageConTripDeleteServlet extends HttpServlet {
 		String msg="";
 		String loc="";
 		if(result>0) {
-			msg="나의 다님길이 삭제되었습니다.";
+			msg="나의 여행기가 삭제되었습니다.";
 			loc="/myPage/myPageContent.do?userNo="+userNo;
 		}else {
-			msg="나의 다님길 삭제에 실패했습니다.";
+			msg="나의 여행기 삭제에 실패했습니다.";
 			loc="/myPage/myPageContent.do?userNo="+userNo;
 		}
 		request.setAttribute("msg", msg);

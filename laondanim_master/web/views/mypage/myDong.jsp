@@ -315,9 +315,9 @@
 		}
 	});
 	
-	$("myDongDeadline").on("shown.bs.modal', function(){
-		/* var no = $(this).val(); */
-	}
+	/* $("myDongDeadline").on("shown.bs.modal', function(){
+		var no = $(this).val();
+	} */
 	
 	$(".modal-close").click(()=>{
 	    $("#myDongDeadline").hide();

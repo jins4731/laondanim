@@ -93,7 +93,7 @@
 											<%if(d.getImage()==null){ %>
 												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
 											<%}else{ %>
-												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=d.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
+												<img src="<%=request.getContextPath() %>/upload/donghang/<%=d.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
 											<%} %>
 										</div>
 				                        <div class="d-flex flex-column justify-content-center p-2" style="font-size:7px;">

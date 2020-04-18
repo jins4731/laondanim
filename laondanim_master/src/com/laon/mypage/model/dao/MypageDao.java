@@ -803,4 +803,24 @@ public class MypageDao {
 		return result;
 	}
 	
+	//내 여행기 다중삭제
+	public int myConTripDelete(Connection conn,int[] tripNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("myConTripDelete");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			for(int i=0; i<tripNo.length; i++) {
+				pstmt.setInt(1, tripNo[i]);
+				result=pstmt.executeUpdate();
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 }

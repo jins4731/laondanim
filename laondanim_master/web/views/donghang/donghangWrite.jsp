@@ -9,10 +9,6 @@
 <%
 	List<TripMyCon> tripList = (List<TripMyCon>)request.getAttribute(CommonKey.TRIP_LIST);
 	List<Like> likeList = (List<Like>)request.getAttribute(CommonKey.LIKE_LIST);
-	System.out.println("왜안되는데 쓰벌~~"+tripList.size());
-	for(TripMyCon t : tripList){
-		System.out.println(t);	
-	}
 	
 %>
 
@@ -347,9 +343,9 @@
                     });
                 });
 
-                function changeValue(obj){
+/*                 function changeValue(obj){
                     alert(obj.value);
-                }   
+                }   */ 
 
                 /* 2) 미리보기 fn*/
                 function readInputFile(input) {
@@ -443,7 +439,7 @@
 
                 /*리스트에 체크된 값을 히든인풋에 넣어주기*/                
                 $('button[data-dismiss="modal"]').click(()=>{
-                    alert($('input[name="selectTrip"]:checked').val());
+                    /* alert($('input[name="selectTrip"]:checked').val()); */
                     let no = $('input[name="selectTrip"]:checked').val();
                     $("#selectTripNo").val(no);
                     console.log( $("#selectTripNo").val());

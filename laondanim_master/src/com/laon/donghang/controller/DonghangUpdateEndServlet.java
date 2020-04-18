@@ -93,14 +93,14 @@ public class DonghangUpdateEndServlet extends HttpServlet {
 			publicEnabled = "Y";			
 		}
 		
-		System.out.println("살려줘 제발~~~***********************************************************");
-		System.out.println(mr.getParameter("selectTripNo"));
+		
+		
 		int pw = mr.getParameter("donghangPw")==null||mr.getParameter("donghangPw").equals("")?-1:Integer.parseInt(mr.getParameter("donghangPw")); //-> 비공개인 경우 무조건 -1으로 설정
 
 		int tripNo = mr.getParameter("selectTripNo")==null||mr.getParameter("selectTripNo").equals("")?-1:Integer.parseInt(mr.getParameter("selectTripNo")); //null인 경우 무조건 -1로 설정
 		String content = mr.getParameter("content");
 		String tag = mr.getParameter("tag");
-		System.out.println(tripNo);
+		
 
 		//vo저장
 		Donghang donghang = new Donghang(no, userNo, tripNo, null, 0, tag, title, content,

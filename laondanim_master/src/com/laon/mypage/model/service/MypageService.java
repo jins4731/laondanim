@@ -397,4 +397,18 @@ public class MypageService {
 		return result;
 	}
 	
+	//참여 동행 신청 취소
+	public int joinDongCancle(int userNo,int jdNo) {
+		Connection conn=getConnection();
+		int result=dao.joinDongCancle(conn,userNo,jdNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
 }

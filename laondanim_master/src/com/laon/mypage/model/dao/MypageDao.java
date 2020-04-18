@@ -938,4 +938,23 @@ public class MypageDao {
 		return result;
 	}
 	
+	//참여 동행 취소
+	public int joinDongCancle(Connection conn,int userNo,int jdNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("joinDongCancle");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, jdNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 }

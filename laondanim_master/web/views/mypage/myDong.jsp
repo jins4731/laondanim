@@ -174,7 +174,7 @@
 								                        	<%}else if(dj.getConfirmed().equals("Y")){ %>
 														      	<a class="dropdown-item" href="#">동행 나가기</a>
 								                        	<%}else{ %>
-														      	<a class="dropdown-item" href="#">참여 신청 취소</a>
+														      	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongJoinCancle.do?userNo=<%=loginUser.getNo()%>&djNo=<%=dj.getNo()%>&title=<%=j.getTitle() %>" onclick="return confirm('[<%=j.getTitle() %>] 동행 참여 신청을 취소 하시겠습니까?');">참여 신청 취소</a>
 						                        	<%} } }%>
 						                        	</div>
 												</div>

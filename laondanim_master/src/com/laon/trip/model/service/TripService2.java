@@ -13,6 +13,7 @@ import com.laon.etc.model.vo.Picture;
 import com.laon.trip.model.dao.TripDao;
 import com.laon.trip.model.vo.TagCount;
 import com.laon.trip.model.vo.Trip2;
+import com.laon.trip.model.vo.TripSchedule;
 import com.laon.user.model.vo.User;
 
 public class TripService2 {
@@ -101,5 +102,19 @@ public class TripService2 {
 		ArrayList<Trip2> tagList =dao.selectTagList(conn);
 		close(conn);
 		return tagList;
+	}
+	
+	public ArrayList<TripSchedule> selectSchedule(int no){
+		Connection conn = getConnection();
+		ArrayList<TripSchedule> scheduleList = dao.selectSchedule(conn, no);
+		close(conn);
+		return scheduleList;
+	}
+	
+	public ArrayList<Trip2> selectTripList(ArrayList<TripSchedule> scheduleList){
+		Connection conn = getConnection();
+		ArrayList<Trip2> tripList = dao.selectTripList(conn, scheduleList);
+		close(conn);
+		return tripList;
 	}
 }

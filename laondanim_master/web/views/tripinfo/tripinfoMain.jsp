@@ -428,7 +428,7 @@
 	                           		} 
 	                           	
 	                           %>
-	                            
+	                           <!-- 풀을해보자 -->
 	                           <div class="d-flex flex-row justify-content-center align-items-center">
 	                                <div class="mr-2">
 	                                	<input type="hidden" value="<%=i<count?list.get(i).getTripinfoNo():""%>"/>
@@ -476,7 +476,7 @@
 	        		}
 	       		 </script>
 	            </div>
-	
+				<!-- 풀을하자 -->
 	            <div class="row mb-2 h-50 row2">
 	            <%
 	           
@@ -746,12 +746,14 @@
 								
 							<div class="box002 d-flex">					
 								<div class="danimgil">
-									<button class="btn btn-primary">관련 다님길 연결</button>
+									<button class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/trip/tripListView.do?infoNo=<%=tp.getTripinfoNo()%>')">관련 여행기 연결</button>
 								</div>
 								
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 							</div>
 						</div>
+						
+						
 						
 						<div class="pl-3">
 							<span><%=tp.getTripinfoAddress()%></span>
@@ -849,10 +851,10 @@
 										src="<%=request.getContextPath()%>/views/picture/icon/naver(1).png"
 										alt="naver" width="30px" height="30px">
 									</a> <a href="<%=tp.getTripinfoHomePage()%>"> <img
-										src="<%=request.getContextPath()%>/views/picture/icon/naver(1).png"
+										src="<%=request.getContextPath()%>/views/picture/icon/homepage.png"
 										alt="naver" width="30px" height="30px">
 									</a> <a href="<%=tp.getTripinfoSns()%>"> <img
-										src="<%=request.getContextPath()%>/views/picture/icon/naver(1).png"
+										src="<%=request.getContextPath()%>/views/picture/icon/facebook.png"
 										alt="naver" width="30px" height="30px">
 									</a>
 								</div>

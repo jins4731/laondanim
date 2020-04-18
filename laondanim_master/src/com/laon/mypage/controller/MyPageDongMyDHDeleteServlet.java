@@ -1,27 +1,23 @@
-package com.laon.board.controller;
+package com.laon.mypage.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.laon.board.model.service.BoardService;
-import com.laon.board.model.vo.BoardJoinUser;
-
 /**
- * Servlet implementation class AlterBoardServlet
+ * Servlet implementation class MyPageDongMyDHDeleteServlet
  */
-@WebServlet("/board/alterBoard.do")
-public class AlterBoardServlet extends HttpServlet {
+@WebServlet("/mypage/myDongDel.do")
+public class MyPageDongMyDHDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AlterBoardServlet() {
+    public MyPageDongMyDHDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,14 +26,8 @@ public class AlterBoardServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int boardNo=Integer.parseInt(request.getParameter("boardNo"));
-		System.out.println(boardNo);
-		
-		BoardJoinUser b=new BoardService().boardDetail(boardNo);
-		
-		request.setAttribute("BoardJoinUser", b);
-		request.getRequestDispatcher("/views/board/boardAlter.jsp").forward(request, response);
-		
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

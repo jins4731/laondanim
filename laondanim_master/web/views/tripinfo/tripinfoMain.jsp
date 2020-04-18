@@ -849,10 +849,10 @@
 										src="<%=request.getContextPath()%>/views/picture/icon/naver(1).png"
 										alt="naver" width="30px" height="30px">
 									</a> <a href="<%=tp.getTripinfoHomePage()%>"> <img
-										src="<%=request.getContextPath()%>/views/picture/icon/naver(1).png"
+										src="<%=request.getContextPath()%>/views/picture/icon/homepage.png"
 										alt="naver" width="30px" height="30px">
 									</a> <a href="<%=tp.getTripinfoSns()%>"> <img
-										src="<%=request.getContextPath()%>/views/picture/icon/naver(1).png"
+										src="<%=request.getContextPath()%>/views/picture/icon/facebook.png"
 										alt="naver" width="30px" height="30px">
 									</a>
 								</div>

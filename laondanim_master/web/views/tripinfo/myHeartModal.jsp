@@ -250,7 +250,7 @@
 				</div>
 				
 				
-				<script>
+				<!-- <script>
 					$(function(){
 						
 						var three=$("#collapseThree").hide();
@@ -262,7 +262,7 @@
 							two.show();
 						})
 					})
-				</script>
+				</script> -->
 
 
 

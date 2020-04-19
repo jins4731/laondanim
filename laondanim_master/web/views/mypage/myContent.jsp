@@ -73,7 +73,7 @@
 											    	</button>
 											   	 	<div class="dropdown-menu">
 											      		<a class="dropdown-item" href="#">수정</a>
-											     		<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myTripDelete.do?userNo=<%=loginUser.getNo()%>&tripNo=<%=t.getNo()%>">삭제</a>
+											     		<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myTripDelete.do?userNo=<%=loginUser.getNo()%>&tripNo=<%=t.getNo()%>&title=<%=t.getTitle()%>" onclick="return confirm('[<%=t.getTitle() %>] 여행기를 삭제 하시겠습니까?');">삭제</a>
 											    	</div>
 												</div>
 											</div>

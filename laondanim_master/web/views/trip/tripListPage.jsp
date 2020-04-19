@@ -398,6 +398,7 @@
                        }
                        %>
                         <div class="card-body h-50 w-100 p-0 border-0">
+                        <%if(i<count && list.get(i).getDeleted()=='N'){ %>
                             <div class="hdTagBox" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=i<count?list.get(i).getNo():""%>')">
                                  <ul class="hdTag">                            
                                    <%if(i<count&&list.get(i).getTag()!=null){
@@ -407,6 +408,15 @@
                                    <%} } %> 
                                </ul>                              
                             </div>  
+                            <%}else{ %>
+                            <div class="hdTagBox" onclick="">
+                                 <ul class="hdTag">                            
+                                   
+                                    <li><a>삭제된 게시물 입니다.</a></li>
+                                   
+                               </ul>                              
+                            </div> 
+                            <%} %>
                             <img src="<%
                             String picture="";
                             for(int j=0; j<pictureList.size(); j++){ 
@@ -548,6 +558,7 @@
                         </div>
                         
                         <div class="card-body h-50 w-100 p-0 border-0">
+                           <%if(i-5<count&&list.get(i).getDeleted()=='Y'){ %>
                            <div class="hdTagBox" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=i-5<count?list.get(i).getNo():""%>')">
                                 <ul class="hdTag">                            
                                    <%if(i-5<count&&list.get(i).getTag()!=null){
@@ -557,7 +568,15 @@
                                    <%} } %> 
                                </ul>                               
                             </div>
-                            
+                            <%}else{ %>
+                            <div class="hdTagBox" onclick="">
+                                 <ul class="hdTag">                            
+                                   
+                                    <li><a>삭제된 게시물 입니다.</a></li>
+                                   
+                               </ul>                              
+                            </div> 
+                            <%} %>
                              <img src="<%
                             String picture="";
                             for(int j=1; j<pictureList.size(); j++){ 

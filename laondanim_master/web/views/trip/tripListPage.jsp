@@ -589,7 +589,7 @@
                         </div>
                         
                         <div class="card-body h-50 w-100 p-0 border-0">
-                           <%if(i-5<count&&list.get(i).getDeleted()=='Y'){ %>
+                           <%if(i-5<count&&list.get(i).getDeleted()=='N'){ %>
                            <div class="hdTagBox" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=i-5<count?list.get(i).getNo():""%>')">
                                 <ul class="hdTag">                            
                                    <%if(i-5<count&&list.get(i).getTag()!=null){

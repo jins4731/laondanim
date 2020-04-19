@@ -81,7 +81,7 @@
                 background-image: url('<%=request.getContextPath()%>/images/down_icon.png');
                 background-repeat: no-repeat;
                 background-position: right center;
-                background: ;
+                /* background: ; */
             }
             #searchDIV input[type="text"]{
                 width: 57%;
@@ -101,7 +101,34 @@
             }
             #searchDIV button:focus{
                 outline: none;
-            }         
+            }       
+
+			/* by 세현 */
+			#searchFilterStyle .ldBtnC{
+			    border-radius: 20px;
+			    background-color: white;
+			    border: 2px solid #00abbf;
+			    color: #00abbf;
+			    padding: 6px 15px 6px 15px;
+			    width: 130px;
+			}  
+			.ldBtnC:hover,.ldBtnC:active {
+			    color: white;
+			    background-color: #00abbf;
+			}   
+			.ldBtnSubmit{
+			    border-radius: 20px;
+			    background-color: #00abbf;
+			    border: 2px solid #00abbf;
+			    color: white;
+			    padding: 6px 15px 6px 15px;   
+			}      
+			.ldBtnF{
+				background: none;
+				color: #595959;
+				font-weight: bolder;
+				border: none;
+			}              
         </style>
           <script>
             $(function(){   
@@ -255,12 +282,12 @@
          
       </style>
         <!-- 필터 / 작성 -->
-        <div class="container">
+        <div class="container" id="searchFilterStyle">
            <div class="row justify-content-between" >
                 <div class="d-flex flex-row">
                 <div class="col-3  d-flex flex-row my-auto mr-5">              
                      <div class="dropdown">
-                   <button class="btn btn-light dropdown-toggle border border-secondary rounded mr-3" type="button" id="plan-review" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   <button class="ldBtnC dropdown-toggle mr-3" type="button" id="plan-review" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         전체여행기
                    </button>
                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -273,7 +300,7 @@
                   
                <div class="col-3  d-flex flex-row my-auto">              
                <div class="dropdown">
-                   <button class="btn btn-light dropdown-toggle border border-secondary rounded mr-3" type="button" id="lo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   <button class="dropdown-toggle mr-3 ldBtnC" type="button" id="lo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         	선택 지역별
                    </button>
                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -347,15 +374,15 @@
         </style>
 
         <!-- 전체 목록 개수 / 필터 -->
-        <div class="container mt-4">
-            <div class="row justify-content-between">
+        <div class="container mt-4 mb-3">
+            <div class="row justify-content-between align-items-center">
                 <div class="col-4 d-flex align-items-center">
                     <h6 class="display-6 mt-2">총 <%=totalItemCount%>건의 여행기가 있습니다.</h6>
                 </div>
 
                 <div class="col-3 d-flex justify-content-end">
-                    <button class="btn btn-mg btn-outline-secondary border-0" id="recent">최근순</button>  
-                    <button class="btn btn-mg btn-outline-secondary border-0" id="like">좋아요순</button> 
+                    <button class="ldBtnF border-0 mr-2" id="recent">최근순</button>  
+                    <button class="ldBtnF border-0 " id="like">좋아요순</button> 
                 </div>
             </div>
         </div>
@@ -455,6 +482,10 @@
            }
    
            .hdTagBox:hover{
+           }
+           .card-footer .ck{
+     			border : none;
+     			background: none;      
            }
        </style>
                         <div class="card-footer h-30 d-flex flex-column p-1 text-center bg-white">
@@ -646,7 +677,7 @@
         </div>
 
         <!--페이지 버튼-->
-        <div class="container mt-3">
+        <div class="container mt-5 mb-5">
                 <%=pageBar %>
         </div>
    

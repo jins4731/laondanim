@@ -30,7 +30,7 @@
 	right: 50%;
 	margin-right: -700px;
 	margin-top: 300px;
-	text-align: center;
+	/* text-align: center; */
 }
 .carousel, .slide {
 	width: 600px;
@@ -177,8 +177,8 @@
   
 			<!--------------------------------------------------찜목록 버튼---------------------------------------------------->
 			<div class="my-heart">
-				<button type="button" class="btn" id="myHeart" >
-					<img src="<%=request.getContextPath()%>/views/picture/icon/heart2.png" width="70px" height="70px">
+				<button type="button" class="btn d-flex justify-content-center" id="myHeart" >
+					<img src="<%=request.getContextPath()%>/views/picture/icon/myHeartModalBtn.png" width="70px" height="70px">
 				</button>
 			</div>	
 					
@@ -408,6 +408,7 @@
 		} 
 		.card{
 		    border: 2px solid #dadada;
+		    cursor: pointer;
 		}
 		.ck{
 			border:none;
@@ -416,6 +417,10 @@
 		.ck > img{
 			width: 27px;
 			height: 27px;
+		}
+		#myHeart img:hover{
+			width: 80px;
+			height: 80px;
 		}
     	</style>
 	                        <div class="card-footer h-30 d-flex flex-column p-1 text-center bg-white">                                                  

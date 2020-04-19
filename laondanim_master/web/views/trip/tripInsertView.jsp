@@ -5,7 +5,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ include file="/views/common/header.jsp"%>
 <%
 
 	String userNo = (String)request.getAttribute("userNo");
@@ -102,11 +102,11 @@
             }
         }
 
-        header {
+/*         header {
             border: 2px solid red;
             box-sizing: border-box;
             height: 150px;
-        }
+        } */
 
         section {
             /* border: 2px solid green; */
@@ -118,12 +118,12 @@
             box-sizing: border-box;
         }
 
-        footer {
+/*         footer {
             /* border: 2px solid blue; */
             box-sizing: border-box;
 
             height: 70px;
-        }
+        } */
 
         #titleContainer div {
             /* border: 1px solid black; */
@@ -213,6 +213,9 @@
 			font-size: 22px;
 			color: #595959;
 		}
+		.bolder{
+			font-weight: 750;
+		}
 		.input{
 			border: 0;
 		}
@@ -230,12 +233,25 @@
             color: #00abbf;
             font-weight: 900;
 		}
+		.navbar {
+		    font-weight: normal;
+		    -webkit-box-shadow: none;
+		    box-shadow: none;
+		}
+		header{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.border-danger{
+			border-color: #dadada;
+		}
     </style>
 </head>
 
 <body>
-    <header class="container-fluid"></header>
-
+    <!-- <header class="container-fluid"></header> -->
+	<div style="height: 170px;"></div>
 
     <section class="container-fluid">
         <div id="titleContainer" class="row justify-content-center mb-5">
@@ -270,7 +286,7 @@
 
         <div id="tripinfoContainer">
             <div class="border-bottom text-dark pb-2 pl-2">
-                <span class="laonBodyFont">여행정보</span>
+                <span class="laonBodyFont bolder">여행정보</span>
             </div>
 
             <div class="col">
@@ -627,7 +643,7 @@
     </section>
 
 
-    <footer class="container-fluid"></footer>
+<!--     <footer class="container-fluid"></footer> -->
 
 
 
@@ -1298,6 +1314,4 @@
         // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
         var map = new kakao.maps.Map(mapContainer, mapOption);
     </script>
-</body>
-
-</html>
+<%@ include file="/views/common/footer.jsp"%> 

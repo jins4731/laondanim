@@ -38,7 +38,7 @@
 
 
 
-<title>라온다님 메인</title>
+<title>라온다님</title>
 	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css"> .nanumsquare { font-family: 'NanumSquare', sans-serif !important; }
 <style>
 /* 헤더 푸터 값조절 */

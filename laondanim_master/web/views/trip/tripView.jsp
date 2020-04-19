@@ -13,6 +13,7 @@
 <%@page import="com.laon.common.CommonKey"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/views/common/header.jsp"%>
 <%
 	Object oTrip = request.getAttribute(CommonKey.TRIP_ITEM);
 	Trip trip = null;
@@ -66,24 +67,7 @@
 	System.out.println(pictureListMap);
 	System.out.println(dayMap);
 %>
-<!DOCTYPE html>
-<html>
 
-
-<head>
-	<meta charset="UTF-8">
-	<title>여행기</title>
-	
-	
-	
-	<!-- 지워도 되는거 -->
-	<!-- 지워도 되는거 -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-	<!-- 지워도 되는거 -->
-	<!-- 지워도 되는거 -->
 
 
 
@@ -167,17 +151,54 @@
 			object-fit: contain;
 		}
 		
+		.navbar {
+		    font-weight: normal;
+		    -webkit-box-shadow: none;
+		    box-shadow: none;
+		}
+		header{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}		
+		#title, #tag{
+			font-weight: bolder;
+			color: white;
+			text-shadow: 0 0 5px #000000;
+		}
+        .ldBtnC{
+            border-radius: 20px;
+            background-color: white;
+            border: 2px solid #00abbf;
+            color: #00abbf;
+            width: 120px;
+            margin-right: 15px;
+            padding: 6px 15px 6px 15px;
+        }  
+        .ldBtnC:hover,.ldBtnC:active {
+            color: white;
+            background-color: #00abbf;
+        } 
+        .ldBtn{
+            border-radius: 20px;
+            background-color: white;
+            border: 2px solid #00abbf;
+            color: #00abbf;
+            padding: 6px 15px 6px 15px;
+        }  
+        .ldBtn:hover,.ldBtn:active {
+            color: white;
+            background-color: #00abbf;
+        }  		
 	</style>
-</head>
-
-<body>
-	<header class="container-fluid"></header>
-	<section class="container-fluid">
+	
+	<div style="height: 170px;"></div>
+	<section class="container-fluid d-flex flex-column align-items-center">
 		<div id="head" class="col">
 
 
 			<div class="row justify-content-center">
-				<h1 class="text-dark" id="title"><%=trip.getTitle()%></h1>
+				<h1 class="mt-1" id="title"><%=trip.getTitle()%></h1>
 			</div>
 
 
@@ -223,15 +244,15 @@
 						<div class="col-4 align-content-center">
 							<div class="row h-75"></div>
 							<div class="row h-25 p-1 align-items-center justify-content-end">
-								<div class="d-flex border border-danger justify-content-center">
+								<div class="d-flex border-danger justify-content-center">
 									<img id="image" class="d-block rounded-circle" width="20px" height="20px"
 										src="<%=request.getContextPath() + "/" + userPicList.get(0).getImage()%>"
 										alt="frog">
 								</div>
-								<label class=" m-0 border border-primary text-center" for="image"
+								<label class=" m-0 border-primary text-center" for="image"
 									id="nickName"><%=user.getNickName()%></label>
 								<div class="dropdown">
-									<a class=" m-0 p-0 border border-success text-center dropdown-toggle-split"
+									<a class=" m-0 p-0 border-success text-center dropdown-toggle-split"
 										data-toggle="dropdown" href=""><img class="align-text-top"
 											src="../picture/trip/icon/menu.png" width="20px" height="20px"
 											alt="menu"></a>
@@ -256,9 +277,9 @@
 			<div class="row pl-2">
 				<div class="d-flex col-3">
 					<a id="courseTypeBt" onclick="courseTypeBt()" href="javascript:void(0)"
-						class="col-5 d-block btn btn-indigo py-1 active"> 코스 </a> <a id="reviewTypeBt"
+						class="col-5 d-block ldBtnC py-1 active text-center"> 코스 </a> <a id="reviewTypeBt"
 						onclick="reviewTypeBt()" href="javascript:void(0)"
-						class="col-5 d-block btn btn-indigo ml-3 py-1 "> 후기 </a>
+						class="col-5 d-block ldBtnC ml-3 py-1 text-center"> 후기 </a>
 				</div>
 			</div>
 
@@ -267,8 +288,8 @@
 
 
 			<div id="courseContainer">
-				<div class="row dropdown justify-content-center">
-					<button class="d-block btn dropdown-toggle" id="dayBt" data-save="1"
+				<div class="row dropdown justify-content-center mb-5 mt-5">
+					<button class="d-block ldBtnC dropdown-toggle" id="dayBt" data-save="1"
 						data-toggle="dropdown"><%=dayList.get(0) %>일차</button>
 					<div class="dropdown-menu">
 						<%for(int i = 0 ;i< dayList.size();i++){ %>
@@ -440,7 +461,7 @@
 					</div>
 
 					<div class="row p-5">
-						<textarea class="form-control bg-light" rows="5" id="content" name="text" readonly>
+						<textarea class="form-control" rows="5" id="content" name="text" readonly>
  <%=trip.getContent()%>
 			</textarea>
 					</div>
@@ -456,7 +477,6 @@
 
 
 
-	<footer class="container-fluid"></footer>
 
 	<script>
 		$(function () {
@@ -574,12 +594,10 @@
 
 
 	</script>
-	<div>
+	<div class="text-center mb-2">
 		Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a
 			href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
 	</div>
 
 	
-</body>
-
-</html>
+<%@ include file="/views/common/footer.jsp"%> 

@@ -121,41 +121,39 @@ public class TripInfoMainServlet extends HttpServlet {
 		int totalDate=new TripInfoService().selectCountTripInfo(category,type,keyword);
 		int totalPage=(int)Math.ceil((double)totalDate/numPerPage);
 		
-		String pageBar="";
+		String pageBar="<ul class=\"pagination justify-content-center\"> <li class='page-item'><a class='page-link' href='' area-label='Previous'>&laquo;</a></li>";
 		int pageBarSize=5;
 		
 		int pageNo=((cPage-1)/pageBarSize)*pageBarSize+1;
 		int pageEnd=pageNo+pageBarSize-1;
 		
 		if(pageNo==1) {
-			pageBar+="<span>이전</span>";
+			pageBar+="<li class='page-item'><a class='page-link' href='' area-label='Previous'>&lt;</a></li>";
 		}else {
-			pageBar+="<a href='"+request.getContextPath()
-			+"/tripinfo/tripinfoMain?cPage="+(pageNo-1)
-			+"&category="+category+"&type="+type+"&keyword="+keyword+"&mind="+mind+"&first="+first
-			+"'>이전</a>";
+			pageBar+="<li class='page-item'><a class='page-link' href='"+request.getContextPath()+"/tripinfo/tripinfoMain?cPage="+(pageNo-1)
+					+"&category="+category+"&type="+type+"&keyword="+keyword+"&mind="+mind+"&first="+first+"' area-label='Previous'>&lt;</a></li>";
+					
+					
 		}
 		
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(pageNo==cPage) {
-				pageBar+="<span>"+pageNo+"</span>";
+				pageBar+="<li class='page-item'><a class='page-link' href=''>"+pageNo+"</a></li>";
 			}else {
-				pageBar+="<a href='"+request.getContextPath()
-				+"/tripinfo/tripinfoMain?cPage="+pageNo
-				+"&category="+category+"&type="+type+"&keyword="+keyword+"&mind="+mind+"&first="+first
-				+"'>"+pageNo+"</a>";
+				pageBar+="<li class='page-item'><a class='page-link' href='"+request.getContextPath()+"/tripinfo/tripinfoMain?cPage="+pageNo+"&category="+category+"&type="+type+"&keyword="+keyword+"&mind="+mind+"&first="+first+"'>"+pageNo+"</a></li>";											
 			}
 			pageNo++;
 		}
 		
 		if(pageNo>totalPage) {
-			pageBar+="<span>다음</span>";
+			pageBar+="<li class='page-item'><a class='page-link' href='' area-label='Previous'>&gt;</a></li>";
 		}else {
-			pageBar+="<a href='"+request.getContextPath()
-			+"/tripinfo/tripinfoMain?cPage="+pageNo
-			+"&category="+category+"&type="+type+"&keyword="+keyword+"&mind="+mind+"&first="+first
-			+"'>다음</a>";
+			pageBar+="<li class='page-item'><a class='page-link' href='"+request.getContextPath()+"/tripinfo/tripinfoMain?cPage="+pageNo+"&category="+category+"&type="+type+"&keyword="+keyword+"&mind="+mind+"&first="+first+"' area-label='Previous'>&gt;</a></li>";
+					
 		}
+		pageBar +=
+				  "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&raquo;</a></li> </ul>"
+				 ;
 		
 		request.setAttribute("pageBar", pageBar);
 		

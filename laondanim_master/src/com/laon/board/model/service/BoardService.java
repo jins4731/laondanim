@@ -85,9 +85,9 @@ public class BoardService {
 		return list;
 	}
 
-	public int searchCount(String category,String searchDetail,String searchBox) {
+	public int searchCount(String category,String searchDetail,String searchBox,String recent,String viewCount) {
 		Connection conn=getConnection();
-		int count=dao.searchCount(conn,category,searchDetail,searchBox);
+		int count=dao.searchCount(conn,category,searchDetail,searchBox,recent,viewCount);
 		close(conn);
 		return count;
 	}

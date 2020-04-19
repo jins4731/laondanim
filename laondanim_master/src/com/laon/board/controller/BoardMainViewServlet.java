@@ -46,7 +46,7 @@ public class BoardMainViewServlet extends HttpServlet {
 			cPage=1;
 		}
 		
-		int numPerPage=8;
+		int numPerPage=5;
 		///전체 게시판글을 불러오는 로직
 		String category="null";
 		String searchDetail="null";
@@ -62,7 +62,7 @@ public class BoardMainViewServlet extends HttpServlet {
 		
 		//페이지 바는 템플릿으로 구현을 해본다
 		String url=request.getContextPath();
-		String pageBar=new Paging().pageBar(request.getContextPath()+"/board/list.do",totalData,cPage,numPerPage);
+		String pageBar=new Paging().pageBar(url+"/board/list.do",totalData,cPage,numPerPage);
 		System.out.println(pageBar);
 		request.setAttribute("pageBar",pageBar);
 		

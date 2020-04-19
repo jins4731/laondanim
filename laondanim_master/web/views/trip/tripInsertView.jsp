@@ -20,21 +20,15 @@
 
 
 %>
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     
-    
+<%--     
 <!-- 지워도 되는거 -->
 <!-- 지워도 되는거 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
 <!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -50,7 +44,7 @@
 <!-- 지워도 되는거 -->
 <!-- 지워도 되는거 -->
 
-
+ --%>
 
 
 
@@ -111,11 +105,12 @@
         section {
             /* border: 2px solid green; */
             box-sizing: border-box;
+            width: 1336px;
         }
 
         section div {
             /* border: 1px solid black; */
-            box-sizing: border-box;
+            /* box-sizing: border-box; */
         }
 
 /*         footer {
@@ -246,15 +241,22 @@
 		.border-danger{
 			border-color: #dadada;
 		}
+		.ldBtnSubmit{
+		    border-radius: 20px;
+		    background-color: #00abbf;
+		    border: 2px solid #00abbf;
+		    color: white;
+		    padding: 6px 15px 6px 15px;   
+		}  
     </style>
-</head>
 
-<body>
+
+
     <!-- <header class="container-fluid"></header> -->
 	<div style="height: 170px;"></div>
 
-    <section class="container-fluid">
-        <div id="titleContainer" class="row justify-content-center mb-5">
+    <section class="container-fluid d-flex flex-column align-items-center">
+        <div id="titleContainer" class="row justify-content-center mb-5 w-100">
             <div class="col-4">
                 <div class="row dropdown justify-content-center">
                     <button type="button" id="category" name="category"
@@ -284,7 +286,7 @@
         </div>
 
 
-        <div id="tripinfoContainer">
+        <div id="tripinfoContainer" class="w-100">
             <div class="border-bottom text-dark pb-2 pl-2">
                 <span class="laonBodyFont bolder">여행정보</span>
             </div>
@@ -351,7 +353,7 @@
 
 
 
-        <div id="courseContainer" class="mt-5">
+        <div id="courseContainer" class="mt-5 w-100">
             <div class="row mx-1 mb-2">
                 <button id="matzipBt" onclick="matzipBt()" class="ldBtnC">맛집</button>
                 <button id="myoungsoBt" onclick="myoungsoBt()" class="ldBtnC">명소</button>
@@ -512,7 +514,7 @@
 
             <!-- 스케줄 추가 -->
             
-            <div id="dayContainer" class="col p-0 mx-1">
+            <div id="dayContainer" class="col p-0 mx-1 mt-3 mb-3">
 
                 <div id="day1" name="day" data-save="1" class="row mx-1" id="schduleContainer">
                 
@@ -568,9 +570,9 @@
                             class="d-inline-flex  view overlay zoom p-1 img-fluid align-items-center justify-content-center">
 
                             <img src="<%=request.getContextPath() %>/picture/trip/plus.png" alt=""
-                                style="object-fit: contain;width: 100%;height: 100%;">
+                                style="object-fit: contain;width: 120%;height: 120%; opacity: 0.6; cursor: pointer;">
                             <input type="file" id="image" name="image" multiple accept=".jpg, .png"
-                                style="width: 100%;height: 100%;position: absolute;" form="tripForm" required>
+                                style="width: 100%;height: 100%;position: absolute; cursor: pointer;" form="tripForm" required>
                         </div>
 
 
@@ -591,7 +593,7 @@
             </div>
 
             <div class="row p-5">
-                <textarea class="form-control bg-light" rows="5" id="content" name="text"></textarea>
+                <textarea class="form-control" rows="5" id="content" name="text"></textarea>
             </div>
 
 
@@ -629,12 +631,12 @@
             </div>
 
 
-            <div id="formContainer">
+            <div id="formContainer" style="height: 150px;" class="d-flex align-items-center">
                 <form class="d-flex col justify-content-center" id="tripForm"
                     action="<%=request.getContextPath()%>/trip/tripInsertEnd.do" method="POST"
                     enctype="multipart/form-data">
-                    <input class="btn btn-grey" type="reset" id="resetBt" value="취소">
-                    <input class="btn btn-grey ml-4" type="button" id="submitBt" value="전송">
+                    <input class="ldBtn" type="reset" id="resetBt" value="취소" style="width: 120px;">
+                    <input class="ldBtnSubmit ml-4" type="button" id="submitBt" value="전송" style="width: 120px;">
                     <input type="hidden" id="fileNames" name="fileNames" value="">
 
                 </form>
@@ -737,7 +739,7 @@
             dayCount++;
             span.html(dayCount + "일차");
             span[0].dataset.save = dayCount;
-            var div = $('<div class="d-flex ml-2 bg-primary rounded-pill justify-content-center align-items-center" style="height: 100%;width: 60px;cursor: pointer;" onclick="dayBt(event)"></div>');
+            var div = $('<div class="d-flex ml-2 dayBtn rounded-pill justify-content-center align-items-center" style="height: 100%;width: 120px;cursor: pointer;" onclick="dayBt(event)"></div>');
             div.append(span).append(a);
             div[0].dataset.save = dayCount;
             $(event.target).before(div);

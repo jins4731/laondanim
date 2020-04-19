@@ -204,7 +204,7 @@
 											<input type="hidden" value="<%=lod.getNo() %>" class="mind">
 										</button>
 									</div>
-									<img src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=lod.getImage()%>">
+									<img class="card-img" src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=lod.getImage()%>">
 								</div>
 							<%} %>
 							</div>
@@ -251,7 +251,7 @@
 											<input type="hidden" value="<%=att.getNo() %>" class="mind">
 										</button>
 									</div>
-									<img src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=att.getImage()%>">
+									<img class="card-img" src="<%=request.getContextPath()%>/views/picture/tripinfo/<%=att.getImage()%>">
 								</div>
 							<%} %>
 							</div>

@@ -59,7 +59,11 @@
         
             <td><%=re.getNo() %></td>
             <td><%=re.getUserId() %></td>
+            <%if(re.getDonghangNo()==0){ %>
             <td>커뮤니티 게시판</td>
+            <%}else if(re.getBoardNo()==0){ %>
+            <td>동행 찾기</td>
+            <%} %>
             <td><%=re.getReportContent() %></td>
             <!-- if 문으로 동행일때 연결 바꿔주기 -->
             <%if(re.getDonghangNo()==0){%>

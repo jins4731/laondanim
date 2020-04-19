@@ -5,23 +5,31 @@
 %>
 <%@ include file="/views/common/header.jsp"%>
 <div style="height:170px;"></div>
-<section class="d-flex flex-column justify-content-center align-items-center">
+<section class="d-flex flex-column justify-content-center align-items-center mt-3">
 <div id="login-submit" style="height: 717px;">
 	
-		
-	<h2>비밀번호 변경</h2>
+		<div class="text-center">
+	<h2 style="color:#00abbf">비밀번호 변경</h2>
+		</div>	
 		<hr>	
 		<table>
 		<tr>
-			<td>
-			임시비밀번호 입력:
+			<td style="color:#00abbf; font-size:20px" colspan="2">
+			<strong>메일로 전송된 임시 비밀번호를 입력해주세요.</strong>
 			</td>
+		</tr>
+		<tr>
+			<td>
+				<br/>
+			</td>
+		</tr>
+		<tr>
 			<td>
 				<input type="hidden" id="authId" value="<%=id %>">
-				<input type="text" class="form-control" id="authPw" placeholder="전송된  임시 비밀번호 입력"/>
+				<input type="text" class="form-control" id="authPw" placeholder="전송된  임시 비밀번호 입력" size=22px;/>
 			</td>
 			<td>
-				<button class="btn btn-primary" id="authPwck">비밀번호 확인</button>
+				<button class="btn btn-primary" id="authPwck" style="background-color:#00abbf;border-color:#00abbf">비밀번호 확인</button>
 			</td>
 		</tr>
 		<tr>
@@ -31,6 +39,11 @@
 		<tr>
 		</table>
 		<table id="pwck-table" style="display:none">
+		<tr>
+			<td>
+				<br/>
+			</td>
+		</tr>
 			<td>
 			새 비밀번호 입력:
 			</td>
@@ -72,6 +85,7 @@
 			</td>
 		</tr>
 		</table>
+</div>
 </section>
 <script>
 
@@ -171,8 +185,7 @@ $.ajax({
 		
 		
 		
-		
-		</script>
+</script>
 
 
 

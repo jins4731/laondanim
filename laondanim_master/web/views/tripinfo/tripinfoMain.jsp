@@ -175,76 +175,126 @@
            </div>
    
   
-			<!--------------------------------------------------찜목록 버튼---------------------------------------------------->
-			<div class="my-heart">
-				<button type="button" class="btn d-flex justify-content-center" id="myHeart" >
-					<img src="<%=request.getContextPath()%>/views/picture/icon/myHeartModalBtn.png" width="70px" height="70px">
-				</button>
-			</div>	
-					
-			<script>
-				//찜목록(하트) 클릭시 모달창 띄우기
-				$(function(){
-					
-					var userNo = $("#userNo").val();
-					
-					$("#myHeart").click(function(e){
-						
-						$.ajax({
-							url:"<%=request.getContextPath()%>/tripinfo/userMind.do?userNo="+userNo,
-							type:"get",
-							success:function(data){
-								$("#myModal").html(data);
-							}
-						});
-						
-						$("#myModal").modal({
-							remote : '<%=request.getContextPath()%>/views/tripinfo/myHeartModal.jsp'
-						});	
-					});	
-				})
-			</script>
-			
-			<!-- 카테고리 -->
-			 <div class="container mt-5 mb-5">
-	           <div class="row justify-content-between" >
-	                <div class="d-flex flex-row">
-		                <div class="col category">              		        		
-							<button type="button" id="cafe-button" class="ldBtnC" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
-								맛집
-							</button>
-						</div>
-						
-						<div class="col category">
-							<button type="button" id="room-button" class="ldBtnC" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="숙소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
-								숙소
-							</button>
-						</div>
-							
-						<div class="col category">
-							<button type="button" id="attraction-button" class="ldBtnC" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="명소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
-								명소
-							</button>							
-						</div>					
-					</div>
-	           </div>
-	        </div>
-			<!-----------------------------------------------카테고리 버튼---------------------------------------------------->
-			
-			<!-- 전체 목록 개수 / 필터 -->			
-			<div class="container mt-4 mb-3">
-	            <div class="row d-flex justify-content-between align-items-center">
-	                <div class="col-4 d-flex align-items-center">
-	                    <h6 class="display-6 mt-2">총 <%=request.getAttribute("totalData")%>건의 여행정보가 있습니다.</h6>
-	                </div>
-	
-	                <div class="col-3 d-flex justify-content-end">
-	                    <button id="mind-btn" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%=category%>&mind=mind')" class="ldBtnF">
-							마음 순
-						</button> 
-	                </div>
-	            </div>
-	        </div>
+         <!--------------------------------------------------찜목록 버튼---------------------------------------------------->
+         <div class="my-heart">
+            <button type="button" class="btn d-flex justify-content-center" id="myHeart" >
+               <img src="<%=request.getContextPath()%>/views/picture/icon/myHeartModalBtn.png" width="70px" height="70px">
+            </button>
+         </div>   
+               
+         <script>
+            //찜목록(하트) 클릭시 모달창 띄우기
+            $(function(){
+               
+               var userNo = $("#userNo").val();
+               
+               $("#myHeart").click(function(e){
+                  
+                  $.ajax({
+                     url:"<%=request.getContextPath()%>/tripinfo/userMind.do?userNo="+userNo,
+                     type:"get",
+                     success:function(data){
+                        $("#myModal").html(data);
+                     }
+                  });
+                  
+                  $("#myModal").modal({
+                     remote : '<%=request.getContextPath()%>/views/tripinfo/myHeartModal.jsp'
+                  });   
+               });   
+            })
+         </script>
+         
+         <!-- 카테고리 -->
+          <div class="container mt-5 mb-5">
+              <div class="row justify-content-between" >
+                   <div class="d-flex flex-row">
+                      <div class="col category">                                  
+                     <button type="button" id="cafe-button" class="ldBtnC" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
+                        맛집
+                     </button>
+                  </div>
+                  
+                  <div class="col category">
+                     <button type="button" id="room-button" class="ldBtnC" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="숙소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
+                        숙소
+                     </button>
+                  </div>
+                     
+                  <div class="col category">
+                     <button type="button" id="attraction-button" class="ldBtnC" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="명소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
+                        명소
+                     </button>                     
+                  </div>               
+               </div>
+              </div>
+           </div>
+         <!-----------------------------------------------카테고리 버튼---------------------------------------------------->
+         
+         <!-- 전체 목록 개수 / 필터 -->         
+         <div class="container mt-4 mb-3">
+               <div class="row d-flex justify-content-between align-items-center">
+                   <div class="col-4 d-flex align-items-center">
+                       <h6 class="display-6 mt-2">총 <%=request.getAttribute("totalData")%>건의 여행정보가 있습니다.</h6>
+                   </div>
+   
+                   <div class="col-3 d-flex justify-content-end">
+                       <button id="mind-btn" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%=category%>&mind=mind')" class="ldBtnF">
+                     마음 순
+                  </button> 
+                   </div>
+               </div>
+           </div>
+        
+         
+         <!--여행 정보 리스트-->
+             <div class="container mt-4 justify-content-center mb-5" style="height:640px;">
+               <div class="row mb-2 h-50 row1">
+               <%
+               int size = list.size();
+               int count = 0;
+               if(size<5) count = size;
+             else count = 5;
+               int cnt=1;
+                  for(int i=0; i<5; i++){            
+               %>
+               <input type="hidden" value="<%=count %>" id="count1"/>
+                   <div class="col h-100 p-0 mr-2">
+                       <div class="card h-100" >
+                           <div class="card-header h-20 p-1 d-flex justify-content-between bg-white border-bottom-0">
+                               <span class="ml-1"><%=i<count?list.get(i).getTripinfoName():"" %></span>                                                
+                           </div>
+                          
+                           <div class="card-body h-50 w-100 p-0 border-0" data-toggle="modal" data-target="#mymodal<%=cnt++%>">
+                               <div class="hdTagBox">
+                                    <ul class="hdTag">                            
+                                      <%if(i<count&&list.get(i).getTripinfoTag()!=null){
+                                      String[] tagArr = list.get(i).getTripinfoTag().split(",");   
+                                      for(String tag : tagArr){%>
+                                       <li><a>#<%=tag%></a></li>
+                                      <%} } %> 
+                                  </ul>                              
+                               </div>  
+                               <img src="<%
+                               String picture="";
+                               for(int j=0; j<pictureList.size(); j++){ 
+                                  if(i<count&&list.get(i).getTripinfoNo()==pictureList.get(j).getTripinfoNo()){
+                                     picture = pictureList.get(j).getImage();
+                                  break; //break; 하면 처음 꺼만 안하면 마지막 꺼
+                                  }
+                                  //picture=pictureList.get(5).getImage(); //나중에 삭제 테스트용
+                               }
+                               %><%=request.getContextPath()+"/views/picture/tripinfo/"+picture%>" class="img-thumbnail p-0 h-100 w-100 rounded-0 border-0" style="height:50%"/> 
+                                             
+                           </div>
+                           
+                          
+                           
+        <style>
+        
+         .modal-body{
+           position: relative;
+        }
         
         .comment-hide{
             position: absolute;
@@ -315,265 +365,265 @@
                height: 38px;
          }
          #searchCon #type-btn{
-         		margin: 0px;
-        	   }
-    	 #searchCon #search-btn{
-    	   		border-top-right-radius: 25px;
-    	   		border-bottom-right-radius: 25px;
-    	   		border-top-left-radius: 0px;
-    	   		border-bottom-left-radius: 0px;
-    	   		background-color: white;
-    	   		height: 38px;
-    	   		width: 57px;
-    	   		color: #00abbf;
-    	 }
-		.ldBtnC{
-		    border-radius: 20px;
-		    background-color: white;
-		    border: 2px solid #00abbf;
-		    color: #00abbf;
-		    padding: 6px 15px 6px 15px;
-		    width: 120px;
-		}  
-		.ldBtnC:hover,.ldBtnC:active {
-		    color: white;
-		    background-color: #00abbf;
-		}   
-		.ldBtnSubmit{
-		    border-radius: 20px;
-		    background-color: #00abbf;
-		    border: 2px solid #00abbf;
-		    color: white;
-		    padding: 6px 15px 6px 15px;   
-		}      
-		.ldBtnF{
-			background: none;
-			color: #595959;
-			font-weight: bolder;
-			border: none;
-		}	
-		.card-header > span{
-			color:#595959;
-			font-weight: bolder;
-		} 
-		.card{
-		    border: 2px solid #dadada;
-		    cursor: pointer;
-		}
-		.ck{
-			border:none;
-			background:none;
-		}
-		.ck > img{
-			width: 27px;
-			height: 27px;
-		}
-		#myHeart img:hover{
-			width: 80px;
-			height: 80px;
-		}
-    	</style>
-	                        <div class="card-footer h-30 d-flex flex-column p-1 text-center bg-white">                                                  
-	                            <span class="location-info"><%
-	                            	if(i<count){
-	                            %>
-	                            <%=list.get(i).getTripinfoAddress().indexOf("도") < 4 && list.get(i).getTripinfoAddress().indexOf("도") != -1
-								? list.get(i).getTripinfoAddress().substring(list.get(i).getTripinfoAddress().indexOf("도") + 1,
-										list.get(i).getTripinfoAddress().indexOf(" ", list.get(i).getTripinfoAddress().indexOf("도") + 2))
-								: list.get(i).getTripinfoAddress().substring(0, list.get(i).getTripinfoAddress().indexOf(" "))%>
-								<%
-			                            	}else{
-								%>
-											""
-								<%
-			                            	}
-								%>
-						
-								<span>
-	                            <%
-	                           		int loginNo = loginUser.getNo();	//로그인된 유저 아이디 
-	                           		String mindCheck = "";
-	                           	
-	                           		for(Mind mind : mindList){
-	                           			if(mind.getUserNo()==loginNo){
-	                           				if(i<count&&mind.getTripinfoNo()==list.get(i).getTripinfoNo()){
-	                           					mindCheck = mind.getCancled();	// 게시물에 대한 좋아요 체크 여부 'N' OR 'Y'
-	                           				}
-	                           			}
-	                           		} 
-	                           	
-	                           %>
-	                           <!-- 풀을해보자 -->
-	                           <div class="d-flex flex-row justify-content-center align-items-center">
-	                                <div class="mr-2">
-	                                	<input type="hidden" value="<%=i<count?list.get(i).getTripinfoNo():""%>"/>
-	                                	<input type="hidden" class='mind-category' name="mind-category" id="mind-category"								
-										value="<%=request.getParameter("category") == null ? "" : request.getParameter("category")%>" />
-	                                	<%
-		                                	String src="";
-		                                	
-		                                	if(i<count&&mindCheck.equals("N")||mindCheck.equals("")){ 
-		                                		src = request.getContextPath()+"/views/picture/icon/heart1.png";
-		                                	}else{
-		                                		src = request.getContextPath()+"/views/picture/icon/heart2.png";
-		                                	}
-	                                	%>                           
-	                                	<button class="ck">
-	                                		<img src="<%=src%>" class="like-ck" width="30px" height="30px">                                                           	                                	                 	                              
-	                                	</button>                                                           	                                	                 	                              
-	                                </div>
-	                             
-	                                <div>
-										<%
-	                                	int mindCount = 0;
-	                                	for(int j=0; j<heartCount.size(); j++){ 
-	                                		if(i<count&&list.get(i).getTripinfoNo()==heartCount.get(j).getTripinfoNo())
-	                                			mindCount = heartCount.get(j).getCount();
-	                                	}
-	                                	%>
-	                                	<%=mindCount %>
-									</div>   <!--좋아요 수 가져오기 !!-->
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <%
-	            		}
-	                %>
-	                 <script>
-	        		var count=$("#count1").val();
-	        		console.log("count : "+ count);
-	        		var col = $(".row1>.col");
-	        		if(count<5){
-	        			for(let i=count; i<5; i++){
-	        				$(col).eq(i).addClass("invisible");
-	        			}
-	        		}
-	       		 </script>
-	            </div>
-				<!-- 풀을하자 -->
-	            <div class="row mb-2 h-50 row2">
-	            <%
-	           
-	            if(size<10) count = size-5;
-	    		else count = 5;
-	            
-	            	for(int i=5; i<10; i++){      		
-	            %>
-	            <input type="hidden" value="<%=count %>" id="count2"/>
-	                <div class="col h-100 p-0 mr-2">
-	                    <div class="card h-100" >
-	                        <div class="card-header h-20 p-1 d-flex justify-content-between bg-white border-bottom-0">
-	                            <span class="ml-1"><%=i-5<count?list.get(i).getTripinfoName():"" %></span>	                     
-	                        </div>
-	                        <div class="card-body h-50 w-100 p-0 border-0" data-toggle="modal" data-target="#mymodal<%=cnt++%>">
-	                        	<div class="hdTagBox">
-	                                <ul class="hdTag">                            
-		                                <%if(i-5<count&&list.get(i).getTripinfoTag()!=null){
-	                                   String[] tagArr = list.get(i).getTripinfoTag().split(",");   
-	                                   for(String tag : tagArr){%>
-	                                    <li><a>#<%=tag%></a></li>
-	                                	<%} } %> 
-		                            </ul>                               
-	                            </div>
-	                            
-	                             <img src="<%
-	                            String picture="";
-	                            for(int j=1; j<pictureList.size(); j++){ 
-	                            	if(i-5<count&&list.get(i).getTripinfoNo()==pictureList.get(j).getTripinfoNo()){
-	                            		picture = pictureList.get(j).getImage();
-	       								break; //break; 하면 처음 꺼만 안하면 마지막 꺼
-	                            	}
-	                            	//picture=pictureList.get(6).getImage(); //나중에 삭제 테스트용
-	                            }
-	                            %><%=request.getContextPath()+"/views/picture/tripinfo/"+picture%>" class="img-thumbnail p-0 h-100 w-100 rounded-0 border-0"/>
-	                        </div>
-	                        
-	                        <div class="card-footer h-30 d-flex flex-column p-1 text-center bg-white">
-	                            <span class="location-info">
-	                            <%
-	                            	if(i-5<count){
-	                            %>
-	                            <%=list.get(i).getTripinfoAddress().indexOf("도") < 4 && list.get(i).getTripinfoAddress().indexOf("도") != -1
-						? list.get(i).getTripinfoAddress().substring(list.get(i).getTripinfoAddress().indexOf("도") + 1,
-								list.get(i).getTripinfoAddress().indexOf(" ", list.get(i).getTripinfoAddress().indexOf("도") + 2))
-						: list.get(i).getTripinfoAddress().substring(0, list.get(i).getTripinfoAddress().indexOf(" "))%>
-						<%
-	                            	}else{
-						%>
-									""
-						<%
-	                            	}
-						%>
-								<span>
-							
-	                            
-	                           <%
-	                           		int loginNo = loginUser.getNo();	//로그인된 유저 아이디 
-	                           		
-	                           		String mindCheck = "";
-	                           		
-	                           		for(Mind mind : mindList){                        			
-	                           			if(mind.getUserNo()==loginNo){                  
-	                           				if(i-5<count&&mind.getTripinfoNo()==list.get(i).getTripinfoNo()){
-	                           					mindCheck = mind.getCancled();	// 게시물에 대한 좋아요 체크 여부 'N' OR 'Y'
-	                           				}
-	                           			}
-	                           		}
-	                           		
-	                           %>
-	                            <div class="d-flex flex-row justify-content-center align-items-center">
-	                                <div class="mr-2">
-	                                	<input type="hidden" value="<%=i-5<count?list.get(i).getTripinfoNo():""%>"/>	                             	
-										<input type="hidden" class='mind-category' name="mind-category" id="mind-category"								
-										value="<%=request.getParameter("category") == null ? "" : request.getParameter("category")%>" />
-										
-	                                	<%
-	                                	String src="";
-	                                	
-	                                	if(i-5<count&&mindCheck.equals("N")||mindCheck.equals("")){ 
-	                                		src = request.getContextPath()+"/views/picture/icon/heart1.png";
-	                                	}else{
-	                                		src = request.getContextPath()+"/views/picture/icon/heart2.png";
-	                                	}
-	                                	%>                           
-	                                	<button class="ck">
-	                                		<img src="<%=src%>" class="like-ck" width="30px" height="30px">                                                           	                                	                 	                              
-	                                	</button>
-	                                </div>
-	                             
-	                                <div>
-										<%
-	                                	int mindCount = 0;
-	                                	for(int j=0; j<heartCount.size(); j++){ 
-	                                		if(i-5<count&&list.get(i).getTripinfoNo()==heartCount.get(j).getTripinfoNo())
-	                                			mindCount = heartCount.get(j).getCount();
-	                                	}
-	                                	%>
-	                                	<%=mindCount %>
-									</div>   <!--좋아요 수 가져오기 !!-->
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	               
-	                <%
-	            		}
-	                %>
-	                 <script>
-	        		var count = $("#count2").val();
-	        		console.log("count : "+ count);
-	        		var col = $(".row2>.col");
-	        		console.log(col);
-	        		if(count<10){
-	        			for(let i=count; i<5; i++){
-	        				$(col).eq(i).addClass("invisible");
-	        			}
-	        		}
-	       		 </script>
-	            </div>
-	      
-	        </div> 
+               margin: 0px;
+              }
+        #searchCon #search-btn{
+                border-top-right-radius: 25px;
+                border-bottom-right-radius: 25px;
+                border-top-left-radius: 0px;
+                border-bottom-left-radius: 0px;
+                background-color: white;
+                height: 38px;
+                width: 57px;
+                color: #00abbf;
+        }
+      .ldBtnC{
+          border-radius: 20px;
+          background-color: white;
+          border: 2px solid #00abbf;
+          color: #00abbf;
+          padding: 6px 15px 6px 15px;
+          width: 120px;
+      }  
+      .ldBtnC:hover,.ldBtnC:active {
+          color: white;
+          background-color: #00abbf;
+      }   
+      .ldBtnSubmit{
+          border-radius: 20px;
+          background-color: #00abbf;
+          border: 2px solid #00abbf;
+          color: white;
+          padding: 6px 15px 6px 15px;   
+      }      
+      .ldBtnF{
+         background: none;
+         color: #595959;
+         font-weight: bolder;
+         border: none;
+      }   
+      .card-header > span{
+         color:#595959;
+         font-weight: bolder;
+      } 
+      .card{
+          border: 2px solid #dadada;
+          cursor: pointer;
+      }
+      .ck{
+         border:none;
+         background:none;
+      }
+      .ck > img{
+         width: 27px;
+         height: 27px;
+      }
+      #myHeart img:hover{
+         width: 80px;
+         height: 80px;
+      }
+       </style>
+                           <div class="card-footer h-30 d-flex flex-column p-1 text-center bg-white">                                                  
+                               <span class="location-info"><%
+                                  if(i<count){
+                               %>
+                               <%=list.get(i).getTripinfoAddress().indexOf("도") < 4 && list.get(i).getTripinfoAddress().indexOf("도") != -1
+                        ? list.get(i).getTripinfoAddress().substring(list.get(i).getTripinfoAddress().indexOf("도") + 1,
+                              list.get(i).getTripinfoAddress().indexOf(" ", list.get(i).getTripinfoAddress().indexOf("도") + 2))
+                        : list.get(i).getTripinfoAddress().substring(0, list.get(i).getTripinfoAddress().indexOf(" "))%>
+                        <%
+                                        }else{
+                        %>
+                                 ""
+                        <%
+                                        }
+                        %>
+                  
+                        <span>
+                               <%
+                                    int loginNo = loginUser.getNo();   //로그인된 유저 아이디 
+                                    String mindCheck = "";
+                                 
+                                    for(Mind mind : mindList){
+                                       if(mind.getUserNo()==loginNo){
+                                          if(i<count&&mind.getTripinfoNo()==list.get(i).getTripinfoNo()){
+                                             mindCheck = mind.getCancled();   // 게시물에 대한 좋아요 체크 여부 'N' OR 'Y'
+                                          }
+                                       }
+                                    } 
+                                 
+                              %>
+                              <!-- 풀을해보자 -->
+                              <div class="d-flex flex-row justify-content-center align-items-center">
+                                   <div class="mr-2">
+                                      <input type="hidden" value="<%=i<count?list.get(i).getTripinfoNo():""%>"/>
+                                      <input type="hidden" class='mind-category' name="mind-category" id="mind-category"                        
+                              value="<%=request.getParameter("category") == null ? "" : request.getParameter("category")%>" />
+                                      <%
+                                         String src="";
+                                         
+                                         if(i<count&&mindCheck.equals("N")||mindCheck.equals("")){ 
+                                            src = request.getContextPath()+"/views/picture/icon/heart1.png";
+                                         }else{
+                                            src = request.getContextPath()+"/views/picture/icon/heart2.png";
+                                         }
+                                      %>                           
+                                      <button class="ck">
+                                         <img src="<%=src%>" class="like-ck" width="30px" height="30px">                                                                                                                                                   
+                                      </button>                                                                                                                                                   
+                                   </div>
+                                
+                                   <div>
+                              <%
+                                      int mindCount = 0;
+                                      for(int j=0; j<heartCount.size(); j++){ 
+                                         if(i<count&&list.get(i).getTripinfoNo()==heartCount.get(j).getTripinfoNo())
+                                            mindCount = heartCount.get(j).getCount();
+                                      }
+                                      %>
+                                      <%=mindCount %>
+                           </div>   <!--좋아요 수 가져오기 !!-->
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <%
+                     }
+                   %>
+                    <script>
+                 var count=$("#count1").val();
+                 console.log("count : "+ count);
+                 var col = $(".row1>.col");
+                 if(count<5){
+                    for(let i=count; i<5; i++){
+                       $(col).eq(i).addClass("invisible");
+                    }
+                 }
+                 </script>
+               </div>
+            <!-- 풀을하자 -->
+               <div class="row mb-2 h-50 row2">
+               <%
+              
+               if(size<10) count = size-5;
+             else count = 5;
+               
+                  for(int i=5; i<10; i++){            
+               %>
+               <input type="hidden" value="<%=count %>" id="count2"/>
+                   <div class="col h-100 p-0 mr-2">
+                       <div class="card h-100" >
+                           <div class="card-header h-20 p-1 d-flex justify-content-between bg-white border-bottom-0">
+                               <span class="ml-1"><%=i-5<count?list.get(i).getTripinfoName():"" %></span>                        
+                           </div>
+                           <div class="card-body h-50 w-100 p-0 border-0" data-toggle="modal" data-target="#mymodal<%=cnt++%>">
+                              <div class="hdTagBox">
+                                   <ul class="hdTag">                            
+                                      <%if(i-5<count&&list.get(i).getTripinfoTag()!=null){
+                                      String[] tagArr = list.get(i).getTripinfoTag().split(",");   
+                                      for(String tag : tagArr){%>
+                                       <li><a>#<%=tag%></a></li>
+                                      <%} } %> 
+                                  </ul>                               
+                               </div>
+                               
+                                <img src="<%
+                               String picture="";
+                               for(int j=1; j<pictureList.size(); j++){ 
+                                  if(i-5<count&&list.get(i).getTripinfoNo()==pictureList.get(j).getTripinfoNo()){
+                                     picture = pictureList.get(j).getImage();
+                                  break; //break; 하면 처음 꺼만 안하면 마지막 꺼
+                                  }
+                                  //picture=pictureList.get(6).getImage(); //나중에 삭제 테스트용
+                               }
+                               %><%=request.getContextPath()+"/views/picture/tripinfo/"+picture%>" class="img-thumbnail p-0 h-100 w-100 rounded-0 border-0"/>
+                           </div>
+                           
+                           <div class="card-footer h-30 d-flex flex-column p-1 text-center bg-white">
+                               <span class="location-info">
+                               <%
+                                  if(i-5<count){
+                               %>
+                               <%=list.get(i).getTripinfoAddress().indexOf("도") < 4 && list.get(i).getTripinfoAddress().indexOf("도") != -1
+                  ? list.get(i).getTripinfoAddress().substring(list.get(i).getTripinfoAddress().indexOf("도") + 1,
+                        list.get(i).getTripinfoAddress().indexOf(" ", list.get(i).getTripinfoAddress().indexOf("도") + 2))
+                  : list.get(i).getTripinfoAddress().substring(0, list.get(i).getTripinfoAddress().indexOf(" "))%>
+                  <%
+                                  }else{
+                  %>
+                           ""
+                  <%
+                                  }
+                  %>
+                        <span>
+                     
+                               
+                              <%
+                                    int loginNo = loginUser.getNo();   //로그인된 유저 아이디 
+                                    
+                                    String mindCheck = "";
+                                    
+                                    for(Mind mind : mindList){                                 
+                                       if(mind.getUserNo()==loginNo){                  
+                                          if(i-5<count&&mind.getTripinfoNo()==list.get(i).getTripinfoNo()){
+                                             mindCheck = mind.getCancled();   // 게시물에 대한 좋아요 체크 여부 'N' OR 'Y'
+                                          }
+                                       }
+                                    }
+                                    
+                              %>
+                               <div class="d-flex flex-row justify-content-center align-items-center">
+                                   <div class="mr-2">
+                                      <input type="hidden" value="<%=i-5<count?list.get(i).getTripinfoNo():""%>"/>                                   
+                              <input type="hidden" class='mind-category' name="mind-category" id="mind-category"                        
+                              value="<%=request.getParameter("category") == null ? "" : request.getParameter("category")%>" />
+                              
+                                      <%
+                                      String src="";
+                                      
+                                      if(i-5<count&&mindCheck.equals("N")||mindCheck.equals("")){ 
+                                         src = request.getContextPath()+"/views/picture/icon/heart1.png";
+                                      }else{
+                                         src = request.getContextPath()+"/views/picture/icon/heart2.png";
+                                      }
+                                      %>                           
+                                      <button class="ck">
+                                         <img src="<%=src%>" class="like-ck" width="30px" height="30px">                                                                                                                                                   
+                                      </button>
+                                   </div>
+                                
+                                   <div>
+                              <%
+                                      int mindCount = 0;
+                                      for(int j=0; j<heartCount.size(); j++){ 
+                                         if(i-5<count&&list.get(i).getTripinfoNo()==heartCount.get(j).getTripinfoNo())
+                                            mindCount = heartCount.get(j).getCount();
+                                      }
+                                      %>
+                                      <%=mindCount %>
+                           </div>   <!--좋아요 수 가져오기 !!-->
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                  
+                   <%
+                     }
+                   %>
+                    <script>
+                 var count = $("#count2").val();
+                 console.log("count : "+ count);
+                 var col = $(".row2>.col");
+                 console.log(col);
+                 if(count<10){
+                    for(let i=count; i<5; i++){
+                       $(col).eq(i).addClass("invisible");
+                    }
+                 }
+                 </script>
+               </div>
+         
+           </div> 
         
          <!------------------------------------------------여행정보 리스트---------------------------------------------------->
          

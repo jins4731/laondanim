@@ -39,6 +39,35 @@
 .swiper-slide:hover .mind-delete {
 	display: inline;
 }
+
+/* by세현 */
+.mind-cafe, .mind-room, .mind-hotspot{
+	background: none;
+	border-top : none;
+	border-left: none;
+	border-right:none;
+	border-bottom: 2px solid #dadada;
+	
+}
+#accordion > .card{
+	border : none;
+}
+#accordion > .card h4{
+	font-size : 25px;
+	color : #595959;
+	font-weight: bolder;
+}
+#accordion{
+	padding : 20px;
+}
+.rotateBtn {
+     -webkit-transform: rotate(180deg);
+     -moz-transform: rotate(180deg);
+     -o-transform: rotate(180deg);
+     -ms-transform: rotate(180deg);
+     transform: rotate(180deg);
+}
+
 </style>
 
 
@@ -60,6 +89,11 @@
 			prevEl : '.swiper-button-prev', // 이번 버튼 클래스명
 		},
 	});
+	
+	/* by세현 */
+	$("#accordion .card-header").click(function(event) {
+		$(this).find('img').toggleClass('rotateBtn');
+	});
 </script>
 </head>
 <body>
@@ -70,12 +104,12 @@
 		<div class="modal-content">
 			<!---------------------------------------찜목록 헤더----------------------------------------------->
 			<div class="modal-header">
-				<h4 class="modal-title"><%=loginUser == null ? 1 : loginUser.getNickName()%>님의
-					찜목록
+				<h4 class="modal-title ml-2 mt-2"><%=loginUser == null ? 1 : loginUser.getNickName()%>님의
+					찜목록<span><img src="<%=request.getContextPath()%>/views/picture/icon/heart2.png" style="width: 25px; margin-bottom: 5px;"></span>
 				</h4>
 				<!-- <button class="btn" onclick="$("#myModal").modal('hide')">X</button>
 							 -->
-				<button class="btn"
+				<button class="btn mr-2 mt-2"
 					onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser == null ? 1 : loginUser.getNo()%>')">X</button>
 				<!-- <button id="mind-close" class="btn" data-dismiss="modal">&times;</button> -->
 			</div>
@@ -122,8 +156,9 @@
 						}
 					%>
 					<div class="card">
-						<div class="card-header  mind-cafe">
+						<div class="card-header mind-cafe d-flex justify-content-between align-items-center">
 							<h4>맛집</h4>
+							<span><img src="<%=request.getContextPath()%>/images/slideUp_icon.png" class="slideImg"></span>
 						</div>
 						<div id="collapseOne" class="collapse show"
 							data-parent="#accordion">
@@ -174,9 +209,10 @@
 
 
 					<div class="card">
-						<div class="card-header collapsed card-link mind-room"
+						<div class="card-header collapsed card-link mind-room d-flex justify-content-between align-items-center"
 							 href="#collapseTwo">
 							<h4>숙소</h4>
+							<span><img src="<%=request.getContextPath()%>/images/slide_icon.png" class="slideImg"></span>
 						</div>
 						<div id="collapseTwo" class="collapse show"
 							data-parent="#accordion">
@@ -226,9 +262,10 @@
 					</div>
 
 					<div class="card">
-						<div class="card-header collapsed card-link mind-hotspot"
+						<div class="card-header collapsed card-link mind-hotspot d-flex justify-content-between align-items-center"
 							 href="#collapseThree">
 							<h4>명소</h4>
+							<span><img src="<%=request.getContextPath()%>/images/slide_icon.png" class="slideImg"></span>
 						</div>
 						<div id="collapseThree" class="collapse show"
 							data-parent="#accordion">

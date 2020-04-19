@@ -343,15 +343,15 @@
 		visibility: visible;
 	}
 	
-	.card-body{
+	section .card-body{
 		display:flex;
 	}
 	
-	.card-body:first-child {
+	section .card-body:first-child {
 		flex:8;
 	}
 	
-	.card-body:last-child {
+	section .card-body:last-child {
 		margin-top:10px;
 	}
 	

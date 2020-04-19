@@ -152,7 +152,7 @@
                 <!-- trip 연결 -->
                 <div class="d-flex flex-column justify-content-center align-items-center" style="height: 150px; border: 1px solid white;">
                     <button type="button" id="danimLinkBtn" class="ldBtn mb-3" data-toggle="modal" data-target="#myModal">다님일정 연결하기</button>
-                    <div id="danimTitleBox"><strong class="mr-3">연결된 다님일정</strong>
+                    <div id="danimTitleBox">
                     	<!--<span id="danimTitle"><!%=((Integer)dh.getTripNo()!=null)?tripList.get(dh.getTripNo()).getTitle():""%></span>-->
 					<span id="danimTitle"></span>
                     </div>

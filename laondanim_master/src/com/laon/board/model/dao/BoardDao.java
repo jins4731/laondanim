@@ -58,25 +58,7 @@ public class BoardDao {
 	}
 	
 	
-	/*
-	 * public List<BoardJoinUser> selectBoard(Connection conn,int cPage,int
-	 * numPerPage){ PreparedStatement pstmt=null; ResultSet rs=null;
-	 * List<BoardJoinUser> list=new ArrayList(); String
-	 * sql=prop.getProperty("selectBoard"); try{pstmt=conn.prepareStatement(sql);
-	 * pstmt.setInt(1, (cPage-1)*numPerPage+1); pstmt.setInt(2, cPage*numPerPage);
-	 * rs=pstmt.executeQuery(); while(rs.next()) { BoardJoinUser b=new
-	 * BoardJoinUser(); b.setNo(rs.getInt("no")); b.setUserNo(rs.getInt("user_no"));
-	 * b.setCategory(rs.getString("category"));
-	 * b.setWriteDate(rs.getDate("write_date"));
-	 * b.setViewCount(rs.getInt("viewcount")); b.setTag(rs.getString("tag"));
-	 * b.setTitle(rs.getString("title")); b.setContent(rs.getString("content"));
-	 * b.setDeleted(rs.getString("deleted").charAt(0));
-	 * b.setNickName(rs.getString("nick_name")); list.add(b); } }catch(SQLException
-	 * e) { e.printStackTrace(); }finally { close(rs); close(pstmt); }return list;
-	 * 
-	 * }
-	 */
-	
+
 	public int countBoard(Connection conn) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -240,27 +222,36 @@ public class BoardDao {
 		
 		
 	}
-
-	public int searchCount(Connection conn,String category,String searchDetail,String searchBox) {
+	public int searchCount(Connection conn,String category,String searchDetail,String searchBox,String recent,String viewCount){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
+		int result=0;
 		List<BoardJoinUser> list=new ArrayList();
 		String sql="";
-		int result=0;
+	
+		//검색창부터
+		//작성자writer  제목title 내용content 키워드 태그tags
 		if(searchDetail.equals("writer")) {
-			sql=prop.getProperty("selectBoardSortWriter");
+			sql=prop.getProperty("countBoardSortWriter");
 		}if(searchDetail.equals("title")) {
-			sql=prop.getProperty("selectBoardSortTitle");
+			sql=prop.getProperty("countBoardSortTitle");
 		}if(searchDetail.equals("content")) {
-			sql=prop.getProperty("selectBoardSortContent");
+			sql=prop.getProperty("countBoardSortContent");
 		}if(searchDetail.equals("tags")) {
-			sql=prop.getProperty("selectBoardSortTags");
+			sql=prop.getProperty("countBoardSortTags");
 		}if(searchDetail.equals("null")) {
-			sql=prop.getProperty("selectBoard");
-			sql=sql.replace("WHERE DELETED='N'", "WHERE CATEGORY=? AND DELETED='N'");
+			sql=prop.getProperty("countBoards");
 		}
-		sql=sql.replace("WHERE RNUM BETWEEN ? AND ?", " ");
-		System.out.println("적용됨 sql?"+sql);
+		System.out.println("카운트패턴1적용전:"+sql);
+	
+		if(recent.equals("null") &&!viewCount.equals("null")) {
+			//조회수순 버튼 눌렀을때 ORDER BY VIEWCOUNT DESC 추가
+			sql=sql.replace("DELETED='N' ORDER BY WRITE_DATE DESC", "DELETED='N' ORDER BY VIEWCOUNT DESC");
+			  }
+		
+		
+		
+		System.out.println("카운트패턴2적용전:"+sql);
 		if(category.equals("null")||category.equals("all")) {
 			//전체를 출력할경우 category= 이거를 category!= 이걸로 바꿔줘야함
 			Pattern pattern=Pattern.compile("=");
@@ -278,17 +269,23 @@ public class BoardDao {
 		}
 		System.out.println("indexs.length:"+indexs.length);
 		int targetIndex=indexs[1];
-		
 		sql=sql.substring(0,targetIndex)+"!="+sql.substring(targetIndex+1,sql.length());
-		System.out.println("완성된 sql문:"+sql);	
-		System.out.println("카테고리뭐야:"+category);
+			
 		}
-		try{pstmt=conn.prepareStatement(sql);
-		if(category.equals("null")||category.equals("all")&&searchBox.equals("null")) {
+		System.out.println("카운트패턴2적용후:"+sql);
+	
+	
+	try{pstmt=conn.prepareStatement(sql);
+		if(category.equals("null")){//처음화면일때
 			pstmt.setString(1, "null");
+			
+		}else if(category.equals("all")&&(searchDetail.equals("null") ||searchBox.equals("null"))) {//최신이나 조회수순 눌렀을때
+			pstmt.setString(1, "null");
+		
 		}
-		else { pstmt.setString(1, category);
-			pstmt.setString(2, "%"+searchBox+"%");
+		else {//검색했을때
+		pstmt.setString(1, category);
+		pstmt.setString(2, "%"+searchBox+"%");
 		}
 		rs=pstmt.executeQuery();
 		while(rs.next()) {
@@ -314,9 +311,56 @@ public class BoardDao {
 		result=list.size();
 	}
 		return result;
+
 		
 		
 	}
+	/*
+	 * public int searchCount(Connection conn,String category,String
+	 * searchDetail,String searchBox) { PreparedStatement pstmt=null; ResultSet
+	 * rs=null; List<BoardJoinUser> list=new ArrayList(); String sql=""; int
+	 * result=0; if(searchDetail.equals("writer")) {
+	 * sql=prop.getProperty("selectBoardSortWriter");
+	 * }if(searchDetail.equals("title")) {
+	 * sql=prop.getProperty("selectBoardSortTitle");
+	 * }if(searchDetail.equals("content")) {
+	 * sql=prop.getProperty("selectBoardSortContent");
+	 * }if(searchDetail.equals("tags")) {
+	 * sql=prop.getProperty("selectBoardSortTags"); }if(searchDetail.equals("null"))
+	 * { sql=prop.getProperty("selectBoard"); sql=sql.replace("WHERE DELETED='N'",
+	 * "WHERE CATEGORY=? AND DELETED='N'"); }
+	 * sql=sql.replace("WHERE RNUM BETWEEN ? AND ?", " ");
+	 * System.out.println("적용됨 sql?"+sql);
+	 * if(category.equals("null")||category.equals("all")) { //전체를 출력할경우 category=
+	 * 이거를 category!= 이걸로 바꿔줘야함 Pattern pattern=Pattern.compile("="); Matcher
+	 * matcher=pattern.matcher(sql); int count=0; while(matcher.find()) { count++; }
+	 * matcher.reset(); int[] indexs=new int[count]; int i=0; while(matcher.find())
+	 * { indexs[i]=matcher.start(); i++; }
+	 * System.out.println("indexs.length:"+indexs.length); int
+	 * targetIndex=indexs[1];
+	 * 
+	 * sql=sql.substring(0,targetIndex)+"!="+sql.substring(targetIndex+1,sql.length(
+	 * )); System.out.println("완성된 sql문:"+sql);
+	 * System.out.println("카테고리뭐야:"+category); }
+	 * try{pstmt=conn.prepareStatement(sql);
+	 * if(category.equals("null")||category.equals("all")&&searchBox.equals("null"))
+	 * { pstmt.setString(1, "null"); } else { pstmt.setString(1, category);
+	 * pstmt.setString(2, "%"+searchBox+"%"); } rs=pstmt.executeQuery();
+	 * while(rs.next()) { BoardJoinUser b=new BoardJoinUser();
+	 * b.setNo(rs.getInt("no")); b.setUserNo(rs.getInt("user_no"));
+	 * b.setCategory(rs.getString("category"));
+	 * b.setWriteDate(rs.getDate("write_date"));
+	 * b.setViewCount(rs.getInt("viewcount")); b.setTag(rs.getString("tag"));
+	 * b.setTitle(rs.getString("title")); b.setContent(rs.getString("content"));
+	 * b.setDeleted(rs.getString("deleted").charAt(0));
+	 * b.setNickName(rs.getString("nick_name")); list.add(b); }
+	 * 
+	 * }catch(SQLException e) { e.printStackTrace(); }finally { close(rs);
+	 * close(pstmt); result=list.size(); } return result;
+	 * 
+	 * 
+	 * }
+	 */
 
 	public int insertComment(Connection conn, BoardComment bc) {
 		PreparedStatement pstmt=null;

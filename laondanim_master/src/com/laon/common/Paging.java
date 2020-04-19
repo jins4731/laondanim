@@ -126,7 +126,7 @@ public class Paging {
 		 
 		return pageBar;
 	}
-	
+	//aldus
 	public  String pageBar(String url,
 			int totalItemCount,int cPage,int perPage,String category,String searchDetail, String searchBox,String recent,String viewCount) {
 		

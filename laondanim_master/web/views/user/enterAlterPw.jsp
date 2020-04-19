@@ -7,14 +7,14 @@
 <div style="height:170px;"></div>
 <section class="d-flex flex-column justify-content-center align-items-center">
 <div id="login-submit" style="height: 717px;">	
-	<h2>비밀번호 변경</h2>
+	<h2 style="color:#00abbf" class="text-center">비밀번호 변경</h2>
 		<hr>
 		<table>
 		<tr>
 			<td colspan="2">
 				<button class="btn btn-warning" id="pw-exit">나중에 변경하기</button>
 				<input type="hidden" value="<%=id%>" id="userId">
-				<button class="btn btn-primary pwck-table" value="<%=id%>" id="enterPw" >비밀번호 변경</button>
+				<button class="btn btn-primary pwck-table" value="<%=id%>" id="enterPw" style="background-color:#00abbf;border-color:#00abbf" >비밀번호 변경</button>
 			</td>
 		</tr>
 		</table>

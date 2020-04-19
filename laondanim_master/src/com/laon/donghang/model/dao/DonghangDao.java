@@ -534,34 +534,55 @@ public class DonghangDao {
 	public int insertDonghaong(Connection conn, Donghang dh) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String sql = prop.getProperty("insertDonghaong");
+		String sql = "";
 		
+		if(dh.getTripNo()==-1) {
+			sql = prop.getProperty("insertDonghaong");
+		}else {
+			sql = prop.getProperty("insertDonghaongTripNo");
+		}
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, dh.getUserNo());
-			
 			if(dh.getTripNo()==-1) {
-				pstmt.setNull(2, Types.INTEGER);
-			}else {
-				pstmt.setInt(2, dh.getTripNo());
-			}
-			pstmt.setString(3, dh.getTag());
-			pstmt.setString(4, dh.getTitle());
-			pstmt.setString(5, dh.getContent());
-			pstmt.setString(6, dh.getTravleLocale());
-			pstmt.setDate(7, dh.getTravleStartDate());
-			pstmt.setDate(8, dh.getTravleEndDate());
-			pstmt.setDate(9, dh.getRecruitStartDate());
-			pstmt.setDate(10, dh.getRecruitEndDate());
+			
+			pstmt.setInt(1, dh.getUserNo());
+			pstmt.setString(2, dh.getTag());
+			pstmt.setString(3, dh.getTitle());
+			pstmt.setString(4, dh.getContent());
+			pstmt.setString(5, dh.getTravleLocale());
+			pstmt.setDate(6, dh.getTravleStartDate());
+			pstmt.setDate(7, dh.getTravleEndDate());
+			pstmt.setDate(8, dh.getRecruitStartDate());
+			pstmt.setDate(9, dh.getRecruitEndDate());
 			if(dh.getPw()==-1||dh.getPublicEnabled().equals("N")) {
-				pstmt.setNull(11, Types.INTEGER);
+				pstmt.setNull(10, Types.INTEGER);
 			}else {
-				pstmt.setInt(11, dh.getPw());
+				pstmt.setInt(10, dh.getPw());
 			}
-			pstmt.setString(12, dh.getPublicEnabled());
-			pstmt.setInt(13, dh.getRecruitPeopleNo());
+			pstmt.setString(11, dh.getPublicEnabled());
+			pstmt.setInt(12, dh.getRecruitPeopleNo());
 						
+			}else {
+				pstmt.setInt(1, dh.getUserNo());
+				pstmt.setInt(2, dh.getTripNo());
+				pstmt.setString(3, dh.getTag());
+				pstmt.setString(4, dh.getTitle());
+				pstmt.setString(5, dh.getContent());
+				pstmt.setString(6, dh.getTravleLocale());
+				pstmt.setDate(7, dh.getTravleStartDate());
+				pstmt.setDate(8, dh.getTravleEndDate());
+				pstmt.setDate(9, dh.getRecruitStartDate());
+				pstmt.setDate(10, dh.getRecruitEndDate());
+				if(dh.getPw()==-1||dh.getPublicEnabled().equals("N")) {
+					pstmt.setNull(11, Types.INTEGER);
+				}else {
+					pstmt.setInt(11, dh.getPw());
+				}
+				pstmt.setString(12, dh.getPublicEnabled());
+				pstmt.setInt(13, dh.getRecruitPeopleNo());
+			}
+			
 			result = pstmt.executeUpdate();
 			
 		}catch(SQLException e) {

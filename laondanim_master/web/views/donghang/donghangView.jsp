@@ -93,6 +93,12 @@
 
 
 					<!-- 로그인 유저가 동행작성자일 때 -->
+					
+                <%if( dh.getRecruitPeopleNo() <= dh.getJoinPeopleNo() ) {%>
+                		<button type="button" class="ldBtnInactive ml-2" disabled>
+			            	동행 모집마감
+			            </button>
+			    <%} else{ %>
                     <%if( loginUser.getNo()==dh.getUserNo() ) {%>
                     <button type="button" class="ldBtn ml-2"
 						onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangUpdate.do?userNo=<%=loginUser.getNo()%>&no=<%=dh.getNo()%>')">
@@ -128,6 +134,7 @@
 	                    	동행마감
 	                    </button>
 					<%} %>
+				<%} %>
                 </div>
             </div>
 
@@ -203,7 +210,7 @@
                     %>             
                         <div class="d-flex justify-content-center align-items-center m-2">
                             <img src="<%=request.getContextPath()%>/views/picture/profile/<%=up.getImage()%>" alt="프로필사진" style="width: 40px; height: 40px;" class="profileImg">
-                            <p class="m-0"><%=up.getNickName()%></p>
+                            <p class="m-0 ml-2"><%=up.getNickName()%></p>
                         </div>
                     <%}} %>  
                     </div>            

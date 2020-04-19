@@ -152,9 +152,19 @@ public class MypageService {
 	public List<MyDong> selectOriJoin(List<DonghangJoin> jd){
 		Connection conn=getConnection();
 		List<MyDong> list=dao.selectOriJoin(conn,jd);
+		List<MyDong> jdList=new ArrayList<MyDong>();
+		
+		int cnt=0;
+		for(MyDong j:list) {
+			jdList.add(j);
+			cnt++;
+			if(cnt==4) {
+				break;
+			}
+		}
 		close(conn);
 		
-		return list;
+		return jdList;
 	}
 	
 	//�������� �������� �������� �� ������ ��� ����Ʈ

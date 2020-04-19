@@ -122,12 +122,12 @@
 									let src = $(e.target).parent().find("img").attr("src");
 	      							console.log("src = " + src);
 	      							console.log(e.target);
-	      							if(src == "<%=request.getContextPath()%>/views/picture/icon/heart2.jpg"){
-	      								$(e.target).attr("src", "<%=request.getContextPath()%>/views/picture/icon/heart1.jpg");
+	      							if(src == "<%=request.getContextPath()%>/views/picture/icon/heart2.png"){
+	      								$(e.target).attr("src", "<%=request.getContextPath()%>/views/picture/icon/heart1.png");
 	      								let minus = $(e.target).parent().parent().next().text().trim();
 	      								$(e.target).parent().parent().next().text(parseInt(minus)-1);
 	      							}else{
-	      								$(e.target).attr("src", "<%=request.getContextPath()%>/views/picture/icon/heart2.jpg");
+	      								$(e.target).attr("src", "<%=request.getContextPath()%>/views/picture/icon/heart2.png");
 	      								let plus = $(e.target).parent().parent().next().text().trim();
 	      								$(e.target).parent().parent().next().text(parseInt(plus)+1);
 	      							}
@@ -153,7 +153,7 @@
 	                <div class="col-8 d-flex flex-row justify-content-between p-0">
 	                    <div class="d-flex flex-row">
 	                        <div class="dropdown">
-		 						<button class="btn dropdown-toggle rounded mr-3" type="button" id="type-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="searchFilter">
+		 						<button class="btn dropdown-toggle ml-2" type="button" id="type-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="searchFilter">
 		   							상호명
 		 						</button>
 		 						
@@ -165,11 +165,11 @@
 							</div>	
 	                    </div>
 						
-						<input type="text" placeholder="검색하세요 :)" class="form-control border-0 ml-2" size="100" list="data" id="search"/>	
+						<input type="text" placeholder="검색하세요 :)" class="form-control border-0" size="100" list="data" id="search"/>	
 						
 	                    
 	                    <button id="cancel" class="btn btn-light border-0 ml-auto" onclick="searchCancel()">&times;</button>
-	                   	<input type="button" id="search-btn" class="btn btn-primary" value="검색"/>	        
+	                   	<input type="button" id="search-btn" class="btn" value="검색"/>	        
 	                </div>
 	            </div>
         	</div>
@@ -178,7 +178,7 @@
 			<!--------------------------------------------------찜목록 버튼---------------------------------------------------->
 			<div class="my-heart">
 				<button type="button" class="btn" id="myHeart" >
-					<img src="<%=request.getContextPath()%>/views/picture/icon/heart2.jpg" width="70px" height="70px">
+					<img src="<%=request.getContextPath()%>/views/picture/icon/heart2.png" width="70px" height="70px">
 				</button>
 			</div>	
 					
@@ -206,23 +206,23 @@
 			</script>
 			
 			<!-- 카테고리 -->
-			 <div class="container">
+			 <div class="container mt-5 mb-5">
 	           <div class="row justify-content-between" >
 	                <div class="d-flex flex-row">
 		                <div class="col category">              		        		
-							<button type="button" id="cafe-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
+							<button type="button" id="cafe-button" class="ldBtnC" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="맛집"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
 								맛집
 							</button>
 						</div>
 						
 						<div class="col category">
-							<button type="button" id="room-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="숙소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
+							<button type="button" id="room-button" class="ldBtnC" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="숙소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
 								숙소
 							</button>
 						</div>
 							
 						<div class="col category">
-							<button type="button" id="attraction-button" class="btn btn-primary" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="명소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
+							<button type="button" id="attraction-button" class="ldBtnC" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%="명소"%>&userNo=<%=loginUser==null?"":loginUser.getNo()%>&first=<%=first%>')">
 								명소
 							</button>							
 						</div>					
@@ -232,15 +232,15 @@
 			<!-----------------------------------------------카테고리 버튼---------------------------------------------------->
 			
 			<!-- 전체 목록 개수 / 필터 -->			
-			<div class="container mt-4">
-	            <div class="row justify-content-between">
+			<div class="container mt-4 mb-3">
+	            <div class="row d-flex justify-content-between align-items-center">
 	                <div class="col-4 d-flex align-items-center">
 	                    <h6 class="display-6 mt-2">총 <%=request.getAttribute("totalData")%>건의 여행정보가 있습니다.</h6>
 	                </div>
 	
 	                <div class="col-3 d-flex justify-content-end">
-	                    <button id="mind-btn" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%=category%>&mind=mind')">
-							<span>마음 순</span>
+	                    <button id="mind-btn" onclick="location.replace('<%=request.getContextPath()%>/tripinfo/tripinfoMain?category=<%=category%>&mind=mind')" class="ldBtnF">
+							마음 순
 						</button> 
 	                </div>
 	            </div>
@@ -248,7 +248,7 @@
         
 			
 			<!--여행 정보 리스트-->
-				 <div class="container mt-3 justify-content-center mb-5" style="height:640px;">
+				 <div class="container mt-4 justify-content-center mb-5" style="height:640px;">
 	            <div class="row mb-2 h-50 row1">
 	            <%
 	            int size = list.size();
@@ -301,67 +301,123 @@
 	     	 display:none;
 	     	
 	     	
-	     } 
-	              
-	           .card-body{
-	               position: relative;
-	           }
-	   
-	           .hdTagBox{
-	               width: 100%;
-	               height: 100%;
-	               position: absolute;
-	               background-color: rgba(0, 0, 0, 0.63);
-	               display: flex;
-	               justify-content: center;
-	               align-items: center;
-	               visibility: hidden;
-	           }
-	   
-	           .hdTag{
-	               width: 90%;
-	               margin: 0px;
-	               padding: 0px;
-	               color: white;
-	               /* border: 1px solid white; */
-	               list-style: none;
-	           }
-	   
-	           .hdTag li{
-	               display: inline;
-	               padding-right: 5px;
-	           }
-	   
-	           .card-body:hover .hdTagBox{
-	               visibility: visible;
-	           }
-	   
-	           .hdTagBox:hover{
-	           }
-	           
-	           #searchCon{
-	                height: 45px;
-	                width: 450px;
-	                border: 3px solid #00abbf;
-	                background-color: #00abbf;
-	                border-radius: 30px;
-	                /* overflow: hidden; */
-	           }
-	           
-	           #searchFilter{
-	           		background: none;
-	           		border: 0px;
-	           }
-	           #searchCon .btn{
-	           		color: white;
-	           }
-	           #searchCon input[type="text"]{
-	           		width: 300px;
-	           }
-	           #searchCon #cancel{
-	           		color : #00abbf;
-	           }
-	       </style>
+	     } 	              
+         .card-body{
+             position: relative;
+         }
+ 
+         .hdTagBox{
+             width: 100%;
+             height: 100%;
+             position: absolute;
+             background-color: rgba(0, 0, 0, 0.63);
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             visibility: hidden;
+         }
+ 
+         .hdTag{
+             width: 90%;
+             margin: 0px;
+             padding: 0px;
+             color: white;
+             /* border: 1px solid white; */
+             list-style: none;
+         }
+ 
+         .hdTag li{
+             display: inline;
+             padding-right: 5px;
+         }
+ 
+         .card-body:hover .hdTagBox{
+             visibility: visible;
+         }
+ 
+         .hdTagBox:hover{
+         }
+         
+         #searchCon{
+              height: 45px;
+              width: 450px;
+              border: 3px solid #00abbf;
+              background-color: #00abbf;
+              border-radius: 30px;
+              /* overflow: hidden; */
+         }	           
+         #searchFilter{
+         		background: none;
+         		border: 0px;
+         }
+         #searchCon .btn{
+         		color: white;
+         }
+         #searchCon input[type="text"]{
+         		width: 256px;
+         		border-radius: 0px;
+         		height: 38px;
+         }
+         #searchCon #cancel{
+         		color : #00abbf;
+         		background-color: white;
+         		border-radius: 0px;
+         		height: 38px;
+         }
+         #searchCon #type-btn{
+         		margin: 0px;
+        	   }
+    	 #searchCon #search-btn{
+    	   		border-top-right-radius: 25px;
+    	   		border-bottom-right-radius: 25px;
+    	   		border-top-left-radius: 0px;
+    	   		border-bottom-left-radius: 0px;
+    	   		background-color: white;
+    	   		height: 38px;
+    	   		width: 57px;
+    	   		color: #00abbf;
+    	 }
+		.ldBtnC{
+		    border-radius: 20px;
+		    background-color: white;
+		    border: 2px solid #00abbf;
+		    color: #00abbf;
+		    padding: 6px 15px 6px 15px;
+		    width: 120px;
+		}  
+		.ldBtnC:hover,.ldBtnC:active {
+		    color: white;
+		    background-color: #00abbf;
+		}   
+		.ldBtnSubmit{
+		    border-radius: 20px;
+		    background-color: #00abbf;
+		    border: 2px solid #00abbf;
+		    color: white;
+		    padding: 6px 15px 6px 15px;   
+		}      
+		.ldBtnF{
+			background: none;
+			color: #595959;
+			font-weight: bolder;
+			border: none;
+		}	
+		.card-header > span{
+			color:#595959;
+			font-weight: bolder;
+		} 
+		.card{
+		    border: 2px solid #dadada;
+		}
+		.ck{
+			border:none;
+			background:none;
+		}
+		.ck > img{
+			width: 27px;
+			height: 27px;
+		}
+    	</style>
 	                        <div class="card-footer h-30 d-flex flex-column p-1 text-center bg-white">                                                  
 	                            <span class="location-info"><%
 	                            	if(i<count){
@@ -402,9 +458,9 @@
 		                                	String src="";
 		                                	
 		                                	if(i<count&&mindCheck.equals("N")||mindCheck.equals("")){ 
-		                                		src = request.getContextPath()+"/views/picture/icon/heart1.jpg";
+		                                		src = request.getContextPath()+"/views/picture/icon/heart1.png";
 		                                	}else{
-		                                		src = request.getContextPath()+"/views/picture/icon/heart2.jpg";
+		                                		src = request.getContextPath()+"/views/picture/icon/heart2.png";
 		                                	}
 	                                	%>                           
 	                                	<button class="ck">
@@ -521,9 +577,9 @@
 	                                	String src="";
 	                                	
 	                                	if(i-5<count&&mindCheck.equals("N")||mindCheck.equals("")){ 
-	                                		src = request.getContextPath()+"/views/picture/icon/heart1.jpg";
+	                                		src = request.getContextPath()+"/views/picture/icon/heart1.png";
 	                                	}else{
-	                                		src = request.getContextPath()+"/views/picture/icon/heart2.jpg";
+	                                		src = request.getContextPath()+"/views/picture/icon/heart2.png";
 	                                	}
 	                                	%>                           
 	                                	<button class="ck">
@@ -606,7 +662,7 @@
 								<%for(Mind m : heartCount) { %>
 										<%if(tp.getTripinfoNo()==m.getTripinfoNo()){  %>
 								<div>
-									<img src="<%=request.getContextPath()%>/views/picture/icon/heart2.jpg" width="10px" height="10px">
+									<img src="<%=request.getContextPath()%>/views/picture/icon/heart2.png" width="10px" height="10px">
 									<%=m.getCount()%>
 								</div>
 										

@@ -75,11 +75,11 @@
 												    	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>&filter=ALL">신청서 수신함</a>
 												      	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongDeadline.do?userNo=<%=loginUser.getNo() %>&no=<%=d.getNo() %>&title=<%=d.getTitle() %>" onclick="return confirm('[<%=d.getTitle() %>] 동행 모집을 마감하시겠습니까?');">모집 마감</a>
 												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangUpdate.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">동행 수정</a>
-												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongDel.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo() %>">동행 삭제</a>
+												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongDel.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo() %>&title=<%=d.getTitle() %>" onclick="return confirm('[<%=d.getTitle() %>] 동행을 삭제하시겠습니까?');">동행 삭제</a>
 						                        	<%}else{ %>
 						                        		<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>&filter=ALL">신청서 수신함</a>
 												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">동행 수정</a>
-												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongDel.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo() %>">동행 삭제</a>
+												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongDel.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo() %>&title=<%=d.getTitle() %>" onclick="return confirm('[<%=d.getTitle() %>] 동행을 삭제하시겠습니까?');">동행 삭제</a>
 						                        	<%} %>
 												    </div>
 												</div>

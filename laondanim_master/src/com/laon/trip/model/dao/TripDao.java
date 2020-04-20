@@ -195,7 +195,8 @@ public class TripDao {
 		int check = 0;			   
 		ArrayList<Trip2> list = new ArrayList<Trip2>();
 		Trip2 t = null;
-		
+		System.out.println("====변화전====");
+		System.out.println(sql);
 		if(first.equals("first")) {
 			for(int i=(cPage-1)*perPage; i<cPage*perPage; i++) {
 				if(i<tripTagCountList.size()) {
@@ -253,7 +254,9 @@ public class TripDao {
 				      i++;
 				   }
 				   int targetIndex = indexs[2];
-				   //SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT TR.*, (SELECT COUNT(*) FROM LIKE_TB WHERE TR.NO=TRIP_NO AND CANCLED='Y') AS CNT FROM TRIP_TB TR WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ? ORDER BY CNT DESC)A) WHERE RNUM BETWEEN ? AND ?
+				   //SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT TR.*, 
+				   //(SELECT COUNT(*) FROM LIKE_TB WHERE TR.NO=TRIP_NO AND CANCLED='Y') AS CNT FROM TRIP_TB TR 
+				   //WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ? ORDER BY CNT DESC)A) WHERE RNUM BETWEEN ? AND ?
 	
 				   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+1, sql.length());
 			}
@@ -271,8 +274,12 @@ public class TripDao {
 				      indexs[i] =  matcher.start();
 				      i++;
 				   }
-	
-				   int targetIndex = indexs[3];
+				   int targetIndex=0;
+				   
+				   
+				   targetIndex = indexs[3];
+				
+				   
 				   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+1, sql.length());
 			}
 			
@@ -295,7 +302,8 @@ public class TripDao {
 				   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+4, sql.length());
 	
 			}
-			
+			System.out.println("====변화후====");
+			System.out.println(sql);
 			try {
 				
 				pstmt = conn.prepareStatement(sql);
@@ -353,13 +361,31 @@ public class TripDao {
 		ResultSet rs = null;
 		
 		String sql = prop.getProperty("selectTripCount2");
-		//SELECT COUNT(*) FROM TRIP_TB WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ?
+		//SELECT COUNT(*) FROM TRIP_TB WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE AND DELETED='N'?
 		
 		if(category.equals("null") || category.equals("전체 여행기")) {
 			sql =sql.replaceFirst("=", "!=");
 		}
 		if(lo.equals("null") || lo.equals("선택 지역별")) {
-			sql = replaceLast(sql, "=", "!=",0);
+			Pattern pattern = Pattern.compile("=");
+			   Matcher matcher = pattern.matcher(sql);
+			   int count = 0;
+			   while (matcher.find()) {
+			      count++;
+			   }
+			   matcher.reset();
+			   int[] indexs = new int[count];
+			   int i = 0;
+			   while (matcher.find()) {
+			      indexs[i] =  matcher.start();
+			      i++;
+			   }
+
+			   int targetIndex = 0;
+			   
+			   targetIndex = indexs[1];
+			   
+			   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+1, sql.length());
 		}
 		if(keyword.equals("null")) {			
 			sql = sql.replaceFirst("LIKE", "!=");

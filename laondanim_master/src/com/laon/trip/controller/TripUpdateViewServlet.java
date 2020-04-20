@@ -1,4 +1,4 @@
-package com.laon.mypage.controller;
+package com.laon.trip.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,19 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.laon.mypage.model.service.MypageService;
-
 /**
- * Servlet implementation class MyPageDongMyDHDeleteServlet
+ * Servlet implementation class TripUpdateViewServlet
  */
-@WebServlet("/mypage/myDongDel.do")
-public class MyPageDongMyDHDeleteServlet extends HttpServlet {
+@WebServlet("/tripUpdateView.do")
+public class TripUpdateViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageDongMyDHDeleteServlet() {
+    public TripUpdateViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,24 +26,10 @@ public class MyPageDongMyDHDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int userNo=Integer.parseInt(request.getParameter("userNo"));
-		int myDongNo=Integer.parseInt(request.getParameter("no"));
-		String title=request.getParameter("title");
+		// TODO Auto-generated method stub
+		System.out.println("TripUpdateViewServlet. doGet()");
 		
-		int result=new MypageService().myDongDelete(myDongNo);
 		
-		String msg="";
-		String loc="";
-		if(result>0) {
-			msg="["+title+"] 동행이 삭제되었습니다.";
-			loc="/myPage/myPageDong.do?userNo="+userNo;
-		}else {
-			msg="["+title+"] 동행 삭제에 실패했습니다.";
-			loc="/myPage/myPageDong.do?userNo="+userNo;
-		}
-		request.setAttribute("msg", msg);
-		request.setAttribute("loc",loc);
-		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 	}
 
 	/**

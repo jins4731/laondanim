@@ -64,13 +64,13 @@ public class BoardSearchServlet extends HttpServlet {
 		}
 		int perPage = 5;
 		
-		int totalData=new BoardService().searchCount(category,searchDetail,searchBox);
+		int totalData=new BoardService().searchCount(category,searchDetail,searchBox,recent,viewCount);
 	
 		System.out.println("페이지바 파라미터:"+category+":"+searchDetail+":"+searchBox+":"+recent+":"+viewCount+":"+cPage);
 	
 		
 		List<BoardJoinUser> list=new BoardService().searchBoard(cPage,perPage,category,searchDetail,searchBox,recent,viewCount); 
-		System.out.println("검색된 갯수:"+list.size());
+		
 		String pageBar=new Paging().pageBar(request.getContextPath()+"/board/search.do",
 				totalData,cPage,perPage,category,searchDetail,searchBox,recent,viewCount);
 		//버튼에 이용할 쿼리스트링 저장

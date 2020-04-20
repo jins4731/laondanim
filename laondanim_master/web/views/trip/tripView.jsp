@@ -315,7 +315,7 @@
 									
 									class="col-2 text-center p-2" style="height: 100px;">
 									<div class="w-100 h-100 text-center view overlay zoom ">
-										<img src="<%=request.getContextPath() %>/views/picture/trip/<%=image%>" width="120px"
+										<img src="<%=request.getContextPath() %>/views/picture/tripinfo/<%=image%>" width="120px"
 											height="100%" class="d-inline-block rounded-lg py-1 shadow">
 										<div class="mx-auto mask flex-center rgba-black-strong text-nowrap"
 											style="width: 73%;height: 100%;z-index: 1;overflow: hidden;" data-address="<%=info.getAddress()%>" data-name="<%=info.getName() %>">
@@ -335,7 +335,7 @@
 									data-address="<%=info.getAddress()%>" data-name="<%=info.getName() %>"
 									class="col-2 text-center p-2" style="height: 100px;">
 									<div class="w-100 h-100 text-center view overlay zoom ">
-										<img src="<%=request.getContextPath() %>/views/picture/trip/<%=image%>" width="120px"
+										<img src="<%=request.getContextPath() %>/views/picture/tripinfo/<%=image%>" width="120px"
 											height="100%" class="d-inline-block rounded-lg py-1 shadow">
 										<div class="mx-auto mask flex-center rgba-black-strong text-nowrap"
 											style="width: 73%;height: 100%;z-index: 1;overflow: hidden;" data-address="<%=info.getAddress()%>" data-name="<%=info.getName() %>">

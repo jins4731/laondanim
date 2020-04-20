@@ -102,11 +102,7 @@
             }
         }
 
-        header {
-            border: 2px solid red;
-            box-sizing: border-box;
-            height: 150px;
-        }
+       
 
         section {
             /* border: 2px solid green; */
@@ -378,19 +374,19 @@
 							
 						%>
 
-                        <div id="matzipItem<%=i %>" name="matzipItem" class="d-inline-block view zoom"
+                        <div data-dropable="false" id="matzipItem<%=i %>" name="matzipItem" class="d-inline-block view zoom"
                            
                             style="height: 170px; width: 170px;position: relative;">
-                            <img id="matzipImg<%=i %>" onclick="itemBt(event)" name="matzipImg" class="d-block " data-no="<%=no%>" data-category="<%=category %>"
+                            <img data-dropable="false" id="matzipImg<%=i %>" onclick="itemBt(event)" name="matzipImg" class="d-block " data-no="<%=no%>" data-category="<%=category %>"
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
-                                src="<%=request.getContextPath()+"/views/picture/trip/"+image %>"
+                                src="<%=request.getContextPath()+"/views/picture/tripinfo/"+image %>"
                                 draggable="true" ondragstart="dragstart(event)" alt=""
                                 style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
-                            <div class="mask flex-center rgba-black-strong text-nowrap"
+                            <div data-dropable="false" class="mask flex-center rgba-black-strong text-nowrap"
                                 style="width: 100%;height: 30px;z-index: 1;overflow: hidden;">
-                                <p class="white-text"><%=name%></p>
+                                <p data-dropable="false" class="white-text"><%=name%></p>
                             </div>
                         </div>
 
@@ -410,18 +406,18 @@
                             String image = info.getPictureList().get(0).getImage();
 						%>
 
-                        <div id="myoungsoItem<%=i %>" name="myoungsoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
-                                <img id="myoungsoImg<%=i %>"  onclick="itemBt(event)" name="myoungsoImg" class="d-block" data-no="<%=no%>"
+                        <div data-dropable="false" id="myoungsoItem<%=i %>" name="myoungsoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
+                                <img data-dropable="false" id="myoungsoImg<%=i %>"  onclick="itemBt(event)" name="myoungsoImg" class="d-block" data-no="<%=no%>"
                                     data-category="<%=category %>" data-tag="<%=tag %>" data-name="<%=name %>"
                                     data-address="<%=address %>" data-businessHours="<%=businessHours %>"
                                     data-tel="<%=tel %>" data-homepage="<%=homepage %>" data-naver="<%=naver %>"
                                     data-sns="<%=sns %>"
-                                    src="<%=request.getContextPath()+"/views/picture/trip/"+image %>"
+                                    src="<%=request.getContextPath()+"/views/picture/tripinfo/"+image %>"
                                     draggable="true" ondragstart="dragstart(event)" alt=""
                                     style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
-                                <div class="mask flex-center rgba-black-strong text-nowrap"
+                                <div data-dropable="false" class="mask flex-center rgba-black-strong text-nowrap"
                                     style="width: 100%;height: 30px;z-index: 1;overflow: hidden;">
-                                    <p class="white-text"><%=name%></p>
+                                    <p data-dropable="false" class="white-text"><%=name%></p>
                                 </div>
                         </div>
 
@@ -442,17 +438,17 @@
 							
 						%>
 
-                        <div id="sooksoItem<%=i %>" name="sooksoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
-                            <img id="sooksoImg<%=i %>" onclick="itemBt(event)" name="sooksoImg" class="d-block" data-no="<%=no%>" data-category="<%=category %>"
+                        <div data-dropable="false" id="sooksoItem<%=i %>" name="sooksoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
+                            <img data-dropable="false" id="sooksoImg<%=i %>" onclick="itemBt(event)" name="sooksoImg" class="d-block" data-no="<%=no%>" data-category="<%=category %>"
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
-                                src="<%=request.getContextPath()+"/views/picture/trip/"+image %>"
+                                src="<%=request.getContextPath()+"/views/picture/tripinfo/"+image %>"
                                 draggable="true" ondragstart="dragstart(event)" alt=""
                                 style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
-                            <div class="mask flex-center rgba-black-strong text-nowrap"
+                            <div data-dropable="false" class="mask flex-center rgba-black-strong text-nowrap"
                                 style="width: 100%;height: 30px;z-index: 1;overflow: hidden;">
-                                <p class="white-text"><%=name%></p>
+                                <p data-dropable="false" class="white-text"><%=name%></p>
                             </div>
                         </div>
 
@@ -973,9 +969,26 @@
         function drop(event) { // 드래그 해서 놓았을때
             console.log("ondrop");
             event.preventDefault();
-            const div = $(event.target)[0];
+            var div = $(event.target)[0];
+            console.log("div.dataset.dropable : " + div.dataset.dropable);
+
+
+            
+            var isUpdateItem = false;
+            if(div.dataset.dropable != undefined){
+                div = $(div).parent().parent()[0];
+                $(div).empty(); 
+                isUpdateItem = true;
+            }else{
+
+            }
+            
             var order = div.dataset.order;
+            console.log("order : " + order);
             var data = event.dataTransfer.getData("itemId");
+            console.log("data :" + data );
+            
+           
 
             var itemClone = $("#" + data).clone(); // 이미지
             console.log(itemClone);
@@ -999,9 +1012,13 @@
                 left: "-90px"
             });
             div.appendChild(trantport[0]);
-            var addSchedule = $("[name='addSchedule']")[0].cloneNode()// 아이템 추가 공간 생성
+
+            if(!isUpdateItem){
+                var addSchedule = $("[name='addSchedule']")[0].cloneNode()// 아이템 추가 공간 생성
             addSchedule.dataset.order= (Number(order)+1);
-            event.target.after(addSchedule);
+            $(div).after(addSchedule);
+            }
+          
             
 
         }

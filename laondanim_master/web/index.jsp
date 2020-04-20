@@ -143,12 +143,13 @@
 							<p class="pTitle">#게시판</p>
 							<hr class="pHr">
 						</div>
-						<div>
+						<div>	<a href="<%=request.getContextPath()%>/sdasdewq.do">안녕하세요</a>	
 							<p class="pAdd">"제주도 맛집리스트 좀 공유합시다"</p>
 							<p class="pBody">사담부터 질문까지 함께 나누는 자유게시판</p>
 						</div>
 					</div>			
-				</div>			
+				</div>	
+				
 		</section>
 
 	</div>

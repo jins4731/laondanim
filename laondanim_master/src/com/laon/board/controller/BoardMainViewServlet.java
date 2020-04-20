@@ -62,7 +62,7 @@ public class BoardMainViewServlet extends HttpServlet {
 		
 		//페이지 바는 템플릿으로 구현을 해본다
 		String url=request.getContextPath();
-		String pageBar=new Paging().pageBar(request.getContextPath()+"/board/list.do",totalData,cPage,numPerPage);
+		String pageBar=new Paging().pageBar(url+"/board/list.do",totalData,cPage,numPerPage);
 		System.out.println(pageBar);
 		request.setAttribute("pageBar",pageBar);
 		

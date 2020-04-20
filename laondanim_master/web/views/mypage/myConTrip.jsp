@@ -21,7 +21,7 @@
 					<button type="button" id="myH" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageHeart.do?userNo=<%=loginUser.getNo()%>')">내 마음함</button>
 					<button type="button" id="myDh" class="btn btn-info" onclick="location.replace('<%=request.getContextPath()%>/myPage/myPageDong.do?userNo=<%=loginUser.getNo()%>')">내 동행</button>
 				</div>
-				<div id="myPageView">
+				<div id="myPageView" class="w-100">
 					<div class="menu">
 						<div class="manuBar">
 							<div>
@@ -51,7 +51,7 @@
 								</div>
 							</div>
 							<!-- 게시글위치 -->
-							<table id="dnTbl" class="d-flex justify-content-center">
+							<table id="dnTbl" class="d-flex justify-content-start">
 								<input type="hidden" value="<%=loginUser.getNo() %>" name="userNo" id="userNo">
 								<tr class="d-flex flex-wrap">
 								<%for(TripMyCon t:trip){ %>
@@ -74,7 +74,7 @@
 												    	</button>
 												   	 	<div class="dropdown-menu">
 												      		<a class="dropdown-item" href="#">수정</a>
-												     		<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myTripDelete.do?userNo=<%=loginUser.getNo()%>&tripNo=<%=t.getNo()%>">삭제</a>
+												     		<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myTripDelete.do?userNo=<%=loginUser.getNo()%>&tripNo=<%=t.getNo()%>&title=<%=t.getTitle()%>" onclick="return confirm('[<%=t.getTitle() %>] 여행기를 삭제 하시겠습니까?');">삭제</a>
 												    	</div>
 													</div>
 												</div>
@@ -86,7 +86,7 @@
 				                           </div>
 				                           <div class="d-flex card-body p-2">
 				                           		<div style="width:150px;font-size:12px;">
-													<p class="mb-0"><%=t.getTitle() %></p>
+													<p class="mb-0 tover"><%=t.getTitle() %></p>
 													<%for(Like l:tripLike){%>
 													<%if(t.getNo()==l.getNo()) {%>
 														<span><%=l.getLikeCount() %></span>
@@ -160,6 +160,12 @@
 	#myMenuBtn>button:hover{
 		color: white;
     	background-color: #00abbf;
+	}
+	
+	.tover{
+		white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 	}
 </style>
 

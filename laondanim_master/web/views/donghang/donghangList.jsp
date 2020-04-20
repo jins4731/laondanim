@@ -439,10 +439,10 @@
             </div>
             
             <!-- Modal body -->
-            <div class="modal-body d-flex">
+            <div class="modal-body d-flex flex-column justify-content-center align-items-center">
             	<div class="d-flex justify-content-center w-100">
-            		<input type="password" name="inputDhPw" id="inputDhPw" required="required"
-            			style="width: 360px; border-bottom: 2px soild #dadada; border-top: none; border-left: none; border-right: none;"/>
+            		<input type="password" name="inputDhPw" id="inputDhPw" 
+            			style="width: 360px; border-bottom: 2px soild #dadada; border-top: none; border-left: none; border-right: none;" required/>
             	</div>
             </div>
             
@@ -549,7 +549,8 @@
     	
     	$("#dhPwBtn").click(()=>{
     		inputPw = $("#inputDhPw").val();
-    		if(inputPw==dhPw){
+
+    		if(inputPw==dhPw ){
     			location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo='+luNo+'&no='+dhNo);
     		}else{
     			$("#pwErorrModal").modal("show");

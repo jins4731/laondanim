@@ -126,7 +126,7 @@ public class Paging {
 		 
 		return pageBar;
 	}
-	
+	//aldus
 	public  String pageBar(String url,
 			int totalItemCount,int cPage,int perPage,String category,String searchDetail, String searchBox,String recent,String viewCount) {
 		
@@ -167,7 +167,7 @@ public class Paging {
 		return pageBar;
 	}
 	
-	public String pageBar(String url, int totalData, int cPage, int perPage, String keyword, String category, String lo, String recent, String like, String first) {
+	public String pageBar(String url, int totalData, int cPage, int perPage, String keyword, String category, String lo, String recent, String like, String first, String infoNo) {
 		
 	
 		
@@ -193,14 +193,14 @@ public class Paging {
 		if(rowNum == 1) {
 			pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&lt;</a></li>";
 		}else {
-			pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?cPage=" + (rowNum-1) +"&keyword="+keyword+"&category="+category+"&lo="+lo+"&recent="+recent+"&like="+like+"&first="+first+"' area-label='Previous'>&lt;</a></li>";
+			pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?cPage=" + (rowNum-1) +"&keyword="+keyword+"&category="+category+"&lo="+lo+"&recent="+recent+"&like="+like+"&first="+first+"&infoNo="+infoNo+"' area-label='Previous'>&lt;</a></li>";
 		}
 		
 		while(!(rowNum>pageLast || rowNum>totalPage)) {
 			if(cPage==rowNum) {
 				pageBar += "<li class='page-item'><a class='page-link' href=''>"+rowNum+"</a></li>";
 			}else {
-				pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?cPage="+rowNum+"&keyword="+keyword+"&category="+category+"&lo="+lo+"&recent="+recent+"&like="+like+"&first="+first+"'>"+rowNum+"</a></li>";
+				pageBar += "<li class='page-item'><a class='page-link' href='"+url+"?cPage="+rowNum+"&keyword="+keyword+"&category="+category+"&lo="+lo+"&recent="+recent+"&like="+like+"&first="+first+"&infoNo="+infoNo+"'>"+rowNum+"</a></li>";
 			}
 			rowNum++;
 		}
@@ -208,7 +208,7 @@ public class Paging {
 		if(rowNum>totalPage) {
 			pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&gt;</a></li>";
 		}else {
-			pageBar +="<li class='page-item'><a class='page-link' href='"+url+"?cPage="+rowNum+"&keyword="+keyword+"&category="+category+"&lo="+lo+"&recent="+recent+"&like="+like+"&first="+first+"' area-label='Previous'>&gt;</a></li>";
+			pageBar +="<li class='page-item'><a class='page-link' href='"+url+"?cPage="+rowNum+"&keyword="+keyword+"&category="+category+"&lo="+lo+"&recent="+recent+"&like="+like+"&first="+first+"&infoNo="+infoNo+"' area-label='Previous'>&gt;</a></li>";
 		}
 		
 		pageBar += "<li class='page-item'><a class='page-link' href='' area-label='Previous'>&raquo;</a></li> </ul>";

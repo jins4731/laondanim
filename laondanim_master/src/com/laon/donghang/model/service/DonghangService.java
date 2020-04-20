@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.laon.admin.model.vo.Reports;
 import com.laon.donghang.model.dao.DonghangDao;
 import com.laon.donghang.model.vo.Donghang;
 import com.laon.donghang.model.vo.DonghangJoin;
@@ -72,7 +73,7 @@ public class DonghangService {
 			}
 			
 		}
-		
+		close(conn);
 		return donghangItem;
 	}
 
@@ -93,6 +94,7 @@ public class DonghangService {
 	public List<Like> selectLike(List<TripMyCon> list) {
 		Connection conn = getConnection();
 		List<Like> likeList = dao.selectLike(conn, list);
+		close(conn);
 		return likeList;
 	}
 
@@ -188,9 +190,9 @@ public class DonghangService {
 		return list;
 	}
 
-	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(int loginUserNo) {
+	public List<DonghangJoinDonghangJoinTb> selectDonghangJoinList(int loginUserNo, int no, String filter) {
 		Connection conn = getConnection();
-		List<DonghangJoinDonghangJoinTb> list = dao.selectDonghangJoinList(conn, loginUserNo);
+		List<DonghangJoinDonghangJoinTb> list = dao.selectDonghangJoinList(conn, loginUserNo, no, filter);
 		close(conn);
 		return list;
 	}
@@ -202,9 +204,9 @@ public class DonghangService {
 		return list;
 	}
 
-	public int selectJoinCount(int userNo) {
+	public int selectJoinCount(int userNo, int no) {
 		Connection conn = getConnection();
-		int result = dao.selectJoinCount(conn, userNo);
+		int result = dao.selectJoinCount(conn, userNo, no);
 		close(conn);
 		return result;
 	}
@@ -230,4 +232,39 @@ public class DonghangService {
 		close(conn);
 		return userList;
 	}
+
+	public int joinComfirmedUpdate(String confirmedValue, int joinNo, int dhNo) {
+		Connection conn = getConnection();
+		int result = dao.joinComfirmedUpdate(conn, confirmedValue, joinNo, dhNo);
+		if(result>0) {
+			commit(conn);
+		} else rollback(conn);
+		close(conn);
+		
+		return result;
+	}
+
+	public int donghangJoinPlus(int dhNo) {
+		Connection conn = getConnection();
+		int result = dao.donghangJoinPlus(conn, dhNo);
+		if(result>0) {
+			commit(conn);
+		} else rollback(conn);
+		close(conn);
+		
+		return result;
+	}
+	
+	public int insertReport(Reports re) {
+		Connection conn=getConnection();
+		int result=dao.insertReport(conn,re);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+
+
+
 }

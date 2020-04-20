@@ -72,15 +72,14 @@
 												    </button>
 												    <div class="dropdown-menu">
 												    <%if(d.getEnded().equals("N")){ %>
-												    	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">신청서 수신함</a>
-												      	<a class="dropdown-item" id="myDongDeadline" data-toggle="modal" data-target="#myDongDeadline" value="<%=d.getNo()%>">모집 마감</a>
-												      	<!-- href="#" onclick="return confirm('동행 모집을 마감하시겠습니까?');" -->
+												    	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>&filter=ALL">신청서 수신함</a>
+												      	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongDeadline.do?userNo=<%=loginUser.getNo() %>&no=<%=d.getNo() %>&title=<%=d.getTitle() %>" onclick="return confirm('[<%=d.getTitle() %>] 동행 모집을 마감하시겠습니까?');">모집 마감</a>
 												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangUpdate.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">동행 수정</a>
-												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongDel.do?no=<%=d.getNo() %>">동행 삭제</a>
+												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongDel.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo() %>&title=<%=d.getTitle() %>" onclick="return confirm('[<%=d.getTitle() %>] 동행을 삭제하시겠습니까?');">동행 삭제</a>
 						                        	<%}else{ %>
-						                        		<a class="dropdown-item" href="#">신청서 수신함</a>
+						                        		<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>&filter=ALL">신청서 수신함</a>
 												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangJoinlist.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo()%>">동행 수정</a>
-												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/donghang/donghangUpdate.do?userNo=<%=d.getNo() %>&fileName=<%=d.getImage()%>">동행 삭제</a>
+												     	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongDel.do?userNo=<%=loginUser.getNo()%>&no=<%=d.getNo() %>&title=<%=d.getTitle() %>" onclick="return confirm('[<%=d.getTitle() %>] 동행을 삭제하시겠습니까?');">동행 삭제</a>
 						                        	<%} %>
 												    </div>
 												</div>
@@ -92,7 +91,7 @@
 											<%} %>
 										</div>
 				                        <div class="d-flex flex-column justify-content-center p-2" style="font-size:7px;">
-				                        	<p class="mb-0"><%=d.getTitle() %></p>
+				                        	<p class="mb-0 tover"><%=d.getTitle() %></p>
 				                       		<ul class="p-0 m-0">
 				                            	<li class="tover">동행지역 : <span><%=d.getTravleLocale() %></span></li>
 				                            	<li>기간 : <span><%=d.getTravleStartDate() %></span><br>
@@ -164,27 +163,30 @@
 			                           	<div>
 			                           		<div style="position: absolute;">
 			                            		<div class="dropdown" style="position: relative;">
+			                            		<%for(DonghangJoin dj:joinDong){ 
+					                        		if(j.getNo()==dj.getDonghangNo()){
+													    if(!dj.getConfirmed().equals("Y")){ %>
 											    	<button type="button" class="btn" data-toggle="dropdown">
 											      		...
 											    	</button>
+											    	<%} } }%>
 					                        		<div class="dropdown-menu">
 					                        		<%for(DonghangJoin dj:joinDong){ 
 					                        			if(j.getNo()==dj.getDonghangNo()){
 													    	if(dj.getConfirmed().equals("N")){ %>
 														    	<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myDongJoinRefusal.do?userNo=<%=loginUser.getNo()%>&dongJoinNo=<%=dj.getNo()%>">삭제</a>
-								                        	<%}else if(dj.getConfirmed().equals("Y")){ %>
-														      	<a class="dropdown-item" href="#">동행 나가기</a>
-								                        	<%}else{ %>
-								                        		<a class="dropdown-item" href="#">보낸 신청서 보기</a>
-														      	<a class="dropdown-item" href="#">참여 신청 취소</a>
+								                        	<%-- <%}else if(dj.getConfirmed().equals("Y")){ %>
+														      	<a class="dropdown-item" href="#">동행 나가기</a> --%>
+								                        	<%}else if(dj.getConfirmed().equals("J")){ %>
+														      	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongJoinCancle.do?userNo=<%=loginUser.getNo()%>&djNo=<%=dj.getNo()%>&title=<%=j.getTitle() %>" onclick="return confirm('[<%=j.getTitle() %>] 동행 참여 신청을 취소 하시겠습니까?');">참여 신청 취소</a>
 						                        	<%} } }%>
 						                        	</div>
 												</div>
 			                           		</div>
 			                           		<%if(j.getImage()==null){ %>
-												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px" onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo=<%=loginUser.getNo() %>&no=<%=j.getNo()%>')">
 											<%}else{ %>
-												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=j.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
+												<img src="<%=request.getContextPath() %>/upload/donghang/<%=j.getImage()%>" class="card-img" alt="..." width="155px" height="155px" onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo=<%=loginUser.getNo() %>&no=<%=j.getNo()%>')">
 											<%} %>
 			                           </div>
 			                           <div class="d-flex flex-column justify-content-center card-body p-2" style="font-size:7px;">
@@ -210,7 +212,7 @@
 			                   </td>
 			                <%} %>
 							</tr>
-							<%if(joinDong.size()==4){ %>
+							<%if(oriJoinDong.size()==4){ %>
 							<tr>
 								<td colspan="4" style="text-align: center;">
 									<button class="btn" onclick="location.replace('<%=request.getContextPath()%>/myPage/myDongMyJD.do?userNo=<%=loginUser.getNo()%>')">+더보기</button>
@@ -329,10 +331,6 @@
 			flag=true;
 		}
 	});
-	
-	/* $("myDongDeadline").on("shown.bs.modal', function(){
-		var no = $(this).val();
-	} */
 	
 	$(".modal-close").click(()=>{
 	    $("#myDongDeadline").hide();

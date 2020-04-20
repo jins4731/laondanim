@@ -15,7 +15,7 @@
 	List<Like> likeList = (List<Like>)request.getAttribute(CommonKey.LIKE_LIST);
 	
 	DonghangJoinUserPicture dh = (DonghangJoinUserPicture)request.getAttribute(CommonKey.DONGHANG_ITEM);
-		
+
 %>
 
 <%@ include file="/views/common/header.jsp"%>
@@ -36,17 +36,16 @@
             <div class="d-flex justify-content-center align-items-center" style="width: 1000px; height: 350px;">
                 <div style="width: 480px; height: 270px; position: relative;" class="border d-flex justify-content-center align-items-center mr-5">
                     <!--사진 넣는 버튼-->
-                    <input type="file" id="file" name="imageFile" accept="image/*" onchange="changeValue(this)"/>
+                    <input type="hidden" id="oriFile" name="oriImageFile" accept="image/*" value="<%=dh.getImage()%>"/>
+                    <input type="file" id="newFile" name="newImageFile" accept="image/*"/>
                     <button type="button" id="btnFileUplaod" style="width: 50px; height: 50px; border-radius: 25px; position: absolute; background-color: rgba(0, 0, 0, 0.746); color: white; display: flex;
                     justify-content: center; align-items: center; font-size: 25px;" class="border-0">
                         <p style="height: 50px;" class="m-0 pt-1">+</p>
                     </button>
-                    <img id="preview" style="width: 100%; height: 100%;" src="/uload/image/<%=dh.getImage()%>">
+                    <img id="preview" style="width: 100%; height: 100%;" src="<%=request.getContextPath()%>/upload/donghang/<%=dh.getImage()%>">
+                    <img id="oriFileView" style="width: 100%; height: 100%;" src="<%=request.getContextPath()%>/upload/donghang/<%=dh.getImage()%>">
                 </div>
 
-				<script>
-					console.log("<%=dh.getTravleLocale()%>");
-				</script>
 
                 <table class="p-0" style="width: 300px; height: 250px;">
                     <tr>
@@ -77,12 +76,13 @@
                                 </select>                                    
                             </div>
                             <input type="hidden" id="travelLocal" name="travelLocal">
-                        </div>
+                        <!-- </div> -->
                         </td>
                     </tr>
                     <tr>
                         <td class="p-0 pt-2">동행인원수</td>
                     </tr>
+                    <tr>
                     <td class="p-0 border-bottom d-flex align-items-center">
                         <div id="minus" class="ml-3"></div>
                         <input type="number" class="form-control w-50 text-center border-0" value="1" placeholder="동행(모집) 인원" name="recruitPeopleNo" id="recruitPeopleNo" 
@@ -152,9 +152,9 @@
                 <!-- trip 연결 -->
                 <div class="d-flex flex-column justify-content-center align-items-center" style="height: 150px; border: 1px solid white;">
                     <button type="button" id="danimLinkBtn" class="ldBtn mb-3" data-toggle="modal" data-target="#myModal">다님일정 연결하기</button>
-                    <div id="danimTitleBox"><strong class="mr-3">연결된 다님일정</strong>
-                    	<!--<span id="danimTitle"><%=((Integer)dh.getTripNo()!=null)?tripList.get(dh.getTripNo()).getTitle():""%></span>-->
-			<span id="danimTitle"></span>
+                    <div id="danimTitleBox">
+                    	<!--<span id="danimTitle"><!%=((Integer)dh.getTripNo()!=null)?tripList.get(dh.getTripNo()).getTitle():""%></span>-->
+					<span id="danimTitle"></span>
                     </div>
                 </div>
 
@@ -208,7 +208,9 @@
                                 class="d-flex align-items-center justify-content-start">
                                 
                                     <ul style="zoom: 0.8; list-style: none; position: absolute; left: 0;" id="danimList" class="d-flex align-items-center p-0">
-											<%for(int i=0; i<tripList.size(); i++) {%>
+											<%if(tripList.size()>1 && dh.getTripNo()>0){
+												for(int i=0; i<tripList.size(); i++) {%>
+											
                                             <label>
                                             <li class="pr-1">
                                             	<input type="checkbox" name="selectTrip" id="<%=tripList.get(i).getNo()%>" value="<%=tripList.get(i).getNo()%>"
@@ -218,7 +220,7 @@
                                                         <span><%=tripList.get(i).getCategory()%></span>
                                                         <span><%=tripList.get(i).getWriteDate() %></span>
                                                     </div>
-                                                    <img src="<%=tripList.get(i).getImage()%>" class="card-img" alt="..." width="235px" height="235px">
+                                                    <img src="<%=request.getContextPath()%>/views/picture/trip/<%=tripList.get(i).getImage()%>" class="card-img" alt="..." width="235px" height="235px">
                                                     <div class="d-flex flex-column justify-content-center card-body p-2" style="line-height: 22px;">
                                                         <span><%=tripList.get(i).getTitle()%><span><br>
                                                         <span><%=loginUser.getNickName()%></span><br>
@@ -237,7 +239,8 @@
                                                 </div>
                                             </li>
                                             </label>
-                                            <%} %>             
+                                            <%	}
+											}%>             
                                     </ul>
                                 
                                 
@@ -255,12 +258,12 @@
                     
                         <!-- Modal footer -->
                         <div class="modal-footer border-top-0">
-                            <button type="button" class="ldBtn" data-dismiss="modal">Close</button>
+                            <button type="button" class="ldBtn" data-dismiss="modal">선택</button>
                         </div>
                     </div>
                 </div>
             </div>
-
+ 
 
             <!--사진&정보 스타일-->
             <style>
@@ -314,9 +317,12 @@
                     align-items: center;
                     cursor: pointer;
                 }  
-                input[name="imageFile"]{    
+                input[name="oriImageFile"]{    
                     display:none;
                 }
+                input[name="newImageFile"]{    
+                    display:none;
+                }                
             </style>     
                
             <script>
@@ -359,15 +365,12 @@
                 $(function () {
                     $('#btnFileUplaod').click(function (e) {
                         e.preventDefault();
-                        $('#file').click();
+                        $('#newFile').click();
                     });
                 });
 
-                function changeValue(obj){
-                    alert(obj.value);
-                }   
-
                 /* 2) 미리보기 fn*/
+				$("#preview").hide();
                 function readInputFile(input) {
                     if(input.files && input.files[0]) {
                         var reader = new FileReader();
@@ -378,13 +381,15 @@
                     }
                 }
             
-                $("#file").on('change', function(){
+                $("#newFile").on('change', function(){
                     readInputFile(this);
+                    $("#oriFileView").hide();
+                    $("#preview").show();  				
                 });               
                 
                 
                 /* trip일정 선택해서 넣어주기 */
-                $("#")
+
 
             </script>    
 
@@ -457,16 +462,19 @@
                     $("#back").css("visibility","visible");
                 });
 
-                /*리스트에 체크된 값을 히든인풋에 넣어주기*/                
-/*                 $('button[data-dismiss="modal"]').click(()=>{
-                    alert($('input[name="selectTrip"]:checked').val()); */
-                    let no = $('input[name="selectTrip"]:checked').val();
+                /*리스트에 체크된 값을 히든인풋에 넣어주기*/              
+                let no = $('input[name="selectTrip"]:checked').val();
+                $("#selectTripNo").val(no);
+
+                /*체크된 값이 바뀔 때 다시 저장해 주기*/
+                $('input[name="selectTrip"]').change(()=>{
+                	no = $('input[name="selectTrip"]:checked').val();
                     $("#selectTripNo").val(no);
-                    console.log( $("#selectTripNo").val());
-/*                 }); */
+                })
+
    
-                let liNo = $('input[name="selectTrip"]:checked').val();
-                let str = "#ck"+liNo;
+/*                 let liNo = $('input[name="selectTrip"]:checked').val();
+                let str = "#ck"+liNo; */
                 /* 체크박스 개수 제한 */
                 function doOpenCheck(chk){
                 var obj = document.getElementsByName("selectTrip");

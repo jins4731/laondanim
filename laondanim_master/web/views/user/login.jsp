@@ -122,7 +122,7 @@ td > label{
 	      <tr>
 	         <td>
 	          <label>USER ID<br>
-	            <input type="text" id="userId" name="userId" class="form-control mb-1" placeholder="아이디 입력">
+	            <input type="text" id="userId" name="userId" class="form-control mb-1" placeholder="아이디 입력" value="<%=saveId %>">
 	         </label>
 	         </td>
 	      </tr>

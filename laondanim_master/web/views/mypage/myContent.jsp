@@ -57,7 +57,7 @@
 						<!-- 게시글위치 -->
 						<%if(trip.size()>0){ %>
 						<table id="dnTbl">
-							<tr class="d-flex flex-wrap justify-content-center">
+							<tr class="d-flex flex-wrap">
 								<%for(TripMyCon t:trip){ %>
 								<td class="p-1">
 									<div class="card" style="width: 155px; height: 250px;">
@@ -73,7 +73,7 @@
 											    	</button>
 											   	 	<div class="dropdown-menu">
 											      		<a class="dropdown-item" href="#">수정</a>
-											     		<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myTripDelete.do?userNo=<%=loginUser.getNo()%>&tripNo=<%=t.getNo()%>">삭제</a>
+											     		<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myTripDelete.do?userNo=<%=loginUser.getNo()%>&tripNo=<%=t.getNo()%>&title=<%=t.getTitle()%>" onclick="return confirm('[<%=t.getTitle() %>] 여행기를 삭제 하시겠습니까?');">삭제</a>
 											    	</div>
 												</div>
 											</div>
@@ -85,7 +85,7 @@
 			                           </div>
 			                           <div class="d-flex card-body p-2">
 			                           		<div style="width:150px;font-size:12px;">
-												<p class="mb-0"><%=t.getTitle() %></p>
+												<p class="mb-0 tover"><%=t.getTitle() %></p>
 												<%for(Like l:tripLike){%>
 												<%if(t.getNo()==l.getNo()) {%>
 													<span><%=l.getLikeCount() %></span>
@@ -165,7 +165,7 @@
 											<%=b.getCategory() %>
 										</td>
 										<td>
-											<a href="<%=request.getContextPath()%>/board/boardView.do?no=<%=b.getNo()%>"><%=b.getTitle() %></a>
+											<a class="tover" href="<%=request.getContextPath()%>/board/boardView.do?no=<%=b.getNo()%>"><%=b.getTitle() %></a>
 										</td>
 										<td style="width:150px;">
 											<%=b.getWriteDate() %>
@@ -197,6 +197,10 @@
 <style>
 	div.menu{
 		width:auto;
+		cursor:pointer;
+	}
+	
+	img{
 		cursor:pointer;
 	}
 	
@@ -244,6 +248,12 @@
 	#myMenuBtn>button:hover{
 		color: white;
     	background-color: #00abbf;
+	}
+	
+	.tover{
+		white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 	}
 </style>
 

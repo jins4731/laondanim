@@ -72,7 +72,7 @@ public class BoardViewServlet extends HttpServlet {
 		
 		if(b==null) { //�Խñ��� �������
 			
-			request.setAttribute("msg", "������ �Խù��� �������� �ʽ��ϴ�");
+			request.setAttribute("msg", "선택한 게시물이 없습니다");
 			request.setAttribute("loc", "/board/list.do");
 			request.getRequestDispatcher("/views/common/msg.jsp");
 			

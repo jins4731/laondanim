@@ -5,7 +5,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ include file="/views/common/header.jsp"%>
 <%
 
 	String userNo = (String)request.getAttribute("userNo");
@@ -20,21 +20,15 @@
 
 
 %>
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     
-    
+<%--     
 <!-- 지워도 되는거 -->
 <!-- 지워도 되는거 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
 <!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -50,7 +44,7 @@
 <!-- 지워도 되는거 -->
 <!-- 지워도 되는거 -->
 
-
+ --%>
 
 
 
@@ -102,24 +96,29 @@
             }
         }
 
-       
+/*         header {
+            border: 2px solid red;
+            box-sizing: border-box;
+            height: 150px;
+        } */
 
         section {
             /* border: 2px solid green; */
             box-sizing: border-box;
+            width: 1336px;
         }
 
         section div {
             /* border: 1px solid black; */
-            box-sizing: border-box;
+            /* box-sizing: border-box; */
         }
 
-        footer {
+/*         footer {
             /* border: 2px solid blue; */
             box-sizing: border-box;
 
             height: 70px;
-        }
+        } */
 
         #titleContainer div {
             /* border: 1px solid black; */
@@ -209,6 +208,9 @@
 			font-size: 22px;
 			color: #595959;
 		}
+		.bolder{
+			font-weight: 750;
+		}
 		.input{
 			border: 0;
 		}
@@ -226,22 +228,42 @@
             color: #00abbf;
             font-weight: 900;
 		}
+		.navbar {
+		    font-weight: normal;
+		    -webkit-box-shadow: none;
+		    box-shadow: none;
+		}
+		header{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.border-danger{
+			border-color: #dadada;
+		}
+		.ldBtnSubmit{
+		    border-radius: 20px;
+		    background-color: #00abbf;
+		    border: 2px solid #00abbf;
+		    color: white;
+		    padding: 6px 15px 6px 15px;   
+		}  
     </style>
-</head>
-
-<body>
-    <header class="container-fluid"></header>
 
 
-    <section class="container-fluid">
-        <div id="titleContainer" class="row justify-content-center mb-5">
+
+    <!-- <header class="container-fluid"></header> -->
+	<div style="height: 170px;"></div>
+
+    <section class="container-fluid d-flex flex-column align-items-center">
+        <div id="titleContainer" class="row justify-content-center mb-5 w-100">
             <div class="col-4">
                 <div class="row dropdown justify-content-center">
                     <button type="button" id="category" name="category"
                         class="ldBtn dropdown-toggle mb-5" data-toggle="dropdown" style="font-weight: 600; width: 150px;">일정</button>
                     <div class="dropdown-menu">
-                        <a id="courseDropBt" href="#" class="dropdown-item">일정</a>
-                        <a id="reviewDropBt" href="#" class="dropdown-item">후기</a>
+                        <a id="courseDropBt" href="#" class="dropdown-item">여행 일정</a>
+                        <a id="reviewDropBt" href="#" class="dropdown-item">여행 후기</a>
                     </div>
                 </div>
 
@@ -264,9 +286,9 @@
         </div>
 
 
-        <div id="tripinfoContainer">
+        <div id="tripinfoContainer" class="w-100">
             <div class="border-bottom text-dark pb-2 pl-2">
-                <span class="laonBodyFont">여행정보</span>
+                <span class="laonBodyFont bolder">여행정보</span>
             </div>
 
             <div class="col">
@@ -331,7 +353,7 @@
 
 
 
-        <div id="courseContainer" class="mt-5">
+        <div id="courseContainer" class="mt-5 w-100">
             <div class="row mx-1 mb-2">
                 <button id="matzipBt" onclick="matzipBt()" class="ldBtnC">맛집</button>
                 <button id="myoungsoBt" onclick="myoungsoBt()" class="ldBtnC">명소</button>
@@ -374,19 +396,19 @@
 							
 						%>
 
-                        <div data-dropable="false" id="matzipItem<%=i %>" name="matzipItem" class="d-inline-block view zoom"
+                        <div id="matzipItem<%=i %>" name="matzipItem" class="d-inline-block view zoom"
                            
                             style="height: 170px; width: 170px;position: relative;">
-                            <img data-dropable="false" id="matzipImg<%=i %>" onclick="itemBt(event)" name="matzipImg" class="d-block " data-no="<%=no%>" data-category="<%=category %>"
+                            <img id="matzipImg<%=i %>" onclick="itemBt(event)" name="matzipImg" class="d-block " data-no="<%=no%>" data-category="<%=category %>"
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
-                                src="<%=request.getContextPath()+"/views/picture/tripinfo/"+image %>"
+                                src="<%=request.getContextPath()+"/views/picture/trip/"+image %>"
                                 draggable="true" ondragstart="dragstart(event)" alt=""
                                 style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
-                            <div data-dropable="false" class="mask flex-center rgba-black-strong text-nowrap"
+                            <div class="mask flex-center rgba-black-strong text-nowrap"
                                 style="width: 100%;height: 30px;z-index: 1;overflow: hidden;">
-                                <p data-dropable="false" class="white-text"><%=name%></p>
+                                <p class="white-text"><%=name%></p>
                             </div>
                         </div>
 
@@ -406,18 +428,18 @@
                             String image = info.getPictureList().get(0).getImage();
 						%>
 
-                        <div data-dropable="false" id="myoungsoItem<%=i %>" name="myoungsoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
-                                <img data-dropable="false" id="myoungsoImg<%=i %>"  onclick="itemBt(event)" name="myoungsoImg" class="d-block" data-no="<%=no%>"
+                        <div id="myoungsoItem<%=i %>" name="myoungsoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
+                                <img id="myoungsoImg<%=i %>"  onclick="itemBt(event)" name="myoungsoImg" class="d-block" data-no="<%=no%>"
                                     data-category="<%=category %>" data-tag="<%=tag %>" data-name="<%=name %>"
                                     data-address="<%=address %>" data-businessHours="<%=businessHours %>"
                                     data-tel="<%=tel %>" data-homepage="<%=homepage %>" data-naver="<%=naver %>"
                                     data-sns="<%=sns %>"
-                                    src="<%=request.getContextPath()+"/views/picture/tripinfo/"+image %>"
+                                    src="<%=request.getContextPath()+"/views/picture/trip/"+image %>"
                                     draggable="true" ondragstart="dragstart(event)" alt=""
                                     style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
-                                <div data-dropable="false" class="mask flex-center rgba-black-strong text-nowrap"
+                                <div class="mask flex-center rgba-black-strong text-nowrap"
                                     style="width: 100%;height: 30px;z-index: 1;overflow: hidden;">
-                                    <p data-dropable="false" class="white-text"><%=name%></p>
+                                    <p class="white-text"><%=name%></p>
                                 </div>
                         </div>
 
@@ -438,17 +460,17 @@
 							
 						%>
 
-                        <div data-dropable="false" id="sooksoItem<%=i %>" name="sooksoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
-                            <img data-dropable="false" id="sooksoImg<%=i %>" onclick="itemBt(event)" name="sooksoImg" class="d-block" data-no="<%=no%>" data-category="<%=category %>"
+                        <div id="sooksoItem<%=i %>" name="sooksoItem" class="d-none view  zoom"  style="height: 170px; width: 170px;position: relative;">
+                            <img id="sooksoImg<%=i %>" onclick="itemBt(event)" name="sooksoImg" class="d-block" data-no="<%=no%>" data-category="<%=category %>"
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
-                                src="<%=request.getContextPath()+"/views/picture/tripinfo/"+image %>"
+                                src="<%=request.getContextPath()+"/views/picture/trip/"+image %>"
                                 draggable="true" ondragstart="dragstart(event)" alt=""
                                 style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
-                            <div data-dropable="false" class="mask flex-center rgba-black-strong text-nowrap"
+                            <div class="mask flex-center rgba-black-strong text-nowrap"
                                 style="width: 100%;height: 30px;z-index: 1;overflow: hidden;">
-                                <p data-dropable="false" class="white-text"><%=name%></p>
+                                <p class="white-text"><%=name%></p>
                             </div>
                         </div>
 
@@ -492,7 +514,7 @@
 
             <!-- 스케줄 추가 -->
             
-            <div id="dayContainer" class="col p-0 mx-1">
+            <div id="dayContainer" class="col p-0 mx-1 mt-3 mb-3">
 
                 <div id="day1" name="day" data-save="1" class="row mx-1" id="schduleContainer">
                 
@@ -548,9 +570,9 @@
                             class="d-inline-flex  view overlay zoom p-1 img-fluid align-items-center justify-content-center">
 
                             <img src="<%=request.getContextPath() %>/picture/trip/plus.png" alt=""
-                                style="object-fit: contain;width: 100%;height: 100%;">
+                                style="object-fit: contain;width: 120%;height: 120%; opacity: 0.6; cursor: pointer;">
                             <input type="file" id="image" name="image" multiple accept=".jpg, .png"
-                                style="width: 100%;height: 100%;position: absolute;" form="tripForm" required>
+                                style="width: 100%;height: 100%;position: absolute; cursor: pointer;" form="tripForm" required>
                         </div>
 
 
@@ -571,7 +593,7 @@
             </div>
 
             <div class="row p-5">
-                <textarea class="form-control bg-light" rows="5" id="content" name="text"></textarea>
+                <textarea class="form-control" rows="5" id="content" name="text"></textarea>
             </div>
 
 
@@ -609,12 +631,12 @@
             </div>
 
 
-            <div id="formContainer">
+            <div id="formContainer" style="height: 150px;" class="d-flex align-items-center">
                 <form class="d-flex col justify-content-center" id="tripForm"
                     action="<%=request.getContextPath()%>/trip/tripInsertEnd.do" method="POST"
                     enctype="multipart/form-data">
-                    <input class="btn btn-grey" type="reset" id="resetBt" value="취소">
-                    <input class="btn btn-grey ml-4" type="button" id="submitBt" value="전송">
+                    <input class="ldBtn" type="reset" id="resetBt" value="취소" style="width: 120px;">
+                    <input class="ldBtnSubmit ml-4" type="button" id="submitBt" value="전송" style="width: 120px;">
                     <input type="hidden" id="fileNames" name="fileNames" value="">
 
                 </form>
@@ -623,7 +645,7 @@
     </section>
 
 
-    <footer class="container-fluid"></footer>
+<!--     <footer class="container-fluid"></footer> -->
 
 
 
@@ -717,7 +739,7 @@
             dayCount++;
             span.html(dayCount + "일차");
             span[0].dataset.save = dayCount;
-            var div = $('<div class="d-flex ml-2 bg-primary rounded-pill justify-content-center align-items-center" style="height: 100%;width: 60px;cursor: pointer;" onclick="dayBt(event)"></div>');
+            var div = $('<div class="d-flex ml-2 dayBtn rounded-pill justify-content-center align-items-center" style="height: 100%;width: 120px;cursor: pointer;" onclick="dayBt(event)"></div>');
             div.append(span).append(a);
             div[0].dataset.save = dayCount;
             $(event.target).before(div);
@@ -969,26 +991,9 @@
         function drop(event) { // 드래그 해서 놓았을때
             console.log("ondrop");
             event.preventDefault();
-            var div = $(event.target)[0];
-            console.log("div.dataset.dropable : " + div.dataset.dropable);
-
-
-            
-            var isUpdateItem = false;
-            if(div.dataset.dropable != undefined){
-                div = $(div).parent().parent()[0];
-                $(div).empty(); 
-                isUpdateItem = true;
-            }else{
-
-            }
-            
+            const div = $(event.target)[0];
             var order = div.dataset.order;
-            console.log("order : " + order);
             var data = event.dataTransfer.getData("itemId");
-            console.log("data :" + data );
-            
-           
 
             var itemClone = $("#" + data).clone(); // 이미지
             console.log(itemClone);
@@ -1012,13 +1017,9 @@
                 left: "-90px"
             });
             div.appendChild(trantport[0]);
-
-            if(!isUpdateItem){
-                var addSchedule = $("[name='addSchedule']")[0].cloneNode()// 아이템 추가 공간 생성
+            var addSchedule = $("[name='addSchedule']")[0].cloneNode()// 아이템 추가 공간 생성
             addSchedule.dataset.order= (Number(order)+1);
-            $(div).after(addSchedule);
-            }
-          
+            event.target.after(addSchedule);
             
 
         }
@@ -1315,6 +1316,4 @@
         // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
         var map = new kakao.maps.Map(mapContainer, mapOption);
     </script>
-</body>
-
-</html>
+<%@ include file="/views/common/footer.jsp"%> 

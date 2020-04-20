@@ -161,7 +161,7 @@ public class TripDao {
 		}
 		sql = sql.substring(0, sql.length()-1);
 		sql += ")";
-		System.out.println(sql);
+		
 		List<Tripinfo> list = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -195,10 +195,12 @@ public class TripDao {
 		int check = 0;			   
 		ArrayList<Trip2> list = new ArrayList<Trip2>();
 		Trip2 t = null;
-		System.out.println("변화전 : " + sql);
-		
+		System.out.println("====변화전====");
+		System.out.println(sql);
 		if(first.equals("first")) {
 			for(int i=(cPage-1)*perPage; i<cPage*perPage; i++) {
+				if(i<tripTagCountList.size()) {
+				
 				t = new Trip2();
 				
 				t.setNo(tripTagCountList.get(i).getNo());
@@ -216,6 +218,8 @@ public class TripDao {
 				t.setDeleted(tripTagCountList.get(i).getDeleted());
 				
 				list.add(t);
+				
+				}
 			}
 			
 			return list;
@@ -250,7 +254,9 @@ public class TripDao {
 				      i++;
 				   }
 				   int targetIndex = indexs[2];
-				   //SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT TR.*, (SELECT COUNT(*) FROM LIKE_TB WHERE TR.NO=TRIP_NO AND CANCLED='Y') AS CNT FROM TRIP_TB TR WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ? ORDER BY CNT DESC)A) WHERE RNUM BETWEEN ? AND ?
+				   //SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT TR.*, 
+				   //(SELECT COUNT(*) FROM LIKE_TB WHERE TR.NO=TRIP_NO AND CANCLED='Y') AS CNT FROM TRIP_TB TR 
+				   //WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ? ORDER BY CNT DESC)A) WHERE RNUM BETWEEN ? AND ?
 	
 				   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+1, sql.length());
 			}
@@ -268,8 +274,12 @@ public class TripDao {
 				      indexs[i] =  matcher.start();
 				      i++;
 				   }
-	
-				   int targetIndex = indexs[3];
+				   int targetIndex=0;
+				   
+				   
+				   targetIndex = indexs[3];
+				
+				   
 				   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+1, sql.length());
 			}
 			
@@ -287,12 +297,13 @@ public class TripDao {
 				      indexs[i] =  matcher.start();
 				      i++;
 				   }
-				   System.out.println("변화후"+sql);
+
 				   int targetIndex = indexs[1];
 				   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+4, sql.length());
 	
 			}
-			System.out.println("변화 후:" + sql);
+			System.out.println("====변화후====");
+			System.out.println(sql);
 			try {
 				
 				pstmt = conn.prepareStatement(sql);
@@ -350,19 +361,36 @@ public class TripDao {
 		ResultSet rs = null;
 		
 		String sql = prop.getProperty("selectTripCount2");
-		//SELECT COUNT(*) FROM TRIP_TB WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE ?
-		System.out.println("dao에서 데이터 량 출력 변화 전 : " + sql);
-		System.out.println("dao에서 lo 값 : " + lo); 
+		//SELECT COUNT(*) FROM TRIP_TB WHERE CATEGORY=? AND TRAVLE_LOCALE=? AND TAG LIKE AND DELETED='N'?
+		
 		if(category.equals("null") || category.equals("전체 여행기")) {
 			sql =sql.replaceFirst("=", "!=");
 		}
 		if(lo.equals("null") || lo.equals("선택 지역별")) {
-			sql = replaceLast(sql, "=", "!=",0);
+			Pattern pattern = Pattern.compile("=");
+			   Matcher matcher = pattern.matcher(sql);
+			   int count = 0;
+			   while (matcher.find()) {
+			      count++;
+			   }
+			   matcher.reset();
+			   int[] indexs = new int[count];
+			   int i = 0;
+			   while (matcher.find()) {
+			      indexs[i] =  matcher.start();
+			      i++;
+			   }
+
+			   int targetIndex = 0;
+			   
+			   targetIndex = indexs[1];
+			   
+			   sql = sql.substring(0, targetIndex) + "!=" + sql.substring(targetIndex+1, sql.length());
 		}
 		if(keyword.equals("null")) {			
 			sql = sql.replaceFirst("LIKE", "!=");
 		}
-		System.out.println("dao에서 데이터 량 출력 변화 후 : " + sql);
+		
 		int count = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -739,8 +767,8 @@ public class TripDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, Integer.parseInt(data.getUserNo()));
-			pstmt.setInt(1, 1);
+			pstmt.setInt(1, Integer.parseInt(data.getUserNo()));
+//			pstmt.setInt(1, 1);
 			pstmt.setString(2, data.getCategory());
 			pstmt.setString(3, data.getTag());
 			pstmt.setString(4, data.getTitle());
@@ -750,8 +778,8 @@ public class TripDao {
 			pstmt.setString(8, data.getTravleTyp());
 			pstmt.setDate(9, Date.valueOf(data.getTravleStartDate()));
 			pstmt.setDate(10, Date.valueOf(data.getTravleEndDate()));
-//			pstmt.setString(11, data.getPublicEnabled());
-			pstmt.setString(11, "y");
+			pstmt.setString(11, data.getPublicEnabled());
+//			pstmt.setString(11, "y");
 			pstmt.setString(12, data.getDeleted());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -767,7 +795,7 @@ public class TripDao {
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty(insertTripSchedule);
 		int result[] = null;
-		System.out.println("tripNo : " + tripNo);
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			for(int i=0;i<data2.getScheduleData().length;i++) {
@@ -835,13 +863,13 @@ public class TripDao {
 			 
 			while(rs.next()) {
 				s = new TripSchedule();
-				s.setNo(rs.getInt("NO"));
+				//s.setNo(rs.getInt("NO"));
 				s.setTripNo(rs.getInt("TRIP_NO"));
-				s.setTripinfoNo(rs.getInt("TRIPINFO_NO"));
-				s.setDay(rs.getInt("DAY"));
-				s.setOrders(rs.getInt("ORDERS"));
-				s.setRequiredHours(rs.getString("REQUIRED_HOURS"));
-				s.setTransport(rs.getString("TRANSPORT"));
+				//s.setTripinfoNo(rs.getInt("TRIPINFO_NO"));
+				//s.setDay(rs.getInt("DAY"));
+				//s.setOrders(rs.getInt("ORDERS"));
+				//s.setRequiredHours(rs.getString("REQUIRED_HOURS"));
+				//s.setTransport(rs.getString("TRANSPORT"));
 				
 				scheduleList.add(s);
 			}
@@ -885,29 +913,8 @@ public class TripDao {
 					t.setStartDate(rs.getDate("TRAVLE_START_DATE"));
 					t.setEndDate(rs.getDate("TRAVLE_END_DATE"));
 					t.setDeleted(rs.getString("DELETED").charAt(0));
-					
-					int tNo[] = new int[tripList.size()];
-					for(Trip2 t2 : tripList) {
-						int cnt1 = 0;
-						tNo[cnt1] = t2.getNo();
-						cnt1++;
-					}
-					
-					for(int i=0; i<tNo.length; i++) {
-						System.out.println(tNo[i]);
-					}
-					
-					boolean flag = false;
-					for(int i=0; i<tNo.length; i++) {
-						if(tNo[i] == t.getNo()) {
-							flag = true;
-							break;
-						}	
-					}
-					
-					if(!flag) {
-						tripList.add(t);
-					}
+										
+					tripList.add(t);
 				}
 			}
 		}catch(SQLException e) {

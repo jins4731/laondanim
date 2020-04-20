@@ -11,25 +11,18 @@
 	int totalData=Integer.parseInt(request.getAttribute("totalData").toString());
 %>
 <style>
-.searchContainer {
-	/* border: 1px solid coral; */
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	padding-top: 50px;
-	padding-bottom: 20px;
-}
+
 /* 검색창 구현 */
 #searchButton-container{
 height:40px;
-width:400px;
-border:1px solid mediumaquamarine;
+width:450px;
+
 background:#ffffff;
 
 }
 #searchBox{
 font-size:16px;
-width:325px;
+/* width:325px; */
 padding:10px;
 border:0px;
 outline:none;
@@ -39,7 +32,7 @@ float:left;
 width:50px;
 height:100%;
 border:0px;
-background:mediumaquamarine;
+
 outline:none;
 float:right;
 color:#ffffff;
@@ -48,12 +41,11 @@ color:#ffffff;
 
 
 .searchBox {
-	/* border: 1px solid coral; */
+
 	display: flex;
 	flex-direction: row;
 	height: 35px;
-/* 	border: 1.5px solid #00abbf;
-	border-radius: 20px; */
+
 	
 }
 
@@ -70,23 +62,14 @@ color:#ffffff;
 	color: white;
 }
 
-.searchBoxElement img {
-	width: 20px;
-	height: 20px;
+#searchSubmit img {
+	width: 25px;
+	height: 25px;
 	margin-right: 5px;
 }
 
 #search-form{
 	display:flex;
-}
-.searchContainer input {
-	height: 30px;
-	/* border: none; */
-	margin-left: 5px;
-}
-
-.searchContainer input:focus {
-	outline: none;
 }
 
 .searchBoxElement>p {
@@ -105,9 +88,9 @@ color:#ffffff;
 	justify-content: space-around;
 	align-items: center;
 	/* border: 1px solid black; */
-	width: 180px;
+	width: 200px;
 	margin-left: auto;
-	margin-right: 22%;
+	margin-right: 18%;
 	margin-top:2%;
 	margin-bottom: 30px;
 }
@@ -142,46 +125,82 @@ table{
 
 .filter ul>li {
 	padding-left: 10px;
+	
 }
 
 #filter-container {
 	/* border: 1px solid black; */
 	margin-left: auto;
-	margin-right: 100px;
+	margin-right: 50px;
 }
 .print-post{
-	margin-left:100px;
+	margin-left:50px;
 }
 
-/* .board-container {
-	width: 1000px;
-	margin-left: auto;
-	margin-right: auto;
-} */
 
+  #searchDIV{
+                height: 45px;
+                width: 550px;
+                border: 3px solid #00abbf;
+                background-color: #00abbf;
+                border-radius: 30px;
+                overflow: hidden;
+            }
+            #searchDIV select{
+                width: 33%;
+                height: 100%;
+                background-color: #00abbf;
+                color: white;
+                padding-left: 20px;
+                -webkit-appearance: none;
+                background-image: url('<%=request.getContextPath()%>/images/down_icon.png');
+                background-repeat: no-repeat;
+                background-position: right center;
+                background: ;
+            }
+            #searchDIV input[type="text"]{
+                width: 57%;
+                height: 100%;
+                border: none;
+            }
+            #searchDIV input[type="text"]:focus{
+                outline: none;
+            }
+            #searchDIV button{
+            	width: 10%;
+            	height: 100%;
+            	padding: 0px;
+            	margin: 0px;
+            	border: none;
+            	background: white;
+            }
+            #searchDIV button:focus{
+                outline: none;
+            } 
 </style>
 <div style="height:170px;"></div>
 <section class="d-flex flex-column justify-content-center align-items-center">
-	<div class="searchContainer">
-		<div class="searchBox">
+	<div  id="searchDIV" class="d-flex justify-content-center align-items-center m-5">
+		<div class="searchBox" class="pt-5 pb-5">
 			
-				<img src="<%=request.getContextPath()%>/views/picture/board/search_icon.png"
-					alt="search_icon">
+				
 				<form action="<%=request.getContextPath()%>/board/search.do" type="post" id="search-form">
-					<select name="category"  data-width="fit">
+					<select name="category" class="form-control border-0 rounded-0" data-width="fit">
 						<option value="all">전체게시글</option>
 						<option value="qna">질문글</option>
 						<option value="others">자유글</option>
 					</select> 
-					<select name="searchDetail"  data-width="fit">
+					<select name="searchDetail" class= "form-control border-0 rounded-0" data-width="fit">
 						<option value="writer">작성자</option>
 						<option value="title">제목</option>
 						<option value="content">내용</option>
 						<option value="tags">키워드태그</option>
 					</select>
 				<div id="searchButton-container">
-				<input type="text" placeholder="검색어 입력" name="searchBox" id="searchBox" size="40px">
-				<button type="submit" class="btn btn-secondary btn-sm" id="searchSubmit" >검색</button>
+				<input type="text" placeholder="검색어 입력" name="searchBox" id="searchBox"  class="pl-2">
+				<button type="submit"  id="searchSubmit" >
+				<img src="<%=request.getContextPath()%>/images/inactiveSearch_icon.png" alt="searchSubmit" id="searchSubmit"/>
+				</button>
 				</div>
 				<!-- 검색한후에 버튼 필터 사용시 -->
 				<input type="hidden" value="<%=searchBox %>" id="searchBox"/>
@@ -196,7 +215,7 @@ table{
 </div>
 <!--게시글 수 출력/필터링-->
 <div class="filter">
-    <div class="print-post" style="text-decoration:underline;">총 <%=totalData%>건의 게시물이 있습니다</div>
+    <div class="print-post" style="text-decoration:underline;"><h6>총 <%=totalData%>건의 게시물이 있습니다</h6></div>
     <div id="filter-container">
     <ul class="comm-filter">
     <li><button class="btn btn-mg btn-outline-secondary border-0" id="recent">최근 순</button></li>
@@ -206,7 +225,7 @@ table{
 </div>
 <!--게시글 내용출력-->
 <div class="board-container">
-<table class="table table-bordered" style="width:800px">
+<table class="table table-bordered" style="width:1000px">
     <thead>
     <tr>
         <th style="width:10%">NO</th>

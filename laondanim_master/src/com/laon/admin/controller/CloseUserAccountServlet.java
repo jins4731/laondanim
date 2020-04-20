@@ -32,6 +32,7 @@ public class CloseUserAccountServlet extends HttpServlet {
 		int result=new AdminService().closeAccount(userNo);
 		String msg="";
 		String loc="";
+		
 		if(result>0) {
 			msg="해당회원의 이용이 정지처리되었습니다.";
 			loc="/admin/adminView.do";

@@ -197,6 +197,7 @@ public class UserDao {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
+			close(rs);
 			close(pstmt);
 		}
 		return flag;
@@ -222,6 +223,7 @@ public class UserDao {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
+			close(rs);
 			close(pstmt);
 		}
 		return flag;
@@ -280,14 +282,12 @@ public class UserDao {
 		ResultSet rs=null;
 		int result=0;
 		String sql=prop.getProperty("searchReport");
-		System.out.println("������ sql="+sql);
 	try{
 		pstmt=conn.prepareStatement(sql);
 		pstmt.setInt(1, userNo);
 		rs=pstmt.executeQuery();
 		rs.next();
 		result=rs.getInt(1);
-		System.out.println(result);
 	}catch(SQLException e) {
 		e.printStackTrace();
 	}finally {

@@ -43,21 +43,20 @@ public class TripListViewServlet extends HttpServlet {
 		//ó�� ����� Ŭ������ ��
 		String infoNo = request.getParameter("infoNo");
 		infoNo = infoNo==null?"null":infoNo;
-		System.out.println("서블릿에서 infoNo의 값은 ? " + infoNo);
 		
 		String first = request.getParameter("first");
 		first=first==null?"null":first;
-		System.out.println("list에서 first : " + first);
+		
 		//�˻���ư ������ ��, keyword �� �������� , null �̸� �˻� ���Ѱ� ������ �˻��Ѱ�
 		String keyword = request.getParameter("keyword");
 		keyword=keyword==null?"null":keyword;
 		//��ü ����� Ŭ�� ��, category �� ��������
 		String category = request.getParameter("category")==null?"전체 여행기":request.getParameter("category");
-		System.out.println("서블릿에서 category : " + category);
+
 		category=category==null?"null":category;
 		//���� Ŭ�� ��, lo �� ��������
 		String lo = request.getParameter("lo")==null?"선택 지역별":request.getParameter("lo");
-		System.out.println("서블릿에서 lo : " + lo);
+	
 		lo=lo==null?"null":lo;
 		//�ֱټ� Ŭ���� recent �� ��������
 		String recent = request.getParameter("recent");
@@ -90,15 +89,9 @@ public class TripListViewServlet extends HttpServlet {
 		if(!infoNo.equals("null")) {
 			int no = Integer.parseInt(infoNo);
 			scheduleList = new TripService2().selectSchedule(no);
-			System.out.println("============schedule============");
-			for(TripSchedule ts : scheduleList) {
-				System.out.println(ts);
-			}
+						
 			tripList = new TripService2().selectTripList(scheduleList);
-			System.out.println("===========tripList=============");
-			for(Trip2 t : tripList) {
-				System.out.println(t);
-			}			
+								
 		}
 		
 		//�α��ε� ���� no ��������
@@ -108,26 +101,31 @@ public class TripListViewServlet extends HttpServlet {
 		String userTag = user.getTag();
 		
 		//�α��ε� ���� no�� ��ġ�ϴ� �±׼��� ���� ���� ����� �Խù� ��������
-		tripTagCountList = new TagFilter().tagCountList(userTag);
-		
-		
-		//총 데이터 수
-		totalItemCount = new TripService2().selectTripCount(lo, category, keyword);
+		tripTagCountList = new TagFilter().tagCountList(userTag);	
 		
 		if(infoNo.equals("null")) {
+			totalItemCount = new TripService2().selectTripCount(lo, category, keyword);
 			list = new TripService2().selectTripPage(cPage, perPage, lo, category, keyword, recent, like, tripTagCountList, first);
-		}else {
-			System.out.println("여기 찍히냐");
+		}else {						
+			if(tripList.size()>0) {
+			
 			ArrayList<Trip2> sortList = new ArrayList<Trip2>(); 
 			for(int i=(cPage-1)*perPage; i<cPage*perPage; i++) {
-				sortList.add(tripList.get(i));
+				if(i<tripList.size())
+					sortList.add(tripList.get(i));
 			}
 			list = sortList;
+			
+			totalItemCount = list.size();
+		
+			}else {
+				request.setAttribute("msg", "관련된 여행기가 없습니다.");
+				request.setAttribute("loc", "/tripinfo/tripinfoMain?category=맛집");
+				
+				request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);;
+			}
 		}
 		
-		for(Trip2 t : list) {
-			System.out.println("servlet 에서 list" +t );
-		}
 		//����Ʈ���� �������� �ش� ����Ʈ�� ��Ī�Ǵ� picture ��������
 		pictureList = new TripService2().selectPicture(list);
 		
@@ -141,7 +139,7 @@ public class TripListViewServlet extends HttpServlet {
 		likeList = new TripService2().selectLike(userNo);		
 		
 		//����¡ ó��
-		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/tripListView.do", totalItemCount, cPage, perPage, keyword, category, lo, recent, like, first); //�������� ��������
+		String pageBar = new Paging().pageBar(request.getContextPath()+"/trip/tripListView.do", totalItemCount, cPage, perPage, keyword, category, lo, recent, like, first, infoNo); //�������� ��������
 		
 		//������Ʈ�� ����
 		request.setAttribute("keyword", keyword);

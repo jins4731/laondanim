@@ -15,11 +15,12 @@ public class UserProfile {
     private String email;
     private String tag;
     private String image;
+    private int joinDays;
 
     public UserProfile() {}
 
 	public UserProfile(int no, Date createdDate, String userId, String password, String name, String nickName,
-			Date birthday, String gender, String phone, String email, String tag, String image) {
+			Date birthday, String gender, String phone, String email, String tag, String image, int joinDays) {
 		super();
 		this.no = no;
 		this.createdDate = createdDate;
@@ -33,6 +34,7 @@ public class UserProfile {
 		this.email = email;
 		this.tag = tag;
 		this.image = image;
+		this.joinDays = joinDays;
 	}
 
 	public int getNo() {
@@ -129,6 +131,14 @@ public class UserProfile {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public int getJoinDays() {
+		return joinDays;
+	}
+
+	public void setJoinDays(int joinDays) {
+		this.joinDays = joinDays;
 	}
     
 }

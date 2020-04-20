@@ -102,10 +102,7 @@ public class TripInfoDao {
 	//============================
 	/* �������� ����Ʈ ��������  */
 	public List<TripInfoPicture> selectTripinfoList(Connection conn, int cPage,int numPerPage ,String category, String type, String keyword, String mind) {
-		System.out.println(category);
-		System.out.println(type);
-		System.out.println(keyword);
-		System.out.println(mind);
+		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<TripInfoPicture> list = new ArrayList();
@@ -113,7 +110,6 @@ public class TripInfoDao {
 		String sql = "";
 		sql = mind.equals("null")?prop.getProperty("selectTripInfoPage2"):prop.getProperty("sortMind");
 		
-		System.out.println("��ȭ�� " + sql);
 		//SELECT * FROM (SELECT A.*, ROWNUM AS RNUM FROM (SELECT TR.*, (SELECT COUNT(*) 
 		//FROM MIND_TB WHERE TR.NO=TRIPINFO_NO AND CANCLED='Y') AS CNT FROM TRIPINFO_TB TR 
 		//WHERE CATEGORY=? AND ADDRESS LIKE ? AND NAME LIKE ? AND TAG LIKE ?)A) 
@@ -210,7 +206,7 @@ public class TripInfoDao {
 			
 			}
 		}
-		System.out.println("변화 후 : " + sql);
+		
 			try {
 							
 				pstmt = conn.prepareStatement(sql);
@@ -283,13 +279,13 @@ public class TripInfoDao {
 
 	/* �������� ����Ʈ ī����  */
 	public int selectCountTripInfo(Connection conn, String category, String type, String keyword) {
-		System.out.println("type�� ���? "+ type);
+	
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int count = 0;
 		//SELECT COUNT(*) FROM TRIPINFO_TB WHERE CATEGORY=? AND ADDRESS LIKE ? AND NAME LIKE ? AND TAG LIKE ?
 		String sql = prop.getProperty("selectCountTripInfo");
-		System.out.println("변화전 : " + sql);
+		
 		//������, ��ȣ��, �±׸�
 		
 		if(type.equals("상호명") && keyword.equals("null")) {
@@ -312,7 +308,7 @@ public class TripInfoDao {
 			sql = sql.replaceFirst("LIKE", "!=");
 			sql = sql.replaceFirst("LIKE", "!=");
 		}
-		System.out.println("변화후 : " + sql);
+	
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, category);
@@ -449,11 +445,8 @@ public class TripInfoDao {
 			close(rs);
 			close(pstmt);
 		}
+
 		
-		System.out.println("dao���� ");
-		for(Mind m : userMindList) {
-			System.out.println(m);
-		}
 		return userMindList;
 	}
 
@@ -783,21 +776,19 @@ public class TripInfoDao {
 	
 	public int deleteMind(Connection conn , int tripinfoNo , int userNo) {
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+
 		int result = 0;
 		String sql = prop.getProperty("deleteMind");
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, userNo);
 			pstmt.setInt(2, tripinfoNo);
-			
-		
 
 			result = pstmt.executeUpdate();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(rs);
 			close(pstmt);
 		}
 		return result;
@@ -840,6 +831,30 @@ public class TripInfoDao {
 		}
 		
 		return infoList;
+	}
+	
+	public int deleteComment(Connection conn,int tripinfoNo , int userNo,String content) {
+		
+		PreparedStatement pstmt = null;
+		System.out.println("dao에서 트립인포no"+tripinfoNo);
+		System.out.println("dao에서 유저no"+userNo);
+		System.out.println("dao에서 컨텐트"+content);
+
+		int result = 0;
+		String sql = prop.getProperty("deleteComment");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, content);
+
+			result = pstmt.executeUpdate();
+			
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 }// Ŭ����

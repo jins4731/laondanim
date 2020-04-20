@@ -42,23 +42,12 @@
 							<div style="height:45px;">
 								<span>총 <%=myJDCount %>개의 동행</span>
 							</div>
-							<div id="jDhCk1">
-								<button class="btn">선택삭제</button>
-							</div>
-							<div id="jDhCk2">
-								<label><input type="checkbox" id="jDhAll">&nbsp;전체 선택</label>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn">삭제</button>&nbsp;&nbsp;|&nbsp;&nbsp;
-								<button class="btn" id="jDhEndBtn">돌아가기</button>
-							</div>
 						</div>
 						<!-- 게시글위치 -->
 						<table id="dhTbl">
-							<tr class="d-flex flex-wrap justify-content-center">
+							<tr class="d-flex flex-wrap">
 							<%for(MyDong j:oriJoinDong){ %>
 								<td class="p-1">
-			                    	<div class="jDhCk3" style="margin:10px;">
-										<input type="checkbox" class="jDhCks">
-									</div>
 			                       	<div class="card" style="width: 155px; height: 290px;" >
 			                        	<div class="d-flex justify-content-between p-2" style="font-size:5px;">
 			                        		<%for(DonghangJoin dj:joinDong){ 
@@ -75,32 +64,34 @@
 			                           	<div>
 			                           		<div style="position: absolute;">
 			                            		<div class="dropdown" style="position: relative;">
+			                            		<%for(DonghangJoin dj:joinDong){ 
+					                        		if(j.getNo()==dj.getDonghangNo()){
+													    if(!dj.getConfirmed().equals("Y")){ %>
 											    	<button type="button" class="btn" data-toggle="dropdown">
 											      		...
 											    	</button>
+											    	<%} } }%>
 					                        		<div class="dropdown-menu">
 					                        		<%for(DonghangJoin dj:joinDong){ 
 					                        			if(j.getNo()==dj.getDonghangNo()){
 													    	if(dj.getConfirmed().equals("N")){ %>
-														    	<a class="dropdown-item" href="#">삭제</a>
-								                        	<%}else if(dj.getConfirmed().equals("Y")){ %>
-								                        		<a class="dropdown-item" href="#">채팅</a>
-														      	<a class="dropdown-item" href="#">동행 나가기</a>
-								                        	<%}else{ %>
-								                        		<a class="dropdown-item" href="#">보낸 신청서 보기</a>
-														      	<a class="dropdown-item" href="#">참여 신청 취소</a>
+														    	<a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/myDongJoinRefusal.do?userNo=<%=loginUser.getNo()%>&dongJoinNo=<%=dj.getNo()%>">삭제</a>
+								                        	<%-- <%}else if(dj.getConfirmed().equals("Y")){ %>
+														      	<a class="dropdown-item" href="#">동행 나가기</a> --%>
+								                        	<%}else if(dj.getConfirmed().equals("J")){ %>
+														      	<a class="dropdown-item" href="<%=request.getContextPath()%>/mypage/myDongJoinCancle.do?userNo=<%=loginUser.getNo()%>&djNo=<%=dj.getNo()%>&title=<%=j.getTitle() %>" onclick="return confirm('[<%=j.getTitle() %>] 동행 참여 신청을 취소 하시겠습니까?');">참여 신청 취소</a>
 						                        	<%} } }%>
 						                        	</div>
 												</div>
 			                           		</div>
 			                           		<%if(j.getImage()==null){ %>
-												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px">
+												<img src="<%=request.getContextPath() %>/images/images.jpeg" class="card-img" alt="..." width="155px" height="155px" onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo=<%=loginUser.getNo() %>&no=<%=j.getNo()%>')">
 											<%}else{ %>
-												<img src="<%=request.getContextPath() %>/views/picture/trip/<%=j.getImage()%>" class="card-img" alt="..." width="155px" height="155px">
+												<img src="<%=request.getContextPath() %>/upload/donghang/<%=j.getImage()%>" class="card-img" alt="..." width="155px" height="155px" onclick="location.replace('<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo=<%=loginUser.getNo() %>&no=<%=j.getNo()%>')">
 											<%} %>
 			                           </div>
 			                           <div class="d-flex flex-column justify-content-center card-body p-2" style="font-size:7px;">
-			                               <p class="mb-0"><%=j.getTitle() %></p>
+			                               <p class="mb-0 tover"><%=j.getTitle() %></p>
 			                               <%String nick="";
 			                               for(UserProfile un:userNick){ 
 			                            	   if(j.getUserNo()==un.getNo()){

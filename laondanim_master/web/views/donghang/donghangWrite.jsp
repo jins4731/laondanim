@@ -9,7 +9,7 @@
 <%
 	List<TripMyCon> tripList = (List<TripMyCon>)request.getAttribute(CommonKey.TRIP_LIST);
 	List<Like> likeList = (List<Like>)request.getAttribute(CommonKey.LIKE_LIST);
-
+	
 %>
 
 <%@ include file="/views/common/header.jsp"%>
@@ -132,8 +132,8 @@
 
                 <!-- trip 연결 -->
                 <div class="d-flex flex-column justify-content-center align-items-center" style="height: 150px; border: 1px solid white;">
-                    <button type="button" id="danimLinkBtn" class="ldBtn mb-3" data-toggle="modal" data-target="#myModal">다님일정 연결하기</button>
-                    <div id="danimTitleBox"><strong class="mr-3">연결된 다님일정</strong>
+                    <button type="button" id="danimLinkBtn" class="ldBtn mb-3" data-toggle="modal" data-target="#myModal">여행일정 연결하기</button>
+                    <div id="danimTitleBox">
                     	<span id="danimTitle"></span>
                     </div>
                 </div>
@@ -171,18 +171,18 @@
             
 
 
-            <!-- 다님길 연결 -->
+            <!-- 여행 연결 -->
             <div class="modal fade" id="myModal">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                     
                         <!-- Modal Header -->
                         <div class="modal-header border-bottom-0">
-                            <h4 class="modal-title">내 다님일정</h4>
+                            <h4 class="modal-title">내 여행일정</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         
-                        <!-- 다님일정 -->
+                        <!-- 여행일정 -->
                         <div class="modal-body d-flex justify-content-center p-0">
                             <div style="position: relative; width: 770px; height: 330px; overflow: hidden;" 
                                 class="d-flex align-items-center justify-content-start">
@@ -198,11 +198,11 @@
                                                         <span><%=tripList.get(i).getCategory()%></span>
                                                         <span><%=tripList.get(i).getWriteDate() %></span>
                                                     </div>
-                                                    <img src="<%=tripList.get(i).getImage()%>" class="card-img" alt="..." width="235px" height="235px">
+                                                    <img src="<%=request.getContextPath()%>/views/picture/trip/<%=tripList.get(i).getImage()%>" class="card-img" alt="..." width="235px" height="235px">
                                                     <div class="d-flex flex-column justify-content-center card-body p-2" style="line-height: 22px;">
                                                         <span><%=tripList.get(i).getTitle()%><span><br>
                                                         <span><%=loginUser.getNickName()%></span><br>
-                                                        <img src="" width="20px" height="20px"/>
+                                                        <img src="<%=request.getContextPath()%>/views/picture/trip/likeChecked.png" width="20px" height="20px"/>
 						                                <span>
 						                                	<%
 						                                	int likeCount = 0;
@@ -223,10 +223,10 @@
                                 
                                     <div style="width: 766px; position: absolute;" class="d-flex flex-row justify-content-md-between">
                                         <button type="button" style="border:none; background: none;" id="back">
-                                            <img src="icon/img-left_icon.png" style="width: 50px;">
+                                            <img src="<%=request.getContextPath()%>/images/img-left_icon.png" style="width: 50px;">
                                         </button>
                                         <button type="button" style="border:none; background: none;" id="next">
-                                            <img src="icon/img-right_icon.png"style="width: 50px;">
+                                            <img src="<%=request.getContextPath()%>/images/img-right_icon.png"style="width: 50px;">
                                         </button>
                                     </div>
                             </div>
@@ -343,9 +343,9 @@
                     });
                 });
 
-                function changeValue(obj){
+/*                 function changeValue(obj){
                     alert(obj.value);
-                }   
+                }   */ 
 
                 /* 2) 미리보기 fn*/
                 function readInputFile(input) {
@@ -422,7 +422,7 @@
             </style> 
 
 
-            <!--다님일정 모달 스크립트-->
+            <!--여행일정 모달 스크립트-->
 			<script>        
                 if($("#danimList").offset().left == 0){
                     $("#back").css("visibility","hidden");
@@ -439,7 +439,7 @@
 
                 /*리스트에 체크된 값을 히든인풋에 넣어주기*/                
                 $('button[data-dismiss="modal"]').click(()=>{
-                    alert($('input[name="selectTrip"]:checked').val());
+                    /* alert($('input[name="selectTrip"]:checked').val()); */
                     let no = $('input[name="selectTrip"]:checked').val();
                     $("#selectTripNo").val(no);
                     console.log( $("#selectTripNo").val());

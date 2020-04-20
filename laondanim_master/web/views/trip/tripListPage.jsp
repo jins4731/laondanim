@@ -20,8 +20,6 @@
        //지역 에 따른 분기  처리
        String lo = (String)request.getAttribute("lo");
        
-       System.out.println("jsp에서 category : " + category);
-       System.out.println("jsp에서 lo : " + lo);
      %>
           
     <div style="height: 170px;"></div>
@@ -57,6 +55,7 @@
                     <option value="searchKeyword">태그 검색</option>                    
                 </select>
                 <input type="text" name="keyword" class="pl-2"  list="data" id="search" value=""/>
+                
                 <button id="btn-search">
                 	<img src="<%=request.getContextPath()%>/images/inactiveSearch_icon.png" alt="searchIcon" id="searchIcon"/>
                 </button>
@@ -82,7 +81,7 @@
                 background-image: url('<%=request.getContextPath()%>/images/down_icon.png');
                 background-repeat: no-repeat;
                 background-position: right center;
-                background: ;
+                /* background: ; */
             }
             #searchDIV input[type="text"]{
                 width: 57%;
@@ -102,7 +101,34 @@
             }
             #searchDIV button:focus{
                 outline: none;
-            }         
+            }       
+
+			/* by 세현 */
+			#searchFilterStyle .ldBtnC{
+			    border-radius: 20px;
+			    background-color: white;
+			    border: 2px solid #00abbf;
+			    color: #00abbf;
+			    padding: 6px 15px 6px 15px;
+			    width: 130px;
+			}  
+			.ldBtnC:hover,.ldBtnC:active {
+			    color: white;
+			    background-color: #00abbf;
+			}   
+			.ldBtnSubmit{
+			    border-radius: 20px;
+			    background-color: #00abbf;
+			    border: 2px solid #00abbf;
+			    color: white;
+			    padding: 6px 15px 6px 15px;   
+			}      
+			.ldBtnF{
+				background: none;
+				color: #595959;
+				font-weight: bolder;
+				border: none;
+			}              
         </style>
           <script>
             $(function(){   
@@ -137,15 +163,19 @@
                if(key!='null') $("#search").val(key);
                //검색 버튼 클릭했을 때 검색한 값 쿼리스트링으로 전송
                $("#btn-search").click(function(){      
-                   var keyword = $("#search").val();                   
-                    location.replace('<%=request.getContextPath()%>/trip/tripListView.do?keyword='+keyword);
-                });
+                   var keyword = $("#search").val();
+                   location.replace('<%=request.getContextPath()%>/trip/tripListView.do?keyword='+keyword);
+                    
+               });
                
                //여행 category 드랍 다운 선택 시 서블릿 요청 필터 처리 
                $("#plan-review").siblings("div").children().each(function(i,v){
                     $(this).click(function(){
                         var category = $(this).html();
-                        var keyword = $("#keyword").val();
+                        //var keyword = $("#keyword").val();
+                        var keyword = $("#search").val();
+                        console.log("몬데");
+                        console.log(keyword);
                         $("#plan-review").html(category);
                         location.replace('<%=request.getContextPath()%>/trip/tripListView.do?category='+category+'&keyword='+keyword);
                     })
@@ -156,7 +186,9 @@
                     $(this).click(function(){
                        var lo = $(this).html();
                         console.log(lo);
-                       var keyword = $("#keyword").val();
+                       //var keyword = $("#keyword").val();
+                       var keyword = $("#search").val();
+                       
                         var category = $("#category").val();
                         $("#lo").html(lo);
                         location.replace('<%=request.getContextPath()%>/trip/tripListView.do?category='+category+'&keyword='+keyword+'&lo='+lo);
@@ -175,7 +207,8 @@
                 
                 //최근순 버튼 클릭 시 정렬 최근순으로 정렬
                 $("#recent").click(function(){
-                   var keyword = $("#keyword").val();
+                   //var keyword = $("#keyword").val();
+                   var keyword = $("#search").val();
                     var category = $("#category").val();
                     var lo = $("#location").val();
                    var recent = 'recent';
@@ -185,7 +218,8 @@
                 
                 //좋아요 순 버튼 클릭시 정렬 많은 순으로 정렬
                 $("#like").click(function(){
-                   var keyword = $("#keyword").val();
+                   //var keyword = $("#keyword").val();
+                   var keyword = $("#search").val();
                     var category = $("#category").val();
                     var lo = $("#location").val();
                     var recent ='null';
@@ -248,12 +282,12 @@
          
       </style>
         <!-- 필터 / 작성 -->
-        <div class="container">
+        <div class="container" id="searchFilterStyle">
            <div class="row justify-content-between" >
                 <div class="d-flex flex-row">
                 <div class="col-3  d-flex flex-row my-auto mr-5">              
                      <div class="dropdown">
-                   <button class="btn btn-light dropdown-toggle border border-secondary rounded mr-3" type="button" id="plan-review" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   <button class="ldBtnC dropdown-toggle mr-3" type="button" id="plan-review" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         전체여행기
                    </button>
                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -266,7 +300,7 @@
                   
                <div class="col-3  d-flex flex-row my-auto">              
                <div class="dropdown">
-                   <button class="btn btn-light dropdown-toggle border border-secondary rounded mr-3" type="button" id="lo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   <button class="dropdown-toggle mr-3 ldBtnC" type="button" id="lo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         	선택 지역별
                    </button>
                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -288,7 +322,7 @@
              
             </div>
             
-            <div class="col-2 d-flex flex-row my-auto">
+            <div class="col-3 d-flex flex-row my-auto">
                  <button id="tWriteBtn" style="display:inline" class="d-flex align-items-end justify-content-center mt-3 mb-3 btn btn-lg" style="text-decoration: underline;" onclick="location.replace('<%=request.getContextPath()%>/trip/tripInsertView.do?no=<%=loginUser.getNo()%>')">                   
                  	 <p class="m-0">여행기 작성</p> 
                  	 <img src="<%=request.getContextPath()%>/images/write_icon.png" class="ml-2 w-25">
@@ -340,15 +374,15 @@
         </style>
 
         <!-- 전체 목록 개수 / 필터 -->
-        <div class="container mt-4">
-            <div class="row justify-content-between">
+        <div class="container mt-4 mb-3">
+            <div class="row justify-content-between align-items-center">
                 <div class="col-4 d-flex align-items-center">
                     <h6 class="display-6 mt-2">총 <%=totalItemCount%>건의 여행기가 있습니다.</h6>
                 </div>
 
                 <div class="col-3 d-flex justify-content-end">
-                    <button class="btn btn-mg btn-outline-secondary border-0" id="recent">최근순</button>  
-                    <button class="btn btn-mg btn-outline-secondary border-0" id="like">좋아요순</button> 
+                    <button class="ldBtnF border-0 mr-2" id="recent">최근순</button>  
+                    <button class="ldBtnF border-0 " id="like">좋아요순</button> 
                 </div>
             </div>
         </div>
@@ -387,11 +421,11 @@
                        	int no = 0;
                        if(i<count){
                     	   no=list.get(i).getNo();
-                    	   System.out.println("과연 no는 ? ");
-                    	   System.out.println(no);
+                    	   
                        }
                        %>
                         <div class="card-body h-50 w-100 p-0 border-0">
+                        <%if(i<count && list.get(i).getDeleted()=='N'){ %>
                             <div class="hdTagBox" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=i<count?list.get(i).getNo():""%>')">
                                  <ul class="hdTag">                            
                                    <%if(i<count&&list.get(i).getTag()!=null){
@@ -401,6 +435,15 @@
                                    <%} } %> 
                                </ul>                              
                             </div>  
+                            <%}else{ %>
+                            <div class="hdTagBox" onclick="">
+                                 <ul class="hdTag">                            
+                                   
+                                    <li><a>삭제된 게시물 입니다.</a></li>
+                                   
+                               </ul>                              
+                            </div> 
+                            <%} %>
                             <img src="<%
                             String picture="";
                             for(int j=0; j<pictureList.size(); j++){ 
@@ -449,6 +492,10 @@
            }
    
            .hdTagBox:hover{
+           }
+           .card-footer .ck{
+     			border : none;
+     			background: none;      
            }
        </style>
                         <div class="card-footer h-30 d-flex flex-column p-1 text-center bg-white">
@@ -542,6 +589,7 @@
                         </div>
                         
                         <div class="card-body h-50 w-100 p-0 border-0">
+                           <%if(i-5<count&&list.get(i).getDeleted()=='N'){ %>
                            <div class="hdTagBox" onclick="location.replace('<%=request.getContextPath()%>/trip/tripView.do?no=<%=i-5<count?list.get(i).getNo():""%>')">
                                 <ul class="hdTag">                            
                                    <%if(i-5<count&&list.get(i).getTag()!=null){
@@ -551,7 +599,15 @@
                                    <%} } %> 
                                </ul>                               
                             </div>
-                            
+                            <%}else{ %>
+                            <div class="hdTagBox" onclick="">
+                                 <ul class="hdTag">                            
+                                   
+                                    <li><a>삭제된 게시물 입니다.</a></li>
+                                   
+                               </ul>                              
+                            </div> 
+                            <%} %>
                              <img src="<%
                             String picture="";
                             for(int j=1; j<pictureList.size(); j++){ 
@@ -640,7 +696,7 @@
         </div>
 
         <!--페이지 버튼-->
-        <div class="container mt-3">
+        <div class="container mt-5 mb-5">
                 <%=pageBar %>
         </div>
    

@@ -6,6 +6,7 @@ import static com.laon.common.template.JDBCTemplate.getConnection;
 import static com.laon.common.template.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.laon.board.model.vo.Board;
@@ -151,9 +152,19 @@ public class MypageService {
 	public List<MyDong> selectOriJoin(List<DonghangJoin> jd){
 		Connection conn=getConnection();
 		List<MyDong> list=dao.selectOriJoin(conn,jd);
+		List<MyDong> jdList=new ArrayList<MyDong>();
+		
+		int cnt=0;
+		for(MyDong j:list) {
+			jdList.add(j);
+			cnt++;
+			if(cnt==4) {
+				break;
+			}
+		}
 		close(conn);
 		
-		return list;
+		return jdList;
 	}
 	
 	//�������� �������� �������� �� ������ ��� ����Ʈ
@@ -195,7 +206,17 @@ public class MypageService {
 	//���� ���ƿ��� ����� ����Ʈ
 	public List<TripMyCon> selectTripList(List<Like> likeT){
 		Connection conn=getConnection();
-		List<TripMyCon> tripList=dao.selectTripList(conn,likeT);
+		List<TripMyCon> list=dao.selectTripList(conn,likeT);
+		List<TripMyCon> tripList=new ArrayList<TripMyCon>();
+		
+		int cnt=0;
+		for(TripMyCon t:list) {
+			tripList.add(t);
+			cnt++;
+			if(cnt==4) {
+				break;
+			}
+		}
 		close(conn);
 		
 		return tripList;
@@ -306,6 +327,90 @@ public class MypageService {
 	public int myDongMultiDelete(int[] myDongNo) {
 		Connection conn=getConnection();
 		int result=dao.myDongMultiDelete(conn,myDongNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	//내 동행 삭제
+	public int myDongDelete(int myDongNo) {
+		Connection conn=getConnection();
+		int result=dao.myDongDelete(conn,myDongNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	//찜 취소
+	public int myMindCancled(int mindNo,int userNo) {
+		Connection conn=getConnection();
+		int result=dao.myMindCancled(conn,mindNo,userNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	//좋아요 다중취소
+	public int likeTripMultiCancled(int userNo,int[] myLikeNo) {
+		Connection conn=getConnection();
+		int result=dao.likeTripMultiCancled(conn,userNo,myLikeNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	//좋아요 취소
+	public int likeTripCancled(int userNo,int likeNo) {
+		Connection conn=getConnection();
+		int result=dao.likeTripCancled(conn,userNo,likeNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	//나의 동행 모집 마감
+	public int myDongDeadline(int dongNo) {
+		Connection conn=getConnection();
+		int result=dao.myDongDeadline(conn,dongNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	//참여 동행 신청 취소
+	public int joinDongCancle(int userNo,int jdNo) {
+		Connection conn=getConnection();
+		int result=dao.joinDongCancle(conn,userNo,jdNo);
 		if(result>0) {
 			commit(conn);
 		}else {

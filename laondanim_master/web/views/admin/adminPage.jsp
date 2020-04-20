@@ -1,9 +1,9 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="java.util.List,com.laon.admin.model.vo.Reports" %>
+<%@page import="java.util.List,com.laon.admin.model.vo.ReportsJoinUser" %>
 <%
-	List<Reports> list=(List)request.getAttribute("reports");
-
+	List<ReportsJoinUser> list=(List)request.getAttribute("reports");
+	
 %>	
 	
 <%@ include file="/views/common/header.jsp"%>
@@ -54,15 +54,27 @@
             <td>자세히보기</td>
             <td>유저관리</td>
         </tr>
-        <%for (Reports re:list){ %>
+        <%for (ReportsJoinUser re:list){ %>
         <tr>
+        
             <td><%=re.getNo() %></td>
-            <td><%=re.getUserNo() %></td>
+            <td><%=re.getUserId() %></td>
+            <%if(re.getDonghangNo()==0){ %>
             <td>커뮤니티 게시판</td>
+            <%}else if(re.getBoardNo()==0){ %>
+            <td>동행 찾기</td>
+            <%} %>
             <td><%=re.getReportContent() %></td>
-            <td><button class="ref-page btn btn-primary" value="<%=re.getBoardNo()%>">게시글보기</button></td>
+            <!-- if 문으로 동행일때 연결 바꿔주기 -->
+            <%if(re.getDonghangNo()==0){%>
+            <td><button class="ref-page btn btn-primary" id="boardNo" value="<%=re.getBoardNo()%>">게시글보기</button></td>
+            <%}else if(re.getBoardNo()==0){ %>
+            <td><button class="ref-page1 btn btn-primary" id="donghangNo" value="<%=re.getDonghangNo()%>">게시글보기</button></td>
+            <%} %>
+            <input type="hidden" value="<%=loginUser.getNo() %>" id="loginUser">
             <td><button class="close-account btn btn-warning" value="<%=re.getUserNo()%>">이용정지</button></td>
         </tr>
+        
 		<% } %>
 
     </table>
@@ -77,7 +89,20 @@ $(function(){
 	//신고된 해당 게시글을 확인하는 버튼
 	$(".ref-page").click(function(){
 		var boardNo=$(this).val();
+		
+
 		location.href="<%=request.getContextPath()%>/board/boardView.do?no="+boardNo;
+		
+	
+		
+	})
+	
+	$(".ref-page1").click(function(){
+		
+		var donghangNo=$(this).val();
+		var loginUserNo=$("#loginUser").val();
+	
+		location.href="<%=request.getContextPath()%>/donghang/donghangView.do?loginUserNo="+loginUserNo+"&no="+donghangNo;	
 		
 		
 	})
@@ -88,6 +113,10 @@ $(function(){
 		var closeAcct=confirm("회원을 정지시키겠습니까?");
 		if(closeAcct){
 		var userNo=$(this).val();
+		if(userNo==1){
+			alert("관리자는 삭제할수 없습니다");
+			return false;
+		}
 		location.href="<%=request.getContextPath()%>/admin/closeAccount.do?userNo="+userNo;
 		}
 	})

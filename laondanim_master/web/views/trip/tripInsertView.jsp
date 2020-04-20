@@ -260,7 +260,7 @@
             <div class="col-4">
                 <div class="row dropdown justify-content-center">
                     <button type="button" id="category" name="category"
-                        class="ldBtn dropdown-toggle mb-5" data-toggle="dropdown" style="font-weight: 600; width: 150px;">일정</button>
+                        class="ldBtn dropdown-toggle mb-5" data-toggle="dropdown" style="font-weight: 600; width: 150px;">여행 일정</button>
                     <div class="dropdown-menu">
                         <a id="courseDropBt" href="#" class="dropdown-item">여행 일정</a>
                         <a id="reviewDropBt" href="#" class="dropdown-item">여행 후기</a>
@@ -403,7 +403,7 @@
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
-                                src="<%=request.getContextPath()+"/views/picture/trip/"+image %>"
+                                src="<%=request.getContextPath()+"/views/picture/tripinfo/"+image %>"
                                 draggable="true" ondragstart="dragstart(event)" alt=""
                                 style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
                             <div class="mask flex-center rgba-black-strong text-nowrap"
@@ -434,7 +434,7 @@
                                     data-address="<%=address %>" data-businessHours="<%=businessHours %>"
                                     data-tel="<%=tel %>" data-homepage="<%=homepage %>" data-naver="<%=naver %>"
                                     data-sns="<%=sns %>"
-                                    src="<%=request.getContextPath()+"/views/picture/trip/"+image %>"
+                                    src="<%=request.getContextPath()+"/views/picture/tripinfo/"+image %>"
                                     draggable="true" ondragstart="dragstart(event)" alt=""
                                     style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
                                 <div class="mask flex-center rgba-black-strong text-nowrap"
@@ -465,7 +465,7 @@
                                 data-tag="<%=tag %>" data-name="<%=name %>" data-address="<%=address %>"
                                 data-businessHours="<%=businessHours %>" data-tel="<%=tel %>"
                                 data-homepage="<%=homepage %>" data-naver="<%=naver %>" data-sns="<%=sns %>"
-                                src="<%=request.getContextPath()+"/views/picture/trip/"+image %>"
+                                src="<%=request.getContextPath()+"/views/picture/tripinfo/"+image %>"
                                 draggable="true" ondragstart="dragstart(event)" alt=""
                                 style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 0;">
                             <div class="mask flex-center rgba-black-strong text-nowrap"
@@ -870,13 +870,13 @@
 
         $("#courseDropBt").on("click", function (e) {
             console.log("courseDropBt");
-            $("#category").html("일정");
-            $("#category").val("일정")
+            $("#category").html("여행 일정");
+            $("#category").val("여행 일정")
         });
         $("#reviewDropBt").on("click", function (e) {
             console.log("reviewDropBt");
-            $("#category").html("후기");
-            $("#category").val("후기")
+            $("#category").html("여행 후기");
+            $("#category").val("여행 후기")
 
         });
 
@@ -1136,7 +1136,7 @@
                     var schduleData = $($("[name='day']")[i]).find("img")[k].dataset;
                     console.log("requiredTime : "+requiredTime);
                     if(requiredTime == ""){
-                        alert("이동 소요시간을 입력해주세요.");
+                        //alert("이동 소요시간을 입력해주세요.");
                     }
                     var schedule = {
                     tripinfoNo: schduleData.no,

@@ -190,9 +190,10 @@ header li>a {
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> 
 						<%
-						
+						System.out.println("누구냐 넌?");
+						System.out.println(userProfile.getImage());
 						if(userProfile.getImage()==null){ %>
-						
+							
 							<img src="<%=request.getContextPath()%>/images/profile_icon.png" width="50px" height="50px">
 						<%} else{ %>
 							<img src="<%=request.getContextPath()%>/views/picture/profile/<%=userProfile.getImage()%>" width="50px" height="50px"

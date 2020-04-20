@@ -291,7 +291,7 @@
                                        <button type="button" class="mind-delete-btn" style="padding: 0;">
                                           <img
                                              src="<%=request.getContextPath()%>/views/picture/icon/142125213.jpg"
-                                             alt="..." width="30px" height="30px">
+                                             alt="..." width="30px" height="30px" >
                                        </button>
                                     </div>
                                  </div>

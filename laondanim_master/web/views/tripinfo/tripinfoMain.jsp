@@ -299,6 +299,8 @@
         .comment-hide{
             position: absolute;
             display:none;
+            border:solid 1px red; 
+            width:160px;
            
            
         }                  
@@ -837,7 +839,7 @@
                                     <input type="hidden"  value="<%=tc.getContent()%>"/>
                                     
                                     <td>
-                                       <div class="comment-hide" style="border:solid 1px red; width:160px;">
+                                       <div class="comment-hide">
                                           <button class="btn comment-delete">삭제하기</button>
                                           <button class="btn comment-close">취소</button>
                                        </div>
@@ -857,6 +859,9 @@
                               }
                               .comment-tr:hover .comment-menu{
                                  display:inline;
+                              }
+                              .comment-tr{
+                              	border: solid 1px black;
                               }
                            </style>
                            

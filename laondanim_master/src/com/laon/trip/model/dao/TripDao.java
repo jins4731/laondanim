@@ -780,7 +780,8 @@ public class TripDao {
 			pstmt.setDate(10, Date.valueOf(data.getTravleEndDate()));
 			pstmt.setString(11, data.getPublicEnabled());
 //			pstmt.setString(11, "y");
-			pstmt.setString(12, data.getDeleted());
+//			pstmt.setString(12, data.getDeleted());
+			pstmt.setString(12, "N");
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
